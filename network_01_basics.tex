@@ -4,718 +4,1227 @@
 \usetheme{Madrid}
 \usecolortheme{default}
 
-% Required packages
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
-\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,backgrounds,fit,decorations.pathmorphing}
 \usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
 \usepackage{xcolor}
 
-% TikZ libraries
-\usetikzlibrary{shapes,arrows,positioning,calc,decorations.pathreplacing}
-\usetikzlibrary{backgrounds,fit,shadows}
+% Graphics path for icons
+\graphicspath{{images/}}
 
 % Custom colors
-\definecolor{networkblue}{RGB}{30,144,255}
-\definecolor{networkgreen}{RGB}{34,139,34}
-\definecolor{networkred}{RGB}{220,20,60}
+\definecolor{networkblue}{RGB}{51,102,187}
+\definecolor{networkgreen}{RGB}{46,125,50}
+\definecolor{networkorange}{RGB}{255,152,0}
+\definecolor{networkred}{RGB}{198,40,40}
 
 % Title information
-\title{Chapter 1: Introduction to Networks}
+\title{Introduction to Networking}
 \author{Brendan Shea, PhD}
-\institute{Introduction to Networking}
-\date{2026}
+\institute{Rochester Community and Technical College}
+\date{} % No date as requested
 
+% Custom commands for network icons
+\newcommand{\neticon}[2][0.4cm]{\includegraphics[height=#1]{#2}}
+
+% TikZ styles for network diagrams
+\tikzset{
+    device/.style={rectangle, draw, thick, minimum width=2cm, minimum height=1cm, align=center},
+    router/.style={rectangle, draw, thick, fill=networkblue!20, minimum width=2cm, minimum height=1cm, align=center},
+    switch/.style={rectangle, draw, thick, fill=networkgreen!20, minimum width=2cm, minimum height=1cm, align=center},
+    computer/.style={rectangle, draw, thick, fill=gray!20, minimum width=1.5cm, minimum height=1cm, align=center},
+    connection/.style={thick, -latex},
+    wireless/.style={thick, -latex, dashed, color=networkblue},
+    cloud/.style={ellipse, draw, thick, fill=networkorange!10, minimum width=3cm, minimum height=2cm, align=center}
+}
 
 \begin{document}
-	
-	% Slide 1: Title Slide
-	\begin{frame}
-		\titlepage
-	\end{frame}
-	
-	% Slide 2: Learning Objectives and Exam Coverage
-	\begin{frame}{Learning Objectives and Exam Coverage}
-		\begin{itemize}
-			\item Students will understand fundamental networking concepts and terminology used in modern computer networks.
-			\item Students will be able to compare and contrast different network topologies and their appropriate use cases.
-			\item Students will identify various network types including LANs, WANs, MANs, and specialized networks.
-			\item Students will analyze network architectures and traffic flow patterns in enterprise environments.
-		\end{itemize}
-		
-		\begin{alertblock}{CompTIA Network+ Exam Objective}
-			Domain 1.0 Networking Concepts - 1.6: Compare and contrast network topologies, architectures, and types including mesh, hybrid, star/hub-and-spoke, spine-leaf, point-to-point, three-tier hierarchical model, and traffic flows.
-		\end{alertblock}
-	\end{frame}
-	
-	% Slide 3: What is a Network? - Basic Definition
-	\begin{frame}{What is a Network? - Basic Definition}
-		\begin{itemize}
-			\item A \textbf{network} is defined as "a group or system of interconnected people or things."
-			\item In computing, a network means two or more connected computers that can share resources.
-			\item \textbf{Resources} include data, applications, office machines, Internet connections, or combinations thereof.
-			\item Networks enable communication between devices using \textbf{binary code} consisting of 1s and 0s in specific patterns.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.8]
-				% Draw two computers
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1.5cm, minimum height=1cm] (comp1) at (0,0) {Host A};
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1.5cm, minimum height=1cm] (comp2) at (6,0) {Host B};
-				
-				% Draw printer
-				\node[draw, rectangle, fill=networkgreen!20, minimum width=1cm, minimum height=0.8cm] (printer) at (3,2) {Printer};
-				
-				% Draw connections
-				\draw[thick, networkred] (comp1) -- (comp2);
-				\draw[thick, networkgreen] (comp1) -- (printer);
-				\draw[thick, networkgreen] (comp2) -- (printer);
-				
-				% Add labels
-				\node[below=0.3cm of comp1] {\small Files \& Data};
-				\node[below=0.3cm of comp2] {\small Applications};
-				\node[above=0.2cm of printer] {\small Shared Resource};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 4: The Local Area Network (LAN) - Definition and Scope
-	\begin{frame}{The Local Area Network (LAN) - Definition and Scope}
-		\begin{itemize}
-			\item A \textbf{Local Area Network (LAN)} is restricted to spanning a particular geographic location.
-			\item Examples include office buildings, single departments, or home offices.
-			\item Modern LANs have overcome historical limitations of 30 workstations and distance restrictions.
-			\item \textbf{Workgroups} are logical zones that make administration easier by dividing large LANs.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang Network Example}
-			The Mystery Inc. gang sets up their network in their headquarters building. Fred's computer in the main office needs to access files on Velma's computer in the research lab, and Shaggy's laptop in the kitchen needs to print investigation reports on the shared printer in Daphne's room. This entire building network represents their LAN.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 5: Common Network Components Overview
-	\begin{frame}{Common Network Components Overview}
-		\begin{itemize}
-			\item Networks are composed of three main categories of devices that work together to enable communication.
-			\item \textbf{Workstations} are powerful computers that provide resources to other users on the network.
-			\item \textbf{Servers} are specialized computers running network operating systems to maintain and control networks.
-			\item \textbf{Hosts} refer to any network device with an IP address in TCP/IP terminology.
-		\end{itemize}
-		
-		\begin{block}{Key Distinction}
-			The terms workstation, client, and host are often used interchangeably in casual conversation, but they have technical differences. A \textbf{client machine} is any device that can request access to resources from servers or workstations.
-		\end{block}
-	\end{frame}
-	
-	% Slide 6: Workstations vs. Clients - Understanding the Difference
-	\begin{frame}{Workstations vs. Clients - Understanding the Difference}
-		\begin{itemize}
-			\item \textbf{Workstations} are powerful computers with multiple CPUs whose resources are available to network users.
-			\item Workstations are often employed as systems that end users operate on a daily basis.
-			\item \textbf{Client machines} are any devices that can request access to resources like printers or other hosts.
-			\item The distinction matters technically, though people often use these terms interchangeably in practice.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang Example}
-			Velma's high-powered computer with dual processors serves as a workstation, running complex analysis software while sharing its computational resources with the team. Meanwhile, Shaggy's basic laptop acts as a client machine, requesting access to files stored on Velma's workstation and sending print jobs to the shared printer.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 7: Server Types and Their Functions
-	\begin{frame}{Server Types and Their Functions}
-		\begin{itemize}
-			\item \textbf{Servers} get their name because they are "at the service" of the network users.
-			\item Servers run specialized \textbf{network operating systems} to maintain and control network operations.
-			\item Dedicated servers optimize performance by handling one specific labor-intensive job.
-			\item Servers require superior CPUs, hard-drive space, and memory compared to client machines.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tabular}{ll}
-				\toprule
-				\textbf{Server Type} & \textbf{Function} \\
-				\midrule
-				File Server & Stores and dispenses files \\
-				Mail Server & Handles email functions \\
-				Print Server & Manages network printers \\
-				Web Server & Manages web content via HTTPS \\
-				Application Server & Manages network applications \\
-				Proxy Server & Handles tasks for other machines \\
-				\bottomrule
-			\end{tabular}
-		\end{center}
-	\end{frame}
-	
-	% Slide 8: Hosts - The TCP/IP Perspective
-	\begin{frame}{Hosts - The TCP/IP Perspective}
-		\begin{itemize}
-			\item The term \textbf{host} can refer to almost any type of networking device in modern usage.
-			\item In TCP/IP terminology, a host specifically means any network device with an IP address.
-			\item The term originates from the era when only mainframes were considered intelligent network devices.
-			\item Today, hosts include workstations, servers, routers, and any device that can communicate using TCP/IP.
-		\end{itemize}
-		
-		\begin{alertblock}{Historical Context}
-			In networking's "Jurassic period," mainframes were the only intelligent devices on networks and were called hosts. Everything else was considered "dumb terminals" without IP addresses. The term has evolved but retains its connection to devices capable of independent network communication.
-		\end{alertblock}
-	\end{frame}
-	
-	% Slide 9: Metropolitan Area Network (MAN)
-	\begin{frame}{Metropolitan Area Network (MAN)}
-		\begin{itemize}
-			\item A \textbf{Metropolitan Area Network (MAN)} covers a metropolitan area to interconnect buildings and facilities.
-			\item MANs typically operate over \textbf{carrier provider networks} using leased network connections.
-			\item These networks can be thought of as concentrated WANs with high-speed interconnections.
-			\item MANs often use in-ground fiber optics and provide cost-effective high-speed interconnects.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.6]
-				% Draw city outline
-				\draw[thick, networkblue] (0,0) ellipse (4cm and 2.5cm);
-				\node[above] at (0,2.8) {\textbf{Metropolitan Area}};
-				
-				% Draw buildings
-				\node[draw, rectangle, fill=networkgreen!20, minimum width=0.8cm, minimum height=1cm] (bldg1) at (-4,0.5) {HQ};
-				\node[draw, rectangle, fill=networkgreen!20, minimum width=0.8cm, minimum height=1cm] (bldg2) at (4,0.5) {Branch};
-				\node[draw, rectangle, fill=networkgreen!20, minimum width=0.8cm, minimum height=1cm] (bldg3) at (0,-1) {Data Center};
-				
-				% Draw fiber connections
-				\draw[thick, networkred, dashed] (bldg1) -- (bldg2);
-				\draw[thick, networkred, dashed] (bldg1) -- (bldg3);
-				\draw[thick, networkred, dashed] (bldg2) -- (bldg3);
-				
-				\node[below] at (0,-3) {\small High-speed fiber optic connections};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 10: Wide Area Network (WAN) - Spanning the Distance
-	\begin{frame}{Wide Area Network (WAN) - Spanning the Distance}
-		\begin{itemize}
-			\item A \textbf{Wide Area Network (WAN)} spans large geographic areas and links disparate locations.
-			\item WANs usually employ routers and public links as defining criteria for their classification.
-			\item The Internet is the largest example of a WAN, connecting networks worldwide.
-			\item WANs can be \textbf{distributed} (interconnected computers in many places) or \textbf{centralized} (remote connections to a main location).
-		\end{itemize}
-		
-		\begin{block}{Key WAN Characteristics}
-			\begin{itemize}
-				\item Usually need router ports for connectivity
-				\item Span larger geographic areas than LANs
-				\item Generally slower than LANs
-				\item Allow selective connection timing and duration
-				\item Can utilize private or public data transport media
-			\end{itemize}
-		\end{block}
-	\end{frame}
-	
-	% Slide 11: Personal Area Network (PAN) - Close Proximity Connections
-	\begin{frame}{Personal Area Network (PAN) - Close Proximity Connections}
-		\begin{itemize}
-			\item A \textbf{Personal Area Network (PAN)} enables close proximity connections between devices.
-			\item PANs are commonly seen with smartphones and laptops in conference rooms for collaboration.
-			\item While PANs can use wired connections like Ethernet or USB, wireless is more common.
-			\item Typical wireless technologies include \textbf{Bluetooth}, \textbf{infrared}, and \textbf{ZigBee}.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang PAN Example}
-			During a mystery investigation meeting, Fred uses Bluetooth to connect his smartphone to the conference room projector to display clues. Simultaneously, Velma's laptop connects to Daphne's tablet via Bluetooth to share forensic analysis data. These short-range connections (a few meters) form their PAN for the meeting.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 12: Campus Area Network (CAN)
-	\begin{frame}{Campus Area Network (CAN)}
-		\begin{itemize}
-			\item A \textbf{Campus Area Network (CAN)} covers a limited geographical area such as a college or corporate campus.
-			\item CANs typically interconnect LANs in various buildings and offer Wi-Fi components for roaming users.
-			\item These networks are larger than LANs but smaller than MANs or WANs in scope.
-			\item Most CANs provide Internet connectivity as well as access to data center resources.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.8]
-				% Draw campus boundary
-				\draw[thick, networkblue, dashed] (-5,-2) rectangle (6,2);
-				\node[above right] at (4,2) {\small Campus Boundary};
-				
-				% Draw buildings with LANs
-				\node[draw, rectangle, fill=networkgreen!20] (admin) at (-4,1) {Admin LAN};
-				\node[draw, rectangle, fill=networkgreen!20] (student) at (4,1) {Student LAN};
-				\node[draw, rectangle, fill=networkgreen!20] (library) at (-4,-1) {Library LAN};
-				\node[draw, rectangle, fill=networkgreen!20] (lab) at (4,-1) {Lab LAN};
-				
-				% Central switch
-				\node[draw, circle, fill=networkred!20] (switch) at (0,0) {Core Switch};
-				
-				% Connections
-				\draw[thick] (admin) -- (switch);
-				\draw[thick] (student) -- (switch);
-				\draw[thick] (library) -- (switch);
-				\draw[thick] (lab) -- (switch);
-				
-				% WiFi coverage
-				\draw[networkblue, dotted] (0,0) circle (2.5);
-				\node[networkblue] at (1.8,1.8) {\small WiFi};
-			\end{tikzpicture}
-		\end{center}
-		
-		
-	\end{frame}
-	
-	% Slide 17: Peer-to-Peer Networks - Decentralized Authority
-	\begin{frame}{Peer-to-Peer Networks - Decentralized Authority}
-		\begin{itemize}
-			\item In \textbf{peer-to-peer networks}, computers have no central or special authority and are all equals.
-			\item The authority to perform security checks lies with the computer that has the desired resource.
-			\item Computers can simultaneously act as both client machines requesting resources and server machines providing resources.
-			\item This architecture works well for small numbers of users with local backups and minimal security requirements.
-		\end{itemize}
-		
-		\begin{alertblock}{Peer-to-Peer Challenges}
-			Security presents major challenges because each user must maintain usernames and passwords on every machine. Passwords for the same user often change across different machines, creating a management nightmare. Backing up critical data becomes difficult without centralized storage.
-		\end{alertblock}
-	\end{frame}
-	
-	% Slide 18: Client-Server Networks - Centralized Management
-	\begin{frame}{Client-Server Networks - Centralized Management}
-		\begin{itemize}
-			\item \textbf{Client-server networks} use a single server with a network operating system to manage the entire network.
-			\item Client requests for resources go to the main server, which handles security and directs clients to desired resources.
-			\item This architecture provides better organization because all files are stored in one centralized location.
-			\item Security is tighter because all usernames and passwords are maintained on the dedicated server.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang Client-Server Example}
-			Mystery Inc. sets up a client-server network where Velma's dedicated server computer stores all case files, clue databases, and monster identification records. When Fred needs to access witness statements from his laptop (client), he authenticates through Velma's server, which verifies his permissions and grants access to the appropriate files.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 19: Hybrid Network Architectures
-	\begin{frame}{Hybrid Network Architectures}
-		\begin{itemize}
-			\item Many modern networks are a healthy blend of peer-to-peer and client-server architectures.
-			\item \textbf{Hybrid networks} have specified servers while permitting simultaneous resource sharing from workstations.
-			\item Supporting machines run server services reasonably well despite handling fewer inbound connections.
-			\item Well-designed mixed environments benefit from the positive aspects of both architectural worlds.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Draw central server
-				\node[draw, rectangle, fill=networkred!20, minimum width=1.5cm, minimum height=1cm] (server) at (0,0) {Main Server};
-				
-				% Draw workstations that also share resources
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1cm, minimum height=0.8cm] (ws1) at (-3,2) {WS1};
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1cm, minimum height=0.8cm] (ws2) at (3,2) {WS2};
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1cm, minimum height=0.8cm] (ws3) at (-3,-2) {WS3};
-				\node[draw, rectangle, fill=networkblue!20, minimum width=1cm, minimum height=0.8cm] (ws4) at (3,-2) {WS4};
-				
-				% Server connections (client-server)
-				\draw[thick, networkred] (server) -- (ws1);
-				\draw[thick, networkred] (server) -- (ws2);
-				\draw[thick, networkred] (server) -- (ws3);
-				\draw[thick, networkred] (server) -- (ws4);
-				
-				% Peer-to-peer connections
-				\draw[thick, networkgreen, dashed] (ws1) -- (ws2);
-				\draw[thick, networkgreen, dashed] (ws3) -- (ws4);
-				
-				\node[below] at (0,-3) {\small Solid lines: Client-Server, Dashed: Peer-to-Peer};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 20: Network Architecture Comparison
-	\begin{frame}{Network Architecture Comparison}
-		\begin{itemize}
-			\item Network architecture choice depends on organization size, security needs, and administrative requirements.
-			\item \textbf{Scalability} differs significantly between peer-to-peer and client-server implementations.
-			\item Performance optimization varies based on centralized versus distributed resource management approaches.
-			\item Cost considerations include both initial setup expenses and ongoing maintenance requirements.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tabular}{lcc}
-				\toprule
-				\textbf{Factor} & \textbf{Peer-to-Peer} & \textbf{Client-Server} \\
-				\midrule
-				Security & Decentralized & Centralized \\
-				Scalability & Limited & Excellent \\
-				Cost & Low initial & Higher initial \\
-				Administration & Complex & Simplified \\
-				Performance & Variable & Optimized \\
-				Fault Tolerance & Distributed & Single point \\
-				\bottomrule
-			\end{tabular}
-		\end{center}
-	\end{frame}
-	
-	% Slide 21: Bus Topology - Linear Connections
-	\begin{frame}{Bus Topology - Linear Connections}
-		\begin{itemize}
-			\item \textbf{Bus topology} is the most basic topology, consisting of two distinct and terminated ends.
-			\item Each computer connects to one unbroken cable running the entire length of the network.
-			\item Modern implementations use drop cables or "T" connectors instead of direct wire taps.
-			\item All computers see all data flowing through the cable, but only the addressed computer receives it.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.8]
-				% Draw main bus cable
-				\draw[very thick, networkblue] (-4,0) -- (4,0);
-				
-				% Draw terminators
-				\node[draw, rectangle, fill=networkred!20] at (-4,0) {T};
-				\node[draw, rectangle, fill=networkred!20] at (4,0) {T};
-				
-				% Draw connected devices
-				\node[draw, rectangle, fill=networkgreen!20] (client1) at (-2,1.5) {Client};
-				\node[draw, rectangle, fill=networkgreen!20] (server) at (0,1.5) {Server};
-				\node[draw, rectangle, fill=networkgreen!20] (printer) at (2,1.5) {Printer};
-				
-				% Draw drop cables
-				\draw[thick] (-2,0) -- (client1);
-				\draw[thick] (0,0) -- (server);
-				\draw[thick] (2,0) -- (printer);
-				
-				\node[below] at (0,-0.5) {\small Main Bus Cable with Terminators};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 22: Star (Hub-and-Spoke) Topology
-	\begin{frame}{Star (Hub-and-Spoke) Topology}
-		\begin{itemize}
-			\item \textbf{Star topology} connects computers to a central point with individual cables or wireless connections.
-			\item The central device is typically a hub, switch, or access point managing all connections.
-			\item Cable failure affects only the specific machine or segment, providing better fault tolerance.
-			\item This topology offers excellent scalability by simply adding new cables to the central device.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.8]
-				% Draw central switch
-				\node[draw, circle, fill=networkred!20, minimum size=1.2cm] (switch) at (0,0) {Switch};
-				
-				% Draw connected devices in star formation
-				\node[draw, rectangle, fill=networkgreen!20] (pc1) at (-2.5,2) {Fred's PC};
-				\node[draw, rectangle, fill=networkgreen!20] (pc2) at (2.5,2) {Velma's PC};
-				\node[draw, rectangle, fill=networkgreen!20] (pc3) at (-2.5,-2) {Daphne's PC};
-				\node[draw, rectangle, fill=networkgreen!20] (pc4) at (2.5,-2) {Shaggy's PC};
-				\node[draw, rectangle, fill=networkblue!20] (printer) at (0,2.8) {Printer};
-				
-				% Draw connections
-				\draw[thick] (switch) -- (pc1);
-				\draw[thick] (switch) -- (pc2);
-				\draw[thick] (switch) -- (pc3);
-				\draw[thick] (switch) -- (pc4);
-				\draw[thick] (switch) -- (printer);
-				
-				\node[below] at (0,-3) {\small All devices connect to central switch};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 23: Ring Topology - Circular Data Flow
-	\begin{frame}{Ring Topology - Circular Data Flow}
-		\begin{itemize}
-			\item \textbf{Ring topology} connects each computer directly to other computers in a circular formation.
-			\item Network data flows from computer to computer around the ring back to the source.
-			\item Adding new devices requires breaking the cable ring, likely bringing down the entire network.
-			\item This topology is expensive, difficult to reconfigure, and not fault-tolerant for LANs.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.8]
-				% Draw ring with devices
-				\node[draw, rectangle, fill=networkgreen!20] (pc1) at (0,2.5) {PC 1};
-				\node[draw, rectangle, fill=networkgreen!20] (pc2) at (2.2,1.5) {PC 2};
-				\node[draw, rectangle, fill=networkgreen!20] (pc3) at (2.2,-1.5) {PC 3};
-				\node[draw, rectangle, fill=networkgreen!20] (pc4) at (0,-2.5) {PC 4};
-				\node[draw, rectangle, fill=networkgreen!20] (pc5) at (-2.2,-1.5) {PC 5};
-				\node[draw, rectangle, fill=networkgreen!20] (pc6) at (-2.2,1.5) {PC 6};
-				
-				% Draw ring connections with arrows showing direction
-				\draw[very thick, networkblue, ->] (pc1) -- (pc2);
-				\draw[very thick, networkblue, ->] (pc2) -- (pc3);
-				\draw[very thick, networkblue, ->] (pc3) -- (pc4);
-				\draw[very thick, networkblue, ->] (pc4) -- (pc5);
-				\draw[very thick, networkblue, ->] (pc5) -- (pc6);
-				\draw[very thick, networkblue, ->] (pc6) -- (pc1);
-				
-				\node[below] at (0,-3.5) {\small Data flows in one direction around the ring};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 24: Mesh Topology - Multiple Redundant Paths
-	\begin{frame}{Mesh Topology - Multiple Redundant Paths}
-		\begin{itemize}
-			\item \textbf{Mesh topology} provides a path from every machine to every other machine in the network.
-			\item Full mesh requires n(n-1)/2 connections, where n is the number of devices.
-			\item \textbf{Partial mesh} provides some redundancy without connecting every device to every other device.
-			\item This topology offers excellent fault tolerance but creates significant complexity and cost.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Draw four devices in full mesh
-				\node[draw, circle, fill=networkgreen!20] (pc1) at (-1.5,1.5) {A};
-				\node[draw, circle, fill=networkgreen!20] (pc2) at (1.5,1.5) {B};
-				\node[draw, circle, fill=networkgreen!20] (pc3) at (-1.5,-1.5) {C};
-				\node[draw, circle, fill=networkgreen!20] (pc4) at (1.5,-1.5) {D};
-				
-				% Draw all connections (full mesh)
-				\draw[thick, networkblue] (pc1) -- (pc2);
-				\draw[thick, networkblue] (pc1) -- (pc3);
-				\draw[thick, networkblue] (pc1) -- (pc4);
-				\draw[thick, networkblue] (pc2) -- (pc3);
-				\draw[thick, networkblue] (pc2) -- (pc4);
-				\draw[thick, networkblue] (pc3) -- (pc4);
-				
-				% Add calculation
-				\node[below] at (0,-2.5) {\small 4 devices = 4(4-1)/2 = 6 connections};
-				
-				% Add partial mesh example
-				\node at (4.5,0) {vs.};
-				
-				% Partial mesh with 4 devices
-				\node[draw, circle, fill=networkred!20] (p1) at (6,1.5) {A};
-				\node[draw, circle, fill=networkred!20] (p2) at (8,1.5) {B};
-				\node[draw, circle, fill=networkred!20] (p3) at (6,-1.5) {C};
-				\node[draw, circle, fill=networkred!20] (p4) at (8,-1.5) {D};
-				
-				% Partial connections
-				\draw[thick, networkred] (p1) -- (p2);
-				\draw[thick, networkred] (p1) -- (p3);
-				\draw[thick, networkred] (p2) -- (p4);
-				\draw[thick, networkred] (p3) -- (p4);
-				
-				\node[below] at (7,-2.5) {\small Partial mesh = 4 connections};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 25: Point-to-Point and Point-to-Multipoint Topologies
-	\begin{frame}{Point-to-Point and Point-to-Multipoint Topologies}
-		\begin{itemize}
-			\item \textbf{Point-to-point topology} provides a direct connection between two routers or switches.
-			\item This creates one communication path that can be physical (serial cable) or logical (circuit within Frame Relay/MPLS).
-			\item \textbf{Point-to-multipoint topology} connects one interface on a router to multiple destination routers.
-			\item All routers and interfaces in point-to-multipoint connections are part of the same network.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Point-to-point example
-				\node[draw, circle, fill=networkblue!20] (r1) at (-3,1) {Router A};
-				\node[draw, circle, fill=networkblue!20] (r2) at (0,1) {Router B};
-				\draw[very thick, networkred] (r1) -- (r2);
-				\node[above] at (-1.5,1.5) {\small Point-to-Point};
-				
-				% Point-to-multipoint example
-				\node[draw, circle, fill=networkgreen!20] (corp) at (-1,-2) {Corporate HQ};
-				\node[draw, rectangle, fill=networkgreen!20] (branch1) at (3,-1) {Branch 1};
-				\node[draw, rectangle, fill=networkgreen!20] (branch2) at (3,-2) {Branch 2};
-				\node[draw, rectangle, fill=networkgreen!20] (branch3) at (3,-3) {Branch 3};
-				
-				\draw[thick, networkblue] (corp) -- (branch1);
-				\draw[thick, networkblue] (corp) -- (branch2);
-				\draw[thick, networkblue] (corp) -- (branch3);
-				\node[below] at (0,-3.5) {\small Point-to-Multipoint};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 26: Hybrid Topology - Combining Multiple Types
-	\begin{frame}{Hybrid Topology - Combining Multiple Types}
-		\begin{itemize}
-			\item \textbf{Hybrid topology} combines two or more types of physical or logical network topologies.
-			\item This approach allows networks to leverage the advantages of different topologies in appropriate areas.
-			\item Common implementations include star networks connected via mesh backbones or ring WANs.
-			\item Hybrid designs provide flexibility to optimize performance, cost, and fault tolerance for specific needs.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang Hybrid Network Example}
-			Mystery Inc. uses a hybrid topology where their local headquarters uses star topology (all computers connected to a central switch), but their remote investigation sites connect back to headquarters using a partial mesh WAN topology. This gives them reliable local connectivity and redundant paths between field offices, combining the cost-effectiveness of star topology with the fault tolerance of mesh topology.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 27: Three-Tiered Network Model (Core, Distribution, Access)
-	\begin{frame}{Three-Tiered Network Model (Core, Distribution, Access)}
-		\begin{itemize}
-			\item The \textbf{three-tiered model} was introduced by Cisco over 20 years ago as the gold standard for network design.
-			\item \textbf{Core layer} serves as the network backbone, providing high-speed routing and switching between geographic areas.
-			\item \textbf{Distribution layer} (workgroup/aggregation layer) handles packet filtering, security policies, and VLAN routing.
-			\item \textbf{Access layer} (edge layer) connects end-user hosts and provides local switching, collision domains, QoS, and PoE.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Core layer
-				\node[draw, rectangle, fill=networkred!20, minimum width=3cm] (core) at (0,3) {\textbf{Core Layer}};
-				\node[right] at (3.5,3) {\small High-speed backbone};
-				
-				% Distribution layer
-				\node[draw, rectangle, fill=networkblue!20, minimum width=2cm] (dist1) at (-2,1) {Distribution};
-				\node[draw, rectangle, fill=networkblue!20, minimum width=2cm] (dist2) at (2,1) {Distribution};
-				\node[right] at (3.5,1) {\small Policy \& security};
-				
-				% Access layer
-				\node[draw, rectangle, fill=networkgreen!20] (acc1) at (-3,-1) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc2) at (-1,-1) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc3) at (1,-1) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc4) at (3,-1) {Access};
-				\node[right] at (3.5,-1) {\small End-user connections};
-				
-				% Connections
-				\draw[thick] (core) -- (dist1);
-				\draw[thick] (core) -- (dist2);
-				\draw[thick] (dist1) -- (acc1);
-				\draw[thick] (dist1) -- (acc2);
-				\draw[thick] (dist2) -- (acc3);
-				\draw[thick] (dist2) -- (acc4);
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 28: Collapsed-Core Model - Cost-Effective Design
-	\begin{frame}{Collapsed-Core Model - Cost-Effective Design}
-		\begin{itemize}
-			\item The \textbf{collapsed-core model} combines core and distribution layer functions into a single tier.
-			\item This design reduces cost and complexity in small to midsize networks while maintaining functionality.
-			\item Modern powerful switching equipment can support both core routing and distribution-layer services effectively.
-			\item The collapsed-core still performs the same functions as separate core and distribution layers.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Collapsed core/distribution layer
-				\node[draw, rectangle, fill=networkred!30, minimum width=4cm, minimum height=1cm] (collapsed) at (0,2) {\textbf{Collapsed Core/Distribution}};
-				\node[right] at (4.5,2) {\small Combined functions};
-				
-				% Access layer
-				\node[draw, rectangle, fill=networkgreen!20] (acc1) at (-3,0) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc2) at (-1,0) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc3) at (1,0) {Access};
-				\node[draw, rectangle, fill=networkgreen!20] (acc4) at (3,0) {Access};
-				\node[right] at (4.5,0) {\small End-user connections};
-				
-				% End devices
-				\node[draw, circle, fill=networkblue!20, minimum size=0.6cm] at (-3,-1.5) {PC};
-				\node[draw, circle, fill=networkblue!20, minimum size=0.6cm] at (-1,-1.5) {PC};
-				\node[draw, circle, fill=networkblue!20, minimum size=0.6cm] at (1,-1.5) {PC};
-				\node[draw, circle, fill=networkblue!20, minimum size=0.6cm] at (3,-1.5) {PC};
-				
-				% Connections
-				\draw[thick] (collapsed) -- (acc1);
-				\draw[thick] (collapsed) -- (acc2);
-				\draw[thick] (collapsed) -- (acc3);
-				\draw[thick] (collapsed) -- (acc4);
-				\draw[thick] (acc1) -- (-3,-1.5);
-				\draw[thick] (acc2) -- (-1,-1.5);
-				\draw[thick] (acc3) -- (1,-1.5);
-				\draw[thick] (acc4) -- (3,-1.5);
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 29: Traffic Flow Analysis - North-South vs. East-West
-	\begin{frame}{Traffic Flow Analysis - North-South vs. East-West}
-		\begin{itemize}
-			\item Understanding traffic flow is essential for network security and performance optimization.
-			\item \textbf{North-south traffic} flows between your internal network and external Internet connections.
-			\item \textbf{East-west traffic} represents lateral movement between servers, data centers, and internal network segments.
-			\item Security monitoring must address both traffic types, with increasing focus on east-west due to insider threats.
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tikzpicture}[scale=0.7]
-				% Internet cloud
-				\node[draw, cloud, fill=networkblue!20, cloud puffs=10, cloud puff arc=120, aspect=2, minimum width=2cm, minimum height=1cm] (internet) at (0,4) {Internet};
-				
-				% Firewall
-				\node[draw, rectangle, fill=networkred!20] (firewall) at (0,1.5) {Firewall};
-				
-				% Internal network
-				\node[draw, rectangle, fill=networkgreen!20] (server1) at (-4,0) {Server 1};
-				\node[draw, rectangle, fill=networkgreen!20] (server2) at (0,0) {Data Center};
-				\node[draw, rectangle, fill=networkgreen!20] (server3) at (4,0) {Server 2};
-				
-				% North-South arrows
-				\draw[very thick, networkblue, <->] (internet) -- (firewall);
-				\draw[very thick, networkblue, <->] (firewall) -- (server2);
-				\node[right] at (1,2.2) {\textbf{North-South}};
-				
-				% East-West arrows
-				\draw[very thick, networkgreen, <->] (server1) -- (server2);
-				\draw[very thick, networkgreen, <->] (server2) -- (server3);
-				\node[below] at (0,-0.7) {\textbf{East-West}};
-			\end{tikzpicture}
-		\end{center}
-	\end{frame}
-	
-	% Slide 30: Virtual Networking and Network Function Virtualization (NFV)
-	\begin{frame}{Virtual Networking and Network Function Virtualization (NFV)}
-		\begin{itemize}
-			\item \textbf{Virtual networking} provides networking services through software rather than dedicated hardware devices.
-			\item \textbf{Virtual switches (vSwitch)} operate on hypervisors, eliminating the need for external networking hardware.
-			\item \textbf{Virtual Network Interface Cards (vNIC)} connect virtual machines to the hypervisor and network.
-			\item \textbf{Network Function Virtualization (NFV)} runs routers, switches, firewalls, and load balancers as software on single devices.
-		\end{itemize}
-		
-		\begin{exampleblock}{Scooby Doo Gang Virtual Network Example}
-			Mystery Inc. virtualizes their entire network infrastructure on a single powerful server. Instead of buying separate physical routers, switches, and firewalls, they run virtual versions of each device as software. Fred's virtual machine connects through a vNIC to a virtual switch, which routes traffic through a virtual firewall before reaching Velma's analysis server - all running on the same physical hardware managed by the hypervisor.
-		\end{exampleblock}
-	\end{frame}
-	
-	% Slide 31: Chapter Summary and Key Takeaways
-	\begin{frame}{Chapter Summary and Key Takeaways}
-		\begin{itemize}
-			\item Networks enable resource sharing between connected devices using various topologies and architectures.
-			\item Physical topologies (bus, star, ring, mesh) each offer distinct advantages and trade-offs for different scenarios.
-			\item Network types range from small PANs to global WANs, with specialized networks like SANs for storage.
-			\item Modern network design emphasizes virtualization, software-defined approaches, and hierarchical models for scalability.
-		\end{itemize}
-		
-		\begin{block}{Essential Network Concepts}
-			\begin{itemize}
-				\item \textbf{Fault tolerance} vs. \textbf{cost} considerations in topology selection
-				\item \textbf{Centralized} (client-server) vs. \textbf{decentralized} (peer-to-peer) architectures
-				\item \textbf{Three-tier model}: Core (backbone), Distribution (policy), Access (end-users)
-				\item \textbf{Traffic flow}: North-south (external) and east-west (internal) security implications
-			\end{itemize}
-		\end{block}
-	\end{frame}
-	
-	% Slide 32: Review Questions and Exam Preparation
-	\begin{frame}{Review Questions and Exam Preparation}
-		\begin{itemize}
-			\item Which topology provides the highest fault tolerance but requires the most connections?
-			\item What are the three layers of the hierarchical network model and their primary functions?
-			\item How do peer-to-peer and client-server architectures differ in terms of security and scalability?
-			\item What is the difference between north-south and east-west traffic flow patterns?
-		\end{itemize}
-		
-		\begin{center}
-			\begin{tabular}{ll}
-				\toprule
-				\textbf{Study Focus Areas} & \textbf{Key Terms} \\
-				\midrule
-				Network Components & Workstation, Server, Host, Client \\
-				Topologies & Bus, Star, Ring, Mesh, Hybrid \\
-				Network Types & LAN, WAN, MAN, PAN, CAN, SAN \\
-				Architectures & Peer-to-peer, Client-server \\
-				Design Models & Three-tier, Collapsed-core, Spine-leaf \\
-				Advanced Concepts & MPLS, SDWAN, NFV, Traffic flow \\
-				\bottomrule
-			\end{tabular}
-		\end{center}
-	\end{frame}
-	
+
+% Title slide
+\begin{frame}
+\titlepage
+\end{frame}
+
+% Slide 1: Course Introduction
+\begin{frame}{Welcome to Networking Basics}
+\textbf{Learning Objectives:}
+\begin{itemize}
+    \item Understand fundamental networking concepts and terminology
+    \item Learn about network types, topologies, and the OSI Model
+    \item Develop systematic troubleshooting skills
+    \item Build and configure SOHO networks
+\end{itemize}
+
+\begin{block}{Why This Matters}
+Every time you stream a video, send a text, or browse the web, you're using computer networks!
+\end{block}
+\end{frame}
+
+% Slide 2: What is Networking?
+\begin{frame}{What is Networking?}
+\begin{columns}
+\begin{column}{0.65\textwidth}
+\begin{itemize}
+    \item A \textbf{computer network} is a system of interconnected devices that can communicate and share resources with each other.
+    \item A \textbf{node} is any device connected to a network, while a \textbf{host} is a node that provides services or runs applications.
+    \item Networks use \textbf{clients} (devices that request services) and \textbf{servers} (devices that provide services) to organize communication.
+\end{itemize}
+
+\vspace{0.3cm}
+\begin{block}{Real-World Example}
+When you watch Netflix, your phone (client) requests video data from Netflix's servers over the Internet!
+\end{block}
+\end{column}
+
+\begin{column}{0.3\textwidth}
+\centering
+\neticon[1.6cm]{icon_laptop.png}\\
+\vspace{0.2cm}
+\neticon[1.3cm]{icon_router.png}\\
+\vspace{0.2cm}
+\neticon[1.6cm]{icon_server.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+% Slide 3: Network Types - Overview
+\begin{frame}{Network Types - Overview}
+
+\begin{itemize}
+    \item A \textbf{Personal Area Network (PAN)} connects devices within an individual's immediate workspace, typically within 10 meters.
+    \item A \textbf{Local Area Network (LAN)} connects devices within a limited area such as a home, school, or office building.
+    \item A \textbf{Metropolitan Area Network (MAN)} spans a city or large campus, connecting multiple LANs across several kilometers.
+    \item A \textbf{Wide Area Network (WAN)} covers large geographical areas like countries or continents, connecting multiple MANs and LANs.
+\end{itemize}
+
+\end{frame}
+
+% Slide 4: Network Types - Examples & Scale
+\begin{frame}{Network Types - Examples \& Scale}
+
+\begin{itemize}
+    \item Network types are classified primarily by their geographical coverage and the number of devices they connect.
+    \item Each network type uses different technologies and protocols optimized for its specific range and purpose.
+    \item Understanding these categories helps network administrators choose the right tools and design strategies.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|l|l|l|p{4cm}|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Type} & \textbf{Range} & \textbf{Size} & \textbf{Typical Use Cases} \\ \hline
+PAN & Up to 10m & 2-8 devices & Bluetooth headphones, smartwatch syncing \\ \hline
+\rowcolor{gray!10}
+LAN & Up to 1km & 10-1000 devices & Home networks, office buildings, school labs \\ \hline
+MAN & Up to 100km & 1000+ devices & City-wide networks, university campuses \\ \hline
+\rowcolor{gray!10}
+WAN & Global & Millions & The Internet, corporate networks across countries \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 5: Introduction to Network Topologies
+\begin{frame}{Introduction to Network Topologies}
+
+\begin{itemize}
+    \item \textbf{Network topology} refers to the physical or logical arrangement of devices and connections in a network.
+    \item \textbf{Physical topology} describes how devices are actually connected with cables and hardware.
+    \item \textbf{Logical topology} describes how data flows through the network, which may differ from the physical layout.
+    \item Choosing the right topology affects network performance, reliability, cost, and ease of troubleshooting.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Why Topology Matters}
+A well-designed topology can prevent network failures from affecting all users, while a poor design might bring down the entire network if one cable fails!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 6: Star Topology
+\begin{frame}{Star Topology}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+    \item In a \textbf{star topology}, all devices connect to a central hub or switch that manages network traffic.
+    \item This design makes it easy to add new devices and identify problems since each device has its own connection.
+    \item If one cable fails, only that device is affected, providing good \textbf{fault isolation}.
+    \item The main disadvantage is that if the central device fails, the entire network goes down.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Central switch
+    \node[switch] (switch) at (0,0) {\neticon[0.6cm]{icon_switch.png}\\Switch};
+    
+    % Computers in star pattern
+    \node[computer] (pc1) at (-2.5,2) {\neticon[0.5cm]{icon_pc.png}};
+    \node[computer] (pc2) at (2.5,2) {\neticon[0.5cm]{icon_laptop.png}};
+    \node[computer] (pc3) at (-2.5,-2) {\neticon[0.5cm]{icon_phone.png}};
+    \node[computer] (pc4) at (2.5,-2) {\neticon[0.5cm]{icon_laptop.png}};
+    
+    % Connections
+    \draw[connection] (switch) -- (pc1);
+    \draw[connection] (switch) -- (pc2);
+    \draw[connection] (switch) -- (pc3);
+    \draw[connection] (switch) -- (pc4);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+% Slide 7: Mesh Topology
+\begin{frame}{Mesh Topology}
+
+\begin{columns}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+    \item A \textbf{mesh topology} connects devices directly to multiple other devices, creating redundant paths for data.
+    \item \textbf{Full mesh} means every device connects to every other device, while \textbf{partial mesh} has some direct connections.
+    \item Mesh networks provide excellent fault tolerance since data can take alternate routes if one connection fails.
+    \item The main disadvantages are high cost and complexity due to the large number of connections required.
+    \item A \textbf{partial mesh}--often used in WANs--balances redundancy and cost. Here, only critical devices have multiple connections.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.3\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+    % Four routers in mesh
+    \node[router] (r1) at (0,2) {\small R1};
+    \node[router] (r2) at (3,2) {\small R2};
+    \node[router] (r3) at (0,-1) {\small R3};
+    \node[router] (r4) at (3,-1) {\small R4};
+    
+    % Full mesh connections
+    \draw[connection] (r1) -- (r2);
+    \draw[connection] (r1) -- (r3);
+    \draw[connection] (r1) -- (r4);
+    \draw[connection] (r2) -- (r3);
+    \draw[connection] (r2) -- (r4);
+    \draw[connection] (r3) -- (r4);
+    
+    \node at (1.5,-2) {Full Mesh};
+\end{tikzpicture}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+% Slide 8: Legacy Topologies
+\begin{frame}{Legacy Topologies}
+
+\begin{itemize}
+    \item A \textbf{bus topology} connects all devices to a single backbone cable, with data transmitted in both directions along the cable.
+    \item A \textbf{ring topology} connects devices in a circular pattern where data travels in one direction around the ring.
+    \item These topologies were common in early networks but have largely been replaced by star and mesh designs.
+    \item Bus networks are difficult to troubleshoot, and ring networks can fail if any single connection breaks.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Bus topology
+    \draw[very thick] (0,0) -- (8,0);
+    \node[computer] at (1,0.8) {\tiny PC};
+    \node[computer] at (3,0.8) {\tiny PC};
+    \node[computer] at (5,0.8) {\tiny PC};
+    \node[computer] at (7,0.8) {\tiny PC};
+    \draw[connection] (1,0.5) -- (1,0);
+    \draw[connection] (3,0.5) -- (3,0);
+    \draw[connection] (5,0.5) -- (5,0);
+    \draw[connection] (7,0.5) -- (7,0);
+    \node at (4,-0.5) {Bus Topology};
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+% Slide 9: Topology Comparison
+\begin{frame}{Topology Comparison}
+
+\begin{itemize}
+    \item Different topologies are suited for different scenarios based on cost, reliability needs, and scale.
+    \item Modern networks often combine multiple topologies to balance efficiency and reliability.
+    \item Star topology is most common in modern LANs due to its simplicity and manageability.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|p{2.5cm}|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Topology} & \textbf{Cost} & \textbf{Reliability} & \textbf{Scalability} & \textbf{Installation} & \textbf{Best Use} \\ \hline
+Star & Medium & Medium & High & Easy & Modern LANs, offices \\ \hline
+\rowcolor{gray!10}
+Mesh & High & Very High & Low & Complex & Critical systems, WANs \\ \hline
+Bus & Low & Low & Low & Easy & Legacy systems only \\ \hline
+\rowcolor{gray!10}
+Ring & Medium & Low & Medium & Medium & Legacy token ring \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 10: Choosing the Right Topology
+\begin{frame}{Choosing the Right Topology}
+
+\begin{itemize}
+    \item Budget constraints often determine which topology is feasible, with bus being cheapest and mesh being most expensive.
+    \item Reliability requirements guide topology choice, as critical systems need redundant connections that mesh provides.
+    \item Scalability needs affect the decision, since star topologies make it easy to add devices while mesh becomes complex.
+    \item Most real-world networks use \textbf{hybrid topologies} that combine different designs to balance cost and performance.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Example: School Network}
+A typical school might use star topology within each classroom (devices connect to a switch), with those switches connected in a partial mesh to provide redundancy between buildings.
+\end{block}
+
+\end{frame}
+
+% Slide 11: Case Study Problem - Network Design Challenge
+\begin{frame}{Case Study: Luna \& Neville Design a Network}
+
+\begin{alertblock}{The Scenario}
+Luna and Neville have been asked to design a network for Hogwarts to connect three castle towers: Gryffindor, Ravenclaw, and Hufflepuff.
+\end{alertblock}
+
+\vspace{0.3cm}
+
+\textbf{Requirements:}
+\begin{itemize}
+    \item Each tower has 20 computers that need network access
+    \item The network must remain functional even if one connection between towers fails (magical accidents happen!)
+    \item Hogwarts has a limited budget and needs a cost-effective solution
+    \item Installation should be manageable for the small IT team (just Luna and Neville)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Your Challenge:}
+\begin{enumerate}
+    \item Which topology should Luna and Neville use \emph{within} each tower?
+    \item Which topology should they use \emph{between} the three towers?
+    \item Justify your choices based on the requirements above.
+\end{enumerate}
+
+\end{frame}
+
+% Slide 12: Case Study Solution - Network Design Challenge
+\begin{frame}{Case Study: Luna \& Neville's Solution}
+
+\textbf{Their Recommended Solution:}
+\begin{itemize}
+    \item \textbf{Within each tower:} Use star topology with one switch per tower connecting all 20 computers.
+    \item \textbf{Between towers:} Use partial mesh topology connecting the three tower switches with redundant paths.
+    \item This hybrid approach balances cost, reliability, and ease of management effectively.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{Why This Works:}
+\begin{itemize}
+    \item Star within towers: Easy to install, easy to troubleshoot, cost-effective for 20 devices
+    \item Partial mesh between towers: Provides redundancy (magical accidents won't take down the whole network!)
+    \item If one inter-tower connection fails, traffic can be rerouted through the third tower
+    \item Luna and Neville can manage this design without needing to hire additional wizards
+\end{itemize}
+
+\end{frame}
+
+% Slide 13: Transition - From Hardware to Protocols
+\begin{frame}{Transition: From Hardware to Protocols}
+
+\begin{itemize}
+    \item We've learned how to physically connect devices using different network topologies.
+    \item But having wires and devices connected is only the beginning—we need rules for how data travels through these networks.
+    \item These rules are called \textbf{protocols}, and they work together in organized layers to make networking possible.
+    \item Think of it like a postal system: the physical topology is the roads and buildings, but we still need rules for addressing, packaging, and delivering mail.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Next Up: The OSI Model}
+The OSI Model provides a framework for understanding how data moves from one application to another across a network, using seven distinct layers of protocols.
+\end{alertblock}
+
+\end{frame}
+
+% Slide 14: What is the OSI Model?
+\begin{frame}{What is the OSI Model?}
+
+\begin{itemize}
+    \item The \textbf{OSI Model (Open Systems Interconnection Model)} is a conceptual framework that standardizes how different network systems communicate.
+    \item Created by the International Organization for Standardization (ISO) in 1984, it divides networking functions into seven distinct layers.
+    \item Each layer has specific responsibilities and communicates only with the layers directly above and below it.
+    \item The OSI Model helps network professionals understand, design, and troubleshoot networks systematically.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{The Postal System Analogy}
+Think of the OSI Model like mailing a letter: you write it (Application), put it in an envelope with an address (Transport/Network), give it to the postal service (Data Link/Physical), who delivers it through their system.
+\end{block}
+
+\end{frame}
+
+% Slide 15: The Seven Layers Overview
+\begin{frame}{The Seven Layers Overview}
+
+\begin{itemize}
+    \item The OSI Model consists of seven layers numbered from 1 (bottom) to 7 (top), with data flowing down when sending and up when receiving.
+    \item A popular memory trick is \textbf{"Please Do Not Throw Sausage Pizza Away"} representing Physical, Data Link, Network, Transport, Session, Presentation, Application.
+    \item Upper layers (5-7) deal with software and applications, while lower layers (1-4) handle data transmission and routing.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|l|l|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Layer} & \textbf{Name} & \textbf{Basic Function} \\ \hline
+7 & Application & User interface and applications \\ \hline
+\rowcolor{gray!10}
+6 & Presentation & Data formatting and encryption \\ \hline
+5 & Session & Managing connections \\ \hline
+\rowcolor{gray!10}
+4 & Transport & Reliable delivery and flow control \\ \hline
+3 & Network & Routing across networks \\ \hline
+\rowcolor{gray!10}
+2 & Data Link & Local network delivery \\ \hline
+1 & Physical & Physical transmission of bits \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 16: Data Encapsulation & Decapsulation
+\begin{frame}{Data Encapsulation \& Decapsulation}
+
+\begin{itemize}
+    \item \textbf{Encapsulation} is the process of adding headers (and sometimes trailers) to data as it moves down through the OSI layers when being sent.
+    \item \textbf{Decapsulation} is the reverse process, where headers are removed as data moves up through the layers when being received.
+    \item Each layer adds its own header containing information needed for that layer's function, creating a "package within a package" effect.
+    \item The \textbf{Protocol Data Unit (PDU)} is the name for data at each specific layer, with different names at each level.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Sending side
+    \node at (-1,3) {\textbf{Sending}};
+    \node[draw, fill=networkorange!20] at (-1,2.3) {Data};
+    \node[draw, fill=networkorange!20] at (-1,1.6) {Transport Header | Data};
+    \node[draw, fill=networkorange!20] at (-1,0.9) {Network | Transport | Data};
+    \node[draw, fill=networkorange!20] at (-1,0.2) {DL | Net | Trans | Data | DL};
+    \draw[->, thick] (-1,2.1) -- (-1,0.4);
+    
+    % Receiving side
+    \node at (7,3) {\textbf{Receiving}};
+    \node[draw, fill=networkgreen!20] at (7,2.3) {Data};
+    \node[draw, fill=networkgreen!20] at (7,1.6) {Transport Header | Data};
+    \node[draw, fill=networkgreen!20] at (7,0.9) {Network | Transport | Data};
+    \node[draw, fill=networkgreen!20] at (7,0.2) {DL | Net | Trans | Data | DL};
+    \draw[->, thick] (7,0.4) -- (7,2.1);
+    
+    % Middle transmission
+    \draw[->, very thick] (1.5,0.2) -- (4.5,0.2);
+    \node[below] at (3,0.2) {\tiny Bits on wire};
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+% Slide 17: Layer 1 - Physical Layer
+\begin{frame}{Layer 1: Physical Layer}
+
+\begin{itemize}
+    \item The \textbf{Physical Layer} handles the actual transmission of raw bits (1s and 0s) over a physical medium like cables or radio waves.
+    \item This layer defines the physical characteristics of the network: voltages, cable types, connector shapes, and wireless frequencies.
+    \item Physical layer devices include cables (Ethernet, fiber optic), hubs, repeaters, and the actual network interface cards (NICs).
+    \item The PDU at this layer is simply called \textbf{bits}—the most basic unit of digital information.
+    \item Problems at this layer include broken cables, incorrect connectors, or interference disrupting the signal.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Real-World Examples}
+Cat5e/Cat6 Ethernet cables, fiber optic cables, Wi-Fi radio signals (2.4 GHz and 5 GHz), and the RJ-45 connector you plug into your laptop all operate at Layer 1.
+\end{alertblock}
+
+\end{frame}
+
+% Slide 18: Layer 2 - Data Link Layer
+\begin{frame}{Layer 2: Data Link Layer}
+
+\begin{itemize}
+    \item The \textbf{Data Link Layer} handles communication between devices on the same local network using physical addresses.
+    \item Each network device has a unique \textbf{MAC address (Media Access Control address)} that identifies it at this layer—think of it like a serial number.
+    \item This layer organizes bits from Layer 1 into \textbf{frames} and provides error detection to ensure data arrives correctly.
+    \item Layer 2 devices include switches and wireless access points, which use MAC addresses to forward frames to the correct destination.
+    \item The PDU at this layer is called a \textbf{frame}, which includes MAC addresses for both source and destination.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Example MAC Address}
+A MAC address looks like this: \texttt{00:1A:2B:3C:4D:5E} (six pairs of hexadecimal digits). Every network card manufactured has a unique MAC address assigned by the manufacturer.
+\end{block}
+
+\end{frame}
+
+% Slide 19: Layer 3 - Network Layer
+\begin{frame}{Layer 3: Network Layer}
+
+\begin{itemize}
+    \item The \textbf{Network Layer} enables communication between devices on different networks by providing logical addressing and routing.
+    \item \textbf{IP addresses (Internet Protocol addresses)} identify devices at this layer and can be changed based on network location, unlike permanent MAC addresses.
+    \item \textbf{Routers} operate at Layer 3, making decisions about the best path for data to travel across multiple networks.
+    \item The PDU at this layer is called a \textbf{packet}, which contains both source and destination IP addresses.
+    \item This layer handles breaking large messages into smaller packets and reassembling them at the destination.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Layer 2 vs Layer 3 Addressing}
+MAC addresses (Layer 2) get you to the correct device on your local network, while IP addresses (Layer 3) get you to the correct network anywhere in the world!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 20: Layer 4 - Transport Layer
+\begin{frame}{Layer 4: Transport Layer}
+
+\begin{itemize}
+    \item The \textbf{Transport Layer} ensures reliable end-to-end communication and manages data flow between applications on different devices.
+    \item \textbf{TCP (Transmission Control Protocol)} provides reliable, connection-oriented communication with error checking and guaranteed delivery.
+    \item \textbf{UDP (User Datagram Protocol)} offers faster, connectionless communication without delivery guarantees—useful for streaming and gaming.
+    \item \textbf{Port numbers} identify specific applications on a device (like port 80 for web traffic or port 443 for secure web traffic).
+    \item The PDU at this layer is called a \textbf{segment} (for TCP) or \textbf{datagram} (for UDP).
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{TCP vs UDP Analogy}
+TCP is like certified mail (you get confirmation of delivery), while UDP is like shouting across a room (faster but no guarantee they heard you).
+\end{block}
+
+\end{frame}
+
+% Slide 21: Layers 5-7 - Upper Layers
+\begin{frame}{Layers 5-7: Upper Layers}
+
+\begin{itemize}
+    \item \textbf{Layer 5 (Session Layer)} manages the opening, maintenance, and closing of communication sessions between applications.
+    \item \textbf{Layer 6 (Presentation Layer)} handles data formatting, encryption, compression, and translation so different systems can understand each other.
+    \item \textbf{Layer 7 (Application Layer)} provides network services directly to user applications like web browsers, email clients, and file transfer programs.
+    \item These three layers are often grouped together because they all deal with software and user-facing functions rather than data transmission.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|l|l|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Layer} & \textbf{Name} & \textbf{Common Protocols/Examples} \\ \hline
+7 & Application & HTTP, FTP, SMTP, DNS \\ \hline
+\rowcolor{gray!10}
+6 & Presentation & SSL/TLS, JPEG, MP3 \\ \hline
+5 & Session & NetBIOS, RPC \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 22: OSI Model Summary
+\begin{frame}{OSI Model Summary}
+
+\begin{itemize}
+    \item The OSI Model provides a systematic way to understand how data moves from one application to another across a network.
+    \item When troubleshooting, it's best to work from the bottom (Physical) to the top (Application) to systematically identify problems.
+    \item All seven layers work together seamlessly—if any layer fails, communication cannot occur.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|l|l|l|l|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Layer} & \textbf{Name} & \textbf{Function} & \textbf{PDU} & \textbf{Key Devices/Protocols} \\ \hline
+7 & Application & User applications & Data & HTTP, FTP, DNS \\ \hline
+\rowcolor{gray!10}
+6 & Presentation & Format, encrypt data & Data & SSL/TLS, JPEG \\ \hline
+5 & Session & Manage connections & Data & NetBIOS, RPC \\ \hline
+\rowcolor{gray!10}
+4 & Transport & End-to-end delivery & Segment/Datagram & TCP, UDP \\ \hline
+3 & Network & Routing & Packet & IP, Routers \\ \hline
+\rowcolor{gray!10}
+2 & Data Link & Local delivery & Frame & MAC, Switches \\ \hline
+1 & Physical & Transmit bits & Bits & Cables, Hubs \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 23: Case Study Problem - Troubleshooting with OSI
+\begin{frame}{Case Study: Hermione Troubleshoots the Network}
+
+\begin{alertblock}{The Problem}
+Hermione is in the Hogwarts library trying to access a website on her laptop, but it won't load. However, her phone works fine accessing the same website while connected to the same Wi-Fi network.
+\end{alertblock}
+
+\vspace{0.3cm}
+
+\textbf{What We Know:}
+\begin{itemize}
+    \item The laptop shows it is connected to the Wi-Fi network
+    \item Other students' devices are working fine on the same network
+    \item Hermione's phone can access the website without any problems
+    \item Only this one specific website fails on the laptop—other websites work fine
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Your Challenge:}
+\begin{enumerate}
+    \item Using the OSI model, identify which layers you should check and in what order.
+    \item What might be wrong at each layer you investigate?
+    \item What is the most likely cause of this specific problem?
+\end{enumerate}
+
+\end{frame}
+
+% Slide 24: Case Study Solution - Troubleshooting with OSI
+\begin{frame}{Case Study: Hermione's Solution}
+
+\textbf{Layer-by-Layer Analysis:}
+\begin{itemize}
+    \item \textbf{Layers 1-2 (Physical/Data Link):} These are working—laptop is connected to Wi-Fi successfully.
+    \item \textbf{Layer 3 (Network):} Partially working—other websites load, so routing and IP addressing are functional.
+    \item \textbf{Layer 4 (Transport):} Could be a port issue, but unlikely since other sites work.
+    \item \textbf{Layers 5-7 (Upper layers):} Most likely culprit—could be browser cache, DNS issues, or firewall blocking this specific site.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Most Likely Causes:}
+\begin{enumerate}
+    \item \textbf{Browser cache/cookies problem:} Old cached data causing conflicts (clear browser cache)
+    \item \textbf{DNS cache issue:} Laptop has incorrect IP address cached for this website (flush DNS cache)
+    \item \textbf{Browser-specific problem:} Try a different browser on the laptop
+\end{enumerate}
+
+\end{frame}
+
+% Slide 25: Transition - The OSI Model in Action
+\begin{frame}{Transition: The OSI Model in Action}
+
+\begin{itemize}
+    \item We've learned the theoretical framework of how networks communicate through the OSI Model's seven layers.
+    \item Now we'll see how these layers work together in a practical, real-world setting that you use every day.
+    \item \textbf{SOHO networks (Small Office/Home Office)} are networks that combine all OSI layers into compact, affordable devices.
+    \item Understanding SOHO networks will show you how routers, switches, and wireless access points implement multiple OSI layers in a single device.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{What's Next}
+Your home Wi-Fi router isn't just a router—it's actually a combination device that operates at multiple OSI layers simultaneously! We'll explore how these all-in-one devices work.
+\end{block}
+
+\end{frame}
+
+% Slide 26: What is a SOHO Network?
+\begin{frame}{What is a SOHO Network?}
+
+\begin{itemize}
+    \item A \textbf{SOHO network (Small Office/Home Office)} is a small-scale network typically designed to support 1-10 devices in a home or small business environment.
+    \item SOHO networks are characterized by their simplicity, affordability, and all-in-one devices that combine multiple networking functions.
+    \item The key components of a SOHO network include a router, modem, wireless access point, and the connected devices like computers and phones.
+    \item Most home networks are SOHO networks—if you have Wi-Fi at home, you're already managing a SOHO network!
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Typical SOHO Network}
+A family home might have a cable modem connected to a wireless router, which then provides wired and wireless connections to laptops, smartphones, smart TVs, and gaming consoles.
+\end{block}
+
+\end{frame}
+
+% Slide 27: The SOHO Router
+\begin{frame}{The SOHO Router}
+
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+    \item A \textbf{SOHO router} is actually multiple devices combined into one: a router, switch, wireless access point, and firewall all in a single box.
+    \item The \textbf{WAN port} (Wide Area Network port) connects to your Internet Service Provider through a modem or directly to the ISP.
+    \item The \textbf{LAN ports} (Local Area Network ports) provide wired Ethernet connections to devices in your home or office.
+    \item This multi-function design saves money and space while operating at multiple OSI layers simultaneously.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.75]
+    % Router box
+    \draw[thick, fill=networkblue!20] (0,0) rectangle (4,3);
+    \node at (2,2.5) {\textbf{SOHO Router}};
+    
+    % Functions inside
+    \node[align=left] at (2,1.8) {\small Router};
+    \node[align=left] at (2,1.3) {\small Switch};
+    \node[align=left] at (2,0.8) {\small Wireless AP};
+    \node[align=left] at (2,0.3) {\small Firewall};
+    
+    % WAN port (left)
+    \draw[thick] (-0.3,2) -- (0,2);
+    \node[left] at (-0.3,2) {\tiny WAN};
+    
+    % LAN ports (right)
+    \draw[thick] (4,2.2) -- (4.3,2.2);
+    \draw[thick] (4,1.8) -- (4.3,1.8);
+    \draw[thick] (4,1.4) -- (4.3,1.4);
+    \draw[thick] (4,1.0) -- (4.3,1.0);
+    \node[right] at (4.3,1.6) {\tiny LAN};
+\end{tikzpicture}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+% Slide 28: Physical Layer Functions in SOHO
+\begin{frame}{Physical Layer Functions in SOHO}
+
+\begin{itemize}
+    \item SOHO routers provide \textbf{Ethernet ports} with RJ-45 connectors for wired connections, typically supporting speeds of 100 Mbps to 1 Gbps.
+    \item The wireless radio transmits and receives data using \textbf{Wi-Fi signals} on two frequency bands: 2.4 GHz (longer range) and 5 GHz (faster speed).
+    \item \textbf{LED indicators} on the router show the status of power, Internet connection, wireless activity, and LAN port connections.
+    \item The modem connection (cable, DSL, or fiber) provides the physical link to your Internet Service Provider.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Common Physical Layer Issues}
+No Internet connectivity? Check these Layer 1 items first: Is the router powered on? Are cables securely connected? Are the link lights on? Is the modem working?
+\end{alertblock}
+
+\end{frame}
+
+% Slide 29: Data Link Layer Functions in SOHO
+\begin{frame}{Data Link Layer Functions in SOHO}
+
+\begin{itemize}
+    \item The built-in \textbf{switch} connects multiple wired devices on the LAN using MAC addresses to forward frames efficiently to the correct port.
+    \item The \textbf{wireless access point} broadcasts Wi-Fi signals following the 802.11 standards (like 802.11ac or 802.11ax/Wi-Fi 6) for wireless device connectivity.
+    \item \textbf{DHCP (Dynamic Host Configuration Protocol)} automatically assigns IP addresses to devices when they connect to the network, eliminating manual configuration.
+    \item \textbf{MAC address filtering} can restrict which devices are allowed to connect based on their hardware addresses, providing basic security.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{DHCP in Action}
+When your phone connects to home Wi-Fi, DHCP automatically gives it an IP address (like 192.168.1.105), the router's address (gateway), and DNS server information—all without you doing anything!
+\end{block}
+
+\end{frame}
+
+% Slide 30: Network Layer Functions in SOHO
+\begin{frame}{Network Layer Functions in SOHO}
+
+\begin{itemize}
+    \item The router function operates at Layer 3, making routing decisions between your local network and the Internet.
+    \item \textbf{NAT (Network Address Translation)} allows multiple devices on your home network to share a single public IP address when accessing the Internet.
+    \item \textbf{Private IP addresses} (like 192.168.x.x or 10.x.x.x) are used within your home, while one \textbf{public IP address} is used for Internet communication.
+    \item The router acts as the \textbf{default gateway}, forwarding packets from your local network to the Internet and vice versa.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{NAT in Action}
+Your laptop has private IP 192.168.1.50 inside your home. When you visit a website, NAT translates this to your public IP (like 98.123.45.67) so the website knows where to send responses back!
+\end{block}
+
+\end{frame}
+
+% Slide 31: Transport & Application Layer Functions
+\begin{frame}{Transport \& Application Layer Functions}
+
+\begin{itemize}
+    \item \textbf{Port forwarding} allows specific external traffic to reach devices on your internal network by redirecting traffic from specific ports to designated local IP addresses.
+    \item \textbf{Quality of Service (QoS)} prioritizes certain types of traffic (like video calls or gaming) to ensure they get adequate bandwidth even when the network is busy.
+    \item \textbf{DNS forwarding} receives DNS requests from your devices and forwards them to your ISP's DNS servers to translate domain names into IP addresses.
+    \item Application-level filtering can block or allow specific websites, services, or applications based on parental controls or business policies.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Why Port Forwarding Matters}
+Want to host a gaming server or access security cameras remotely? You'll need port forwarding to allow external connections through your router to the specific device!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 32: Security in SOHO Networks
+\begin{frame}{Security in SOHO Networks}
+
+\begin{itemize}
+    \item SOHO routers include a built-in \textbf{firewall} that filters incoming and outgoing traffic to protect your network from unauthorized access and attacks.
+    \item \textbf{Wi-Fi encryption} protocols like WPA2 and WPA3 scramble wireless data so eavesdroppers cannot intercept and read your network traffic.
+    \item Strong \textbf{password protection} on both your Wi-Fi network and router admin interface prevents unauthorized users from accessing your network or changing settings.
+    \item \textbf{Guest networks} create separate wireless networks for visitors that cannot access your main network devices, protecting your privacy and security.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Security Best Practices}
+Always change default admin passwords, use WPA3 (or WPA2 minimum), enable the firewall, and regularly update router firmware to patch security vulnerabilities!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 33: Connecting to the Internet
+\begin{frame}{Connecting to the Internet}
+
+\begin{itemize}
+    \item Your \textbf{ISP (Internet Service Provider)} provides the connection between your home network and the broader Internet.
+    \item A \textbf{modem} converts signals between your ISP's network and your home network (often cable, DSL, or fiber connections).
+    \item Some ISPs provide combination modem-router devices, while others require separate modem and router equipment.
+    \item Your ISP assigns you a public IP address that identifies your home network on the Internet.
+\end{itemize}
+\vspace{0.3cm}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Home devices
+    \node (laptop) at (0,1) {\neticon[1cm]{icon_laptop.png}};
+    \node (phone) at (1.5,0) {\neticon[1cm]{icon_phone.png}};
+    \node (pc) at (3,-1) {\neticon[1cm]{icon_pc.png}};
+    
+    % Router
+    \node (router) at (5,0) {\neticon[1.2cm]{icon_router.png}};
+    
+    % Modem (using server icon as placeholder for modem)
+    \node (modem) at (7.5,0) {\neticon[1.2cm]{icon_server.png}};
+    
+    % Internet cloud
+    \node (internet) at (10,0) {\neticon[1.5cm]{icon_cloud.png}};
+    
+    % Connections with arrows
+    \draw[->, very thick] (laptop) -- (router);
+    \draw[->, very thick, dashed] (phone) -- (router);
+    \draw[->, very thick] (pc) -- (router);
+    \draw[->, very thick] (router) -- (modem);
+    \draw[->, very thick] (modem) -- (internet);
+    
+    % Labels
+    \node[below, font=\small] at (1.5,-0.8) {Home Devices};
+    \node[below, font=\small] at (5,-0.8) {SOHO Router};
+    \node[below, font=\small] at (7.5,-0.8) {Modem};
+    \node[below, font=\small] at (10,-0.8) {Internet};
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+% Slide 34: Binary and Hexadecimal Basics
+\begin{frame}{Binary and Hexadecimal Basics}
+
+\begin{itemize}
+    \item Computers use \textbf{binary (base-2)} number system because electronic circuits can easily represent two states: on (1) or off (0).
+    \item \textbf{Hexadecimal (base-16)} uses digits 0-9 and letters A-F to represent values, providing a more compact way to write binary numbers.
+    \item Each hexadecimal digit represents exactly four binary digits (bits), making conversion between the two systems straightforward.
+    \item Network professionals use binary and hexadecimal to work with IP addresses, MAC addresses, and subnet masks.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Why This Matters in Networking}
+IP addresses like 192.168.1.1 are actually binary numbers! MAC addresses like 00:1A:2B:3C:4D:5E use hexadecimal. Understanding these number systems helps you work with network addresses effectively.
+\end{block}
+
+\end{frame}
+
+% Slide 35: Number System Conversion
+\begin{frame}{Number System Conversion}
+
+\begin{itemize}
+    \item Converting between decimal, binary, and hexadecimal is essential for understanding how network addresses are structured and manipulated.
+    \item Binary numbers grow long quickly (192 in decimal is 11000000 in binary), which is why hexadecimal is preferred for human readability.
+    \item One byte (8 bits) can represent decimal values from 0 to 255, which is why IP address octets use this range.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|c|c||c|c|c|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Decimal} & \textbf{Binary} & \textbf{Hex} & \textbf{Decimal} & \textbf{Binary} & \textbf{Hex} \\ \hline
+0 & 0000 & 0 & 8 & 1000 & 8 \\ \hline
+\rowcolor{gray!10}
+1 & 0001 & 1 & 9 & 1001 & 9 \\ \hline
+2 & 0010 & 2 & 10 & 1010 & A \\ \hline
+\rowcolor{gray!10}
+3 & 0011 & 3 & 11 & 1011 & B \\ \hline
+4 & 0100 & 4 & 12 & 1100 & C \\ \hline
+\rowcolor{gray!10}
+5 & 0101 & 5 & 13 & 1101 & D \\ \hline
+6 & 0110 & 6 & 14 & 1110 & E \\ \hline
+\rowcolor{gray!10}
+7 & 0111 & 7 & 15 & 1111 & F \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 36: Case Study Problem - Setting Up a Home Network
+\begin{frame}{Case Study: Ron Sets Up the Burrow Network}
+
+\begin{alertblock}{The Scenario}
+Ron needs to set up a home network at the Burrow for his family. They have 2 laptops, 3 smartphones, 1 smart TV, and 1 gaming console that all need Internet access.
+\end{alertblock}
+
+\vspace{0.3cm}
+
+\textbf{Requirements:}
+\begin{itemize}
+    \item Secure Wi-Fi for the family's mobile devices
+    \item Wired connection for the gaming console (for better performance)
+    \item A separate guest network for visitors so they can't access family devices
+    \item Good Wi-Fi coverage throughout the three-story house
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Your Challenge:}
+\begin{enumerate}
+    \item What network topology should Ron use?
+    \item Where should he place the wireless router for best coverage?
+    \item What security settings should Ron configure?
+\end{enumerate}
+
+\end{frame}
+
+% Slide 37: Case Study Solution - Setting Up a Home Network
+\begin{frame}{Case Study: Ron's Solution}
+
+\textbf{Recommended Solution:}
+\begin{itemize}
+    \item \textbf{Topology:} Star topology with all devices connecting to a central SOHO router/wireless access point.
+    \item \textbf{Router placement:} Central location on the second floor for optimal Wi-Fi coverage across all three floors.
+    \item \textbf{Wired connection:} Run an Ethernet cable from router to gaming console for low-latency gaming.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{Security Configuration:}
+\begin{itemize}
+    \item Enable WPA3 encryption (or WPA2 if WPA3 unavailable) with a strong, unique password
+    \item Change default router admin password to prevent unauthorized access
+    \item Enable guest network feature with a separate password for visitors
+    \item Enable the built-in firewall and keep router firmware updated
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{OSI Layers in Action:} This setup uses Physical (cables/Wi-Fi), Data Link (switch/AP), Network (routing/NAT), and Application (security settings) layers!
+
+\end{frame}
+
+% Slide 38: Transition - When Things Go Wrong
+\begin{frame}{Transition: When Things Go Wrong}
+
+\begin{itemize}
+    \item Networks are complex systems with many components working together—problems are inevitable and happen regularly.
+    \item Random troubleshooting by guessing wastes time, can make problems worse, and often fails to find the root cause.
+    \item A \textbf{systematic troubleshooting methodology} provides a structured approach to identify and resolve network issues efficiently.
+    \item Professional network technicians follow a standard seven-step process that applies to nearly every networking problem.
+    \item Learning this methodology now will save you hours of frustration and make you a more effective troubleshooter.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{The Cost of Poor Troubleshooting}
+In business environments, network downtime can cost thousands of dollars per hour. Systematic troubleshooting gets networks back online faster and more reliably!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 39: Network Troubleshooting Methodology
+\begin{frame}{Network Troubleshooting Methodology}
+
+\begin{itemize}
+    \item The industry-standard troubleshooting methodology consists of seven clear steps that guide you from problem identification to resolution.
+    \item Following these steps prevents jumping to conclusions, ensures thorough investigation, and creates documentation for future reference.
+    \item This methodology applies to all IT troubleshooting, not just networking—it's a universal problem-solving framework.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{block}{The Seven Steps}
+	\scriptsize
+\begin{enumerate}
+    \item Identify the problem
+    \item Establish a theory of probable cause
+    \item Test the theory to determine the cause
+    \item Establish a plan of action
+    \item Implement the solution
+    \item Verify full system functionality
+    \item Document findings, actions, and outcomes
+\end{enumerate}
+\end{block}
+
+\end{frame}
+
+% Slide 40: Step 1 - Identify the Problem
+\begin{frame}{Step 1: Identify the Problem}
+
+\begin{itemize}
+    \item Begin by gathering information from users about what they're experiencing—ask open-ended questions to understand symptoms fully.
+    \item Distinguish between \textbf{symptoms} (what users observe, like "I can't access the Internet") and \textbf{causes} (the underlying issue creating the symptom).
+    \item Try to duplicate the problem yourself to verify it exists and understand exactly what's happening.
+    \item Ask critical questions: When did it start? What changed recently? Does it affect one user or multiple users?
+    \item Question the obvious—sometimes the simplest explanation (like an unplugged cable) is the correct one.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Good Questions to Ask}
+"When did you first notice the problem?" "Does it happen all the time or intermittently?" "Can anyone else reproduce this issue?" "What were you doing when it started?"
+\end{block}
+
+\end{frame}
+
+% Slide 41: Step 2 - Establish a Theory of Probable Cause
+\begin{frame}{Step 2: Establish a Theory of Probable Cause}
+
+\begin{itemize}
+    \item Brainstorm possible causes based on the symptoms you've identified—list multiple theories, not just the first one that comes to mind.
+    \item Use the OSI Model as a guide, starting from Layer 1 (Physical) and working upward to systematically consider all possibilities.
+    \item Apply your experience and logic to prioritize which theories are most likely based on the specific symptoms.
+    \item Question the obvious again—don't overcomplicate things if a simple explanation fits the evidence.
+    \item Avoid jumping to conclusions without evidence, but do form educated guesses based on what you know.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Example Theories}
+If "Internet is down," possible causes might be: ISP outage, modem failure, router misconfiguration, loose cable, or DNS server problem. List them all, then prioritize testing!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 42: Step 3 - Test the Theory
+\begin{frame}{Step 3: Test the Theory to Determine the Cause}
+
+\begin{itemize}
+    \item Test your most likely theory first by performing specific checks or tests that will confirm or rule out that cause.
+    \item If the theory is confirmed, you've found the cause and can proceed to planning a solution.
+    \item If the theory is not confirmed, establish a new theory and test it—don't stubbornly stick to a disproven theory.
+    \item If you've exhausted simple theories without success, you may need to escalate to a more experienced technician or specialist.
+    \item Document what you've already tested so you don't repeat tests and waste time.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Testing Example}
+Theory: "The router is misconfigured." Test: Check router settings and compare to known-good configuration. Result: Settings match documentation—theory disproven. New theory: Check ISP connection next.
+\end{block}
+
+\end{frame}
+
+% Slide 43: Step 4 - Establish a Plan of Action
+\begin{frame}{Step 4: Establish a Plan of Action}
+
+\begin{itemize}
+    \item Once you've identified the cause, determine the specific steps needed to resolve the problem before making any changes.
+    \item Consider the impact on users and business operations—will this fix cause downtime or affect other services?
+    \item Schedule the fix appropriately, especially if it requires taking systems offline during business hours.
+    \item Get approval from management or stakeholders for major changes that could affect multiple users or critical systems.
+    \item Have a backup plan ready in case your primary solution doesn't work or creates new problems.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Planning Prevents Problems}
+Rushing to implement a fix without planning can make things worse! Take time to think through consequences and have a rollback strategy ready.
+\end{alertblock}
+
+\end{frame}
+
+% Slide 44: Step 5 - Implement the Solution
+\begin{frame}{Step 5: Implement the Solution}
+
+\begin{itemize}
+    \item Follow your plan carefully and make one change at a time so you can identify exactly what fixed the problem.
+    \item Monitor the implementation as you work to catch any unexpected issues immediately.
+    \item Keep users informed about what you're doing and when they can expect service to be restored.
+    \item Be prepared to roll back changes if the solution doesn't work or creates additional problems.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Implementation Best Practices}
+\begin{itemize}
+    \item Make changes during approved maintenance windows when possible
+    \item Have another technician review your plan for critical systems
+    \item Keep detailed notes of exactly what you changed
+    \item Test incrementally rather than making multiple changes at once
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+% Slide 45: Step 6 - Verify Full System Functionality
+\begin{frame}{Step 6: Verify Full System Functionality}
+
+\begin{itemize}
+    \item Test that the original problem is actually solved, not just that your fix was applied successfully—these aren't always the same thing!
+    \item Check that your solution didn't break something else or create new problems in related systems.
+    \item Have the user who reported the problem verify that it's resolved from their perspective.
+    \item Implement preventive measures if possible to reduce the likelihood of the problem recurring.
+    \item Monitor the system for a period after the fix to ensure stability and catch any delayed issues.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Don't Skip Verification!}
+A fix that seems to work might only address symptoms, not the root cause. Thorough verification catches incomplete solutions before you close the ticket!
+\end{alertblock}
+
+\end{frame}
+
+% Slide 46: Step 7 - Document Findings
+\begin{frame}{Step 7: Document Findings, Actions, and Outcomes}
+
+\begin{itemize}
+    \item Record the problem, the cause you identified, and the solution you implemented in a clear, organized manner.
+    \item Note what worked and what didn't during your troubleshooting process—this information helps with similar future issues.
+    \item Documentation creates a knowledge base that helps you and other technicians resolve problems faster in the future.
+    \item Include relevant details like error messages, configuration changes, and hardware involved, but keep it concise.
+    \item Good documentation is a professional responsibility that benefits the entire IT team and the organization.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{What to Document}
+Problem description, symptoms observed, tests performed, root cause identified, solution implemented, verification results, and any recommendations for preventing recurrence.
+\end{block}
+
+\end{frame}
+
+% Slide 47: Troubleshooting Best Practices
+\begin{frame}{Troubleshooting Best Practices \& Summary}
+
+\begin{itemize}
+    \item Always work systematically through the seven steps rather than jumping randomly between troubleshooting activities.
+    \item Use the OSI Model as your guide—start at Layer 1 (Physical) and work up when the problem location is unclear.
+    \item Make one change at a time so you know exactly what fixed the problem.
+    \item Don't assume—test your theories and verify your solutions thoroughly.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\begin{table}
+\centering
+\small
+\begin{tabular}{|c|l|l|}
+\hline
+\rowcolor{networkblue!30}
+\textbf{Step} & \textbf{Action} & \textbf{Key Question} \\ \hline
+1 & Identify the problem & What are the symptoms? \\ \hline
+\rowcolor{gray!10}
+2 & Establish theory & What might cause this? \\ \hline
+3 & Test the theory & Is this the actual cause? \\ \hline
+\rowcolor{gray!10}
+4 & Plan action & How do we fix it safely? \\ \hline
+5 & Implement solution & Make the fix carefully \\ \hline
+\rowcolor{gray!10}
+6 & Verify functionality & Is it really fixed? \\ \hline
+7 & Document & What did we learn? \\ \hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% Slide 48: Case Study Problem - Final Troubleshooting
+\begin{frame}{Case Study: Harry Troubleshoots Grimmauld Place}
+
+\begin{alertblock}{The Emergency}
+Harry is managing the network at 12 Grimmauld Place (Order of the Phoenix headquarters). Suddenly, 15 computers on the network cannot access the Internet, but phones connected to Wi-Fi also can't connect to any websites. However, Hermione's laptop plugged directly into the cable modem works perfectly fine!
+\end{alertblock}
+
+\vspace{0.3cm}
+
+\textbf{Additional Information:}
+\begin{itemize}
+    \item All devices show they are connected to the network with valid IP addresses
+    \item The router's power and link lights are all on and appear normal
+    \item This started happening suddenly about 10 minutes ago
+    \item No one made any configuration changes recently
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Your Challenge:}
+Using the seven-step troubleshooting methodology, what should Harry do? What does the fact that Hermione's directly-connected laptop works tell us about where the problem is?
+
+\end{frame}
+
+% Slide 49: Case Study Solution & Course Conclusion
+\begin{frame}{Case Study Solution \& Course Wrap-Up}
+
+\textbf{Harry's Troubleshooting Process:}
+\begin{itemize}
+    \item \textbf{Steps 1-2:} Problem identified—no Internet for networked devices. Theory: Router is the problem since direct modem connection works.
+    \item \textbf{Step 3:} Test confirms router is the issue—it's the common point between working (direct) and non-working (networked) devices.
+    \item \textbf{Steps 4-5:} Plan and implement—restart router (power cycle). If that fails, check router configuration or replace router.
+    \item \textbf{Step 6:} Verify all 15 computers and Wi-Fi devices can access Internet after router restart.
+    \item \textbf{Step 7:} Document the incident, including that router restart resolved the issue.
+\end{itemize}
+
+\vspace{0.2cm}
+
+\textbf{What We've Learned in This Course:}
+Network topologies → OSI Model layers → SOHO networks → Systematic troubleshooting. You now have the foundational knowledge to understand, build, and troubleshoot modern networks!
+
+\end{frame}
+
 \end{document}
