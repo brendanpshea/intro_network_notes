@@ -806,4 +806,311 @@
     \end{columns}
 \end{frame}
 
+% Slide 33: Advanced Fiber: WDM and Multi-Fiber
+\begin{frame}{Advanced Fiber Technologies}
+    \begin{itemize}
+        \item \textbf{Wavelength Division Multiplexing (WDM)} allows multiple signals to travel simultaneously on one fiber by using different colors (wavelengths) of light.
+        \item \textbf{CWDM (Coarse WDM)} uses widely-spaced wavelengths (8-18 channels) for metro applications, while \textbf{DWDM (Dense WDM)} packs 40-80+ channels tightly for long-haul networks.
+        \item \textbf{MPO/MTP connectors} are multi-fiber connectors that terminate 12 or 24 fibers in a single small connector, dramatically reducing installation time in data centers.
+        \item These technologies are primarily used in telecommunications and large data centers where maximizing fiber capacity is critical.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{block}{Think of WDM Like This}
+        WDM is like having multiple radio stations broadcasting simultaneously---each uses a different frequency so they don't interfere. With fiber, different colors of light act as separate "channels."
+    \end{block}
+\end{frame}
+
+% Slide 34: Copper vs. Fiber Comparison
+\begin{frame}{Copper vs. Fiber: Making the Choice}
+    \begin{table}
+        \centering
+        \small
+        \begin{tabular}{|l|c|c|}
+            \hline
+            \rowcolor{networkblue!20}
+            \textbf{Feature} & \textbf{Copper (UTP)} & \textbf{Fiber Optic} \\
+            \hline
+            Maximum Distance & 100 m & 550 m - 40+ km \\
+            \hline
+            Maximum Speed & 10 Gbps (Cat 6a) & 100+ Gbps \\
+            \hline
+            EMI Immunity & Vulnerable & Completely immune \\
+            \hline
+            Installation Cost & Lower & Higher \\
+            \hline
+            Installation Difficulty & Easier & Requires training \\
+            \hline
+            Security & Can be tapped & Very difficult to tap \\
+            \hline
+            Weight & Heavier & Much lighter \\
+            \hline
+            Power Delivery & Yes (PoE) & No \\
+            \hline
+        \end{tabular}
+    \end{table}
+    
+    \vspace{0.3cm}
+    \begin{block}{Decision Guide}
+        Use copper for: workstation connections, short runs, PoE devices. Use fiber for: building-to-building, long distances, high EMI environments, high-speed backbones.
+    \end{block}
+\end{frame}
+
+% Slide 35: CASE STUDY - Problem
+\begin{frame}{Case Study: The Addams Family Estate Network}
+    \begin{block}{The Scenario}
+        \scriptsize
+        The Addams family has purchased the abandoned estate next door to expand their property. Gomez wants to connect the network in the main mansion to the new guest house, which will serve as Pugsley's laboratory for explosive experiments.
+        
+        \vspace{0.3cm}
+        Key facts:
+        \begin{itemize}
+            \item Distance between buildings: 800 meters
+            \item The path runs near high-voltage power lines that feed Fester's electrical experiments
+            \item Current network requirement: 1 Gbps minimum
+            \item Future plans: Upgrade to 10 Gbps within 3 years
+            \item Budget: Moderate (this is the Addams family, after all)
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.3cm}
+    \textbf{Your Task:}
+    \begin{itemize}
+        \item What cable type should they use and why?
+        \item If choosing fiber, should they use single-mode or multimode?
+    \end{itemize}
+\end{frame}
+
+% Slide 36: CASE STUDY - Solution
+\begin{frame}{Case Study: Solution}
+    \textbf{Correct Solution:} Single-Mode Fiber (1000BASE-LX or 10GBASE-LR)
+    
+    \vspace{0.3cm}
+    \begin{itemize}
+        \small
+        \item \textbf{Copper Eliminated:} 800 meters far exceeds the 100-meter limit for copper Ethernet---copper is not an option
+        \item \textbf{EMI Immunity:} High-voltage power lines would destroy copper signals; fiber is completely immune to electromagnetic interference
+        \item \textbf{Distance Capability:} Single-mode fiber easily handles 800m (can go 10+ km); multimode limited to 550m maximum
+        \item \textbf{Future-Proofing:} Single-mode supports both current 1 Gbps (1000BASE-LX) and future 10 Gbps (10GBASE-LR) requirements
+        \item \textbf{Why Not Multimode?} At 800m, multimode won't work---it exceeds the 550m limit even for 1 Gbps
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{alertblock}{Final Recommendation}
+        Install single-mode fiber with 1000BASE-LX equipment now, upgrade to 10GBASE-LR transceivers later without replacing cables. The higher upfront cable cost is offset by long-term flexibility.
+    \end{alertblock}
+\end{frame}
+
+
+% Slide 37: The Physical Environment Matters
+\begin{frame}{The Physical Environment Matters}
+    \begin{itemize}
+        \item Network equipment needs more than just cables---servers, switches, and routers require carefully controlled physical environments to operate reliably.
+        \item \textbf{Equipment rooms} and \textbf{data centers} must maintain specific temperature, humidity, and power conditions to prevent hardware failure.
+        \item Environmental problems cause the majority of unexpected network downtime: overheating servers, power outages, water damage, and fire.
+        \item Understanding physical infrastructure requirements is essential because even the best network design fails if equipment shuts down due to environmental issues.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{alertblock}{Real-World Impact}
+        A single equipment room cooling failure can take down an entire building's network in minutes, affecting hundreds or thousands of users. Environmental monitoring is not optional.
+    \end{alertblock}
+\end{frame}
+
+% Slide 38: Rack Systems
+\begin{frame}{Rack Systems}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item \textbf{19-inch equipment racks} are the standard mounting system for network equipment, servers, and patch panels in professional installations.
+                \item Rack height is measured in \textbf{U units} (rack units), where 1U equals 1.75 inches---a typical rack is 42U tall.
+                \item Equipment includes mounting rails, cable management arms, vertical power strips, and proper airflow management (front-to-back or bottom-to-top).
+                \item \textbf{Cable management} within racks prevents tangled "spaghetti" connections and ensures proper airflow around heat-generating equipment.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.95\textwidth]{network_rack_diagram.png}
+            
+            \vspace{0.2cm}
+            \small{\textit{Standard network rack showing switches, patch panels, and cable management}}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 39: Temperature and Humidity Control
+\begin{frame}{Temperature and Humidity Control}
+    \begin{itemize}
+        \item Network equipment should operate in temperatures between 68-77°F (20-25°C)---exceeding these ranges causes hardware to throttle performance or shut down completely.
+        \item \textbf{Humidity} must stay between 40-60\% because low humidity causes static discharge (which damages electronics) and high humidity causes condensation (which shorts circuits).
+        \item Data centers use precision \textbf{HVAC systems} specifically designed for equipment cooling, not human comfort, with redundant cooling units.
+        \item \textbf{Hot aisle/cold aisle} design arranges racks so equipment air intakes face one direction (cold aisle) and exhausts face the opposite direction (hot aisle), maximizing cooling efficiency.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{block}{Warning Signs}
+        If equipment rooms feel warm to touch, have high fan noise, or show temperature warnings, the cooling system is inadequate and equipment lifespan is being drastically reduced.
+    \end{block}
+\end{frame}
+
+% Slide 40: Power Management
+\begin{frame}{Power Management}
+    \begin{itemize}
+        \item An \textbf{Uninterruptible Power Supply (UPS)} provides battery backup that keeps equipment running during power outages and conditions power to prevent damage from surges and sags.
+        \item UPS runtime typically ranges from 5-30 minutes---enough time for graceful shutdown or for backup generators to start.
+        \item \textbf{Surge protectors} only block voltage spikes; true UPS systems also provide battery backup and clean, regulated power continuously.
+        \item Critical facilities use \textbf{redundant power supplies} in servers (two power supplies, two circuits) and backup generators that automatically start within seconds of power loss.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{alertblock}{Investment Priority}
+        A quality UPS protecting \$50,000 of network equipment costs \$2,000-5,000---cheap insurance against power problems that could cause equipment failure or data loss.
+    \end{alertblock}
+\end{frame}
+
+% Slide 41: Fire Suppression in Equipment Rooms
+\begin{frame}{Fire Suppression in Equipment Rooms}
+    \begin{itemize}
+        \item Traditional water sprinkler systems will destroy electronic equipment---water and electricity create short circuits that ruin servers, switches, and data.
+        \item \textbf{Clean agent systems} (like FM-200) use gaseous chemicals that suppress fire without leaving residue or conducting electricity, allowing equipment to continue operating afterward.
+        \item \textbf{Inert gas systems} displace oxygen in the room, suffocating the fire without using chemicals or water.
+        \item \textbf{Pre-action systems} provide a warning (alarm and detection) before releasing suppressant, giving personnel time to verify it's a real fire and evacuate.
+        \item These specialized systems cost significantly more than water sprinklers but are essential for protecting valuable equipment and irreplaceable data.
+    \end{itemize}
+\end{frame}
+
+% Slide 42: Cable Troubleshooting Introduction
+\begin{frame}{Cable Troubleshooting Introduction}
+    \begin{itemize}
+        \item "It was working yesterday!"---This is the most common phrase technicians hear, and now you need to figure out what changed.
+        \item A \textbf{systematic approach} beats random guessing: gather information, form hypotheses, test methodically, and document your findings.
+        \item Good \textbf{documentation} is your best friend during troubleshooting---cable labels, network diagrams, and installation records save hours of work.
+        \item Most cable problems fall into a few common categories: physical damage, incorrect termination, exceeded specifications, or environmental interference.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{block}{The Troubleshooting Mindset}
+        Start with the simple, obvious causes (loose connection, wrong cable) before assuming complex problems. The solution is usually simpler than you think.
+    \end{block}
+\end{frame}
+
+% Slide 43: Common Cable Problems
+\begin{frame}{Common Cable Problems}
+    \begin{table}
+        \centering
+        \small
+        \begin{tabular}{|p{3cm}|p{3.5cm}|p{3.5cm}|}
+            \hline
+            \rowcolor{networkblue!20}
+            \textbf{Symptom} & \textbf{Possible Cause} & \textbf{Solution} \\
+            \hline
+            No connectivity & Unplugged cable, broken wire, bad crimp & Check connections, test cable, re-terminate \\
+            \hline
+            Intermittent drops & Damaged cable, loose connection, marginal crimp & Replace cable, secure connections \\
+            \hline
+            Slow speeds & Wrong cable category, excessive length, bad termination & Verify Cat rating, check distance, re-terminate \\
+            \hline
+            Short max distance & Attenuation too high, cable too long, wrong category & Test with certifier, check length, upgrade cable \\
+            \hline
+            Errors/corruption & Interference (EMI/RFI), crosstalk, poor grounding & Shield cable, reroute away from noise, check grounds \\
+            \hline
+        \end{tabular}
+    \end{table}
+    
+    \vspace{0.2cm}
+    \small{\textit{Always test methodically---don't assume the cable is bad until you've verified it with proper tools}}
+\end{frame}
+
+% Slide 44: Cable Testing Tools
+\begin{frame}{Cable Testing Tools}
+    \begin{itemize}
+        \item A \textbf{cable certifier} tests cables against industry standards (TIA/EIA), measuring attenuation, near-end crosstalk, return loss, and providing pass/fail certification (expensive but essential for professional installations).
+        \item \textbf{Wire map testers} verify that all 8 wires are connected to the correct pins and detect opens, shorts, reversed pairs, and split pairs (inexpensive, basic testing).
+        \item \textbf{Tone generators and probes} send an audible signal through a cable while you use the probe to trace which physical cable it is among many (essential for identifying unlabeled cables).
+        \item \textbf{Optical Time Domain Reflectometers (OTDR)} test fiber optic cables by sending light pulses and measuring reflections to locate breaks and measure loss (advanced, expensive).
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{block}{Tool Investment}
+        Basic wire map tester: \$50-100. Professional cable certifier: \$2,000-5,000. Choose tools based on whether you're doing occasional fixes or professional installations requiring certification.
+    \end{block}
+\end{frame}
+
+% Slide 45: Understanding Cable Issues
+\begin{frame}{Understanding Cable Issues}
+    \begin{itemize}
+        \item \textbf{Attenuation} is signal loss over distance---the signal weakens as it travels, eventually becoming too weak to detect reliably (measured in decibels, dB).
+        \item \textbf{Electromagnetic Interference (EMI)} and \textbf{Radio Frequency Interference (RFI)} are external electrical noise from motors, fluorescent lights, radio transmitters, and power lines that corrupts network signals.
+        \item \textbf{Near-End Crosstalk (NEXT)} occurs when signal from one wire pair bleeds into adjacent pairs near the transmission end, causing interference.
+        \item \textbf{Far-End Crosstalk (FEXT)} is similar bleeding between pairs but measured at the far end of the cable.
+        \item \textbf{Return loss} measures signal reflection caused by impedance mismatches---like sound echoing back when you shout into a canyon.
+    \end{itemize}
+    
+    \vspace{0.2cm}
+    \begin{block}{The Bottom Line}
+        Quality cables, proper termination, correct installation, and appropriate shielding prevent most of these issues. Cheap cables and sloppy work create expensive problems.
+    \end{block}
+\end{frame}
+
+% Slide 46: CASE STUDY - Problem
+\begin{frame}{Case Study: The Addams Family Network Mystery}
+    \begin{block}{The Scenario}
+        Lurch reports that the network connection in the conservatory keeps dropping every few minutes. Other users on the same switch in the telecommunications room work perfectly. Wednesday investigates and finds:
+        
+        \vspace{0.3cm}
+        \begin{itemize}
+            \item The cable from the wall jack to Morticia's computer works fine (tested with cable tester)
+            \item The patch cable in the telecom room connecting patch panel to switch also tests good
+            \item The conservatory is 85 meters from the telecom room
+            \item The horizontal cable was installed last year and was working fine until this week
+            \item The conservatory is next to Fester's workshop, where he recently installed several large Tesla coils for experiments
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.3cm}
+    \textbf{Your Task:} What should Wednesday check next? What is the most likely cause? How would you troubleshoot this systematically?
+\end{frame}
+
+% Slide 47: CASE STUDY - Solution
+\begin{frame}{Case Study: Solution}
+    \textbf{Most Likely Cause:} Electromagnetic interference from Fester's Tesla coils
+    
+    \vspace{0.3cm}
+    \textbf{Troubleshooting Steps:}
+    \begin{enumerate}
+        \item Use a cable certifier (not just a basic tester) to check the horizontal cable run for interference and crosstalk---basic testers won't detect EMI issues
+        \item Test the connection when Fester's Tesla coils are powered off---if it works, you've confirmed the interference source
+        \item Check if the cable runs parallel to power lines or near Fester's equipment
+        \item Measure actual error rates and packet loss (not just "it drops sometimes")
+    \end{enumerate}
+    
+    \vspace{0.3cm}
+    \textbf{Solutions (in order of preference):}
+    \begin{itemize}
+        \item Reroute the cable away from Fester's workshop (maintain 12+ inches from interference sources)
+        \item Replace with shielded twisted pair (STP) cable properly grounded
+        \item Use fiber optic cable (completely immune to EMI, but most expensive)
+    \end{itemize}
+\end{frame}
+
+% Slide 48: Conclusion - Bringing It All Together
+\begin{frame}{Conclusion: The Foundation of Every Network}
+    \textbf{Key Takeaways:}
+    \begin{itemize}
+        \item The physical layer is the foundation---every network depends on properly installed, maintained cabling infrastructure.
+        \item Choose the right cable for each situation: consider distance, speed requirements, environment, interference, and future needs.
+        \item Standards exist for good reasons: they ensure safety, compatibility, performance, and long-term reliability.
+        \item Proper installation prevents 90\% of problems: correct termination, appropriate cable ratings, good documentation, and following specifications.
+        \item Systematic troubleshooting beats random guessing: use the right tools, test methodically, and document everything.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    \begin{block}{Your Impact}
+        As a network technician, your cabling work keeps businesses running, students learning, hospitals operating, and families connected. Quality work at the physical layer makes everything else possible.
+    \end{block}
+    
+    \vspace{0.2cm}
+    \textbf{Next Steps:} Apply these concepts in hands-on labs, pursue certifications (CompTIA Network+, BICSI RCDD), and keep learning!
+\end{frame}
+
 \end{document}
