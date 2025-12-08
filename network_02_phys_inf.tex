@@ -213,7 +213,7 @@
 \subtitle{Networks Module 2.0}
 \author[B. Shea]{Brendan Shea, PhD}
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
-\date{\today}
+\date{}
 
 % Slide numbers
 \setbeamertemplate{footline}{
@@ -339,33 +339,34 @@
 % =============================================================================
 \begin{frame}{Module Overview and Learning Outcomes}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Topics Covered}
-                \begin{enumerate}
-                    \item Ethernet Standards
-                    \item Copper Cables \& Connectors
-                    \item Structured Wiring
-                    \item Fiber Optic Cables
-                    \item Physical Installation
-                    \item Cable Troubleshooting
-                \end{enumerate}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Learning Outcomes}
-                After this module, you will be able to:
+        \begin{column}{0.40\textwidth}
+            \begin{block}{What We'll Cover}
+                \small
                 \begin{itemize}
-                    \item Select appropriate cable types for different scenarios.
-                    \item Explain why twisted pair cables resist interference.
-                    \item Compare copper and fiber optic solutions.
-                    \item Apply proper installation practices.
-                    \item Troubleshoot common cable problems.
+                    \item Ethernet standards
+                    \item Copper cables (UTP, STP, coax)
+                    \item Fiber optic cables
+                    \item Installation best practices
+                    \item Cable troubleshooting
+                \end{itemize}
+            \end{block}
+            
+            \vspace{0.3em}
+            \begin{block}{What You'll Learn}
+                \begin{itemize}
+                    \small
+                    \item Choose the right cable
+                    \item Install cables correctly
+                    \item Fix cable problems
                 \end{itemize}
             \end{block}
         \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{four_cable_types.jpg}
+            \end{center}
+        \end{column}
     \end{columns}
-    
-
 \end{frame}
 
 % =============================================================================
@@ -1541,11 +1542,6 @@
         \end{column}
     \end{columns}
     
-    \vspace{0.5em}
-    \begin{exampleblock}{Other Essential Tools}
-        \small
-        \textbf{Cable stripper}: Removes outer jacket without nicking wires \quad \textbf{Wire cutters}: Clean, straight cuts
-    \end{exampleblock}
 \end{frame}
 
 % =============================================================================
@@ -1705,12 +1701,7 @@
                 \item \keyterm{MPO/MTP}: Multi-fiber connector (12--24 fibers), used in data centers.
             \end{itemize}
             
-            \vspace{0.3em}
-            \begin{alertblock}{Polish Types---Don't Mix!}
-                \textbf{PC/UPC}: Flat/slightly curved, blue \\
-                \textbf{APC}: 8° angle, green \\
-                Connecting APC to UPC damages both!
-            \end{alertblock}
+   
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
@@ -1833,7 +1824,7 @@
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{center}
-                \includegraphics[width=0.85\textwidth]{rack_diagram.png}
+                \includegraphics[width=0.75\textwidth]{rack_diagram.png}
             \end{center}
             
             \vspace{0.3em}
