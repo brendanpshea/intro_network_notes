@@ -806,6 +806,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 238.
+ (c:\Users\brend\OneDrive\Documents\Github\intro_network_notes\PDFs\network_02_phys_inf.out) (c:\Users\brend\OneDrive\Documents\Github\intro_network_notes\PDFs\network_02_phys_inf.out)
 \@outlinefile=\write5
 \openout5 = `network_02_phys_inf.out'.
 
@@ -874,8 +875,7 @@ Dictionary: translator-months-dictionary, Language: English
 Dictionary: translator-numbers-dictionary, Language: English 
 ) (C:\Users\brend\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-)
-No file network_02_phys_inf.nav.
+) (c:\Users\brend\OneDrive\Documents\Github\intro_network_notes\PDFs\network_02_phys_inf.nav)
 <../images/icons/icon_pc.png, id=26, 476.53032pt x 398.99063pt>
 File: ../images/icons/icon_pc.png Graphic file (type png)
 <use ../images/icons/icon_pc.png>
@@ -956,148 +956,4 @@ Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
 File: ../images/icons/icon_pc.png Graphic file (type png)
 <use ../images/icons/icon_pc.png>
 Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-File: ../images/icons/icon_pc.png Graphic file (type png)
-<use ../images/icons/icon_pc.png>
-Package pdftex.def Info: ../images/icons/icon_pc.png  used on input line 643.
-(pdftex.def)             Requested size: 11.8885pt x 9.95863pt.
-
-Overfull \vbox (4.21191pt too high) detected at line 643
- []
-
-
-
-[9
-
-]
-
-[10
-
-]
-Overfull \vbox (7.8675pt too high) detected at line 760
- []
-
-
-
-[11
-
-]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 802.
- (C:\Users\brend\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 802.
- (C:\Users\brend\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 802.
- (C:\Users\brend\AppData\Local\Programs\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss.fd
-File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
-)
-Overfull \vbox (8.23036pt too high) detected at line 802
- []
-
-
-
-[12
-
-]
-Overfull \vbox (7.35524pt too high) detected at line 832
- []
-
-
-
-[13
-
-]
-
-[14
-
-]
-<../images/ch2/twisted_pair_annotated.png, id=795, 627.5445pt x 293.898pt>
-File: ../images/ch2/twisted_pair_annotated.png Graphic file (type png)
-<use ../images/ch2/twisted_pair_annotated.png>
-Package pdftex.def Info: ../images/ch2/twisted_pair_annotated.png  used on input line 890.
-(pdftex.def)             Requested size: 182.0037pt x 85.2372pt.
-
-
-[15
-
- <c:/Users/brend/OneDrive/Documents/Github/intro_network_notes/images/ch2/twisted_pair_annotated.png>]
-<../images/ch2/utp_cat6_rj45.png, id=860, 364.9635pt x 160.80075pt>
-File: ../images/ch2/utp_cat6_rj45.png Graphic file (type png)
-<use ../images/ch2/utp_cat6_rj45.png>
-Package pdftex.def Info: ../images/ch2/utp_cat6_rj45.png  used on input line 940.
-(pdftex.def)             Requested size: 163.8022pt x 72.17073pt.
-
-Overfull \vbox (59.37062pt too high) detected at line 940
- []
-
-
-
-[16
-
- <c:/Users/brend/OneDrive/Documents/Github/intro_network_notes/images/ch2/utp_cat6_rj45.png>]
-<../images/ch2/stp_cat7_rj45_sh.png, id=913, 367.97475pt x 159.59625pt>
-File: ../images/ch2/stp_cat7_rj45_sh.png Graphic file (type png)
-<use ../images/ch2/stp_cat7_rj45_sh.png>
-Package pdftex.def Info: ../images/ch2/stp_cat7_rj45_sh.png  used on input line 985.
-(pdftex.def)             Requested size: 163.8022pt x 71.04323pt.
-
-
-[17
-
- <c:/Users/brend/OneDrive/Documents/Github/intro_network_notes/images/ch2/stp_cat7_rj45_sh.png>]
-Overfull \vbox (68.30733pt too high) detected at line 1032
- []
-
-
-
-[18
-
-]
-
-[19
-
-]
-Overfull \vbox (2.30524pt too high) detected at line 1139
- []
-
-
-
-[20
-
-]
-Overfull \vbox (8.32854pt too high) detected at line 1205
- []
-
-
-
-[21
-
-]
-<../images/ch2/coaxial_cable_annotated.png, id=1178, 702.2235pt x 365.56575pt>
-File: ../images/ch2/coaxial_cable_annotated.png Graphic file (type png)
-<use ../images/ch2/coaxial_cable_annotated.png>
-Package pdftex.def Info: ../images/ch2/coaxial_cable_annotated.png  used on input line 1239.
-(pdftex.def) 
+(pdftex.de
