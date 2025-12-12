@@ -556,6 +556,91 @@
 \end{frame}
 
 % =============================================================================
+% SLIDE A: Layer 1 Network Diagram - The Green Dragon Physical Infrastructure
+% =============================================================================
+\begin{frame}{Layer 1: Physical Infrastructure at the Green Dragon}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.9]
+            % === MAIN SWITCH ===
+            \draw[fill=rctcblue!20, draw=rctcblue, line width=1.5pt, rounded corners] 
+                (0,-0.6) rectangle (8,0.6);
+            \node[font=\small\bfseries] at (4,-1) {Green Dragon Core Switch};
+            
+            % SFP+ slot (left side for server)
+            \draw[fill=fiberyellow!60, line width=1pt] (0.3,-0.3) rectangle (0.8,0.3);
+            \node[font=\tiny] at (0.55,-0.55) {SFP+};
+            
+            % RJ-45 ports (middle)
+            \draw[fill=gray!30, line width=0.5pt] (2.8,-0.25) rectangle (3.2,0.25);
+            \draw[fill=gray!30, line width=0.5pt] (3.8,-0.25) rectangle (4.2,0.25);
+            \draw[fill=gray!30, line width=0.5pt] (4.8,-0.25) rectangle (5.2,0.25);
+            \draw[fill=gray!30, line width=0.5pt] (5.8,-0.25) rectangle (6.2,0.25);
+            \node[font=\tiny] at (4.5,-0.45) {RJ-45 Copper Ports};
+            
+            % SFP+ slot (right side for ISP)
+            \draw[fill=fiberyellow!60, line width=1pt] (7.2,-0.3) rectangle (7.7,0.3);
+            \node[font=\tiny] at (7.45,-0.45) {SFP+};
+            
+            % === FIBER CONNECTION TO SERVER (LEFT) ===
+            \node[server] (srv) at (-2.5,0) {\iconserver[0.8cm]};
+            \node[font=\small, below] at (-2.5,-0.6) {Cellar Server};
+            
+            % SFP+ transceiver at server
+            \draw[fill=fiberyellow!60, line width=1pt] (-1.6,-0.2) rectangle (-1.2,0.2);
+            \node[font=\tiny, above] at (-1.4,0.25) {SFP+};
+            
+            % Fiber cable (MMF - orange)
+            \draw[fiber, line width=3pt] (-1.2,0) -- (0.3,0);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (-0.45,0) {MMF};
+            
+            % === COPPER CONNECTIONS TO DEVICES (TOP) ===
+            % Front desk PC
+            \node[pc] (pc1) at (3,3) {\iconpc[0.6cm]};
+            \node[font=\small, above] at (3,3.5) {Front Desk};
+            \draw[copper, line width=2pt] (3,0.6) -- (3,2.5);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (3,1.5) {Cat6};
+            
+            % Kitchen laptop
+            \node[laptop] (pc2) at (5,3) {\iconlaptop[0.6cm]};
+            \node[font=\small, above] at (5,3.5) {Kitchen};
+            \draw[copper, line width=2pt] (5,0.6) -- (5,2.5);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (5,1.5) {Cat6};
+            
+            % Manager office
+            \node[pc] (pc3) at (7,3) {\iconpc[0.6cm]};
+            \node[font=\small, above] at (7,3.5) {Manager};
+            \draw[copper, line width=2pt] (7,0.6) -- (7,2.5);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (7,1.5) {Cat5e};
+            
+            % === UPLINK TO ISP (RIGHT) ===
+            \node[cloud] (cloud) at (10.5,0) {\iconcloud[0.8cm]};
+            \node[font=\small, below] at (10.5,-0.6) {To Bree ISP};
+            
+            % SFP+ transceiver at ISP side
+            \draw[fill=fiberyellow!60, line width=1pt] (9.2,-0.2) rectangle (9.6,0.2);
+            \node[font=\tiny, above] at (9.4,0.25) {SFP+};
+            
+            % SMF to ISP (yellow for single-mode)
+            \draw[draw=aborange, line width=3pt] (7.7,0) -- (9.2,0);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (8.45,0) {SMF};
+            
+            % === LEGEND ===
+            \draw[copper, line width=3pt] (-2,-1.8) -- (-0.5,-1.8);
+            \node[font=\scriptsize, right] at (-0.3,-1.8) {Copper (UTP)};
+            
+            \draw[fiber, line width=3pt] (2.5,-1.8) -- (4,-1.8);
+            \node[font=\scriptsize, right] at (4.2,-1.8) {Multimode Fiber};
+            
+            \draw[draw=aborange, line width=3pt] (7,-1.8) -- (8.5,-1.8);
+            \node[font=\scriptsize, right] at (8.7,-1.8) {Single-mode Fiber};
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.3em}
+    {\centering Layer 1 focuses on \textbf{physical connections}: cables, connectors, transceivers, and the signals they carry.\par}
+\end{frame}
+
+% =============================================================================
 % SLIDE 8: Transceiver Issues
 % =============================================================================
 \begin{frame}{Transceiver Issues}
@@ -1081,6 +1166,83 @@
 \end{frame}
 
 % =============================================================================
+% SLIDE B: Layer 2 Network Diagram - MAC Address Communication
+% =============================================================================
+\begin{frame}{Layer 2: MAC Address Communication at the Green Dragon}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.9]
+            % === SWITCH WITH MAC TABLE ===
+            \draw[fill=networkgreen!20, draw=networkgreen, line width=1.5pt, rounded corners] 
+                (0,-1) rectangle (10,1);
+            \node[font=\small\bfseries] at (5,0.6) {Green Dragon Switch};
+            
+            % MAC Address Table inside switch
+            \draw[fill=white, line width=0.5pt, rounded corners] (1.5,-0.8) rectangle (8.5,0.2);
+            \node[font=\scriptsize\bfseries] at (5,-0.05) {MAC Address Table};
+            \node[font=\scriptsize] at (5,-0.5) {
+                Port 1: AA:AA:AA \quad Port 2: BB:BB:BB \quad Port 3: CC:CC:CC \quad Port 4: DD:DD:DD
+            };
+            
+            % Port labels below switch
+            \node[font=\small\bfseries, networkgreen] at (1.5,-1.4) {Port 1};
+            \node[font=\small\bfseries, networkgreen] at (4,-1.4) {Port 2};
+            \node[font=\small\bfseries, networkgreen] at (6.5,-1.4) {Port 3};
+            \node[font=\small\bfseries, networkgreen] at (9,-1.4) {Port 4};
+            
+            % === DEVICES WITH MAC ADDRESSES ===
+            % Front Desk (Port 1)
+            \node[pc] (pc1) at (1.5,4) {\iconpc[0.7cm]};
+            \node[font=\small, above] at (1.5,4.5) {Front Desk};
+            \node[font=\small\ttfamily, rctcblue] at (1.5,3.2) {AA:AA:AA};
+            \draw[ethernet noarrow, line width=1.5pt] (1.5,1) -- (1.5,3.5);
+            
+            % Kitchen (Port 2)
+            \node[laptop] (pc2) at (4,4) {\iconlaptop[0.7cm]};
+            \node[font=\small, above] at (4,4.5) {Kitchen};
+            \node[font=\small\ttfamily, rctcblue] at (4,3.2) {BB:BB:BB};
+            \draw[ethernet noarrow, line width=1.5pt] (4,1) -- (4,3.5);
+            
+            % Manager (Port 3)
+            \node[pc] (pc3) at (6.5,4) {\iconpc[0.7cm]};
+            \node[font=\small, above] at (6.5,4.5) {Manager};
+            \node[font=\small\ttfamily, rctcblue] at (6.5,3.2) {CC:CC:CC};
+            \draw[ethernet noarrow, line width=1.5pt] (6.5,1) -- (6.5,3.5);
+            
+            % Guest (Port 4)
+            \node[laptop] (pc4) at (9,4) {\iconlaptop[0.7cm]};
+            \node[font=\small, above] at (9,4.5) {Guest};
+            \node[font=\small\ttfamily, rctcblue] at (9,3.2) {DD:DD:DD};
+            \draw[ethernet noarrow, line width=1.5pt] (9,1) -- (9,3.5);
+            
+            % === FRAME BEING FORWARDED ===
+            % Frame traveling from Front Desk to Manager
+            \draw[fill=aborange!40, draw=aborange, line width=1.5pt, rounded corners]
+                (1.8,1.3) rectangle (6.4,1.8);
+            \node[font=\scriptsize] at (4,1.55) {Frame: Dst CC:CC:CC | Src AA:AA:AA};
+            
+            % Arrow showing forwarding path - into switch
+            \draw[-{Stealth}, aborange, line width=2.5pt] (1.5,2.3) -- (1.5,1.3);
+            
+            % Arrow through switch
+            \draw[-{Stealth}, aborange, line width=2.5pt] (2,1.4) -- (6,1.4);
+            
+            % Arrow out to Manager
+            \draw[-{Stealth}, aborange, line width=2.5pt] (6.5,1.3) -- (6.5,2.3);
+            
+            % X marks on ports NOT receiving the frame
+            \node[font=\Large, alertred] at (4,1.8) {$\times$};
+            \node[font=\Large, alertred] at (9,1.8) {$\times$};
+            
+            % Annotation for blocked ports
+            \node[font=\scriptsize, alertred, right] at (9.5,1.8) {Not forwarded};
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.2em}
+    {\centering Layer 2 uses \textbf{MAC addresses} to forward frames. The switch sends traffic \textbf{only to the destination port}---not everywhere.\par}
+\end{frame}
+
+% =============================================================================
 % SLIDE 19: Unmanaged vs Managed Switches
 % =============================================================================
 \begin{frame}{Unmanaged vs Managed Switches}
@@ -1528,6 +1690,77 @@
             \end{block}
         \end{column}
     \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE C: PoE Network Diagram - Power Budget at the Green Dragon
+% =============================================================================
+\begin{frame}{Power over Ethernet: Green Dragon Power Budget}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.9]
+            % === POE SWITCH ===
+            \draw[fill=rctcblue!20, draw=rctcblue, line width=1.5pt, rounded corners] 
+                (0,-1.3) rectangle (10,0.7);
+            \node[font=\small\bfseries] at (5,0.35) {Green Dragon PoE+ Switch (120W Budget)};
+            
+            % Power budget bar
+            \draw[fill=gray!20, line width=1pt] (0.5,-1.1) rectangle (9.5,-0.5);
+            % Used power section (75W out of 120W = 62.5%)
+            \draw[fill=networkgreen!50, line width=1pt] (0.5,-1.1) rectangle (6.2,-0.5);
+            \node[font=\small\bfseries] at (3.35,-0.8) {Used: 75W};
+            \node[font=\small] at (7.85,-0.8) {Available: 45W};
+            
+            % Port indicators on switch
+            \node[font=\small\bfseries] at (1.5,-0.1) {P1};
+            \node[font=\small\bfseries] at (3.5,-0.1) {P2};
+            \node[font=\small\bfseries] at (6,-0.1) {P3};
+            \node[font=\small\bfseries] at (8.5,-0.1) {P4};
+            
+            % === POE DEVICES ===
+            
+            % VoIP Phone (P1) - 7W
+            \node[phone] (phone) at (1.5,3.5) {\iconvoip[0.7cm]};
+            \node[font=\small, above] at (1.5,4) {Bar Phone};
+            \draw[rctcblue, line width=2pt] (1.5,0.7) -- (1.5,2.9);
+            \node[font=\scriptsize, fill=white, inner sep=2pt] at (1.5,1.8) {Data + Power};
+            % Power box
+            \draw[fill=networkgreen!30, draw=networkgreen, line width=1pt, rounded corners]
+                (0.8,2.2) rectangle (2.2,2.7);
+            \node[font=\small\bfseries, networkgreen] at (1.5,2.45) {7W};
+            
+            % Wireless AP (P2) - 25W
+            \node[wifi] (ap) at (3.5,3.5) {\iconwifi[0.7cm]};
+            \node[font=\small, above] at (3.5,4) {Main Hall AP};
+            \draw[rctcblue, line width=2pt] (3.5,0.7) -- (3.5,2.9);
+            % Power box
+            \draw[fill=aborange!30, draw=aborange, line width=1pt, rounded corners]
+                (2.8,2.2) rectangle (4.2,2.7);
+            \node[font=\small\bfseries, aborange] at (3.5,2.45) {25W};
+            
+            % Security Camera (P3) - 15W
+            \node (cam) at (6,3.5) {\iconlock[0.7cm]};
+            \node[font=\small, above] at (6,4) {Entry Camera};
+            \draw[rctcblue, line width=2pt] (6,0.7) -- (6,2.9);
+            % Power box
+            \draw[fill=networkgreen!30, draw=networkgreen, line width=1pt, rounded corners]
+                (5.3,2.2) rectangle (6.7,2.7);
+            \node[font=\small\bfseries, networkgreen] at (6,2.45) {15W};
+            
+            % Second AP (P4) - 28W
+            \node[wifi] (ap2) at (8.5,3.5) {\iconwifi[0.7cm]};
+            \node[font=\small, above] at (8.5,4) {Garden AP};
+            \draw[rctcblue, line width=2pt] (8.5,0.7) -- (8.5,2.9);
+            % Power box
+            \draw[fill=aborange!30, draw=aborange, line width=1pt, rounded corners]
+                (7.8,2.2) rectangle (9.2,2.7);
+            \node[font=\small\bfseries, aborange] at (8.5,2.45) {28W};
+            
+           
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.1em}
+    {\centering PoE delivers \textbf{data and power} over one cable. Always track your \textbf{power budget}---the switch has limits!\par}
 \end{frame}
 
 % =============================================================================
