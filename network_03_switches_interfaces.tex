@@ -219,7 +219,7 @@
 \subtitle{Network+ Module 3.0}
 \author[B. Shea]{Brendan Shea, PhD}
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
-\date{\today}
+\date{}
 
 % Slide numbers
 \setbeamertemplate{footline}{
@@ -451,8 +451,24 @@
     \end{columns}
 \end{frame}
 
+
+
+
 % =============================================================================
-% SLIDE 6: NIC Features and Specifications
+% SLIDE 6: NIC Examples
+% =============================================================================
+\begin{frame}{NIC Examples}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{three_NICs}
+    \end{center}
+    \begin{center}
+        \small
+        Examples of different network interface cards showing various form factors and connector types.
+    \end{center}
+\end{frame}
+
+% =============================================================================
+% SLIDE 7: NIC Features and Specifications
 % =============================================================================
 \begin{frame}{NIC Features and Specifications}
     \begin{columns}[T]
@@ -498,63 +514,87 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 7: Modular Transceivers
-% =============================================================================
-\begin{frame}{Modular Transceivers: Flexibility Matters}
+
+\begin{frame}{What is a Transceiver?}
     \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
+        \begin{column}{0.52\textwidth}
             \begin{itemize}
-                \item Problem: Different cables need different ports---replacing switches is expensive!
-                \item Solution: \keyterm{Modular transceivers}---swap the module, not the switch.
-                \item \keyterm{SFP}: Small Form-factor Pluggable---up to 1 Gbps.
-                \item \keyterm{SFP+}: Enhanced SFP---up to 10 Gbps.
-                \item \keyterm{QSFP/QSFP+}: Quad SFP---40 to 100 Gbps using 4 channels.
+                \item A \keyterm{transceiver} is a device that both \textbf{transmits} and \textbf{receives} signals.
+                \item Converts between electrical signals (inside the device) and optical or electrical signals (on the cable).
+                \item \keyterm{TX}: Transmit (outgoing signal)
+                \item \keyterm{RX}: Receive (incoming signal)
+                \item Think of it as a translator between two different ``languages'' of communication.
             \end{itemize}
             
             \vspace{0.3em}
-            \begin{exampleblock}{Why This Matters}
-                Same switch can use copper OR fiber---just install the right transceiver module!
-            \end{exampleblock}
+            \begin{block}{Why Transceivers Matter}
+                Without a transceiver, your switch can't understand fiber optic light signals---it only speaks electrical!
+            \end{block}
         \end{column}
-        \begin{column}{0.42\textwidth}
+        \begin{column}{0.45\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.9]
-                    % Switch
-                    \draw[fill=rctcblue!20, line width=1pt, rounded corners] (0,0) rectangle (4,1.5);
-                    \node[font=\small\bfseries] at (2, 1.2) {Switch};
-                    
-                    % SFP slots
-                    \draw[fill=gray!30, line width=1pt] (0.3,0.3) rectangle (0.9,0.8);
-                    \draw[fill=gray!30, line width=1pt] (1.1,0.3) rectangle (1.7,0.8);
-                    \draw[fill=networkgreen!40, line width=1pt] (1.9,0.3) rectangle (2.5,0.8);
-                    \draw[fill=fiberyellow!60, line width=1pt] (2.7,0.3) rectangle (3.3,0.8);
-                    
-                    % Labels
-                    \node[font=\tiny] at (0.6, 0.5) {Empty};
-                    \node[font=\tiny] at (2.2, 0.5) {Cu};
-                    \node[font=\tiny] at (3.0, 0.5) {Fiber};
-                    
-                    % Transceiver being inserted
-                    \draw[fill=aborange!50, line width=1pt] (1.2,1.8) rectangle (1.6,2.4);
-                    \draw[-{Stealth}, line width=1pt] (1.4, 1.7) -- (1.4, 0.9);
-                    \node[font=\tiny, above] at (1.4, 2.4) {SFP+};
-                \end{tikzpicture}
+                \includegraphics[width=\textwidth]{transceiver_cutaway}
             \end{center}
             
             \vspace{0.3em}
-            \begin{block}{Transceiver Types}
+            \begin{alertblock}{Key Components}
                 \small
-                \begin{tabular}{l l}
-                    \textbf{SFP-T} & Copper (RJ-45) \\
-                    \textbf{SFP-SX} & MMF (short) \\
-                    \textbf{SFP-LX} & SMF (long) \\
-                \end{tabular}
-            \end{block}
+                \textbf{Laser/LED}: Converts electrical → light \\
+                \textbf{Photodetector}: Converts light → electrical \\
+                \textbf{Circuit board}: Manages the conversion
+            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
+
+\begin{frame}{Table: Types of Transceivers}
+    \begin{center}
+        \small
+        \begin{tabular}{l l l l l}
+            \toprule
+            \textbf{Transceiver} & \textbf{Speed} & \textbf{Cable Type} & \textbf{Connector} & \textbf{Distance} \\
+            \midrule
+            SFP & 1 Gbps & MMF or SMF & LC & 550m (MMF) \\
+            & & & & 10km (SMF) \\
+            \midrule
+            SFP+ & 10 Gbps & MMF or SMF & LC & 300m (MMF) \\
+            & & & & 10--80km (SMF) \\
+            \midrule
+            QSFP & 40 Gbps & MMF or SMF & MPO/MTP & 100m (MMF) \\
+            & & & & 10km (SMF) \\
+            \midrule
+            QSFP28 & 100 Gbps & MMF or SMF & MPO/MTP & 100m (MMF) \\
+            & & & & 10km (SMF) \\
+            \midrule
+            GBIC & 1 Gbps & MMF or SMF & SC & 550m (MMF) \\
+            (legacy) & & & & 10km (SMF) \\
+            \midrule
+            SFP-T & 1 Gbps & Copper (UTP) & RJ-45 & 100m \\
+            \midrule
+            SFP+ DAC & 10 Gbps & Twinax copper & Integrated & 3--7m \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    
+    \vspace{0.3em}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Key Abbreviations}
+                \small
+                \textbf{MMF}: Multimode Fiber \\
+                \textbf{SMF}: Single-mode Fiber \\
+                \textbf{DAC}: Direct Attach Cable
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Remember}
+                \small
+                Always match transceiver type to cable type and required distance!
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
 % =============================================================================
 % SLIDE A: Layer 1 Network Diagram - The Green Dragon Physical Infrastructure
 % =============================================================================
@@ -1217,17 +1257,17 @@
             % === FRAME BEING FORWARDED ===
             % Frame traveling from Front Desk to Manager
             \draw[fill=aborange!40, draw=aborange, line width=1.5pt, rounded corners]
-                (1.8,1.3) rectangle (6.4,1.8);
+                (1.4,1.3) rectangle (6.8,1.8);
             \node[font=\scriptsize] at (4,1.55) {Frame: Dst CC:CC:CC | Src AA:AA:AA};
             
             % Arrow showing forwarding path - into switch
-            \draw[-{Stealth}, aborange, line width=2.5pt] (1.5,2.3) -- (1.5,1.3);
+            \draw[-{Stealth}, aborange, line width=2.5pt] (1.5,2.7) -- (1.5,1.7);
             
             % Arrow through switch
             \draw[-{Stealth}, aborange, line width=2.5pt] (2,1.4) -- (6,1.4);
             
             % Arrow out to Manager
-            \draw[-{Stealth}, aborange, line width=2.5pt] (6.5,1.3) -- (6.5,2.3);
+            \draw[-{Stealth}, aborange, line width=2.5pt] (6.5,1.7) -- (6.5,2.7);
             
             % X marks on ports NOT receiving the frame
             \node[font=\Large, alertred] at (4,1.8) {$\times$};
