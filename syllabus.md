@@ -130,7 +130,7 @@ This practice exam will provide questions to prepare you for the real exam. You 
 
 **Network+ Exam - 25% total**
 
-RCTC will provide you with a free voucher to take this professional certification exam. Grading is as follows:
+**Once you have completed three practice exams with a grade of over 70%, RCTC will provide you with a free voucher to take this professional certification exam.** Grading is as follows:
 - 12.5% (half credit) for attempting the exam
 - 25% (full credit) for passing the exam and earning the certification
 
