@@ -856,14 +856,14 @@
                     \item DNS server addresses
                 \end{itemize}
             \end{block}
-            
-            \vspace{0.2em}
-            \begin{alertblock}{Key Details}
+           
+        \end{column}
+        \begin{column}{0.48\textwidth}
+             \begin{alertblock}{Key Details}
                 \small
                 Uses \textbf{UDP ports 67} (server) and \textbf{68} (client). Client-server model with lease-based addressing.
             \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
+
             \begin{center}
                 \begin{tikzpicture}[scale=0.7]
                     % Manual config (crossed out)
@@ -919,7 +919,7 @@
             % D - Discover (broadcast)
             \draw[-{Stealth}, dhcppurple, line width=2pt] (0.3,2.7) -- (8.7,2.4);
             \node[fill=dhcppurple!20, rounded corners, font=\small\bfseries] at (4.5,2.9) {1. \textbf{D}iscover};
-            \node[font=\tiny, dhcppurple] at (4.5,2.2) {Broadcast: ``Anyone have an IP?''};
+            \node[font=\tiny, dhcppurple] at (4.5,3.4) {Broadcast: ``Anyone have an IP?''};
             
             % O - Offer
             \draw[-{Stealth}, networkgreen, line width=2pt] (8.7,1.8) -- (0.3,1.5);
@@ -1355,7 +1355,7 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{block}{Troubleshooting Commands}
-                \small
+                \scriptsize
                 \textbf{Windows:}
                 \begin{itemize}\setlength{\itemsep}{1pt}
                     \item \texttt{ipconfig /release}
@@ -1364,6 +1364,7 @@
                 \end{itemize}
                 
                 \vspace{0.2em}
+                \scriptsize
                 \textbf{Linux:}
                 \begin{itemize}\setlength{\itemsep}{1pt}
                     \item \texttt{dhclient -r} (release)
@@ -1420,8 +1421,8 @@
                     
                     % RA message
                     \draw[-{Stealth}, networkgreen, line width=1.5pt] (0.5,2.3) -- (4,1.5);
-                    \node[font=\tiny, networkgreen, align=center] at (2.5,2.3) {Router\\Advertisement};
-                    \node[font=\tiny, networkgreen] at (2.5,1.5) {Prefix: 2001:db8::/64};
+                    \node[font=\tiny, networkgreen, align=center] at (2.5,2.6) {Router\\Advertisement};
+                    \node[font=\tiny, networkgreen] at (2.5,1.3) {Prefix: 2001:db8::/64};
                     
                     % Host
                     \node[pc] (pc) at (4.5,0.5) {\iconpc[0.5cm]};
@@ -1434,8 +1435,8 @@
                     \draw[-{Stealth}, rctcblue] (4.5,0) -- (4.5,-0.5) -- (4,-0.8);
                     
                     % Labels
-                    \node[font=\tiny, rctcblue] at (0.5,-0.8) {Prefix};
-                    \node[font=\tiny, aborange] at (4.5,-0.8) {EUI-64};
+                    \node[font=\tiny, rctcblue] at (0.5,-1.3) {Prefix};
+                    \node[font=\tiny, aborange] at (4.5,-1.3) {EUI-64};
                 \end{tikzpicture}
             \end{center}
             
@@ -2012,11 +2013,6 @@
                 \end{itemize}
             \end{block}
             
-            \vspace{0.2em}
-            \begin{exampleblock}{Next Module}
-                \small
-                Module 7: Network Security Fundamentals
-            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
