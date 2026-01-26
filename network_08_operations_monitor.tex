@@ -1,7 +1,5 @@
 % =============================================================================
-% Module 8.0: Network Operations and Monitoring
-% Network+ Course - LaTeX Beamer Presentation
-% Theme: Shrek
+% Module 8.0: Network Operations (Master Preamble)
 % =============================================================================
 
 \documentclass[aspectratio=169, 11pt]{beamer}
@@ -18,7 +16,8 @@
 \definecolor{aborange}{RGB}{230, 120, 0}
 \definecolor{tcpblue}{RGB}{30, 100, 180}
 \definecolor{udpgreen}{RGB}{50, 160, 80}
-\definecolor{ogregreen}{RGB}{34, 139, 34}
+\definecolor{ogregreen}{RGB}{34, 139, 34}   % Shrek Green
+\definecolor{swampbrown}{RGB}{101, 67, 33}  % Mud Brown
 
 % Set theme colors
 \setbeamercolor{palette primary}{bg=rctcblue, fg=white}
@@ -31,13 +30,13 @@
 \setbeamercolor{block body}{bg=rctcblue!5}
 \setbeamercolor{block title alerted}{bg=alertred, fg=white}
 \setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=networkgreen, fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!5}
+\setbeamercolor{block title example}{bg=ogregreen, fg=white}
+\setbeamercolor{block body example}{bg=ogregreen!10}
 
 % Packages
 \usepackage{tikz}
-\usepackage{booktabs}
 \usepackage{fontawesome5}
+\usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{colortbl}
@@ -46,18 +45,11 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-% TikZ libraries
+% TikZ libraries (Includes 'shapes.symbols' for the cloud shape)
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
                 backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
 
-% Connection styles
-\tikzstyle{ethernet} = [draw, line width=1.5pt, color=rctcblue, -{Stealth}]
-\tikzstyle{process} = [draw=rctcblue, fill=rctcblue!15, rounded corners,
-                       minimum width=1.8cm, minimum height=0.5cm, font=\footnotesize, align=center]
-\tikzstyle{decision} = [draw=aborange, fill=aborange!15, diamond, aspect=2,
-                        minimum width=1.2cm, font=\footnotesize, align=center]
-
-% Icon commands using FontAwesome
+% --- ICON DEFINITIONS (RESTORED) ---
 \newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
 \newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
 \newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
@@ -80,1625 +72,1891 @@
 \newcommand{\iconlog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clipboard-list}}}
 \newcommand{\iconeye}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{eye}}}
 
-% Listings style
-\lstset{
-    basicstyle=\ttfamily\scriptsize,
-    breaklines=true,
-    frame=single,
-    backgroundcolor=\color{rctcblue!5},
-    rulecolor=\color{rctcblue!50}
-}
-
 % Document info
-\title[Module 8.0]{Module 8.0: Network Operations and Monitoring}
-\subtitle{Network+ Certification Course}
-\author{Brendan Shea, PhD}
-\date{Introduction to Networking}
+\title[Module 8.0]{Module 8.0: Network Operations}
+\subtitle{Maintaining the Swamp (Network+)}
+\author{Introduction to Networking}
 \institute{RCTC}
+\date{Fall 2025}
 
 \begin{document}
+% =============================================================================
+% Module 8.0: Slides 1-8 (Refined: Detail + Theme)
+% =============================================================================
 
 % SLIDE 1: Title
 \begin{frame}
     \titlepage
     \begin{center}
-        \begin{tikzpicture}[scale=0.65]
-            \node (monitor) at (0, 0) {\iconserver[0.5cm]};
-            \node[font=\tiny, below=0.05cm of monitor] {NMS};
-            \node (r1) at (-2.5, 1.5) {\iconrouter[0.4cm]};
-            \node (sw1) at (0, 2) {\iconswitch[0.4cm]};
-            \node (s1) at (2.5, 1.5) {\iconserver[0.4cm]};
-            \draw[dashed, ogregreen, -{Stealth}] (monitor) -- (r1);
-            \draw[dashed, ogregreen, -{Stealth}] (monitor) -- (sw1);
-            \draw[dashed, ogregreen, -{Stealth}] (monitor) -- (s1);
+        \begin{tikzpicture}[scale=0.8]
+            % The Swamp
+            \node[cloud, draw=ogregreen, fill=ogregreen!20, minimum width=3.5cm, minimum height=2.5cm] (swamp) at (0,0) {};
+            \node[below=0.1cm, text=ogregreen, font=\bfseries] at (swamp.south) {The Network Swamp};
+            
+            % Admin (Shrek)
+            \node (shrek) at (-3.5, 0) {\faIcon[regular]{user}};
+            \node[below, font=\tiny, align=center] at (-3.5, -0.5) {NetAdmin\\(Shrek)};
+            
+            % Tools (Donkey)
+            \node (tool) at (3.5, 0) {\icontools[0.8cm]};
+            \node[below, font=\tiny, align=center] at (3.5, -0.5) {Ops Tools\\(Donkey)};
+            
+            % Arrows indicating management
+            \draw[->, thick, ogregreen] (shrek) -- (swamp) node[midway, above, font=\tiny] {Manage};
+            \draw[->, thick, rctcblue] (tool) -- (swamp) node[midway, above, font=\tiny] {Monitor};
         \end{tikzpicture}
     \end{center}
 \end{frame}
 
-% SLIDE 2: Module Overview
-\begin{frame}{Module 8 Learning Objectives}
+% SLIDE 2: Objectives (Detailed)
+\begin{frame}{Our Mission: Taming the Swamp}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{1. Documentation \& Policies}
+            \begin{block}{1. Operations (The Chores)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Configuration management
-                    \item Change management processes
-                    \item Physical \& logical diagrams
-                    \item Asset and lifecycle management
-                \end{itemize}
-            \end{block}
-            \begin{block}{2. Discovery \& Monitoring}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Network discovery (nmap)
-                    \item Performance monitoring
-                    \item Availability and configuration checks
+                \begin{itemize}
+                    \item \textbf{Documentation}: Creating Physical and Logical maps so we don't get lost.
+                    \item \textbf{Configuration Mgmt}: Ensuring every switch speaks the same language (Standardization).
+                    \item \textbf{Backups}: "Dragon Insurance" (Disaster Recovery).
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{3. SNMP \& Event Management}
+            \begin{block}{2. Monitoring (The Watch)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item SNMP agents, versions, security
-                    \item Syslog and centralized logging
-                    \item SIEM and event correlation
-                \end{itemize}
-            \end{block}
-            \begin{block}{4. Traffic Analysis}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Packet capture (tcpdump, Wireshark)
-                    \item Flow data (NetFlow, sFlow)
-                    \item QoS and traffic shaping
+                \begin{itemize}
+                    \item \textbf{SNMP}: The protocol for checking device health (CPU, Temp).
+                    \item \textbf{Syslog}: Centralized diary of network events.
+                    \item \textbf{NetFlow}: Analyzing who is talking to whom (Traffic patterns).
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        \textit{"Networks are like onions. They have layers (OSI Layers!)."}
+    \end{center}
 \end{frame}
 
-% SLIDE 3: Why Documentation Matters
-\begin{frame}{Section 8.1: Why Documentation Matters}
+% SLIDE 3: Documentation
+\begin{frame}{8.1 Documentation: Maps for the Kingdom}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{The Swamp Network Problem}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Why Document?}
                 \footnotesize
-                Without documentation, networks become \textbf{unmaintainable swamps}:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item No one knows what's connected where
-                    \item Changes break unknown dependencies
-                    \item Troubleshooting takes hours instead of minutes
-                    \item New staff can't understand the environment
-                \end{itemize}
+                Without a map, the network is a murky swamp. If the Admin leaves, the knowledge leaves with them!
             \end{block}
-            \begin{alertblock}{Key Takeaway}
+            \begin{exampleblock}{Two Types of Maps}
                 \footnotesize
-                Good documentation is the difference between a \textbf{manageable network} and a \textbf{chaotic swamp}!
-            \end{alertblock}
+                \begin{enumerate}
+                    \item \textbf{Physical Diagram}:
+                    \begin{itemize}
+                        \item \textit{Shows:} Racks, Cabling, Ports.
+                        \item \textit{Use:} "Where do I plug this cable?"
+                    \end{itemize}
+                    \item \textbf{Logical Diagram}:
+                    \begin{itemize}
+                        \item \textit{Shows:} IP Addresses, VLANs, Data Flow.
+                        \item \textit{Use:} "Why can't VLAN 10 ping VLAN 20?"
+                    \end{itemize}
+                \end{enumerate}
+            \end{exampleblock}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.45\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node[font=\footnotesize] at (-2, 3) {\textbf{Undocumented}};
-                    \draw[gray, very thick, loosely dashed] (-3.5, -0.5) -- (-2.5, 1.5) -- (-0.5, 0.5) -- (-3, 1) -- (-1.5, 2);
-                    \node[font=\tiny, alertred] at (-2, -1) {???};
-                    \draw[-{Stealth}, very thick, ogregreen] (0, 1) -- (1.5, 1);
-                    \node[font=\footnotesize] at (4, 3) {\textbf{Documented}};
-                    \node at (4, 2) {\iconrouter[0.3cm]};
-                    \node at (3, 1) {\iconswitch[0.3cm]};
-                    \node at (5, 1) {\iconswitch[0.3cm]};
-                    \draw[rctcblue] (4,1.7) -- (3,1.3);
-                    \draw[rctcblue] (4,1.7) -- (5,1.3);
+                \begin{tikzpicture}[scale=0.65]
+                    % Messy Network
+                    \node[font=\bfseries\tiny, text=swampbrown] at (0, 3.5) {Undocumented Swamp};
+                    \node (r1) at (-1, 2) {\iconrouter[0.4cm]};
+                    \node (s1) at (1, 2.5) {\iconswitch[0.4cm]};
+                    \draw[thick, swampbrown, bend left] (r1) -- (s1);
+                    \node[font=\tiny, text=red] at (0, 2.2) {???};
+
+                    % Clean Network
+                    \node[font=\bfseries\tiny, text=ogregreen] at (4, 3.5) {Documented Castle};
+                    \node[draw, rectangle, fill=white, align=left, font=\tiny] at (4, 2) {
+                        \textbf{Logical Map:}\\
+                        R1: 192.168.1.1\\
+                        SW1: 192.168.1.2\\
+                        \textbf{Physical Map:}\\
+                        Rack 2, U14\\
+                        Port G0/1
+                    };
                 \end{tikzpicture}
             \end{center}
-            \begin{exampleblock}{Documentation Types}
-                \footnotesize
-                Configuration management, change management, asset inventory, network diagrams, IPAM
-            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 4: Configuration Management
-\begin{frame}{Configuration Management}
+\begin{frame}{Configuration Management: Avoiding Chaos}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{What is Configuration Management?}
+            \begin{block}{The Concept}
                 \footnotesize
-                The practice of maintaining \textbf{consistent, documented device configurations} across your network infrastructure.
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Baseline configurations (templates)
-                    \item Version control for changes
-                    \item Automated compliance checking
-                    \item Rollback capabilities
-                \end{itemize}
+                Managing device settings centrally to ensure consistency.
             \end{block}
-            \begin{alertblock}{Why It Matters}
+            \begin{alertblock}{Key Terms}
                 \footnotesize
-                Configuration drift causes outages! Consistent configs mean predictable behavior.
+                \begin{itemize}
+                    \item \textbf{Baseline}: The "Golden Standard." How a device \textit{should} be configured (Security rules, VLANs).
+                    \item \textbf{Drift}: When a device slowly changes from the baseline over time (e.g., someone makes a quick manual change and forgets to document it).
+                \end{itemize}
             \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Configuration Management Elements}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Time 0
+                    \node[font=\tiny] at (0, 3) {Day 1 (Baseline)};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (0, 2) {Switch A\\Ver 1.0};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (2.5, 2) {Switch B\\Ver 1.0};
+                    
+                    % Time 1
+                    \node[font=\tiny] at (0, 1) {Day 100 (Drift!)};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (0, 0) {Switch A\\Ver 1.0};
+                    \node[draw, fill=alertred!20, align=center, font=\tiny] at (2.5, 0) {Switch B\\Ver \textbf{1.2}*};
+                    
+                    \draw[->, thick, gray] (1.25, 1.8) -- (1.25, 0.2);
+                    \node[right, font=\tiny, text=red] at (2.8, 1) {Manual Hack!};
+                \end{tikzpicture}
+            \end{center}
+            \begin{block}{The Solution}
                 \footnotesize
-                \begin{tabular}{@{}l l@{}}
-                    \toprule
-                    \textbf{Element} & \textbf{Purpose} \\
-                    \midrule
-                    Baseline & Standard reference \\
-                    Version Control & Track all changes \\
-                    Validation & Check compliance \\
-                    Backup & Enable recovery \\
-                    Templates & Consistent deploys \\
-                    \bottomrule
-                \end{tabular}
+                Use automation tools (Ansible/Python) to force devices back to the Baseline!
             \end{block}
-            \begin{exampleblock}{Common Tools}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 5: Backups
+\begin{frame}{Backups: Dragon Insurance}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{What to Backup?}
                 \footnotesize
-                \textbf{RANCID}, \textbf{Oxidized}, SolarWinds NCM, Ansible, Git for network configs
+                It's not just files. You need:
+                \begin{enumerate}
+                    \item \textbf{Configuration}: The `running-config` text file.
+                    \item \textbf{OS Image}: The IOS/Firmware file.
+                    \item \textbf{State Data}: ARP tables, MAC tables (for forensics).
+                \end{enumerate}
+            \end{block}
+            \begin{alertblock}{The 3-2-1 Rule}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{3} copies of data.
+                    \item On \textbf{2} different media types (Disk/Cloud).
+                    \item Keep \textbf{1} copy off-site (Far Far Away).
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Production
+                    \node (prod) at (0, 2) {\iconserver[0.6cm]};
+                    \node[below, font=\tiny] at (0, 1.6) {Live Config};
+                    
+                    % Local Backup
+                    \node (backup) at (3, 2) {\faIcon{hdd}};
+                    \node[below, font=\tiny] at (3, 1.6) {USB/TFTP};
+                    
+                    % Cloud Backup
+                    \node (cloud) at (1.5, 4) {\iconcloud[0.6cm]};
+                    \node[above, font=\tiny] at (1.5, 4.4) {Cloud};
+                    
+                    \draw[->, thick, rctcblue] (prod) -- (backup) node[midway, below, font=\tiny] {Copy 1};
+                    \draw[->, thick, rctcblue] (backup) -- (cloud) node[midway, right, font=\tiny] {Copy 2};
+                    
+                    % Fire
+                    \node[text=red] at (-1, 2.5) {\faIcon{fire}};
+                    \node[font=\tiny, text=red] at (-1.5, 2.8) {Dragon!};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 6: Change Management
+\begin{frame}{Change Management: The Royal Decree}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Why we need Rules}
+                \footnotesize
+                Ogres are clumsy. If you smash a core switch without a plan, the kingdom goes dark.
+                \textbf{Change Mgmt} minimizes risk.
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, node distance=0.8cm]
+                    % Flowchart
+                    \node[draw, fill=white, rounded corners, font=\tiny] (req) {1. Request};
+                    \node[draw, fill=white, rounded corners, font=\tiny, right=of req] (imp) {2. Impact Analysis};
+                    \node[draw, fill=ogregreen!20, rounded corners, font=\tiny, right=of imp] (app) {3. Approval (CAB)};
+                    \node[draw, fill=white, rounded corners, font=\tiny, below=0.5cm of req] (do) {4. Implement};
+                    \node[draw, fill=white, rounded corners, font=\tiny, right=of do] (back) {5. Rollback?};
+                    
+                    \draw[->] (req) -- (imp);
+                    \draw[->] (imp) -- (app);
+                    \draw[->, dashed] (app) -- (do);
+                    \draw[->] (do) -- (back);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Critical Component: Rollback}
+                \footnotesize
+                Before you change \textit{anything}, you must answer:
+                \textbf{"How do I undo this if it breaks the network?"}
+            \end{block}
+            \begin{exampleblock}{Change Types}
+                \footnotesize
+                \textbf{Standard}: Routine (Reset Password).\\
+                \textbf{Normal}: Risky (New VLAN) -> Needs Approval.\\
+                \textbf{Emergency}: Fix it NOW! (Firewall down).
             \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 5: Network Device Backup Management
-\begin{frame}{Network Device Backup Management}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{What to Backup}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Startup-config}: Saved configuration
-                    \item \textbf{Running-config}: Active configuration
-                    \item \textbf{Firmware/IOS images}: Operating system
-                    \item \textbf{Certificates \& keys}: Security material
-                    \item \textbf{License files}: Entitlements
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{The 3-2-1 Rule}
-                \footnotesize
-                \textbf{3} copies of data, on \textbf{2} different media types, with \textbf{1} copy offsite
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.65]
-                    \node (device) at (0, 2) {\iconrouter[0.5cm]};
-                    \node[font=\tiny] at (0, 1.4) {Network Device};
-                    \node (backup) at (3, 2) {\iconserver[0.4cm]};
-                    \node[font=\tiny] at (3, 1.4) {Backup Server};
-                    \node (cloud) at (5.5, 2) {\iconcloud[0.4cm]};
-                    \node[font=\tiny] at (5.5, 1.4) {Offsite};
-                    \draw[-{Stealth}, tcpblue, line width=1pt] (device) -- (backup) node[midway, above, font=\tiny] {TFTP/SCP};
-                    \draw[-{Stealth}, ogregreen, line width=1pt] (backup) -- (cloud) node[midway, above, font=\tiny] {Sync};
-                \end{tikzpicture}
-            \end{center}
-            \begin{block}{Backup Schedule}
-                \footnotesize
-                \begin{tabular}{@{}l l@{}}
-                    \toprule
-                    \textbf{Frequency} & \textbf{What} \\
-                    \midrule
-                    On change & Running-config \\
-                    Daily & All configs \\
-                    Weekly & Firmware images \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 6: Change Management Process
-\begin{frame}{Change Management Process}
-    \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.85, node distance=1cm]
-                    \node[process] (req) at (0, 0) {Request};
-                    \node[process] (rev) at (2.2, 0) {Review};
-                    \node[decision] (app) at (4.4, 0) {Approve?};
-                    \node[process] (sched) at (6.6, 0) {Schedule};
-                    \node[process] (impl) at (3.3, -1.5) {Implement};
-                    \node[process] (doc) at (5.5, -1.5) {Document};
-                    \draw[-{Stealth}] (req) -- (rev);
-                    \draw[-{Stealth}] (rev) -- (app);
-                    \draw[-{Stealth}] (app) -- node[above, font=\tiny] {Yes} (sched);
-                    \draw[-{Stealth}] (sched) -- (impl);
-                    \draw[-{Stealth}] (impl) -- (doc);
-                \end{tikzpicture}
-            \end{center}
-            \begin{block}{Change Types}
-                \footnotesize
-                \begin{tabular}{@{}l l l@{}}
-                    \toprule
-                    \textbf{Type} & \textbf{Example} & \textbf{Approval} \\
-                    \midrule
-                    Standard & Password reset & Pre-approved \\
-                    Normal & VLAN addition & CAB review \\
-                    Emergency & Security patch & Expedited \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-        \end{column}
-        \begin{column}{0.42\textwidth}
-            \begin{block}{CAB = Change Advisory Board}
-                \footnotesize
-                Team that reviews and approves changes:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Assesses risk and impact
-                    \item Schedules maintenance windows
-                    \item Ensures rollback plans exist
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{Key Principle}
-                \footnotesize
-                \textbf{No undocumented changes!} Every change needs a ticket, approval, and verification.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 7: Case Study - Donkey's Unauthorized Change
-\begin{frame}{Case Study: Donkey's Unauthorized Network Change}
-    \begin{alertblock}{``I'm Making Waffles... and WiFi!''}
+% SLIDE 7: Case Study - Donkey's Waffles
+\begin{frame}{Case Study: Donkey's Unauthorized Wi-Fi}
+    \begin{alertblock}{Scenario: "I'm making Waffles... and Wi-Fi!"}
         \footnotesize
-        Donkey decides to ``help'' by adding a rogue wireless access point to the Swamp Castle network so visitors can connect more easily. He plugs it directly into a core switch port.
+        Donkey wants to stream music in the Swamp. He buys a cheap \$20 Router from Best Buy and plugs it into the main Corporate Switch.
         
         \vspace{0.2em}
-        The next morning, Lord Farquaad's security team detects multiple unknown devices on the network. Investigation reveals the unsecured AP has been broadcasting ``SwampCastle-Guest'' with no password, and several unauthorized users have connected---including someone running network scans.
-        
-        \vspace{0.2em}
-        \textbf{Current situation:} Rogue AP on VLAN 1 (management VLAN), no encryption, unknown devices accessing internal resources.
+        \textbf{The Result:}
+        \begin{itemize}
+            \item The Router broadcasts "Donkey-Guest" (Open/No Password).
+            \item The Router starts handing out bad IP addresses (Rogue DHCP).
+            \item Lord Farquaad's spies connect to it and access the internal Castle network.
+        \end{itemize}
     \end{alertblock}
-    \begin{block}{Review Questions}
+    \begin{block}{Discussion}
         \footnotesize
-        \begin{enumerate}\setlength{\itemsep}{0pt}
-            \item What change management steps did Donkey skip?
-            \item What documentation should exist for wireless additions?
-            \item How could this security breach have been prevented?
+        \begin{enumerate}
+            \item Which Change Management steps did Donkey skip?
+            \item What technical control could have stopped this immediately?
         \end{enumerate}
     \end{block}
 \end{frame}
 
-% SLIDE 8: Case Study Solution - Donkey's Change
-\begin{frame}{Case Study Solution: Donkey's Unauthorized Change}
-    \begin{exampleblock}{Solution: ``That'll Do, Donkey---After Proper Approval!''}
+% SLIDE 8: Case Study Solution
+\begin{frame}{Case Study Solution}
+    \begin{exampleblock}{The Fix}
         \footnotesize
-        \begin{enumerate}\setlength{\itemsep}{1pt}
-            \item Donkey skipped \textbf{all} steps: no request, no review, no approval, no documentation
-            \item Required docs: Change request, security review, network diagram update, IPAM entry
-            \item Prevention: \textbf{Port security}, \textbf{802.1X}, \textbf{change management policy training}
-        \end{enumerate}
+        \begin{itemize}
+            \item \textbf{Process Failure}: Donkey skipped \textbf{Request}, \textbf{Impact Analysis}, and \textbf{Approval}. This was an "Unauthorized Change."
+            \item \textbf{Technical Fix}: Enable \textbf{Port Security} or \textbf{NAC (Network Access Control)}.
+            \item \textbf{Port Security}: Limits how many MAC addresses can use a port. (Donkey's router + all his guests = violation!).
+        \end{itemize}
     \end{exampleblock}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.75]
-                    \node[font=\footnotesize, alertred] at (0, 3) {\textbf{Donkey's Way}};
-                    \node[process, fill=alertred!20] (idea) at (0, 2) {Idea};
-                    \node[process, fill=alertred!20] (do) at (0, 0.5) {Do It!};
-                    \draw[-{Stealth}, alertred, line width=1.5pt] (idea) -- (do);
-                    \node[font=\footnotesize, ogregreen] at (5.5, 3) {\textbf{Correct Way}};
-                    \node[process, fill=ogregreen!15, minimum width=1.2cm] (r) at (3.8, 2) {Request};
-                    \node[process, fill=ogregreen!15, minimum width=1.2cm] (a) at (5.5, 2) {Review};
-                    \node[process, fill=ogregreen!15, minimum width=1.2cm] (d) at (7.2, 2) {Approve};
-                    \draw[-{Stealth}, ogregreen] (r) -- (a);
-                    \draw[-{Stealth}, ogregreen] (a) -- (d);
-                \end{tikzpicture}
-            \end{center}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Key Lesson}
-                \footnotesize
-                Even \textbf{helpful} changes can cause security breaches. Change management exists to protect the network---not to slow people down!
-            \end{alertblock}
-        \end{column}
-    \end{columns}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.7]
+            \node (switch) at (0, 2) {\iconswitch[0.8cm]};
+            \node (donkey) at (0, 0) {\faIcon{wifi}};
+            \node[below, font=\tiny] at (0, -0.4) {Donkey's AP};
+            
+            % Port Security
+            \draw[thick, red] (0, 1.5) -- (0, 0.5);
+            \node[draw, circle, fill=red, text=white, font=\bfseries\tiny] at (0, 1) {X};
+            \node[right, font=\tiny, text=red] at (0.2, 1) {Port Security: Shutdown!};
+        \end{tikzpicture}
+    \end{center}
 \end{frame}
 
-% SLIDE 9: Asset Inventory Documentation
-\begin{frame}{Asset Inventory Documentation}
+
+% =============================================================================
+% Module 8.0: Slides 9-20 (Inventory, Lifecycle, IPAM, Discovery)
+% =============================================================================
+
+% SLIDE 9: Asset Inventory
+\begin{frame}{8.1 Asset Inventory: Counting the Swamp Creatures}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{What to Track}
+            \begin{block}{The Problem}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Hardware}: Routers, switches, servers, APs
-                    \item \textbf{Software}: OS versions, licenses, patches
-                    \item \textbf{Location}: Rack, room, building, site
-                    \item \textbf{Ownership}: Department, cost center
-                    \item \textbf{Lifecycle}: Purchase, warranty, EOL dates
-                \end{itemize}
+                If you don't know what you own, you can't patch it, and you certainly can't secure it.
             \end{block}
-            \begin{alertblock}{Why Track Assets?}
+            \begin{exampleblock}{What to Track (The Tags)}
                 \footnotesize
-                Security (know what's on network), compliance (license audits), planning (budget/refresh), troubleshooting
-            \end{alertblock}
+                \begin{itemize}
+                    \item \textbf{Hardware}: "Switch-01" (Serial \#).
+                    \item \textbf{Location}: "Swamp Hut, Rack 2".
+                    \item \textbf{Owner}: "Donkey".
+                    \item \textbf{Lifecycle}: "Purchase Date" vs "Death Date".
+                \end{itemize}
+            \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Asset Inventory Fields}
-                \footnotesize
-                \begin{tabular}{@{}l l@{}}
-                    \toprule
-                    \textbf{Field} & \textbf{Example} \\
-                    \midrule
-                    Asset Tag & SW-CORE-001 \\
-                    Hostname & swamp-sw-01 \\
-                    Serial Number & FTX1234ABCD \\
-                    MAC Address & AA:BB:CC:DD:EE:FF \\
-                    IP Address & 10.1.1.2 \\
-                    Location & Swamp DC, Rack 3 \\
-                    Purchase Date & 2024-01-15 \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Asset Tag Visual
+                    \node[draw, fill=white, drop shadow, minimum width=3cm, minimum height=4cm, rotate=5] (tag) at (0,0) {};
+                    \node[above=1.5cm, font=\bfseries] at (tag.center) {ASSET TAG};
+                    \node[below=1.5cm, font=\tiny] at (tag.center) {Property of Farquaad};
+                    
+                    % Details (Fixed alignment)
+                    \node[font=\tiny, align=left] at (0, 0) {
+                        \textbf{ID:} SW-CORE-01\\
+                        \textbf{IP:} 10.1.1.1\\
+                        \textbf{Loc:} Dungeon\\
+                        \textbf{Supp:} Active
+                    };
+                    
+                    % Barcode representation
+                    \foreach \x in {-1, -0.8, -0.5, -0.3, 0, 0.2, 0.4, 0.8, 1}
+                        \draw[fill=black] (\x, -1) rectangle (\x+0.1, -0.5);
+                \end{tikzpicture}
+            \end{center}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 10: Lifecycle Management
-\begin{frame}{Lifecycle Management \& Decommissioning}
+\begin{frame}{Lifecycle Management: The Circle of Life}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
+            \begin{block}{Hardware has a lifespan}
+                \footnotesize
+                Like onions (and ogres), hardware gets old and smelly.
+            \end{block}
             \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \draw[-{Stealth}, thick] (0, 0) -- (10, 0);
-                    \fill[tcpblue] (1, 0) circle (4pt);
-                    \node[font=\tiny, above] at (1, 0.2) {Procure};
-                    \fill[ogregreen] (3, 0) circle (4pt);
-                    \node[font=\tiny, above] at (3, 0.2) {Deploy};
-                    \fill[networkgreen] (5, 0) circle (4pt);
-                    \node[font=\tiny, above] at (5, 0.2) {Operate};
-                    \fill[aborange] (7, 0) circle (4pt);
-                    \node[font=\tiny, above] at (7, 0.2) {EoS};
-                    \fill[alertred] (9, 0) circle (4pt);
-                    \node[font=\tiny, above] at (9, 0.2) {Decom};
+                \begin{tikzpicture}[scale=0.7, transform shape]
+                    % Timeline
+                    \draw[->, thick, gray] (0,0) -- (8,0);
+                    
+                    % Milestones
+                    \fill[tcpblue] (1,0) circle (3pt) node[above=0.2cm] {Buy};
+                    \fill[ogregreen] (3,0) circle (3pt) node[above=0.2cm] {Deploy};
+                    \fill[orange] (5,0) circle (3pt) node[above=0.2cm] {EOL};
+                    \fill[alertred] (7,0) circle (3pt) node[above=0.2cm] {Dead};
+                    
+                    % Labels (Fixed alignment)
+                    \node[align=center, font=\tiny] at (3, -1) {\textbf{Production}\\(It Works)};
+                    \node[align=center, font=\tiny, text=alertred] at (5, -1) {\textbf{Risk Zone}\\(No Patches!)};
+                    \node[align=center, font=\tiny] at (7, -1) {\textbf{Disposal}\\(Wipe Data)};
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{Key Lifecycle Terms}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{EoS} (End of Sale): No longer sold
-                    \item \textbf{EoSW} (End of Software): No new features
-                    \item \textbf{EoL} (End of Life): No support/patches
-                    \item \textbf{Decommission}: Proper removal
-                \end{itemize}
-            \end{block}
         \end{column}
         \begin{column}{0.42\textwidth}
-            \begin{block}{Decommissioning Checklist}
+            \begin{alertblock}{The "EoL" Danger}
                 \footnotesize
-                \begin{enumerate}\setlength{\itemsep}{0pt}
-                    \item Backup final configuration
-                    \item Document current connections
-                    \item Notify affected users
-                    \item \textbf{Wipe all data securely}
-                    \item Revoke certificates/keys
-                    \item Update inventory/diagrams
-                \end{enumerate}
-            \end{block}
-            \begin{alertblock}{Security Warning}
-                \footnotesize
-                Old devices contain configs, credentials, and keys. \textbf{Always sanitize before disposal!}
+                \textbf{End of Life (EoL)} means the vendor stops making security patches.
+                If you keep an EoL firewall, you are inviting the Dragon in.
             \end{alertblock}
+            \begin{exampleblock}{Decommissioning}
+                \footnotesize
+                \textbf{Wipe the disk!} Don't sell a router on eBay with the Castle passwords still on it.
+            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 11: Physical Network Diagrams
-\begin{frame}{Physical Network Diagrams}
+% =============================================================================
+% SLIDE 11: Physical Network Diagrams (Detailed Rack View)
+% =============================================================================
+\begin{frame}{Physical Diagrams: The "Real World" Map}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{What Physical Diagrams Show}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{What it shows (Layer 1)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Actual device locations} (racks, rooms)
-                    \item \textbf{Cable runs} with labels and types
-                    \item \textbf{Port assignments} (Gi0/1 to Patch 24)
-                    \item \textbf{Rack elevations} and power connections
-                    \item Physical redundancy paths
+                Used when you need to walk into the server room and touch something.
+                \begin{itemize}
+                    \item \textbf{Location}: Building, Room, Rack Number.
+                    \item \textbf{Hardware}: Specific models, "U" positions.
+                    \item \textbf{Cabling}: Which patch port goes to which switch port?
                 \end{itemize}
             \end{block}
-            \begin{exampleblock}{Use Cases}
+            \begin{exampleblock}{Scenario}
                 \footnotesize
-                Technician dispatches, cable tracing, capacity planning, disaster recovery
+                \textit{"Donkey, go to the Dungeon Server Room, Rack 2. Move the yellow cable from Switch 1, Port 5 to Port 6."}
             \end{exampleblock}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.52\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.6]
-                    \draw[thick] (0, 0) rectangle (3, 4);
-                    \node[font=\tiny] at (1.5, 4.3) {\textbf{Rack A1}};
-                    \draw[fill=rctcblue!20] (0.2, 3.2) rectangle (2.8, 3.8);
-                    \node[font=\tiny] at (1.5, 3.5) {Router};
-                    \draw[fill=tcpblue!20] (0.2, 2.4) rectangle (2.8, 3);
-                    \node[font=\tiny] at (1.5, 2.7) {Switch 1};
-                    \draw[fill=tcpblue!20] (0.2, 1.6) rectangle (2.8, 2.2);
-                    \node[font=\tiny] at (1.5, 1.9) {Switch 2};
-                    \draw[fill=gray!20] (0.2, 0.2) rectangle (2.8, 1.4);
-                    \node[font=\tiny] at (1.5, 0.8) {Patch Panel};
-                    \draw[-{Stealth}, aborange] (3, 3.5) -- (4.5, 3.5) node[right, font=\tiny] {WAN-01};
+                    % Rack Frame
+                    \draw[fill=gray!20, thick] (0,0) rectangle (6, 5.5);
+                    \node[font=\bfseries\tiny] at (3, 5.7) {Rack 2 (Dungeon)};
+                    
+                    % U markers
+                    \foreach \y/\u in {0.5/1, 1.5/2, 2.5/3, 3.5/4, 4.5/5}
+                        \node[font=\tiny, gray, anchor=east] at (0, \y) {U\u};
+
+                    % Patch Panel (U5)
+                    \draw[fill=gray!40] (0.2, 4.2) rectangle (5.8, 4.8);
+                    \node[font=\tiny] at (3, 4.5) {Patch Panel A (Offices)};
+                    \foreach \x in {1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5}
+                        \draw[fill=black] (\x, 4.3) rectangle (\x+0.2, 4.4);
+
+                    % Switch (U4)
+                    \draw[fill=tcpblue!20] (0.2, 3.2) rectangle (5.8, 3.8);
+                    \node[font=\tiny] at (3, 3.5) {Switch 1 (Access)};
+                    \foreach \x in {1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5}
+                        \draw[fill=white] (\x, 3.3) rectangle (\x+0.2, 3.4);
+
+                    % Cable Management (U3)
+                    \draw[fill=black!80] (0.2, 2.2) rectangle (5.8, 2.8);
+                    \node[font=\tiny, text=white] at (3, 2.5) {Cable Mgmt};
+
+                    % Server (U1-U2)
+                    \draw[fill=ogregreen!20] (0.2, 0.2) rectangle (5.8, 1.8);
+                    \node[font=\tiny] at (3, 1) {File Server (Shrek-NAS)};
+
+                    % Cables (Curved Bezier lines)
+                    \draw[thick, ogregreen] (1.1, 4.3) .. controls (1.1, 3.9) and (1.1, 3.8) .. (1.1, 3.4);
+                    \draw[thick, alertred] (2.1, 4.3) .. controls (2.1, 3.9) and (2.6, 3.8) .. (2.6, 3.4);
+                    
+                    % Callout
+                    \node[right, font=\tiny, text=alertred] at (5.8, 4) {$\leftarrow$ Port A3 to SW1-04};
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{Diagram Elements}
-                \footnotesize
-                Device icons, cable lines, port labels, physical location markers
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 12: Logical Network Diagrams
-\begin{frame}{Logical Network Diagrams}
+% =============================================================================
+% SLIDE 12: Logical Network Diagrams (Detailed Subnet View)
+% =============================================================================
+\begin{frame}{Logical Diagrams: The "Data Flow" Map}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{What Logical Diagrams Show}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{What it shows (Layer 3)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{IP addressing} and subnets
-                    \item \textbf{VLAN assignments}
-                    \item \textbf{Routing relationships}
-                    \item \textbf{Logical groupings} (not physical)
-                    \item Layer 3 topology
+                Used when you need to configure routing or firewalls.
+                \begin{itemize}
+                    \item \textbf{Addressing}: IP Subnets / CIDR.
+                    \item \textbf{Grouping}: VLANs, Trust Zones.
+                    \item \textbf{Routing}: Gateways, WAN links.
                 \end{itemize}
             \end{block}
-            \begin{block}{Physical vs Logical}
+            \begin{alertblock}{Comparison}
                 \footnotesize
-                \begin{tabular}{@{}l l@{}}
-                    \toprule
-                    \textbf{Physical} & \textbf{Logical} \\
-                    \midrule
-                    Where things are & How things connect \\
-                    Cable paths & IP subnets \\
-                    Rack locations & VLAN boundaries \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node (core) at (2.5, 3) {\iconrouter[0.4cm]};
-                    \node[font=\tiny] at (2.5, 2.5) {Core};
-                    \node[draw=tcpblue, fill=tcpblue!10, rounded corners, 
-                          minimum width=2cm, minimum height=0.8cm, font=\tiny, align=center] 
-                          (vlan10) at (0, 0.5) {VLAN 10\\10.1.10.0/24};
-                    \node[draw=ogregreen, fill=ogregreen!10, rounded corners, 
-                          minimum width=2cm, minimum height=0.8cm, font=\tiny, align=center] 
-                          (vlan20) at (5, 0.5) {VLAN 20\\10.1.20.0/24};
-                    \draw[-{Stealth}, tcpblue] (core) -- (vlan10) node[midway, left, font=\tiny] {.1};
-                    \draw[-{Stealth}, ogregreen] (core) -- (vlan20) node[midway, right, font=\tiny] {.1};
-                \end{tikzpicture}
-            \end{center}
-            \begin{alertblock}{Both Are Needed!}
-                \footnotesize
-                Physical diagrams for hands-on work; logical diagrams for troubleshooting traffic flow
+                \textbf{Physical:} "The cable is plugged into Port 2."\\
+                \textbf{Logical:} "The traffic flows from the User Subnet to the Server Subnet."
             \end{alertblock}
         \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 13: IP Address Management (IPAM)
-\begin{frame}{IP Address Management (IPAM)}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{IPAM Purpose}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Track} all IP allocations
-                    \item \textbf{Prevent} address conflicts
-                    \item \textbf{Plan} for growth
-                    \item \textbf{Document} assignments
-                    \item \textbf{Integrate} with DNS/DHCP
-                \end{itemize}
-            \end{block}
-            \begin{exampleblock}{IPAM Tools}
-                \footnotesize
-                \textbf{phpIPAM} (free), \textbf{NetBox} (free), Infoblox, SolarWinds IPAM, BlueCat
-            \end{exampleblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{IP Allocation Documentation}
-                \scriptsize
-                \begin{tabular}{@{}l c l c@{}}
-                    \toprule
-                    \textbf{Subnet} & \textbf{VLAN} & \textbf{Use} & \textbf{GW} \\
-                    \midrule
-                    10.1.10.0/24 & 10 & Users & .1 \\
-                    10.1.20.0/24 & 20 & Servers & .1 \\
-                    10.1.30.0/24 & 30 & Guest & .1 \\
-                    10.1.99.0/24 & 99 & Mgmt & .1 \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-            \begin{alertblock}{Avoid These Problems}
-                \footnotesize
-                Duplicate IP addresses, overlapping subnets, exhausted DHCP pools, undocumented static IPs
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 14: Common Agreements
-\begin{frame}{Common Agreements: SLA, MOU, NDA}
-    \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \begin{block}{Agreement Types}
-                \footnotesize
-                \begin{tabular}{@{}l c l l@{}}
-                    \toprule
-                    \textbf{Type} & \textbf{Binding?} & \textbf{Purpose} & \textbf{Example} \\
-                    \midrule
-                    SLA & Yes & Service guarantees & 99.9\% uptime \\
-                    MOU & Sometimes & Partnership terms & Data sharing \\
-                    NDA & Yes & Confidentiality & Trade secrets \\
-                    SOW & Yes & Work scope & Project tasks \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-            \begin{block}{SLA Key Metrics}
-                \footnotesize
-                \textbf{Uptime}: 99.9\% = 8.76 hrs/year downtime; \textbf{Response time}: How fast to acknowledge; \textbf{Resolution time}: How fast to fix
-            \end{block}
-        \end{column}
-        \begin{column}{0.42\textwidth}
-            \begin{exampleblock}{SLA = Service Level Agreement}
-                \footnotesize
-                Contract defining service expectations, metrics, and consequences.
-            \end{exampleblock}
-            \begin{block}{MOU = Memorandum of Understanding}
-                \footnotesize
-                Less formal agreement outlining partnership terms.
-            \end{block}
-            \begin{alertblock}{NDA = Non-Disclosure Agreement}
-                \footnotesize
-                Legal contract protecting confidential information.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 15: Host Discovery Introduction
-\begin{frame}{Section 8.2: Host Discovery \& Monitoring}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Why Discover \& Monitor?}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Security}: Find rogue devices
-                    \item \textbf{Inventory}: Validate asset lists
-                    \item \textbf{Troubleshooting}: Identify issues
-                    \item \textbf{Capacity}: Plan for growth
-                    \item \textbf{Compliance}: Audit readiness
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{Key Question}
-                \footnotesize
-                ``What's on your network?'' If you can't answer confidently, you have a visibility problem!
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.52\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.65]
-                    \node (nms) at (0, 0) {\iconserver[0.5cm]};
-                    \node[font=\tiny] at (0, -0.6) {NMS};
-                    \draw[tcpblue, dashed] (0, 0) circle (1);
-                    \draw[tcpblue, dashed] (0, 0) circle (2);
-                    \draw[tcpblue, dashed] (0, 0) circle (3);
-                    \node at (1.5, 1) {\iconrouter[0.25cm]};
-                    \node at (-1.2, 1.5) {\iconswitch[0.25cm]};
-                    \node at (2, -1) {\iconpc[0.25cm]};
-                    \node[font=\tiny, alertred] at (0.5, 2.5) {?};
+                    % Core Router
+                    \node (core) at (3, 3) {\iconrouter[0.6cm]};
+                    \node[above=0.1cm, font=\bfseries\tiny, align=center] at (core) {Core Router\\(Gateway)};
+
+                    % WAN Cloud
+                    \node (wan) at (3, 5) {\iconcloud[0.5cm]};
+                    \node[right=0.1cm, font=\tiny] at (wan) {Internet (Far Far Away)};
+                    \draw[thick] (core) -- (wan);
+
+                    % VLAN 10 (Users)
+                    \node[ellipse, draw=tcpblue, fill=tcpblue!5, minimum width=2.5cm, minimum height=1.5cm] (vlan10) at (0, 0.5) {};
+                    \node[font=\tiny, text=tcpblue, align=center] at (0, 0.5) {\textbf{VLAN 10}\\(Swamp Users)\\10.1.10.0/24};
+                    \node (pc) at (0, 0) {}; % Anchor
+
+                    % VLAN 20 (Servers)
+                    \node[ellipse, draw=ogregreen, fill=ogregreen!5, minimum width=2.5cm, minimum height=1.5cm] (vlan20) at (6, 0.5) {};
+                    \node[font=\tiny, text=ogregreen, align=center] at (6, 0.5) {\textbf{VLAN 20}\\(Castle Servers)\\10.1.20.0/24};
+                    \node (srv) at (6, 0) {}; % Anchor
+
+                    % Connections with IP labels
+                    \draw[thick, tcpblue, ->] (vlan10) -- (core) node[midway, left, font=\tiny] {.1 (GW)};
+                    \draw[thick, ogregreen, ->] (vlan20) -- (core) node[midway, right, font=\tiny] {.1 (GW)};
+
+                    % Data Flow Arrow
+                    \draw[dashed, red, ->, bend right] (0, -0.5) to node[below, font=\tiny] {Routing Logic} (6, -0.5);
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{Discovery Protocols}
-                \footnotesize
-                ICMP (ping), ARP, SNMP, CDP/LLDP, DNS, NetBIOS
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 16: Network Discovery Methods
-\begin{frame}{Network Discovery Methods}
+% SLIDE 13: IPAM
+\begin{frame}{IPAM: The Royal Guest List}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Active Discovery}
+            \begin{block}{IP Address Management (IPAM)}
                 \footnotesize
-                \textbf{Sends probes} to find devices:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Ping sweeps (ICMP)
-                    \item Port scans (TCP/UDP)
-                    \item SNMP queries
-                    \item ARP requests
-                \end{itemize}
-                \textcolor{ogregreen}{\textbf{Pro}}: Comprehensive results\\
-                \textcolor{alertred}{\textbf{Con}}: Generates traffic, may trigger alerts
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Passive Discovery}
-                \footnotesize
-                \textbf{Listens} to existing traffic:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item ARP table analysis
-                    \item Switch MAC tables
-                    \item Traffic sniffing
-                    \item NetFlow/sFlow data
-                \end{itemize}
-                \textcolor{ogregreen}{\textbf{Pro}}: Stealthy, no extra traffic\\
-                \textcolor{alertred}{\textbf{Con}}: Only sees active devices
-            \end{block}
-            \begin{alertblock}{Best Practice}
-                \footnotesize
-                Use \textbf{both methods}: Active for comprehensive scans, passive for continuous monitoring
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 17: Nmap - The Network Mapper
-\begin{frame}{Nmap --- The Network Mapper}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{What is Nmap?}
-                \footnotesize
-                Open-source \textbf{network scanner} for:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Host discovery
-                    \item Port scanning
-                    \item Service/version detection
-                    \item OS fingerprinting
-                    \item Vulnerability scanning
+                You cannot have two Ogres sitting in the same chair.
+                \begin{itemize}
+                    \item \textbf{Conflict}: Two devices with IP 10.1.1.5 = Network Crash.
+                    \item \textbf{Exhaustion}: Running out of IPs in the DHCP pool.
                 \end{itemize}
             \end{block}
-            \begin{alertblock}{Legal Warning!}
+            \begin{exampleblock}{Tools}
                 \footnotesize
-                Only scan networks you \textbf{own} or have \textbf{written permission} to scan. Unauthorized scanning is illegal!
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Common Nmap Commands}
-                \ttfamily\scriptsize
-                \# Ping sweep (host discovery)\\
-                nmap -sn 192.168.1.0/24\\[0.2em]
-                \# SYN scan (stealth)\\
-                nmap -sS 192.168.1.1\\[0.2em]
-                \# Version detection\\
-                nmap -sV 192.168.1.1\\[0.2em]
-                \# OS detection\\
-                nmap -O 192.168.1.1\\[0.2em]
-                \# Aggressive scan\\
-                nmap -A 192.168.1.1
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 18: Nmap Port Scanning Techniques
-\begin{frame}{Nmap Port Scanning Techniques}
-    \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \begin{block}{Scan Types Comparison}
-                \footnotesize
-                \begin{tabular}{@{}l c l c@{}}
-                    \toprule
-                    \textbf{Scan} & \textbf{Flag} & \textbf{Method} & \textbf{Stealth} \\
-                    \midrule
-                    TCP Connect & {-}sT & Full handshake & Low \\
-                    SYN Scan & {-}sS & Half-open & Medium \\
-                    UDP Scan & {-}sU & UDP probes & Medium \\
-                    ACK Scan & {-}sA & Firewall map & High \\
-                    FIN Scan & {-}sF & FIN flag only & High \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-            \begin{exampleblock}{SYN Scan (Most Common)}
-                \footnotesize
-                Default for root/admin. Sends SYN, receives SYN-ACK (open) or RST (closed), then sends RST. Never completes connection!
+                Don't use an Excel spreadsheet! Use \textbf{NetBox} or \textbf{phpIPAM}.
             \end{exampleblock}
         \end{column}
-        \begin{column}{0.42\textwidth}
+        \begin{column}{0.48\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.65]
-                    \node[font=\footnotesize] at (1.5, 4) {\textbf{SYN Scan}};
-                    \node[font=\tiny] at (0, 3.5) {Scanner};
-                    \node[font=\tiny] at (3, 3.5) {Target};
-                    \draw[dashed, gray] (0, 3.2) -- (0, 0.5);
-                    \draw[dashed, gray] (3, 3.2) -- (3, 0.5);
-                    \draw[-{Stealth}, tcpblue] (0.1, 2.8) -- (2.9, 2.5) node[midway, above, font=\tiny, sloped] {SYN};
-                    \draw[-{Stealth}, ogregreen] (2.9, 2.2) -- (0.1, 1.9) node[midway, above, font=\tiny, sloped] {SYN-ACK};
-                    \draw[-{Stealth}, alertred] (0.1, 1.6) -- (2.9, 1.3) node[midway, above, font=\tiny, sloped] {RST};
-                    \node[font=\tiny, ogregreen] at (1.5, 0.8) {Port OPEN};
+                \begin{tikzpicture}[scale=0.7]
+                    % Chair (IP)
+                    \node[draw, circle, minimum size=1.5cm, fill=yellow!20] (ip) at (0,0) {10.1.1.5};
+                    
+                    % PC 1
+                    \node (pc1) at (-2, 1) {\iconpc[0.6cm]};
+                    \draw[->, thick, red] (pc1) -- (ip);
+                    
+                    % PC 2
+                    \node (pc2) at (2, 1) {\iconlaptop[0.6cm]};
+                    \draw[->, thick, red] (pc2) -- (ip);
+                    
+                    % Boom
+                    \node[star, star points=7, fill=alertred, text=white, font=\tiny] at (0, 1.5) {CONFLICT!};
                 \end{tikzpicture}
             \end{center}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 19: Case Study - Puss in Boots' Reconnaissance
-\begin{frame}{Case Study: Puss in Boots' Network Reconnaissance}
-    \begin{alertblock}{``Fear Me, If You Dare!''}
+% SLIDE 14: Agreements
+\begin{frame}{Agreements: The Royal Treaties}
+    \begin{block}{Definitions}
         \footnotesize
-        Puss in Boots has been hired as a security consultant to assess the Swamp Kingdom network. Shrek wants to know what devices are on the network and what services are exposed before the annual security audit.
+        When Shrek hires Puss in Boots, they sign a contract.
+    \end{block}
+    \vspace{0.5cm}
+    \begin{columns}[T]
+        \begin{column}{0.3\textwidth}
+            \begin{block}{SLA}
+                \tiny \textbf{Service Level Agreement}\\
+                The Promise.\\
+                "I will catch 99.9\% of mice."\\
+                (Binding Contract)
+            \end{block}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{block}{NDA}
+                \tiny \textbf{Non-Disclosure Agreement}\\
+                The Secret.\\
+                "You cannot tell anyone where the Swamp is."\\
+                (Legal Privacy)
+            \end{block}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{block}{MOU}
+                \tiny \textbf{Memo of Understanding}\\
+                The Handshake.\\
+                "We agree to work together on this quest."\\
+                (Less Formal)
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 15: Discovery
+\begin{frame}{8.2 Host Discovery: "Who Goes There?"}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Goal: Visibility}
+                \footnotesize
+                Shrek cannot defend the Swamp if he doesn't know who is in it.
+                \begin{itemize}
+                    \item Finding Rogue Devices (Spies).
+                    \item Checking Open Ports (Unlocked Doors).
+                \end{itemize}
+            \end{block}
+            \begin{alertblock}{Tools}
+                \footnotesize
+                \textbf{Ping Sweeps}: Yelling "Is anyone there?"
+                \textbf{ARP Scans}: Asking "Who has this IP?"
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.65]
+                    \node (nms) at (0, 0) {\iconserver[0.6cm]};
+                    \node[font=\tiny] at (0, -0.6) {Scanner};
+                    
+                    % Targets
+                    \node (t1) at (3, 1) {\iconpc[0.4cm]};
+                    \node (t2) at (3, 0) {\iconpc[0.4cm]};
+                    \node (t3) at (3, -1) {\iconpc[0.4cm]};
+                    
+                    % Waves
+                    \draw[->, thick, tcpblue] (0.5, 0.1) -- (2.5, 1);
+                    \draw[->, thick, tcpblue] (0.5, 0) -- (2.5, 0);
+                    \draw[->, thick, tcpblue] (0.5, -0.1) -- (2.5, -1);
+                    
+                    \node[font=\tiny, text=tcpblue] at (1.5, 1.2) {Ping?};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 16: Active vs Passive
+\begin{frame}{Discovery: Shouting vs. Listening}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Active Discovery (Shouting)}
+                \footnotesize
+                Sending packets to devices to provoke a response.
+                \begin{itemize}
+                    \item \textit{Ex:} Nmap, Ping.
+                    \item \textbf{Pro:} Fast, accurate.
+                    \item \textbf{Con:} Noisy, might crash fragile IoT devices.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Passive Discovery (Listening)}
+                \footnotesize
+                Just listening to network traffic (like sniffing the air).
+                \begin{itemize}
+                    \item \textit{Ex:} Wireshark, NetFlow.
+                    \item \textbf{Pro:} Stealthy, zero impact.
+                    \item \textbf{Con:} Takes longer, misses silent devices.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            % Active (Fixed icon name)
+            \node at (-3, 0) {\faIcon{bullhorn}};
+            \node[below, font=\tiny] at (-3, -0.5) {Active (Loud)};
+            
+            % Passive
+            \node at (3, 0) {\faIcon{assistive-listening-systems}};
+            \node[below, font=\tiny] at (3, -0.5) {Passive (Quiet)};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% =============================================================================
+% SLIDE 17: Nmap Concepts (The Three States)
+% =============================================================================
+\begin{frame}{Nmap Concepts: The Three States of a Door}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{What is Nmap asking?}
+                \footnotesize
+                When Nmap scans an IP, it knocks on every "Door" (Port) and categorizes the response into three main states.
+            \end{block}
+            \begin{exampleblock}{1. OPEN (Success)}
+                \footnotesize
+                \textbf{Response:} "Come in!" (SYN-ACK).\\
+                \textbf{Meaning:} An application is listening.
+                \textit{Risk: This is an entry point for hackers.}
+            \end{exampleblock}
+            \begin{alertblock}{2. CLOSED (Rejection)}
+                \footnotesize
+                \textbf{Response:} "Go away!" (RST).\\
+                \textbf{Meaning:} The device is up, but nothing is running on that port.
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{3. FILTERED (The Void)}
+                \footnotesize
+                \textbf{Response:} Silence... (Timeout).\\
+                \textbf{Meaning:} A Firewall (Dragon) blocked the packet. Nmap doesn't know if the port is open or closed.
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Open Door
+                    \node[draw=green, fill=green!10, rounded corners] (open) at (0, 2) {Open};
+                    \node[right=0.2cm of open, font=\tiny] {App Listening};
+                    
+                    % Closed Door
+                    \node[draw=red, fill=red!10, rounded corners] (closed) at (0, 1) {Closed};
+                    \node[right=0.2cm of closed, font=\tiny] {No Service};
+                    
+                    % Filtered
+                    \node[draw=orange, fill=orange!10, rounded corners] (filt) at (0, 0) {Filtered};
+                    \node[right=0.2cm of filt, font=\tiny] {Firewall Blocked};
+                    
+                    % Dragon Icon for Firewall
+                    \node[text=alertred] at (4, 0) {\iconfirewall[0.6cm]};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 18: Nmap Output (Simulated Terminal)
+% =============================================================================
+\begin{frame}[fragile]{Nmap in Action: Reading the Output}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            % Simulated Terminal Window
+            \begin{tikzpicture}
+                \node[draw, fill=black, text=white, font=\ttfamily\tiny, align=left, inner sep=5pt, rounded corners=3pt] (term) {
+                    \textbf{root@swamp:\~{}\# nmap -A 10.1.1.5}\\
+                    Starting Nmap 7.94...\\
+                    Nmap scan report for \textbf{donkey-pc} (10.1.1.5)\\
+                    Host is up (0.002s latency).\\
+                    \vspace{0.2em}\\
+                    PORT     STATE    SERVICE     VERSION\\
+                    \textcolor{green}{22/tcp   open     ssh         OpenSSH 8.2p1}\\
+                    \textcolor{green}{80/tcp   open     http        Apache httpd 2.4.41}\\
+                    \textcolor{red}{443/tcp  closed   https}\\
+                    \vspace{0.2em}\\
+                    OS details: \textbf{Linux 4.15 - 5.6}\\
+                    Service Info: OS: Linux; CPE: cpe:/o:linux:linux\_kernel
+                };
+                % Window Title Bar
+                \fill[gray!50] (term.north west) [rounded corners=3pt] -- (term.north east) -- ($(term.north east)-(0,0.3)$) -- ($(term.north west)-(0,0.3)$) -- cycle;
+                \node[font=\sffamily\tiny, text=black] at ($(term.north)-(0,0.15)$) {Terminal - Nmap Scan};
+                \fill[red] ($(term.north west)+(0.2,-0.15)$) circle (2pt);
+                \fill[yellow] ($(term.north west)+(0.4,-0.15)$) circle (2pt);
+                \fill[green] ($(term.north west)+(0.6,-0.15)$) circle (2pt);
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Decoding the Scan}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{-A}: Aggressive! (Gets OS and Versions).
+                    \item \textbf{PORT}: The number (e.g., 80 is Web).
+                    \item \textbf{STATE}: Open/Closed.
+                    \item \textbf{VERSION}: Crucial for hackers! "Apache 2.4.41" might have a specific bug we can exploit.
+                    \item \textbf{OS}: Nmap guesses this is a Linux machine (likely Ubuntu) based on how it talks.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 19: Scan Techniques (Visualized)
+% =============================================================================
+\begin{frame}{Scan Techniques: Stealth vs. Noise}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{TCP Connect (-sT)}
+                \footnotesize
+                \textbf{The "Polite" Knock.}
+                \begin{itemize}
+                    \item Complete 3-Way Handshake.
+                    \item \textbf{Con:} Shows up in system logs immediately. Shrek will hear you.
+                \end{itemize}
+            \end{block}
+            \begin{block}{SYN Scan (-sS)}
+                \footnotesize
+                \textbf{The "Ding-Dong-Ditch".}
+                \begin{itemize}
+                    \item Send SYN, get response, then send RST (Reset).
+                    \item Never establishes a full connection.
+                    \item \textbf{Pro:} Faster and stealthier.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.6]
+                    \node[font=\bfseries\tiny] at (0, 3.5) {Scanner};
+                    \node[font=\bfseries\tiny] at (3, 3.5) {Target};
+                    
+                    % SYN
+                    \draw[->, thick, blue] (0, 3) -- (3, 2.5) node[midway, above, font=\tiny, sloped] {1. SYN (Hello?)};
+                    
+                    % SYN-ACK
+                    \draw[->, thick, green] (3, 2) -- (0, 1.5) node[midway, above, font=\tiny, sloped] {2. SYN-ACK (Yes?)};
+                    
+                    % RST
+                    \draw[->, thick, alertred] (0, 1) -- (3, 0.5) node[midway, above, font=\tiny, sloped] {3. RST (Run Away!)};
+                    
+                    \node[font=\tiny, draw, dashed] at (1.5, -0.5) {No Log Entry Created*};
+                \end{tikzpicture}
+            \end{center}
+            \begin{exampleblock}{Timing Flags (-T)}
+                \footnotesize
+                \textbf{-T0} (Paranoid) to \textbf{-T5} (Insane).
+                \begin{itemize}
+                    \item \textbf{-T4} is standard/fast.
+                    \item \textbf{-T1} is super slow (sneaky).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 19: Case Study
+\begin{frame}{Case Study: Puss in Boots' Reconnaissance}
+    \begin{alertblock}{Scenario}
+        \footnotesize
+        Puss has been hired to test the Swamp's security. Shrek says: "Find out what ports are open, but \textbf{don't wake up the babies} (don't crash anything)."
         
         \vspace{0.2em}
-        \textbf{Network information:}
-        \begin{itemize}\setlength{\itemsep}{0pt}
-            \item IP range: 10.0.0.0/16 (approximately 500 devices expected)
-            \item Business hours: 9 AM -- 5 PM (critical operations)
-            \item Shrek's requirement: ``Don't break anything!''
-            \item Deadline: Full report needed within 48 hours
-        \end{itemize}
-        
-        Puss needs to discover all hosts, identify open ports, and detect running services without disrupting the kingdom's operations.
+        \textbf{Target:} 10.0.0.0/24 subnet.
+        \textbf{Constraints:} Business hours (9am-5pm).
     \end{alertblock}
-    \begin{block}{Review Questions}
+    \begin{block}{Strategy Questions}
         \footnotesize
-        1. What scan type for initial discovery? 2. How to minimize business impact? 3. What to document?
+        \begin{enumerate}
+            \item Should Puss use a loud "Connect" scan or a stealthy "SYN" scan?
+            \item Should he scan all 65,535 ports or just the Top 100?
+            \item How can he identify if the server is running Windows?
+        \end{enumerate}
     \end{block}
 \end{frame}
 
-% SLIDE 20: Case Study Solution - Puss' Reconnaissance
-\begin{frame}{Case Study Solution: Puss in Boots' Reconnaissance}
-    \begin{exampleblock}{Solution: ``I Am Not a Kitten---I Am a Professional!''}
+% SLIDE 20: Case Study Solution
+\begin{frame}{Case Study Solution}
+    \begin{exampleblock}{Puss's Plan}
         \footnotesize
-        \begin{enumerate}\setlength{\itemsep}{1pt}
-            \item \textbf{Phase 1}: Ping sweep (-sn) during business hours---low impact discovery
-            \item \textbf{Phase 2}: SYN scan (-sS) after hours---detailed port scanning
-            \item \textbf{Phase 3}: Version detection (-sV) on critical services only
+        \begin{enumerate}
+            \item \textbf{Discovery:} Use `nmap -sn` first just to see what is alive (Ping Sweep). Low impact.
+            \item \textbf{Port Scan:} Use `nmap -sS` (SYN Scan) because it is stealthier and lighter on network traffic.
+            \item \textbf{Depth:} Scan top 100 ports first. Full scans happen after hours.
+            \item \textbf{OS Detect:} Use `nmap -O` carefully (it sends weird packets to confuse the target).
         \end{enumerate}
     \end{exampleblock}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Recommended Commands}
-                \ttfamily\scriptsize
-                \# Phase 1: Discovery (daytime)\\
-                nmap -sn 10.0.0.0/16 -oN hosts.txt\\[0.2em]
-                \# Phase 2: Port scan (night)\\
-                nmap -sS -iL hosts.txt -oN ports.txt\\[0.2em]
-                \# Phase 3: Services (targeted)\\
-                nmap -sV -p 22,80,443 -iL critical.txt
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Key Lesson}
-                \footnotesize
-                Professional scanning is \textbf{staged and scheduled}. Balance thoroughness with business impact. Always document methodology and findings!
-            \end{alertblock}
-        \end{column}
-    \end{columns}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.7]
+            \node (puss) at (0, 0) {\iconuser[0.6cm]};
+            \node[below, font=\tiny] at (0, -0.5) {Puss};
+            
+            \node (server) at (4, 0) {\iconserver[0.6cm]};
+            \node[below, font=\tiny] at (4, -0.5) {Target};
+            
+            \draw[->, dashed, thick, ogregreen] (puss) -- (server) node[midway, above, font=\tiny] {Stealth Scan};
+        \end{tikzpicture}
+    \end{center}
 \end{frame}
 
-% SLIDE 21: Discovery Protocols (CDP, LLDP)
-\begin{frame}{Discovery Protocols: CDP and LLDP}
+% =============================================================================
+% Module 8.0: Slides 21-29 (Discovery, Monitoring, SNMP) - REVISED
+% =============================================================================
+
+% SLIDE 21: Discovery Protocols
+\begin{frame}{Discovery Protocols: "Hello Neighbor!"}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{CDP (Cisco Discovery Protocol)}
+            \begin{block}{The Concept}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Cisco proprietary}
-                    \item Layer 2 multicast
-                    \item 60-second advertisements
-                    \item Shares: hostname, IP, platform, port ID
-                \end{itemize}
-                \ttfamily\scriptsize
-                show cdp neighbors detail
+                Network devices act like friendly neighbors. Every 60 seconds, they shout their details to anyone connected to them.
             \end{block}
-            \begin{block}{LLDP (Link Layer Discovery Protocol)}
+            \begin{alertblock}{What they shout (The Risk)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{IEEE 802.1AB} (vendor-neutral)
-                    \item Works across vendors
-                    \item Similar info to CDP
+                \begin{itemize}
+                    \item "My Name is \textbf{Core-Router-01}."
+                    \item "My Management IP is \textbf{10.1.1.1}."
+                    \item "I am running \textbf{Cisco IOS v15.2}."
+                    \item "You are plugged into \textbf{Port Gi0/1}, \textbf{VLAN 10}."
                 \end{itemize}
-                \ttfamily\scriptsize
-                show lldp neighbors detail
-            \end{block}
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{The Protocols}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{CDP (Cisco Discovery Protocol)}: Proprietary. Only works between Cisco devices.
+                    \item \textbf{LLDP (Link Layer Discovery Protocol)}: Industry Standard (IEEE 802.1AB). Works on everything.
+                \end{itemize}
+            \end{exampleblock}
             \begin{center}
                 \begin{tikzpicture}[scale=0.65]
-                    \node (sw1) at (0, 1.5) {\iconswitch[0.5cm]};
-                    \node[font=\tiny] at (0, 0.9) {Switch-A};
-                    \node (sw2) at (4, 1.5) {\iconswitch[0.5cm]};
-                    \node[font=\tiny] at (4, 0.9) {Switch-B};
-                    \draw[-{Stealth}, tcpblue] (0.5, 1.7) -- (3.5, 1.9) node[midway, above, font=\tiny] {CDP/LLDP};
-                    \draw[-{Stealth}, ogregreen] (3.5, 1.3) -- (0.5, 1.1) node[midway, below, font=\tiny] {CDP/LLDP};
+                    \node (sw1) at (0, 2) {\iconswitch[0.6cm]};
+                    \node[below, font=\tiny] at (0, 1.6) {Switch A (Cisco)};
+                    
+                    \node (sw2) at (4, 2) {\iconswitch[0.6cm]};
+                    \node[below, font=\tiny] at (4, 1.6) {Switch B (HP)};
+                    
+                    % Arrows
+                    \draw[<->, thick, tcpblue] (0.5, 2) -- (3.5, 2) node[midway, above, font=\tiny] {LLDP Messages};
+                    
+                    % Speech Bubbles
+                    \node[draw, fill=white, rounded corners, font=\tiny, align=left] at (0, 3.5) {I am Cisco!\\IP: 10.1.1.1};
+                    \draw[thin] (0, 3.1) -- (0, 2.3);
+                    
+                    \node[draw, fill=white, rounded corners, font=\tiny, align=left] at (4, 0.5) {I am HP!\\IP: 10.1.1.2};
+                    \draw[thin] (4, 0.9) -- (4, 1.7);
                 \end{tikzpicture}
             \end{center}
-            \begin{alertblock}{Security Warning}
-                \footnotesize
-                CDP/LLDP reveal network info to anyone connected. \textbf{Disable on edge ports} (user-facing, untrusted connections)!
-            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 22: Performance Monitoring
-\begin{frame}{Performance Monitoring}
+\begin{frame}{Performance Monitoring: Checking the Pulse}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{What to Monitor}
+            \begin{block}{Key Metrics (The Vital Signs)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Bandwidth}: Link utilization \%
-                    \item \textbf{Latency}: Round-trip time (ms)
-                    \item \textbf{Jitter}: Latency variation
-                    \item \textbf{Packet Loss}: \% dropped packets
-                    \item \textbf{CPU}: Processor utilization
-                    \item \textbf{Memory}: RAM usage
+                \begin{itemize}
+                    \item \textbf{Bandwidth}: "Is the pipe full?" (Utilization \%).
+                    \item \textbf{Latency}: "Ping time." How long for data to travel?
+                    \item \textbf{Jitter}: "Lag Spikes." Variation in latency. (Killer for VoIP and Gaming).
+                    \item \textbf{Packet Loss}: "Dropped Letters." Data destroyed in transit (Bad cables or congestion).
                 \end{itemize}
             \end{block}
-            \begin{exampleblock}{Monitoring Tools}
-                \footnotesize
-                PRTG, Nagios, Zabbix, LibreNMS, SolarWinds, Datadog
-            \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Performance Thresholds}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Speedometer
+                    \draw[fill=gray!10] (0,0) -- (3,0) arc (0:180:3) -- cycle;
+                    \draw[fill=green!30] (0,0) -- (0:3) arc (0:60:3) -- cycle;
+                    \draw[fill=yellow!30] (0,0) -- (60:3) arc (60:120:3) -- cycle;
+                    \draw[fill=alertred!30] (0,0) -- (120:3) arc (120:180:3) -- cycle;
+                    
+                    % Needle (Pointing to Red)
+                    \draw[ultra thick, black, ->] (0,0) -- (135:2.5);
+                    \fill[black] (0,0) circle (0.2);
+                    
+                    \node[font=\bfseries] at (0, -0.5) {Link Saturation};
+                    \node[font=\tiny] at (-2, 1.5) {Critical!};
+                \end{tikzpicture}
+            \end{center}
+            \begin{block}{Baselines}
                 \footnotesize
-                \begin{tabular}{@{}l c c c@{}}
-                    \toprule
-                    \textbf{Metric} & \textbf{OK} & \textbf{Warn} & \textbf{Crit} \\
-                    \midrule
-                    CPU & $<$70\% & 70--85\% & $>$85\% \\
-                    Memory & $<$75\% & 75--90\% & $>$90\% \\
-                    Bandwidth & $<$60\% & 60--80\% & $>$80\% \\
-                    Latency & $<$50ms & 50--100 & $>$100 \\
-                    \bottomrule
-                \end{tabular}
+                You need to know what "Normal" looks like.
+                \textit{Is 80\% CPU usage bad? Not if it's always at 80\% doing video rendering.}
             \end{block}
-            \begin{alertblock}{Baseline First!}
-                \footnotesize
-                Establish \textbf{normal} performance before setting alerts. What's ``high'' varies by environment.
-            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 23: Availability Monitoring
-\begin{frame}{Availability Monitoring}
+% SLIDE 23: Availability
+\begin{frame}{Availability: Is the Drawbridge Down?}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Availability = Uptime}
                 \footnotesize
-                Measuring whether devices and services are \textbf{reachable and responding}:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Device reachability (is it up?)
-                    \item Service availability (is it working?)
-                    \item Response time (how fast?)
-                \end{itemize}
+                "Can users actually do their work?"
             \end{block}
-            \begin{block}{Monitoring Methods}
+            \begin{alertblock}{Ping vs. Service Check}
                 \footnotesize
-                \begin{tabular}{@{}l l c@{}}
-                    \toprule
-                    \textbf{Method} & \textbf{Tests} & \textbf{Freq} \\
-                    \midrule
-                    ICMP Ping & Reachability & 30--60s \\
-                    TCP Check & Port response & 1--5 min \\
-                    HTTP Check & Web service & 1--5 min \\
-                    Synthetic & Full transaction & 5--15 min \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
+                \begin{itemize}
+                    \item \textbf{Ping (ICMP)}: "Is the server on?" (Lights are on).
+                    \item \textbf{Service Check (TCP)}: "Is the Web Server running?" (The store is open).
+                \end{itemize}
+                \textit{A server can respond to Ping but still show a "404 Error" website!}
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.65]
-                    \draw[-{Stealth}, thick] (0, 0) -- (6, 0);
-                    \node[font=\tiny] at (6.3, 0) {Time};
-                    \fill[ogregreen] (0.2, 0.2) rectangle (2, 0.6);
-                    \fill[ogregreen] (2.5, 0.2) rectangle (4, 0.6);
-                    \fill[ogregreen] (4.2, 0.2) rectangle (5.8, 0.6);
-                    \fill[alertred] (2, 0.2) rectangle (2.5, 0.6);
-                    \fill[alertred] (4, 0.2) rectangle (4.2, 0.6);
-                    \node[font=\tiny, ogregreen] at (1, 1) {Up};
-                    \node[font=\tiny, alertred] at (2.25, 1) {Down};
+                \begin{tikzpicture}[scale=0.6]
+                    % Timeline
+                    \draw[->, thick] (0,0) -- (6,0);
+                    \node[below, font=\tiny] at (3, -0.2) {Time Axis};
+                    
+                    % Status Blocks
+                    \fill[green] (0, 0.2) rectangle (2, 0.8);
+                    \node[font=\tiny] at (1, 0.5) {Up};
+                    
+                    \fill[red] (2.1, 0.2) rectangle (3, 0.8);
+                    \node[font=\tiny, white] at (2.55, 0.5) {Down};
+                    
+                    \fill[green] (3.1, 0.2) rectangle (5.5, 0.8);
+                    \node[font=\tiny] at (4.3, 0.5) {Up};
+                    
+                    % Alert
+                    \node[star, star points=5, fill=yellow, draw] at (2.5, 1.5) {Alert!};
+                    \draw[->, dashed] (2.5, 1.2) -- (2.5, 0.8);
                 \end{tikzpicture}
             \end{center}
-            \begin{alertblock}{Don't Just Ping!}
+            \begin{block}{The "Five Nines"}
                 \footnotesize
-                A device can respond to ping but have \textbf{failed services}. Monitor what users actually use!
-            \end{alertblock}
+                \textbf{99.999\% Uptime} means only 5 minutes of downtime per year. This is the gold standard for Enterprise Networks.
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 24: Configuration Monitoring
-\begin{frame}{Configuration Monitoring}
+% SLIDE 24: Config Monitoring
+\begin{frame}{Configuration Monitoring: Who Changed the Settings?}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Purpose}
+            \begin{block}{Configuration Drift}
                 \footnotesize
-                Detect and alert on configuration changes:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Unauthorized changes} (security)
-                    \item \textbf{Drift from baseline} (compliance)
-                    \item \textbf{Change verification} (operations)
-                    \item \textbf{Audit trail} (governance)
+                The network rots over time because people make quick, manual changes and forget to undo them.
+                \begin{itemize}
+                    \item "I'll just open the firewall for testing."
+                    \item *3 months later* -> Firewall is still open.
                 \end{itemize}
             \end{block}
-            \begin{exampleblock}{Config Monitoring Tools}
+            \begin{exampleblock}{The Solution (RANCID)}
                 \footnotesize
-                \textbf{RANCID}, \textbf{Oxidized}, SolarWinds NCM, Cisco Prime, Ansible
+                Tools that automatically backup configs every night and compare them. If a line changed, Shrek gets an email!
             \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.65]
-                    \node[draw=ogregreen, fill=ogregreen!10, rounded corners,
-                          minimum width=2.2cm, minimum height=0.8cm, font=\tiny] 
-                          (base) at (0, 2) {Baseline Config};
-                    \node[draw=tcpblue, fill=tcpblue!10, rounded corners,
-                          minimum width=2.2cm, minimum height=0.8cm, font=\tiny] 
-                          (curr) at (0, 0) {Current Config};
-                    \node[font=\tiny] (comp) at (3, 1) {Compare};
-                    \draw[-{Stealth}] (base) -- (comp);
-                    \draw[-{Stealth}] (curr) -- (comp);
-                    \node[draw=alertred, fill=alertred!10, rounded corners, font=\tiny] (alert) at (5.5, 1) {Alert!};
-                    \draw[-{Stealth}, alertred] (comp) -- node[above, font=\tiny] {Diff?} (alert);
+                \begin{tikzpicture}[scale=0.7]
+                    \node[draw, fill=white] (v1) at (0, 2) {Config v1};
+                    \node[draw, fill=white] (v2) at (0, 0) {Config v2};
+                    
+                    \node (diff) at (3, 1) {\faIcon{exchange-alt}};
+                    \node[below, font=\tiny] at (3, 0.5) {Compare};
+                    
+                    \draw[->] (v1) -- (diff);
+                    \draw[->] (v2) -- (diff);
+                    
+                    \node[right, align=left, font=\ttfamily\tiny, text=red] at (3.5, 1) {+ permit ip any any\\- deny ip any any};
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{What Triggers Alerts}
-                \footnotesize
-                Any config change, specific keywords (passwords, ACLs), deviation from template, unauthorized user
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 25: SNMP Overview
-\begin{frame}{Section 8.3: SNMP --- Simple Network Management Protocol}
+\begin{frame}{8.3 SNMP: The Royal Messengers}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{What is SNMP?}
+            \begin{block}{Simple Network Management Protocol}
                 \footnotesize
-                The \textbf{standard protocol} for network device monitoring and management:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Query device statistics
-                    \item Receive alerts (traps)
-                    \item Configure devices remotely
-                    \item Works across vendors
+                How we talk to devices without logging into them.
+                \begin{itemize}
+                    \item \textbf{Manager (NMS)}: The King (Server) who asks questions.
+                    \item \textbf{Agent}: The Peasant (Router) who answers.
                 \end{itemize}
             \end{block}
-            \begin{block}{Key SNMP Terms}
+            \begin{alertblock}{The "Restaurant" Analogy}
                 \footnotesize
-                \textbf{Agent}: Software on managed device; \textbf{Manager/NMS}: Central monitoring station; \textbf{MIB}: Management Information Base; \textbf{OID}: Object Identifier; \textbf{Community}: Authentication string
-            \end{block}
+                \begin{itemize}
+                    \item \textbf{MIB}: The Menu (List of all possible questions).
+                    \item \textbf{OID}: The Item Number (e.g., .1.3.6... = "CPU Temp").
+                \end{itemize}
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.65]
-                    \node (nms) at (2, 3) {\iconserver[0.5cm]};
-                    \node[font=\tiny] at (2, 2.4) {NMS (Manager)};
-                    \node (r1) at (0, 0.5) {\iconrouter[0.35cm]};
-                    \node[font=\tiny] at (0, 0) {Agent};
-                    \node (sw1) at (2, 0.5) {\iconswitch[0.35cm]};
-                    \node[font=\tiny] at (2, 0) {Agent};
-                    \node (s1) at (4, 0.5) {\iconserver[0.35cm]};
-                    \node[font=\tiny] at (4, 0) {Agent};
-                    \draw[-{Stealth}, tcpblue] (nms) -- (r1) node[midway, left, font=\tiny] {GET};
-                    \draw[-{Stealth}, tcpblue] (nms) -- (sw1);
-                    \draw[-{Stealth}, tcpblue] (nms) -- (s1);
-                    \draw[-{Stealth}, aborange, dashed] (sw1) -- (2, 2.5) node[midway, right, font=\tiny] {TRAP};
+                    % NMS
+                    \node (nms) at (2, 3) {\iconserver[0.6cm]};
+                    \node[font=\bfseries\tiny] at (2, 2.3) {Manager (NMS)};
+                    
+                    % Devices
+                    \node (r1) at (0, 0) {\iconrouter[0.5cm]};
+                    \node[below, font=\tiny] at (0, -0.3) {Agent 1};
+                    
+                    \node (sw1) at (4, 0) {\iconswitch[0.5cm]};
+                    \node[below, font=\tiny] at (4, -0.3) {Agent 2};
+                    
+                    % Poll
+                    \draw[->, thick, tcpblue] (nms) -- (r1) node[midway, left, font=\tiny] {GET (Poll)};
+                    
+                    % Trap
+                    \draw[->, thick, alertred, dashed] (sw1) -- (nms) node[midway, right, font=\tiny] {TRAP (Alert!)};
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{SNMP Ports}
+            \begin{block}{Ports}
                 \footnotesize
-                \textbf{UDP 161}: Agent (queries); \textbf{UDP 162}: Manager (traps)
+                \textbf{UDP 161} (Polling) / \textbf{UDP 162} (Traps)
             \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 26: SNMP Operations
-\begin{frame}{SNMP Operations}
+\begin{frame}{SNMP Operations: Asking vs. Yelling}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{SNMP Operations}
+            \begin{block}{1. Polling (GET)}
                 \footnotesize
-                \begin{tabular}{@{}l l l@{}}
-                    \toprule
-                    \textbf{Operation} & \textbf{Direction} & \textbf{Purpose} \\
-                    \midrule
-                    GET & Mgr to Agent & Read value \\
-                    GET-NEXT & Mgr to Agent & Walk MIB \\
-                    GET-BULK & Mgr to Agent & Read many \\
-                    SET & Mgr to Agent & Write value \\
-                    TRAP & Agent to Mgr & Alert (async) \\
-                    INFORM & Agent to Mgr & Ack'd trap \\
-                    \bottomrule
-                \end{tabular}
+                The Manager asks the Agent a question.
+                \begin{itemize}
+                    \item \textbf{GET}: Read a value (e.g., "What is your uptime?").
+                    \item \textbf{SET}: Change a setting (e.g., "Turn off Port 1").
+                    \item \textbf{Walk}: Ask for the entire inventory.
+                \end{itemize}
             \end{block}
-            \begin{exampleblock}{Polling vs Traps}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{2. Traps (Alerts)}
                 \footnotesize
-                \textbf{Polling}: NMS regularly queries (GET)\\
-                \textbf{Traps}: Agent sends alerts immediately
-            \end{exampleblock}
+                The Agent yells at the Manager because something broke.
+                \begin{itemize}
+                    \item Sent immediately without being asked.
+                    \item Examples: "Fan Failure", "Link Down", "Overheating".
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            \node[draw, fill=white] (mgr) at (0,0) {Manager};
+            \node[draw, fill=white] (agt) at (5,0) {Agent};
+            
+            \draw[->, thick, blue] (0, 0.2) -- (5, 0.2) node[midway, above, font=\tiny] {GET (CPU?)};
+            \draw[->, thick, blue] (5, -0.2) -- (0, -0.2) node[midway, below, font=\tiny] {Response (15\%)};
+            
+            \node[draw, fill=alertred!20] (fire) at (5, -1.5) {Agent};
+            \draw[->, ultra thick, red] (fire) -- (0, -1.5) node[midway, above, font=\tiny] {TRAP (Cable Cut!)};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% SLIDE 27: SNMP Versions
+\begin{frame}{SNMP Versions: Evolution of Security}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Version History}
+                \footnotesize
+                \begin{enumerate}
+                    \item \textbf{SNMPv1}: The original. No security.
+                    \item \textbf{SNMPv2c}: Faster (Bulk transfers), but still \textbf{Cleartext}.
+                    \item \textbf{SNMPv3}: \textbf{Secure}. Adds Encryption + Authentication.
+                \end{enumerate}
+            \end{block}
+            \begin{alertblock}{The Community String Risk}
+                \footnotesize
+                In v1/v2c, the "Password" is called a Community String.
+                \begin{itemize}
+                    \item Defaults: \textbf{public} (Read Only) / \textbf{private} (Read/Write).
+                    \item Sent in \textbf{Cleartext}! Anyone with Wireshark can steal it and map your network.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % v2 Packet
+                    \node[draw, fill=red!10, text width=2cm, align=center] at (0, 2) {v2 Packet\\Comm: "public"};
+                    \node[right, font=\tiny, text=red] at (1.2, 2) {Insecure!};
+                    
+                    % v3 Packet
+                    \node[draw, fill=green!10, text width=2cm, align=center] at (0, 0) {v3 Packet\\User: Shrek\\(Encrypted)};
+                    \node[right, font=\tiny, text=ogregreen] at (1.2, 0) {Secure (AES)};
+                    \node at (0, -0.8) {\iconlock[0.5cm]};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 28: Case Study - Farquaad
+\begin{frame}{Case Study: Lord Farquaad's Open Door}
+    \begin{alertblock}{Scenario: "Welcome to Duloc"}
+        \footnotesize
+        Lord Farquaad set up SNMP monitoring on all his castle switches. Because he was in a rush, he used the default settings:
+        \begin{itemize}
+            \item \textbf{Version}: SNMPv2c.
+            \item \textbf{Community String}: "public".
+        \end{itemize}
+        
+        Robin Hood sat in the bushes with a laptop and ran a tool called `snmpwalk`. Within seconds, he downloaded the entire network map, including IP addresses, router models, and uptime stats.
+    \end{alertblock}
+    \begin{block}{Discussion Questions}
+        \footnotesize
+        \begin{enumerate}
+            \item What specific vulnerability allowed Robin Hood to read the data?
+            \item Did Robin Hood need a complex password cracker to do this?
+            \item What is the industry-standard way to fix this vulnerability?
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% SLIDE 29: Solution
+\begin{frame}{Case Study Solution: Lord Farquaad's Open Door}
+    \begin{exampleblock}{The Answers}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Vulnerability}: \textbf{Cleartext Community Strings}. "public" is the default string known by every hacker on earth.
+            \item \textbf{No Cracker Needed}: It was an "Open Door." He just asked the routers nicely using the default password.
+            \item \textbf{The Fix}: Upgrade to \textbf{SNMPv3}. It uses \textbf{AuthPriv} (Authentication + Privacy/Encryption), so even if Robin Hood captures the packets, he can't read them.
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.7]
+            \node (router) at (0,0) {\iconrouter[0.6cm]};
+            \node (hacker) at (-3, 0) {\faIcon{user-secret}};
+            \node (nms) at (3, 0) {\iconserver[0.6cm]};
+            
+            \draw[->, thick, red] (hacker) -- (router);
+            \node[draw, circle, fill=red, text=white, font=\tiny] at (-1.5, 0) {X};
+            \node[below, font=\tiny, text=red] at (-1.5, -0.3) {ACL / Encryption};
+            
+            \draw[->, thick, green] (nms) -- (router);
+            \node[below, font=\tiny, text=green] at (1.5, -0.3) {Allowed (v3)};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% =============================================================================
+% Module 8.0: Slides 30-42 (Syslog, SIEM, Traffic Analysis)
+% =============================================================================
+
+% SLIDE 30: Syslog Overview
+\begin{frame}{8.4 Syslog: The Royal Scribe}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Standard Diary}
+                \footnotesize
+                Network devices don't have screens. They need a place to write down what is happening.
+                \begin{itemize}
+                    \item \textbf{Syslog (Protocol)}: UDP 514.
+                    \item \textbf{Centralized Logging}: Devices send logs to a single server (The Scribe) so you don't have to log into 50 switches to check for errors.
+                \end{itemize}
+            \end{block}
+            \begin{alertblock}{The Components}
+                \footnotesize
+                \textbf{Facility}: "Who is speaking?" (Kernel, Mail, User).\\
+                \textbf{Severity}: "How bad is it?" (0 to 7).
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.65]
-                    \node[font=\footnotesize] at (2, 3.5) {\textbf{GET Operation}};
-                    \node[font=\tiny] at (0, 3) {NMS};
-                    \node[font=\tiny] at (4, 3) {Agent};
-                    \draw[dashed, gray] (0, 2.7) -- (0, 0.5);
-                    \draw[dashed, gray] (4, 2.7) -- (4, 0.5);
-                    \draw[-{Stealth}, tcpblue] (0.1, 2.3) -- (3.9, 2) node[midway, above, font=\tiny, sloped] {GET ifInOctets};
-                    \draw[-{Stealth}, ogregreen] (3.9, 1.5) -- (0.1, 1.2) node[midway, above, font=\tiny, sloped] {Response: 1234567};
+                    % Server
+                    \node (server) at (4, 2) {\iconserver[0.6cm]};
+                    \node[below, font=\tiny] at (4, 1.5) {Syslog Server};
+                    
+                    % Devices
+                    \node (r1) at (0, 3) {\iconrouter[0.4cm]};
+                    \node (sw1) at (0, 2) {\iconswitch[0.4cm]};
+                    \node (fw1) at (0, 1) {\iconfirewall[0.4cm]};
+                    
+                    % Messages
+                    \draw[->, thick, tcpblue] (r1) -- (server) node[midway, above, font=\tiny, rotate=15] {Link Down!};
+                    \draw[->, thick, tcpblue] (sw1) -- (server);
+                    \draw[->, thick, tcpblue] (fw1) -- (server) node[midway, below, font=\tiny, rotate=-15] {Login Fail};
+                    
+                    % Scroll
+                    \node[draw, fill=white, font=\tiny, align=left] at (4, -0.5) {
+                        10:00: Router1 Link Down\\
+                        10:01: Switch2 Fan Fail\\
+                        10:02: FW1 Deny IP
+                    };
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{Common OIDs}
-                \ttfamily\scriptsize
-                .1.3.6.1.2.1.1.1 = sysDescr\\
-                .1.3.6.1.2.1.1.3 = sysUpTime\\
-                .1.3.6.1.2.1.2.2 = ifTable
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 27: SNMP Versions and Security
-\begin{frame}{SNMP Versions and Security}
+% SLIDE 31: Syslog Severity Levels
+\begin{frame}{Syslog Severity Levels: 0 to 7}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
-            \begin{block}{SNMP Version Comparison}
-                \footnotesize
-                \begin{tabular}{@{}l c c c@{}}
-                    \toprule
-                    \textbf{Feature} & \textbf{v1} & \textbf{v2c} & \textbf{v3} \\
-                    \midrule
-                    Authentication & Community & Community & User/Pass \\
-                    Encryption & None & None & AES/DES \\
-                    Integrity & None & None & MD5/SHA \\
-                    GET-BULK & No & Yes & Yes \\
-                    Security & \textcolor{alertred}{Low} & \textcolor{alertred}{Low} & \textcolor{ogregreen}{High} \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-            \begin{alertblock}{Critical Security Issue!}
-                \footnotesize
-                SNMPv1/v2c send community strings in \textbf{cleartext}! Anyone sniffing traffic can capture them.
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.42\textwidth}
-            \begin{block}{SNMPv3 Security Levels}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{noAuthNoPriv}: Username only
-                    \item \textbf{authNoPriv}: + Authentication
-                    \item \textbf{authPriv}: + Encryption
-                \end{itemize}
-            \end{block}
-            \begin{exampleblock}{Exam Tip}
-                \footnotesize
-                SNMPv3 = \textbf{A}uthentication + \textbf{E}ncryption + \textbf{I}ntegrity. Always prefer v3 for production!
-            \end{exampleblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 28: Case Study - Lord Farquaad's SNMP Disaster
-\begin{frame}{Case Study: Lord Farquaad's SNMP Disaster}
-    \begin{alertblock}{``Some of You May Be Compromised...''}
-        \footnotesize
-        Lord Farquaad's IT team configured SNMP on all Duloc network devices using community strings ``public'' (read-only) and ``private'' (read-write). They thought these were just examples from the documentation.
-        
-        \vspace{0.2em}
-        A security audit reveals:
-        \begin{itemize}\setlength{\itemsep}{0pt}
-            \item Attackers have been querying device configs for weeks
-            \item Someone changed the ACLs on the border router
-            \item Wireshark capture shows SNMP traffic with ``public'' in cleartext
-            \item All 50 network devices use identical community strings
-        \end{itemize}
-        
-        \textbf{Evidence}: \texttt{snmpwalk -v2c -c public 10.0.0.1}
-    \end{alertblock}
-    \begin{block}{Review Questions}
-        \footnotesize
-        1. What SNMP vulnerabilities were exploited? 2. What version should they migrate to? 3. What immediate steps are needed?
-    \end{block}
-\end{frame}
-
-% SLIDE 29: Case Study Solution - Farquaad's SNMP
-\begin{frame}{Case Study Solution: Lord Farquaad's SNMP Disaster}
-    \begin{exampleblock}{Solution: ``This Is Not the Fairy Tale I Wanted!''}
-        \footnotesize
-        \begin{enumerate}\setlength{\itemsep}{1pt}
-            \item \textbf{Vulnerabilities}: Default community strings + cleartext transmission (v2c) + RW access
-            \item \textbf{Migration}: Upgrade to \textbf{SNMPv3} with authPriv (authentication + encryption)
-            \item \textbf{Immediate}: Change all communities, implement ACLs, audit all configs, disable write where not needed
-        \end{enumerate}
-    \end{exampleblock}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.55]
-                    \node[font=\footnotesize, alertred] at (0, 3) {\textbf{Before}};
-                    \node[draw, fill=alertred!10, rounded corners, font=\tiny, text width=2.2cm, align=center] at (0, 1.5) {v2c\\``public''\\Cleartext};
-                    \node[font=\footnotesize, ogregreen] at (5, 3) {\textbf{After}};
-                    \node[draw, fill=ogregreen!10, rounded corners, font=\tiny, text width=2.2cm, align=center] at (5, 1.5) {v3 authPriv\\SHA + AES\\Encrypted};
-                    \draw[-{Stealth}, very thick] (1.8, 1.5) -- (2.7, 1.5);
-                \end{tikzpicture}
-            \end{center}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Key Lessons}
-                \footnotesize
-                Never use default credentials; v1/v2c = cleartext = vulnerable; limit SNMP access with ACLs; disable write access unless needed
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 30: Event Management & Logging
-\begin{frame}{Section 8.4: Event Management \& Logging}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Why Logging Matters}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Troubleshooting}: What happened when?
-                    \item \textbf{Security}: Detect breaches and attacks
-                    \item \textbf{Compliance}: Audit requirements
-                    \item \textbf{Capacity}: Trend analysis
-                    \item \textbf{Accountability}: Who did what?
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{Key Principle}
-                \footnotesize
-                If it's not logged, it didn't happen! Centralize logs for correlation and retention.
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node (r1) at (0, 3) {\iconrouter[0.3cm]};
-                    \node (sw1) at (1.8, 3) {\iconswitch[0.3cm]};
-                    \node (fw1) at (3.6, 3) {\iconfirewall[0.3cm]};
-                    \node (s1) at (5.4, 3) {\iconserver[0.3cm]};
-                    \node (syslog) at (2.25, 1) {\iconlog[0.5cm]};
-                    \node[font=\tiny] at (2.25, 0.4) {Syslog Server};
-                    \node[draw=aborange, fill=aborange!10, rounded corners, font=\tiny] (siem) at (2.25, -1) {SIEM};
-                    \draw[-{Stealth}, tcpblue] (r1) -- (syslog);
-                    \draw[-{Stealth}, tcpblue] (sw1) -- (syslog);
-                    \draw[-{Stealth}, tcpblue] (fw1) -- (syslog);
-                    \draw[-{Stealth}, tcpblue] (s1) -- (syslog);
-                    \draw[-{Stealth}, ogregreen] (syslog) -- (siem);
-                \end{tikzpicture}
-            \end{center}
-            \begin{block}{Log Flow}
-                \footnotesize
-                Devices $\rightarrow$ Syslog Server $\rightarrow$ SIEM $\rightarrow$ Alerts/Dashboards
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 31: Syslog Protocol and Severity Levels
-\begin{frame}{Syslog Protocol and Severity Levels}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Syslog Basics}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Standard logging protocol
-                    \item \textbf{UDP 514} (traditional)
-                    \item \textbf{TCP 514} (reliable)
-                    \item \textbf{TCP 6514} (TLS encrypted)
-                \end{itemize}
-            \end{block}
-            \begin{exampleblock}{Syslog Message Format}
-                \ttfamily\scriptsize
-                <priority>timestamp host message\\[0.2em]
-                <134>Jan 25 10:30:15 router1\\
-                \%LINK-3-UPDOWN: Interface\\
-                Gi0/1 changed state to down
-            \end{exampleblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Severity Levels (Memorize!)}
+            \begin{block}{The Scale (Lower = Worse)}
                 \scriptsize
                 \begin{tabular}{@{}c l l@{}}
                     \toprule
-                    \textbf{Level} & \textbf{Name} & \textbf{Description} \\
+                    \textbf{\#} & \textbf{Name} & \textbf{Meaning} \\
                     \midrule
-                    0 & Emergency & System unusable \\
-                    1 & Alert & Immediate action \\
-                    2 & Critical & Critical condition \\
-                    3 & Error & Error condition \\
-                    4 & Warning & Warning condition \\
-                    5 & Notice & Normal but notable \\
-                    6 & Info & Informational \\
-                    7 & Debug & Debug messages \\
+                    \rowcolor{alertred!30} 0 & \textbf{Emergency} & System is dead (Panic). \\
+                    \rowcolor{alertred!20} 1 & \textbf{Alert} & Action needed NOW. \\
+                    \rowcolor{alertred!10} 2 & \textbf{Critical} & Critical error (RAM fail). \\
+                    \rowcolor{orange!10} 3 & \textbf{Error} & Standard error message. \\
+                    \rowcolor{yellow!10} 4 & \textbf{Warning} & Event occurred (Link flap). \\
+                    5 & \textbf{Notice} & Normal but significant. \\
+                    6 & \textbf{Info} & Just information. \\
+                    7 & \textbf{Debug} & EVERYTHING (Developer). \\
                     \bottomrule
                 \end{tabular}
             \end{block}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{exampleblock}{Mnemonic}
+                \footnotesize
+                \textbf{E}very \textbf{A}lert \textbf{C}reates \textbf{E}rrors \textbf{W}hen \textbf{N}etworks \textbf{I}nterrupt \textbf{D}onkey.
+            \end{exampleblock}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Thermometer concept
+                    \draw[thick, fill=white] (0,0) rectangle (1, 4);
+                    
+                    % Levels
+                    \fill[alertred] (0, 3) rectangle (1, 4);
+                    \node[right, font=\tiny] at (1, 3.5) {0-2 (Wake Shrek)};
+                    
+                    \fill[orange] (0, 2) rectangle (1, 3);
+                    \node[right, font=\tiny] at (1, 2.5) {3-4 (Check later)};
+                    
+                    \fill[green] (0, 0) rectangle (1, 2);
+                    \node[right, font=\tiny] at (1, 1) {5-7 (Noise)};
+                \end{tikzpicture}
+            \end{center}
         \end{column}
     \end{columns}
 \end{frame}
 
 % SLIDE 32: SIEM
-\begin{frame}{SIEM --- Security Information and Event Management}
+\begin{frame}{SIEM: The Magic Mirror}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{What is SIEM?}
+            \begin{block}{Security Information \& Event Mgmt}
                 \footnotesize
-                Central platform that:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Aggregates} logs from all sources
-                    \item \textbf{Normalizes} different log formats
-                    \item \textbf{Correlates} events across systems
-                    \item \textbf{Analyzes} for patterns/threats
-                    \item \textbf{Alerts} on suspicious activity
-                    \item \textbf{Reports} for compliance
+                Syslog collects logs. \textbf{SIEM} understands them.
+                \begin{itemize}
+                    \item \textbf{Aggregation}: Collects logs from Everywhere (Server, Firewall, Door Badge).
+                    \item \textbf{Correlation}: Connects the dots.
+                    \item \textbf{Alerting}: Tells the Admin.
                 \end{itemize}
             \end{block}
-            \begin{exampleblock}{Popular SIEM Platforms}
+            \begin{alertblock}{Correlation Example}
                 \footnotesize
-                Splunk, IBM QRadar, Microsoft Sentinel, Elastic SIEM, AlienVault
-            \end{exampleblock}
+                1. Badge Reader: "Puss entered building at 2AM."\\
+                2. Server: "Puss logged into Database."\\
+                3. Firewall: "Database sending 5GB to Internet."\\
+                \textbf{SIEM Conclusion}: \textbf{Data Theft!}
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node[font=\tiny] at (-1, 3.5) {Sources};
-                    \node at (-1, 2.5) {\iconrouter[0.25cm]};
-                    \node at (-1, 1.5) {\iconfirewall[0.25cm]};
-                    \node at (-1, 0.5) {\iconserver[0.25cm]};
-                    \node[draw=aborange, fill=aborange!15, rounded corners, minimum width=1.5cm, minimum height=1.8cm, font=\footnotesize] (siem) at (2, 1.5) {SIEM};
-                    \node[font=\tiny] at (5, 3.5) {Outputs};
-                    \node at (5, 2.5) {\iconalert[0.3cm]};
-                    \node[font=\tiny] at (5, 2) {Alerts};
-                    \node at (5, 1) {\iconchart[0.3cm]};
-                    \node[font=\tiny] at (5, 0.5) {Dashboards};
-                    \draw[-{Stealth}, tcpblue] (0, 2.5) -- (1, 2);
-                    \draw[-{Stealth}, tcpblue] (0, 1.5) -- (1, 1.5);
-                    \draw[-{Stealth}, tcpblue] (0, 0.5) -- (1, 1);
-                    \draw[-{Stealth}, ogregreen] (3, 2) -- (4.2, 2.5);
-                    \draw[-{Stealth}, ogregreen] (3, 1.5) -- (4.2, 1);
+                \begin{tikzpicture}[scale=0.65]
+                    % Sources
+                    \node (log1) at (0, 4) {\faIcon{file-alt}};
+                    \node (log2) at (0, 3) {\faIcon{file-alt}};
+                    \node (log3) at (0, 2) {\faIcon{file-alt}};
+                    \node[font=\tiny] at (-1, 3) {Raw Logs};
+                    
+                    % Funnel (SIEM)
+                    \node[trapezium, draw=tcpblue, fill=tcpblue!10, rotate=-90, minimum height=1.5cm] (siem) at (3, 3) {SIEM};
+                    
+                    % Arrows
+                    \draw[->] (log1) -- (siem);
+                    \draw[->] (log2) -- (siem);
+                    \draw[->] (log3) -- (siem);
+                    
+                    % Output
+                    \node[draw, circle, fill=alertred, text=white] (alert) at (5.5, 3) {!};
+                    \draw[->, thick, alertred] (siem) -- (alert);
+                    \node[below, font=\tiny] at (alert) {Alert};
                 \end{tikzpicture}
             \end{center}
-            \begin{block}{Correlation Example}
-                \footnotesize
-                Failed logins (Server) + Port scan (Firewall) + New admin (AD) = Possible breach!
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 33: Log Reviews and Alert Prioritization
-\begin{frame}{Log Reviews and Alert Prioritization}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Alert Priority Matrix}
-                \footnotesize
-                \begin{tabular}{@{}l c l@{}}
-                    \toprule
-                    \textbf{Priority} & \textbf{Response} & \textbf{Example} \\
-                    \midrule
-                    P1 Critical & 15 min & Security breach \\
-                    P2 High & 1 hour & Service outage \\
-                    P3 Medium & 4 hours & Degraded perf \\
-                    P4 Low & Next day & Minor warning \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-            \begin{block}{Review Schedule}
-                \footnotesize
-                \textbf{Real-time}: P1/P2 alerts; \textbf{Daily}: Security events; \textbf{Weekly}: Trend analysis; \textbf{Monthly}: Compliance reports
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Alert Fatigue is Real!}
-                \footnotesize
-                Too many alerts = ignored alerts. Tune thresholds to reduce noise:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Suppress known false positives
-                    \item Group related events
-                    \item Set appropriate thresholds
-                    \item Regularly review and tune rules
-                \end{itemize}
-            \end{alertblock}
-            \begin{exampleblock}{Good Alert Design}
-                \footnotesize
-                \textbf{Actionable}: Clear what to do; \textbf{Contextual}: Includes relevant info; \textbf{Prioritized}: Severity is accurate
-            \end{exampleblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 34: Packet Capture and Analysis
-\begin{frame}{Section 8.5: Packet Capture and Analysis}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Why Capture Packets?}
-                \footnotesize
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{Troubleshooting}: See actual traffic
-                    \item \textbf{Security}: Detect malicious activity
-                    \item \textbf{Performance}: Analyze latency issues
-                    \item \textbf{Learning}: Understand protocols
-                    \item \textbf{Forensics}: Incident investigation
-                \end{itemize}
-            \end{block}
-            \begin{block}{Capture Methods}
-                \footnotesize
-                \textbf{SPAN/Mirror Port}: Switch copies traffic; \textbf{Network TAP}: Hardware inline device; \textbf{Host-based}: Capture on endpoint
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node[font=\footnotesize] at (2, 4) {\textbf{SPAN Port Setup}};
-                    \node (sw) at (2, 2.5) {\iconswitch[0.5cm]};
-                    \node (pc1) at (0, 1) {\iconpc[0.3cm]};
-                    \node (pc2) at (2, 0.5) {\iconpc[0.3cm]};
-                    \node (srv) at (4, 1) {\iconserver[0.3cm]};
-                    \node (analyzer) at (5.5, 2.5) {\iconeye[0.4cm]};
-                    \node[font=\tiny] at (5.5, 2) {Analyzer};
-                    \draw[rctcblue] (pc1) -- (sw);
-                    \draw[rctcblue] (pc2) -- (sw);
-                    \draw[rctcblue] (srv) -- (sw);
-                    \draw[-{Stealth}, aborange, line width=1.5pt] (sw) -- (analyzer) node[midway, above, font=\tiny] {Mirror};
-                \end{tikzpicture}
-            \end{center}
-            \begin{block}{Key Tools}
-                \footnotesize
-                \textbf{tcpdump}: CLI packet capture; \textbf{Wireshark}: GUI protocol analyzer; \textbf{tshark}: Wireshark CLI version
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 35: tcpdump and Wireshark
-\begin{frame}{tcpdump and Wireshark}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{tcpdump (Command Line)}
-                \ttfamily\scriptsize
-                \# Capture on interface\\
-                tcpdump -i eth0\\[0.2em]
-                \# Write to file\\
-                tcpdump -w capture.pcap\\[0.2em]
-                \# Filter by port\\
-                tcpdump port 80\\[0.2em]
-                \# Filter by host\\
-                tcpdump host 10.0.0.1\\[0.2em]
-                \# Combine filters\\
-                tcpdump -i eth0 host 10.0.0.1 and port 443
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Wireshark (GUI)}
-                \footnotesize
-                Full protocol analyzer with packet list, details, bytes views; follow TCP/UDP streams; expert analysis
-            \end{block}
-            \begin{block}{Wireshark Display Filters}
-                \ttfamily\scriptsize
-                ip.addr == 10.0.0.1\\
-                tcp.port == 443\\
-                http.request\\
-                dns.qry.name contains "google"\\
-                tcp.flags.syn == 1
-            \end{block}
-            \begin{alertblock}{Capture vs Display Filters}
-                \footnotesize
-                \textbf{Capture filters}: Applied during capture (tcpdump syntax) --- \texttt{host 10.0.0.1}\\
-                \textbf{Display filters}: Applied after capture (Wireshark syntax) --- \texttt{ip.addr == 10.0.0.1}
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 36: Case Study - Fiona's Network Mystery
-\begin{frame}{Case Study: Princess Fiona's Network Mystery}
-    \begin{alertblock}{``By Day One Way, By Night Another...''}
+% SLIDE 33: Case Study - The Silent Failure
+\begin{frame}{Case Study: The Silent Failure}
+    \begin{alertblock}{Scenario: "Why is the bridge up?"}
         \footnotesize
-        Princess Fiona notices the Far Far Away Castle network becomes extremely slow every afternoon around 3 PM. Users complain about timeouts, dropped connections, and slow file transfers.
+        The Castle Drawbridge (Router) stopped working at 3:00 AM. Traffic stopped flowing.
         
-        \vspace{0.2em}
-        Basic monitoring shows:
-        \begin{itemize}\setlength{\itemsep}{0pt}
-            \item Core switch uplink hits 95\% utilization at 3 PM
-            \item CPU and memory on all devices are normal
-            \item No errors or discards on interfaces
-            \item Problem resolves itself by 5 PM
-        \end{itemize}
-        
-        \textbf{Available tools}: Wireshark laptop, SPAN port access on core switch
-        
-        Fiona needs to identify what's consuming all the bandwidth!
+        Shrek wakes up at 8:00 AM. He logs into the Router, but the logs only go back to 7:00 AM because the buffer overwrote the old messages. He has no idea why it crashed.
     \end{alertblock}
-    \begin{block}{Review Questions}
+    \begin{block}{Discussion Questions}
         \footnotesize
-        1. How should Fiona configure packet capture? 2. What Wireshark features help? 3. What metrics to analyze?
+        \begin{enumerate}
+            \item Where were the logs stored (Locally vs. Remotely)?
+            \item Why did the logs disappear?
+            \item What tool would have saved the 3:00 AM error message?
+        \end{enumerate}
     \end{block}
 \end{frame}
 
-% SLIDE 37: Case Study Solution - Fiona's Mystery
-\begin{frame}{Case Study Solution: Princess Fiona's Network Mystery}
-    \begin{exampleblock}{Solution: ``Better Out Than In!''}
+% SLIDE 34: Case Study Solution
+\begin{frame}{Case Study Solution: The Silent Failure}
+    \begin{exampleblock}{The Fix}
         \footnotesize
-        \begin{enumerate}\setlength{\itemsep}{1pt}
-            \item Configure SPAN to mirror uplink traffic to analyzer laptop during peak time
-            \item Use Wireshark \textbf{Statistics $\rightarrow$ Conversations} and \textbf{Endpoints} to find top talkers
-            \item Analyze: bytes by host, protocol distribution, conversation statistics
+        \begin{enumerate}
+            \item \textbf{Storage}: They were stored in \textbf{RAM} (Buffered Logging). When RAM fills up, old logs are deleted.
+            \item \textbf{Reason}: Lack of persistence. Also, if the router rebooted, RAM logs would be lost entirely.
+            \item \textbf{Tool}: A \textbf{Syslog Server}. The router should have sent the critical error ("Fan Failure") to the server immediately at 3:00 AM. Shrek could read it later.
         \end{enumerate}
     \end{exampleblock}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.7]
+            \node (r1) at (0, 0) {\iconrouter[0.6cm]};
+            \node[below, font=\tiny] at (0, -0.5) {Router};
+            
+            \node (srv) at (5, 0) {\iconserver[0.6cm]};
+            \node[below, font=\tiny] at (5, -0.5) {Syslog Server};
+            
+            \draw[->, thick, tcpblue] (r1) -- (srv) node[midway, above, font=\tiny] {UDP 514: "I'm dying!"};
+            
+            \node[right, font=\tiny, text=ogregreen] at (5.5, 0.2) {Saved to Disk};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% SLIDE 35: Traffic Analysis Intro
+\begin{frame}{8.5 Traffic Analysis: NetFlow vs. Packet Capture}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Discovery}
+            \begin{block}{1. NetFlow (Metadata)}
                 \footnotesize
-                Wireshark revealed:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Backup server $\rightarrow$ Cloud storage
-                    \item 500+ Mbps sustained transfer
-                    \item Scheduled backup job at 3 PM
-                    \item Runs during business hours!
+                \textbf{The Phone Bill.}
+                \begin{itemize}
+                    \item Shows \textit{who} called \textit{whom}, \textit{when}, and for \textit{how long}.
+                    \item Does \textbf{NOT} show what they said.
+                    \item \textit{Use:} Bandwidth hogs, DDoS detection.
+                    \item \textbf{Lightweight}.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Resolution}
+            \begin{block}{2. Packet Capture (PCAP)}
                 \footnotesize
-                Reschedule backups to 2 AM; implement QoS for backup traffic; add bandwidth monitoring alerts
+                \textbf{The Wiretap.}
+                \begin{itemize}
+                    \item Records the actual \textbf{content} of the conversation.
+                    \item Shows the passwords, emails, images.
+                    \item \textit{Use:} Deep troubleshooting, Forensics.
+                    \item \textbf{Heavy} (Needs huge storage).
+                \end{itemize}
             \end{block}
-            \begin{alertblock}{Key Lesson}
-                \footnotesize
-                Packet capture reveals what dashboards miss. \textbf{Statistics $\rightarrow$ Endpoints} is your friend!
-            \end{alertblock}
         \end{column}
     \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            % Envelope (NetFlow)
+            \node[draw, fill=yellow!10, minimum width=2cm, minimum height=1.2cm] at (-3, 0) {};
+            \node[font=\tiny, align=left] at (-3, 0) {From: Bob\\To: Alice\\Size: 1KB};
+            \node[below, font=\bfseries\tiny] at (-3, -0.8) {NetFlow (Envelope)};
+            
+            % Letter (PCAP)
+            \node[draw, fill=white, minimum width=2cm, minimum height=1.2cm] at (3, 0) {};
+            \node[font=\tiny, align=left] at (3, 0) {"Dear Alice,\\The password\\is 1234."};
+            \node[below, font=\bfseries\tiny] at (3, -0.8) {PCAP (Content)};
+        \end{tikzpicture}
+    \end{center}
 \end{frame}
 
-% SLIDE 38: Traffic Monitoring & Flow Data
-\begin{frame}{Section 8.6: Traffic Monitoring \& Flow Data}
+% SLIDE 36: NetFlow
+\begin{frame}{NetFlow / IPFIX: Watching the River}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Flow Data vs Packet Capture}
+            \begin{block}{How it works}
                 \footnotesize
-                \begin{tabular}{@{}l l l@{}}
-                    \toprule
-                    & \textbf{Flow} & \textbf{Packet} \\
-                    \midrule
-                    Content & Metadata & Full data \\
-                    Storage & Low & High \\
-                    Privacy & Better & Sensitive \\
-                    Detail & Summary & Complete \\
-                    Use & Trends & Deep dive \\
-                    \bottomrule
-                \end{tabular}
+                Routers summarize traffic into "Flows" and send the summary to a Collector.
+                \begin{itemize}
+                    \item Source IP / Dest IP.
+                    \item Source Port / Dest Port.
+                    \item Protocol (TCP/UDP).
+                    \item Byte Count.
+                \end{itemize}
             \end{block}
-            \begin{block}{Flow = Conversation Summary}
+            \begin{exampleblock}{Finding the "Top Talker"}
                 \footnotesize
-                Source IP, Dest IP, Ports, Protocol, Bytes, Packets, Duration, Timestamps
-            \end{block}
+                "Why is the internet slow?"
+                \textbf{NetFlow says:} "Because Donkey's iPad (10.1.1.50) is downloading 4TB of movies from Netflix."
+            \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.6]
-                    \node (router) at (0, 2) {\iconrouter[0.5cm]};
-                    \node[font=\tiny] at (0, 1.4) {NetFlow Export};
-                    \node (collector) at (4, 2) {\iconserver[0.4cm]};
-                    \node[font=\tiny] at (4, 1.4) {Collector};
-                    \node at (6.5, 2) {\iconchart[0.4cm]};
-                    \node[font=\tiny] at (6.5, 1.4) {Analysis};
-                    \draw[-{Stealth}, aborange] (router) -- (collector) node[midway, above, font=\tiny] {UDP 2055};
-                    \draw[-{Stealth}, ogregreen] (collector) -- (5, 2);
+                    \node (r1) at (0, 0) {\iconrouter[0.6cm]};
+                    \node (collector) at (4, 2) {\iconchart[0.6cm]};
+                    
+                    % Traffic through router
+                    \draw[thick, gray, ->] (-2, 0) -- (2, 0);
+                    
+                    % Flow export
+                    \draw[thick, dashed, tcpblue, ->] (r1) -- (collector);
+                    \node[font=\tiny, rotate=25] at (2, 1.2) {UDP 2055 (Export)};
+                    
+                    % Graph
+                    \node[right, font=\tiny, align=left] at (4.5, 2) {\textbf{Top Apps:}\\1. Netflix\\2. YouTube};
                 \end{tikzpicture}
             \end{center}
-            
-            \begin{block}{Flow Protocols}
-                \footnotesize
-                \begin{tabular}{@{}l l c@{}}
-                    \toprule
-                    \textbf{Protocol} & \textbf{Vendor} & \textbf{Port} \\
-                    \midrule
-                    NetFlow & Cisco & UDP 2055 \\
-                    sFlow & Multi & UDP 6343 \\
-                    IPFIX & Standard & UDP 4739 \\
-                    J-Flow & Juniper & UDP 2055 \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 39: QoS and Traffic Shaping
-\begin{frame}{QoS and Traffic Shaping}
+% SLIDE 37: Packet Capture (Wireshark)
+\begin{frame}{Packet Capture: The Microscope}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{QoS Purpose}
+            \begin{block}{Tools}
                 \footnotesize
-                Prioritize critical traffic when bandwidth is limited:
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item Voice/video over bulk data
-                    \item Business apps over social media
-                    \item Guaranteed bandwidth for critical systems
+                \begin{itemize}
+                    \item \textbf{Wireshark}: The GUI analyzer.
+                    \item \textbf{tcpdump}: Command line capture (Linux).
                 \end{itemize}
             \end{block}
-            \begin{block}{DSCP Values (Review)}
+            \begin{alertblock}{Port Mirroring (SPAN)}
                 \footnotesize
-                \begin{tabular}{@{}l c l@{}}
-                    \toprule
-                    \textbf{Class} & \textbf{DSCP} & \textbf{Use} \\
-                    \midrule
-                    EF & 46 & Voice \\
-                    AF41 & 34 & Video \\
-                    AF21 & 18 & Critical data \\
-                    BE & 0 & Default \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
+                Switches normally keep secrets. To capture traffic not meant for you, you must configure a \textbf{SPAN Port} (Switched Port Analyzer).
+                \textit{"Copy all traffic from Port 1 to Port 2 (My Sniffer)."}
+            \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Policing vs Shaping}
-                \footnotesize
-                \textbf{Policing}: Drop excess traffic immediately (hard limit, can cause packet loss)
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    \node (sw) at (0, 2) {\iconswitch[0.6cm]};
+                    
+                    \node (victim) at (-2, 0) {\iconpc[0.5cm]};
+                    \node (sniffer) at (2, 0) {\iconlaptop[0.5cm]};
+                    \node[below, font=\tiny] at (2, -0.5) {Wireshark};
+                    
+                    \draw[thick] (victim) -- (sw);
+                    \draw[thick] (sniffer) -- (sw);
+                    
+                    % Mirror path
+                    \draw[thick, dashed, red, ->, bend left] (-0.5, 1.5) to (0.5, 1.5);
+                    \node[font=\tiny, text=red] at (0, 1.2) {Copy!};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE 37c: tcpdump (The CLI Sniffer)
+% =============================================================================
+\begin{frame}[fragile]{tcpdump: The Command Line Sniffer}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            % Simulated Terminal Window
+            \begin{tikzpicture}
+                \node[draw, fill=black, text=white, font=\ttfamily\scriptsize, align=left, inner sep=8pt, rounded corners=3pt, text width=8cm] (term) {
+                    \textbf{root@swamp:\~{}\# tcpdump -i eth0 -n port 80}\\
+                    tcpdump: verbose output suppressed...\\
+                    listening on eth0, link-type EN10MB...\\[0.1em]
+                    \textcolor{green}{10:42:01.52} IP \textcolor{cyan}{10.1.1.5.54321} $>$ \textcolor{orange}{10.1.1.1.80}: Flags [S]...\\
+                    \textcolor{green}{10:42:01.53} IP \textcolor{orange}{10.1.1.1.80} $>$ \textcolor{cyan}{10.1.1.5.54321}: Flags [S.]...\\
+                    \textcolor{green}{10:42:01.54} IP \textcolor{cyan}{10.1.1.5.54321} $>$ \textcolor{orange}{10.1.1.1.80}: Flags [.]...\\[0.1em]
+                    3 packets captured
+                };
                 
-                \vspace{0.2em}
-                \textbf{Shaping}: Buffer and delay excess traffic (smoother flow, adds latency)
-            \end{block}
-            \begin{alertblock}{QoS Only Helps When...}
+                % Window Title Bar (Mac/Linux style)
+                \fill[gray!50] (term.north west) [rounded corners=3pt] -- (term.north east) -- ($(term.north east)-(0,0.3)$) -- ($(term.north west)-(0,0.3)$) -- cycle;
+                \node[font=\sffamily\tiny, text=black] at ($(term.north)-(0,0.15)$) {Terminal - tcpdump};
+                \fill[red] ($(term.north west)+(0.2,-0.15)$) circle (2pt);
+                \fill[yellow] ($(term.north west)+(0.4,-0.15)$) circle (2pt);
+                \fill[green] ($(term.north west)+(0.6,-0.15)$) circle (2pt);
+            \end{tikzpicture}
+            
+            \begin{block}{Decoding the Output}
                 \footnotesize
-                There's \textbf{congestion}! QoS doesn't add bandwidth---it manages limited bandwidth intelligently.
+                \begin{itemize}
+                    \item \textcolor{cyan}{\textbf{Source}}: 10.1.1.5 (Port 54321)
+                    \item \textcolor{orange}{\textbf{Dest}}: 10.1.1.1 (Port 80 / Web)
+                    \item \textbf{Flags [S]}: SYN packet (Start of connection)
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{block}{Why use tcpdump?}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{No GUI}: Servers usually don't have screens. You can't use Wireshark on a headless router.
+                    \item \textbf{Speed}: Great for quick checks ("Is traffic hitting this interface?").
+                \end{itemize}
+            \end{block}
+            \begin{exampleblock}{Key Flags}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{-i eth0}: Listen on interface eth0.
+                    \item \textbf{-n}: No DNS (Show IPs, don't wait to resolve names).
+                    \item \textbf{-w capture.pcap}: Save to a file (Write).
+                    \item \textbf{port 80}: Only show web traffic.
+                \end{itemize}
+            \end{exampleblock}
+            \begin{alertblock}{Pro Tip}
+                \footnotesize
+                Capture with \texttt{tcpdump -w file.pcap} on the server, then download the file and open it in Wireshark for ease of use!
             \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 40: Module Summary
-\begin{frame}{Module 8 Summary and Key Takeaways}
+% =============================================================================
+% SLIDE 37b: Wireshark Interface (Fixed)
+% =============================================================================
+\begin{frame}{Wireshark: Anatomy of a Packet Capture}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Documentation \& Policies}
+        \begin{column}{0.65\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.6, font=\sffamily\tiny]
+                    % Window Frame
+                    \draw[fill=white, drop shadow] (0,0) rectangle (10, 8);
+                    \fill[rctcblue] (0, 7.5) rectangle (10, 8);
+                    % FIXED: Escaped underscore in filename
+                    \node[text=white, anchor=west] at (0.2, 7.75) {Wireshark - snmp\_hack.pcap};
+                    
+                    % 1. Filter Bar
+                    \draw[fill=green!10] (0.2, 7) rectangle (7, 7.4);
+                    \node[anchor=west] at (0.2, 7.2) {Filter: \textbf{snmp}};
+                    \draw[fill=gray!20] (7.2, 7) rectangle (9.8, 7.4);
+                    \node at (8.5, 7.2) {Apply};
+
+                    % 2. Packet List (Top Pane)
+                    \draw (0.2, 4.5) rectangle (9.8, 6.8);
+                    \fill[rctcblue!10] (0.2, 6.4) rectangle (9.8, 6.8); % Header
+                    \node[anchor=west] at (0.3, 6.6) {No. \hspace{0.2cm} Time \hspace{0.4cm} Source \hspace{0.8cm} Dest \hspace{0.8cm} Proto \hspace{0.2cm} Info};
+                    
+                    % Packet Rows
+                    \node[anchor=west] at (0.3, 6.2) {12 \hspace{0.35cm} 10.1 \hspace{0.55cm} 192.168.1.50 \hspace{0.2cm} 10.1.1.1 \hspace{0.5cm} SNMP \hspace{0.2cm} get-request};
+                    \fill[tcpblue!30] (0.2, 5.7) rectangle (9.8, 6.0); % Selected Row
+                    \node[anchor=west] at (0.3, 5.85) {13 \hspace{0.35cm} 10.2 \hspace{0.55cm} 192.168.1.50 \hspace{0.2cm} 10.1.1.1 \hspace{0.5cm} SNMP \hspace{0.2cm} get-request};
+                    \node[anchor=west] at (0.3, 5.5) {14 \hspace{0.35cm} 10.2 \hspace{0.55cm} 10.1.1.1 \hspace{0.9cm} 192.168.1.50 \hspace{0.1cm} SNMP \hspace{0.2cm} get-response};
+
+                    % 3. Packet Details (Middle Pane)
+                    \draw (0.2, 2.0) rectangle (9.8, 4.3);
+                    % FIXED: Removed > symbol or used mathematical mode if needed, simpler text here
+                    \node[anchor=west] at (0.3, 4.1) {Frame 13: 182 bytes on wire...};
+                    \node[anchor=west] at (0.3, 3.7) {Ethernet II, Src: 11:22:33:44:55:66...};
+                    \node[anchor=west] at (0.3, 3.3) {Internet Protocol Version 4, Src: 192.168.1.50...};
+                    \node[anchor=west] at (0.3, 2.9) {User Datagram Protocol, Src Port: 54321...};
+                    \node[anchor=west, text=black] at (0.3, 2.5) {Simple Network Management Protocol};
+                    \node[anchor=west, text=alertred] at (0.8, 2.1) {\textbf{version: v2c (1)}}; 
+                    
+                    % 4. Hex Dump (Bottom Pane)
+                    \draw (0.2, 0.2) rectangle (9.8, 1.8);
+                    \node[anchor=west, font=\ttfamily\tiny] at (0.3, 1.5) {0000  00 50 56 c0 00 08 00 0c...};
+                    \node[anchor=west, font=\ttfamily\tiny] at (0.3, 1.2) {0010  00 35 00 35 00 21 1a 2b...};
+                    \node[anchor=west, font=\ttfamily\tiny] at (0.3, 0.9) {0020  \textbf{70 75 62 6c 69 63} ... \textcolor{red}{p u b l i c}};
+                    
+                    % Callouts
+                    \draw[->, ultra thick, alertred] (10.2, 2.1) -- (9, 2.1) node[right=1.2cm, align=left, text=black] {Decoded Layer 7\\(Application)};
+                    
+                    \draw[->, ultra thick, alertred] (10.2, 0.9) -- (7, 0.9) node[right=3.3cm, align=left, text=black] {Raw Payload\\(Cleartext!)};
+
+                \end{tikzpicture}
+                 \begin{block}{1. Packet List}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{Change management}: Request $\rightarrow$ Review $\rightarrow$ Approve $\rightarrow$ Implement
-                    \item \textbf{Physical diagrams}: Where things are
-                    \item \textbf{Logical diagrams}: How things connect
-                    \item \textbf{IPAM}: Track all IP allocations
+                "The Conversation."
+                Shows \textbf{Who} (Src/Dst), \textbf{When} (Time), and \textbf{What} (Protocol).
+            \end{block}
+
+            \end{center}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+           
+            \begin{block}{2. Details (Layers)}
+                \footnotesize
+                "The Inspection."
+                Breaks down the packet by OSI Layer.
+                \begin{itemize}
+                    \item Frame (L1)
+                    \item Eth (L2)
+                    \item IP (L3)
+                    \item UDP (L4)
+                    \item SNMP (L7)
                 \end{itemize}
             \end{block}
-            \begin{block}{Monitoring \& Analysis}
+            \begin{block}{3. Bytes (Hex)}
                 \footnotesize
-                \begin{itemize}\setlength{\itemsep}{0pt}
-                    \item \textbf{SNMP}: v3 for security (auth + encryption)
-                    \item \textbf{Syslog}: Levels 0--7 (Emergency to Debug)
-                    \item \textbf{Packet capture}: tcpdump, Wireshark
-                    \item \textbf{Flow data}: NetFlow, sFlow, IPFIX
+                "The Raw Data."
+                What actually went over the wire.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% =============================================================================
+% Module 8.6: Quality of Service (QoS) - The Missing Piece!
+% =============================================================================
+
+% SLIDE 38: QoS Introduction
+\begin{frame}{8.6 Quality of Service (QoS): The VIP Lane}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Problem}
+                \footnotesize
+                Bandwidth is limited. If Donkey downloads a 4K movie while Shrek is on a Video Call, the video will freeze.
+            \end{block}
+            \begin{alertblock}{The Solution: QoS}
+                \footnotesize
+                \textbf{Prioritization}. Giving critical traffic (Voice/Video) a "Fast Pass" to skip the line.
+                \begin{itemize}
+                    \item \textbf{High Priority}: Voice (VoIP), Video.
+                    \item \textbf{Low Priority}: Email, YouTube, Donkey's downloads.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Road
+                    \draw[fill=gray!20] (0, 0) rectangle (5, 3);
+                    \draw[dashed, white, thick] (0, 1.5) -- (5, 1.5);
+                    
+                    % VIP Lane
+                    \node[font=\bfseries\tiny, text=ogregreen] at (2.5, 2.5) {VIP Lane (Voice)};
+                    \node (shrek) at (1, 2.2) {\faIcon{crown}};
+                    \draw[->, thick, ogregreen] (shrek) -- (4, 2.2);
+                    
+                    % Slow Lane
+                    \node[font=\bfseries\tiny, text=gray] at (2.5, 1) {General Traffic};
+                    \node (donkey1) at (0.5, 0.7) {\iconpc[0.3cm]};
+                    \node (donkey2) at (1.5, 0.7) {\iconpc[0.3cm]};
+                    \node (donkey3) at (2.5, 0.7) {\iconpc[0.3cm]};
+                    \node[right, font=\tiny, text=red] at (3, 0.7) {Stuck!};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 39: Shaping vs. Policing
+\begin{frame}{Managing Bandwidth: Shaping vs. Policing}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Traffic Shaping (The Buffer)}
+                \footnotesize
+                \textbf{"Please Wait."}
+                \begin{itemize}
+                    \item Delays excess packets in a queue (Buffer).
+                    \item Smooths out bursts.
+                    \item \textit{Analogy:} A waiting room.
+                \end{itemize}
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.5]
+                    \draw[->, thick] (0,0) -- (4,0) -- (4,2) -- (5,2) -- (5,0) -- (8,0);
+                    \node[above, font=\tiny] at (2,0) {Burst};
+                    \node[above, font=\tiny] at (6.5,0) {Smooth};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Traffic Policing (The Chop)}
+                \footnotesize
+                \textbf{"Get Out!"}
+                \begin{itemize}
+                    \item Drops excess packets immediately.
+                    \item Hard limit.
+                    \item \textit{Analogy:} A bouncer cutting the line.
+                \end{itemize}
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.5]
+                    \draw[->, thick] (0,0) -- (4,0);
+                    \draw[thick, red] (4, -0.5) -- (4, 2);
+                    \node[right, font=\tiny, text=red] at (4, 1) {DROP!};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 40: Marking the Packets (CoS and DSCP)
+\begin{frame}{Classification: Stamping the Envelope}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{block}{How does the router know?}
+                \footnotesize
+                We add a "Tag" to the packet header so routers know it is VIP.
+            \end{block}
+            \begin{exampleblock}{Layer 2: CoS (Class of Service)}
+                \footnotesize
+                \begin{itemize}
+                    \item Lives in the \textbf{802.1Q VLAN Header}.
+                    \item Range: 0 (Best Effort) to 7 (Network Control).
+                    \item \textbf{Voice usually = 5}.
+                \end{itemize}
+            \end{exampleblock}
+            \begin{exampleblock}{Layer 3: DSCP (DiffServ Code Point)}
+                \footnotesize
+                \begin{itemize}
+                    \item Lives in the \textbf{IP Header}.
+                    \item \textbf{EF (Expedited Forwarding)}: The absolute highest priority for Voice.
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7]
+                    % Packet
+                    \draw[thick, fill=white] (0,0) rectangle (3, 2);
+                    \node at (1.5, 1) {Data Packet};
+                    
+                    % Stamp
+                    \node[circle, fill=ogregreen, text=white, font=\bfseries\tiny, inner sep=2pt] at (2.5, 1.5) {EF};
+                    \draw[->, thick, ogregreen] (3.5, 1.5) -- (2.8, 1.5);
+                    \node[right, font=\tiny] at (3.5, 1.5) {DSCP Tag};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 41: Case Study - The Robot Voice
+\begin{frame}{Case Study: The Robot Voice}
+    \begin{alertblock}{Scenario: "I c-c-can't h-hear y-you!"}
+        \footnotesize
+        Shrek is trying to call Fiona using VoIP (Voice over IP). The audio sounds robotic and choppy.
+        
+        Meanwhile, the 3 Blind Mice are streaming 4K movies in the next room.
+        
+        \vspace{0.2em}
+        \textbf{Diagnosis:}
+        \begin{itemize}
+            \item \textbf{Bandwidth}: Saturated by movies.
+            \item \textbf{Jitter}: Voice packets are arriving late and out of order.
+        \end{itemize}
+    \end{alertblock}
+    \begin{block}{Discussion Questions}
+        \footnotesize
+        \begin{enumerate}
+            \item Which metric is ruining the call: Latency or Jitter?
+            \item How can we fix this without banning movies entirely?
+            \item What DSCP tag should the VoIP phones be using?
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% SLIDE 42: Case Study Solution
+\begin{frame}{Case Study Solution: The Robot Voice}
+    \begin{exampleblock}{The Fix: Apply QoS}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Root Cause}: \textbf{Jitter}. (Variation in arrival time makes voice sound robotic).
+            \item \textbf{Strategy}: Configure \textbf{Queuing} on the router.
+            \begin{itemize} \scriptsize
+                \item Create a "Low Latency Queue" (LLQ) for Voice.
+                \item Put the Movies in the "Best Effort" queue.
+            \end{itemize}
+            \item \textbf{Tagging}: Ensure VoIP phones mark traffic as \textbf{EF (Expedited Forwarding)} or \textbf{DSCP 46}.
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.6]
+            % Router Queue
+            \draw[thick] (0, 0) -- (5, 0);
+            \draw[thick] (0, 2) -- (5, 2);
+            \draw[dashed] (0, 1) -- (5, 1);
+            
+            % Voice Packets (Green)
+            \fill[ogregreen] (4, 1.2) rectangle (4.5, 1.8);
+            \node[font=\tiny, white] at (4.25, 1.5) {V};
+            \node[right, font=\tiny, text=ogregreen] at (5, 1.5) {First!};
+            
+            % Data Packets (Gray)
+            \fill[gray] (2, 0.2) rectangle (2.5, 0.8);
+            \fill[gray] (3, 0.2) rectangle (3.5, 0.8);
+            \node[right, font=\tiny, text=gray] at (5, 0.5) {Wait...};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% =============================================================================
+% SLIDE 43: Final Module Review
+% =============================================================================
+\begin{frame}{Module 8 Review: Key Takeaways}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Operations}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Docs}: Logical (IPs) vs Physical (Cables).
+                    \item \textbf{Baselines}: Know "Normal" to find "Evil".
+                    \item \textbf{Lifecycle}: Replace EoL gear!
+                \end{itemize}
+            \end{block}
+            \begin{block}{Monitoring}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{SNMPv3}: Secure monitoring (Auth+Priv).
+                    \item \textbf{Syslog}: Log collection (Level 0-7).
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Key Ports Reference}
+            % FIXED: Escaped the Ampersand here (Traffic \& QoS)
+            \begin{block}{Traffic \& QoS}
                 \footnotesize
-                \begin{tabular}{@{}l c l@{}}
-                    \toprule
-                    \textbf{Protocol} & \textbf{Port} & \textbf{Purpose} \\
-                    \midrule
-                    SNMP & UDP 161 & Agent queries \\
-                    SNMP Trap & UDP 162 & Alerts \\
-                    Syslog & UDP 514 & Logging \\
-                    Syslog TLS & TCP 6514 & Secure logs \\
-                    NetFlow & UDP 2055 & Flow export \\
-                    sFlow & UDP 6343 & Flow export \\
-                    \bottomrule
-                \end{tabular}
+                \begin{itemize}
+                    \item \textbf{NetFlow}: Who is talking? (Metadata).
+                    \item \textbf{Wireshark}: What are they saying? (Content).
+                    \item \textbf{QoS}: Prioritizing Voice (EF/DSCP 46) over Movies.
+                \end{itemize}
             \end{block}
-            \begin{alertblock}{Exam Reminders}
+            \begin{alertblock}{Final Exam Tip}
                 \footnotesize
-                Syslog 0 = Emergency, 7 = Debug; SNMPv3 = auth + encryption; SPAN/mirror for packet capture
+                If the question says "proprietary discovery," choose \textbf{CDP}. If it says "standard," choose \textbf{LLDP}.
             \end{alertblock}
         \end{column}
     \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        \textit{"And they networked happily ever after."}
+    \end{center}
 \end{frame}
 
 \end{document}
