@@ -986,7 +986,7 @@
             % Mailroom (Replaced Box with Icon)
             \node (mailroom) at (0,0) {\resizebox{2cm}{!}{\faIcon{building}}};
             \node[below=0.1cm of mailroom] {\textbf{MAILROOM}};
-            \node[font=\tiny] at (0,-1.5) {"I got boxes full of Pepe!"};
+            \node[font=\tiny] at (0,-2) {"I got boxes full of Pepe!"};
             
             % Arrows
             \draw[->, thick, blue] (-4, 0) -- (-1.5, 0) node[midway, above] {Incoming};
@@ -999,9 +999,9 @@
             \begin{block}{Agents}
                 \footnotesize
                 \begin{itemize}
-                    \item \textbf{MUA}: User Agent (Outlook).
-                    \item \textbf{MTA}: Transfer Agent (Truck).
-                    \item \textbf{MDA}: Delivery Agent (Box).
+                    \item \textbf{MUA}: User Agent (Outlook, Thunderbird, Apple Mail).
+                    \item \textbf{MTA}: Transfer Agent (SMTP Server).
+                    \item \textbf{MDA}: Delivery Agent (IMAP/POP3 Server).
                 \end{itemize}
             \end{block}
         \end{column}
@@ -1027,18 +1027,20 @@
                 \small
                 SMTP is a \textbf{Push} protocol.
                 \begin{itemize}
-                    \item \textbf{Port 25}: Server-to-Server.
-                    \item \textbf{Port 587}: Client-to-Server.
+                    \item \textbf{Port 25}: Server-to-Server. Shouldn't be used by clients, since it isn't secured. 
+                    \item \textbf{Port 587}: Client-to-Server. Secured with TLS.
+                    \item \textbf{Port 465}: SMTP over SSL (Deprecated).
                 \end{itemize}
             \end{block}
             \begin{alertblock}{Spam Prevention}
                 \small
-                Use \textbf{SPF, DKIM, DMARC} to prove identity.
+                Use \textbf{SPF, DKIM, DMARC} to prove identity. These prevent spoofing by using DNS records and cryptographic signatures.
             \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{exampleblock}{The Conversation}
-                \ttfamily\tiny
+                \ttfamily\scriptsize
+
                 S: 220 paddys.com ESMTP\\
                 C: HELO google.com\\
                 S: 250 Hello\\
