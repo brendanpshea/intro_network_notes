@@ -1,6 +1,5 @@
 % =============================================================================
-% Module 7.0: Network Services (The Gang Configures the Network)
-% Theme: It's Always Sunny in Philadelphia
+% Module 8.0: Network Operations (Master Preamble)
 % =============================================================================
 
 \documentclass[aspectratio=169, 11pt]{beamer}
@@ -9,35 +8,35 @@
 \usetheme{Madrid}
 \usecolortheme{default}
 
-% Custom colors - Paddy's Pub Theme
+% Custom colors
 \definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{paddysgreen}{RGB}{19, 77, 33}     % Dark Green
-\definecolor{beerlight}{RGB}{255, 199, 44}     % Light Beer
-\definecolor{sunnyorange}{RGB}{255, 140, 0}    % Title Card Orange
-\definecolor{tcpblue}{RGB}{30, 100, 180}       % TCP Blue
-\definecolor{alertred}{RGB}{200, 50, 50}       % Alert Red
-\definecolor{aborange}{RGB}{230, 120, 0}       % Network+ Orange
-\definecolor{networkgreen}{RGB}{0, 150, 100}   % Network+ Green
-\definecolor{udpgreen}{RGB}{50, 160, 80}       % UDP Green
+\definecolor{rctcgold}{RGB}{255, 199, 44}
+\definecolor{networkgreen}{RGB}{0, 150, 100}
+\definecolor{alertred}{RGB}{200, 50, 50}
+\definecolor{aborange}{RGB}{230, 120, 0}
+\definecolor{tcpblue}{RGB}{30, 100, 180}
+\definecolor{udpgreen}{RGB}{50, 160, 80}
+\definecolor{ogregreen}{RGB}{34, 139, 34}   % Shrek Green
+\definecolor{swampbrown}{RGB}{101, 67, 33}  % Mud Brown
 
 % Set theme colors
-\setbeamercolor{palette primary}{bg=paddysgreen, fg=white}
-\setbeamercolor{palette secondary}{bg=paddysgreen!80, fg=white}
-\setbeamercolor{palette tertiary}{bg=sunnyorange, fg=white}
-\setbeamercolor{structure}{fg=paddysgreen}
-\setbeamercolor{title}{fg=white, bg=paddysgreen}
-\setbeamercolor{frametitle}{fg=paddysgreen, bg=paddysgreen!10}
-\setbeamercolor{block title}{bg=paddysgreen, fg=white}
-\setbeamercolor{block body}{bg=paddysgreen!5}
+\setbeamercolor{palette primary}{bg=rctcblue, fg=white}
+\setbeamercolor{palette secondary}{bg=rctcblue!80, fg=white}
+\setbeamercolor{palette tertiary}{bg=rctcblue!60, fg=white}
+\setbeamercolor{structure}{fg=rctcblue}
+\setbeamercolor{title}{fg=rctcblue}
+\setbeamercolor{frametitle}{fg=rctcblue, bg=rctcblue!10}
+\setbeamercolor{block title}{bg=rctcblue, fg=white}
+\setbeamercolor{block body}{bg=rctcblue!5}
 \setbeamercolor{block title alerted}{bg=alertred, fg=white}
 \setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=sunnyorange, fg=white}
-\setbeamercolor{block body example}{bg=sunnyorange!10}
+\setbeamercolor{block title example}{bg=ogregreen, fg=white}
+\setbeamercolor{block body example}{bg=ogregreen!10}
 
 % Packages
 \usepackage{tikz}
-\usepackage{booktabs}
 \usepackage{fontawesome5}
+\usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{colortbl}
@@ -46,414 +45,411 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-% TikZ libraries (Essential for shapes)
+% TikZ libraries (Includes 'shapes.symbols' for the cloud shape)
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
                 backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
 
-% --- ICON DEFINITIONS (Robust) ---
+% --- ICON DEFINITIONS (RESTORED) ---
 \newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
+\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
 \newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
 \newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{network-wired}}}
 \newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{sitemap}}}
+\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
+\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
+\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone}}}
+\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}}
+\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
+\newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
 \newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{lock}}}
 \newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}}
-\newcommand{\iconmoney}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{money-bill-wave}}}
-\newcommand{\icontrash}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{trash}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
-\newcommand{\iconvoip}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone-volume}}}
-\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone}}}
-\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
 \newcommand{\iconmail}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{envelope}}}
-\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
-
-% --- CUSTOM STYLES ---
-\newcommand{\keyterm}[1]{\textbf{\textcolor{paddysgreen}{#1}}}
-
-% Case Study Environments
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{#1}
-}{\end{alertblock}}
-
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{Solution: #1}
-}{\end{exampleblock}}
-
-% TikZ Styles
-\tikzstyle{pc} = [inner sep=0pt]
-\tikzstyle{laptop} = [inner sep=0pt]
-\tikzstyle{server} = [inner sep=0pt]
-\tikzstyle{router} = [inner sep=0pt]
-\tikzstyle{switch} = [inner sep=0pt]
-\tikzstyle{firewall} = [inner sep=0pt]
-\tikzstyle{cloud} = [inner sep=0pt]
-\tikzstyle{ethernet} = [draw, line width=1.5pt, color=rctcblue, -{Stealth}]
-\tikzstyle{ethernet noarrow} = [draw, line width=1.5pt, color=rctcblue]
-\tikzstyle{secure} = [draw, line width=1.5pt, color=paddysgreen, -{Stealth}]
+\newcommand{\icondoc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
+\newcommand{\iconsearch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{search}}}
+\newcommand{\icontools}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{tools}}}
+\newcommand{\iconchart}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{chart-line}}}
+\newcommand{\iconalert}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{bell}}}
+\newcommand{\iconlog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clipboard-list}}}
+\newcommand{\iconeye}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{eye}}}
 
 % Document info
-\title[Module 7.0]{Module 7.0: Network Services \& High Availability}
-\subtitle{"The Gang Configures the Network"}
+\title[Module 8.0]{Module 8.0: Network Operations}
+\subtitle{Maintaining the Swamp (Network+)}
 \author{Introduction to Networking}
-\institute{Paddy's Pub IT Dept}
+\institute{RCTC}
 \date{Fall 2025}
 
 \begin{document}
+% =============================================================================
+% Module 8.0: Slides 1-8 (Refined: Detail + Theme)
+% =============================================================================
 
 % SLIDE 1: Title
 \begin{frame}
     \titlepage
     \begin{center}
         \begin{tikzpicture}[scale=0.8]
-            % Paddy's Pub Network
-            \node[draw, fill=paddysgreen, text=white, rounded corners, minimum width=3cm, minimum height=1.5cm] (pub) at (0,0) {\textbf{Paddy's Pub LAN}};
+            % The Swamp
+            \node[cloud, draw=ogregreen, fill=ogregreen!20, minimum width=3.5cm, minimum height=2.5cm] (swamp) at (0,0) {};
+            \node[below=0.1cm, text=ogregreen, font=\bfseries] at (swamp.south) {The Network Swamp};
             
-            % Frank's Money Server
-            \node[font=\tiny] (frank) at (-4, 1) {\iconserver[0.8cm]};
-            \node[below=0.1cm of frank, font=\bfseries\tiny] {Frank's Money (HA)};
+            % Admin (Shrek)
+            \node (shrek) at (-3.5, 0) {\faIcon[regular]{user}};
+            \node[below, font=\tiny, align=center] at (-3.5, -0.5) {NetAdmin\\(Shrek)};
             
-            % Charlie's Rat Server
-            \node[font=\tiny] (charlie) at (-4, -1) {\icontrash[0.8cm]};
-            \node[below=0.1cm of charlie, font=\bfseries\tiny] {Charlie's Server};
+            % Tools (Donkey)
+            \node (tool) at (3.5, 0) {\icontools[0.8cm]};
+            \node[below, font=\tiny, align=center] at (3.5, -0.5) {Ops Tools\\(Donkey)};
             
-            % The Cloud (Internet)
-            \node[cloud, draw=sunnyorange, fill=sunnyorange!10, minimum width=2.5cm, minimum height=1.5cm] (cloud) at (4, 0) {};
-            \node at (4,0) {\iconcloud[0.8cm]};
-            \node[below=0.5cm of cloud, font=\tiny] {The Internet};
-
-            % Connections
-            \draw[<->, thick, paddysgreen] (pub) -- (frank);
-            \draw[<->, thick, paddysgreen] (pub) -- (charlie);
-            \draw[<->, thick, alertred, dashed] (pub) -- (cloud) node[midway, above, font=\tiny] {Firewall (Mac)};
+            % Arrows indicating management
+            \draw[->, thick, ogregreen] (shrek) -- (swamp) node[midway, above, font=\tiny] {Manage};
+            \draw[->, thick, rctcblue] (tool) -- (swamp) node[midway, above, font=\tiny] {Monitor};
         \end{tikzpicture}
     \end{center}
 \end{frame}
 
-% SLIDE 2: Review
-\begin{frame}{Review: The Gang Recaps Module 6}
+% SLIDE 2: Objectives (Detailed)
+\begin{frame}{Our Mission: Taming the Swamp}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Previous Concepts}
-                \small
+            \begin{block}{1. Operations (The Chores)}
+                \footnotesize
                 \begin{itemize}
-                    \item \textbf{TCP/UDP}: Transport protocols. Reliable (TCP) vs Fast (UDP).
-                    \item \textbf{DHCP}: Dynamic Host Configuration Protocol. Assigns IPs automatically.
-                    \item \textbf{DNS}: Domain Name System. Resolves names to IPs.
+                    \item \textbf{Documentation}: Creating Physical and Logical maps so we don't get lost.
+                    \item \textbf{Configuration Mgmt}: Ensuring every switch speaks the same language (Standardization).
+                    \item \textbf{Backups}: "Dragon Insurance" (Disaster Recovery).
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{alertblock}{The New Problem}
-                \small
-                We have connectivity, but...
+            \begin{block}{2. Monitoring (The Watch)}
+                \footnotesize
                 \begin{itemize}
-                    \item Is the connection secure? (Can the McPoyles spy on us?)
-                    \item Is the time synced? (Are we opening the bar on time?)
-                    \item Is the data backed up? (What if Dennis burns it down?)
-                \end{itemize}
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 3: Objectives
-\begin{frame}{Module 7 Objectives: The Scheme}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{1. Security \& Time (Mac's Job)}
-                \small
-                \begin{itemize}
-                    \item \textbf{TLS}: Encryption/Authentication.
-                    \item \textbf{NTP}: Time Synchronization.
-                \end{itemize}
-            \end{block}
-            \begin{block}{2. Web \& Files (Dennis's Job)}
-                \small
-                \begin{itemize}
-                    \item \textbf{HTTP/HTTPS}: Web Services.
-                    \item \textbf{FTP/SMB}: File Transfer.
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{3. Email \& Voice (Dee's Job)}
-                \small
-                \begin{itemize}
-                    \item \textbf{SMTP/IMAP}: Email Protocols.
-                    \item \textbf{VoIP}: Voice Services.
-                \end{itemize}
-            \end{block}
-            \begin{block}{4. High Availability (Frank's Job)}
-                \small
-                \begin{itemize}
-                    \item \textbf{RAID/Clustering}: Redundancy.
-                    \item \textbf{DR}: Disaster Recovery.
+                    \item \textbf{SNMP}: The protocol for checking device health (CPU, Temp).
+                    \item \textbf{Syslog}: Centralized diary of network events.
+                    \item \textbf{NetFlow}: Analyzing who is talking to whom (Traffic patterns).
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
-\end{frame}
-
-% SLIDE 4: Section 7.1
-\begin{frame}{Section 7.1: Security and Time (Charlie Work)}
-    \begin{center}
-        \begin{tikzpicture}
-            \node[draw, fill=black, text=white, font=\bfseries\Large, minimum width=10cm, minimum height=1.5cm] {
-                "The Gang Secures the Network"
-            };
-            \node[font=\tiny] at (0, -1) {cue music...};
-        \end{tikzpicture}
-    \end{center}
     \vspace{0.5cm}
-    \begin{block}{Core Concepts}
-        \small
-        \begin{itemize}
-            \item \textbf{TLS}: Transport Layer Security. The protocol that encrypts traffic (e.g., HTTPS).
-            \item \textbf{NTP}: Network Time Protocol. Ensures all logs and auth timestamps match.
-        \end{itemize}
-    \end{block}
+    \begin{center}
+        \textit{"Networks are like onions. They have layers (OSI Layers!)."}
+    \end{center}
 \end{frame}
 
-% SLIDE 5: TLS Overview
-\begin{frame}{TLS: Transport Layer Security}
+% SLIDE 3: Documentation
+\begin{frame}{8.1 Documentation: Maps for the Kingdom}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Definition}
-                \small
-                \textbf{TLS} is a cryptographic protocol designed to provide:
-                \begin{enumerate}
-                    \item \textbf{Encryption}: Privacy (No eavesdropping).
-                    \item \textbf{Integrity}: Data has not been changed.
-                    \item \textbf{Authentication}: Verifying identity (Certificates).
-                \end{enumerate}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Why Document?}
+                \footnotesize
+                Without a map, the network is a murky swamp. If the Admin leaves, the knowledge leaves with them!
             \end{block}
-            \begin{exampleblock}{Analogy: Mac's "Ocular Patdown"}
-                \small
-                Mac assesses a threat (Authentication), ensures they aren't carrying weapons (Integrity), and clears them for entry.
+            \begin{exampleblock}{Two Types of Maps}
+                \footnotesize
+                \begin{enumerate}
+                    \item \textbf{Physical Diagram}:
+                    \begin{itemize}
+                        \item \textit{Shows:} Racks, Cabling, Ports.
+                        \item \textit{Use:} "Where do I plug this cable?"
+                    \end{itemize}
+                    \item \textbf{Logical Diagram}:
+                    \begin{itemize}
+                        \item \textit{Shows:} IP Addresses, VLANs, Data Flow.
+                        \item \textit{Use:} "Why can't VLAN 10 ping VLAN 20?"
+                    \end{itemize}
+                \end{enumerate}
             \end{exampleblock}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.45\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    \node (mac) at (0,0) {\faIcon{user-secret}};
-                    \node[below] at (0,-0.5) {Mac (TLS)};
-                    
-                    \node (packet) at (3,0) {\faIcon{box}};
-                    \node[below] at (3,-0.5) {Packet};
-                    
-                    \draw[->, thick, paddysgreen] (mac) -- (packet) node[midway, above, font=\tiny] {Verify};
-                    
-                    \node[draw, fill=paddysgreen!20, font=\tiny] at (3, 1) {Encrypted};
-                    \draw[dashed] (mac) -- (3, 0.8);
+                \begin{tikzpicture}[scale=0.65]
+                    % Messy Network
+                    \node[font=\bfseries\tiny, text=swampbrown] at (0, 3.5) {Undocumented Swamp};
+                    \node (r1) at (-1, 2) {\iconrouter[0.4cm]};
+                    \node (s1) at (1, 2.5) {\iconswitch[0.4cm]};
+                    \draw[thick, swampbrown, bend left] (r1) -- (s1);
+                    \node[font=\tiny, text=red] at (0, 2.2) {???};
+
+                    % Clean Network
+                    \node[font=\bfseries\tiny, text=ogregreen] at (4, 3.5) {Documented Castle};
+                    \node[draw, rectangle, fill=white, align=left, font=\tiny] at (4, 2) {
+                        \textbf{Logical Map:}\\
+                        R1: 192.168.1.1\\
+                        SW1: 192.168.1.2\\
+                        \textbf{Physical Map:}\\
+                        Rack 2, U14\\
+                        Port G0/1
+                    };
                 \end{tikzpicture}
             \end{center}
-            \begin{alertblock}{Warning}
-                \small
-                \textbf{SSL} is the old, insecure version. Always use \textbf{TLS 1.2} or \textbf{1.3}.
-            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 6: TLS Handshake
-\begin{frame}{TLS 1.3 Handshake: The Process}
+% SLIDE 4: Configuration Management
+\begin{frame}{Configuration Management: Avoiding Chaos}
     \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Concept}
+                \footnotesize
+                Managing device settings centrally to ensure consistency.
+            \end{block}
+            \begin{alertblock}{Key Terms}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Baseline}: The "Golden Standard." How a device \textit{should} be configured (Security rules, VLANs).
+                    \item \textbf{Drift}: When a device slowly changes from the baseline over time (e.g., someone makes a quick manual change and forgets to document it).
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.7]
-                    % Actors
-                    \node[font=\bfseries\small] at (0, 4.5) {Client};
-                    \node[font=\bfseries\small] at (6, 4.5) {Server};
+                    % Time 0
+                    \node[font=\tiny] at (0, 3) {Day 1 (Baseline)};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (0, 2) {Switch A\\Ver 1.0};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (2.5, 2) {Switch B\\Ver 1.0};
                     
-                    % Timelines
-                    \draw[thick, gray] (0, 4) -- (0, 0);
-                    \draw[thick, gray] (6, 4) -- (6, 0);
+                    % Time 1
+                    \node[font=\tiny] at (0, 1) {Day 100 (Drift!)};
+                    \node[draw, fill=green!10, align=center, font=\tiny] at (0, 0) {Switch A\\Ver 1.0};
+                    \node[draw, fill=alertred!20, align=center, font=\tiny] at (2.5, 0) {Switch B\\Ver \textbf{1.2}*};
                     
-                    % 1. Client Hello
-                    \draw[->, thick, tcpblue] (0.2, 3.5) -- (5.8, 3) node[midway, above, sloped, font=\tiny] {1. Client Hello (Ciphers)};
+                    \draw[->, thick, gray] (1.25, 1.8) -- (1.25, 0.2);
+                    \node[right, font=\tiny, text=red] at (2.8, 1) {Manual Hack!};
+                \end{tikzpicture}
+            \end{center}
+            \begin{block}{The Solution}
+                \footnotesize
+                Use automation tools (Ansible/Python) to force devices back to the Baseline!
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 5: Backups
+\begin{frame}{Backups: Dragon Insurance}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{What to Backup?}
+                \footnotesize
+                It's not just files. You need:
+                \begin{enumerate}
+                    \item \textbf{Configuration}: The `running-config` text file.
+                    \item \textbf{OS Image}: The IOS/Firmware file.
+                    \item \textbf{State Data}: ARP tables, MAC tables (for forensics).
+                \end{enumerate}
+            \end{block}
+            \begin{alertblock}{The 3-2-1 Rule}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{3} copies of data.
+                    \item On \textbf{2} different media types (Disk/Cloud).
+                    \item Keep \textbf{1} copy off-site (Far Far Away).
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=1]
+                    % Production
+                    \node (prod) at (0, 2) {\iconserver[0.6cm]};
+                    \node[below, font=\tiny] at (0, 1.6) {Live Config};
                     
-                    % 2. Server Hello
-                    \draw[->, thick, paddysgreen] (5.8, 2.5) -- (0.2, 2) node[midway, above, sloped, font=\tiny] {2. Server Hello + Key + Cert};
+                    % Local Backup
+                    \node (backup) at (3, 2) {\faIcon{hdd}};
+                    \node[below, font=\tiny] at (3, 1.6) {USB/TFTP};
                     
-                    % 3. Finished
-                    \draw[->, thick, sunnyorange] (0.2, 1.5) -- (5.8, 1) node[midway, above, sloped, font=\tiny] {3. Finished (Ready)};
+                    % Cloud Backup
+                    \node (cloud) at (1.5, 4) {\iconcloud[0.6cm]};
+                    \node[above, font=\tiny] at (1.5, 4.4) {Cloud};
                     
-                    % 4. Data
-                    \draw[<->, ultra thick, purple] (0.2, 0.2) -- (5.8, 0.2) node[midway, above, font=\tiny] {Encrypted Data};
+                    \draw[->, thick, rctcblue] (prod) -- (backup) node[midway, below, font=\tiny] {Copy 1};
+                    \draw[->, thick, rctcblue] (backup) -- (cloud) node[midway, right, font=\tiny] {Copy 2};
+                    
+                    % Fire
+                    \node[text=red] at (-1, 2.5) {\faIcon{fire}};
+                    \node[font=\tiny, text=red] at (-1.5, 2.8) {Dragon!};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 6: Change Management
+\begin{frame}{Change Management: The Royal Decree}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Why we need Rules}
+                \footnotesize
+                Ogres are clumsy. If you smash a core switch without a plan, the kingdom goes dark.
+                \textbf{Change Mgmt} minimizes risk.
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, node distance=0.8cm]
+                    % Flowchart
+                    \node[draw, fill=white, rounded corners, font=\tiny] (req) {1. Request};
+                    \node[draw, fill=white, rounded corners, font=\tiny, right=of req] (imp) {2. Impact Analysis};
+                    \node[draw, fill=ogregreen!20, rounded corners, font=\tiny, right=of imp] (app) {3. Approval (CAB)};
+                    \node[draw, fill=white, rounded corners, font=\tiny, below=0.5cm of req] (do) {4. Implement};
+                    \node[draw, fill=white, rounded corners, font=\tiny, right=of do] (back) {5. Rollback?};
+                    
+                    \draw[->] (req) -- (imp);
+                    \draw[->] (imp) -- (app);
+                    \draw[->, dashed] (app) -- (do);
+                    \draw[->] (do) -- (back);
                 \end{tikzpicture}
             \end{center}
         \end{column}
         \begin{column}{0.42\textwidth}
-            \begin{block}{Technical Steps}
+            \begin{block}{Critical Component: Rollback}
                 \footnotesize
-                \begin{enumerate}
-                    \item \textbf{Client Hello}: "I speak these languages (Ciphers)."
-                    \item \textbf{Server Hello}: "Let's use this one. Here is my ID (Certificate)."
-                    \item \textbf{Key Exchange}: Generating the session keys.
-                    \item \textbf{Finished}: Secure tunnel established.
-                \end{enumerate}
+                Before you change \textit{anything}, you must answer:
+                \textbf{"How do I undo this if it breaks the network?"}
             \end{block}
-            \begin{exampleblock}{Analogy}
+            \begin{exampleblock}{Change Types}
                 \footnotesize
-                The "Secret Handshake" before the gang discusses the scheme.
+                \textbf{Standard}: Routine (Reset Password).\\
+                \textbf{Normal}: Risky (New VLAN) -> Needs Approval.\\
+                \textbf{Emergency}: Fix it NOW! (Firewall down).
             \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
 
-% SLIDE 7: Certificates
-\begin{frame}{Certificates and Trust}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Digital Certificates (X.509)}
-                \small
-                A file binding an identity (Domain Name) to a Public Key.
-                \begin{itemize}
-                    \item \textbf{CA (Certificate Authority)}: The trusted 3rd party who signs the cert.
-                    \item \textbf{Chain of Trust}: Root CA -> Intermediate CA -> Server Cert.
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{Self-Signed Certificates}
-                \small
-                A cert signed by itself, not a trusted CA.
-                \begin{itemize}
-                    \item \textbf{Result:} Browser warning ("Not Secure").
-                    \item \textbf{Use Case:} Internal testing only.
-                \end{itemize}
-            \end{alertblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    % Certificate
-                    \node[draw=paddysgreen, fill=white, drop shadow, minimum width=3cm, minimum height=4cm] (cert) at (0,0) {};
-                    \node[font=\bfseries] at (0, 1.5) {Paddy's Pub};
-                    \node[font=\tiny] at (0, 1) {CN: www.paddys.com};
-                    \node[font=\tiny] at (0, 0.5) {Valid: 2025-2026};
-                    
-                    % Stamp
-                    \node[draw=red, circle, rotate=20, line width=1pt] at (0.5, -1) {\tiny VERIFIED};
-                    \node[font=\tiny] at (0.5, -1.5) {by Let's Encrypt};
-                    
-                    \node at (-1, -1.5) {\faIcon{crow}}; 
-                \end{tikzpicture}
-            \end{center}
-            \begin{exampleblock}{Analogy: Bird Law}
-                \footnotesize
-                A Certificate is like a contract. You need a Judge (CA) to enforce it. Charlie's "Bird Law" (Self-Signed) is not recognized in court.
-            \end{exampleblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 8: NTP
-\begin{frame}{NTP: Network Time Protocol}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Definition}
-                \small
-                Protocol used to synchronize computer clock times in a network.
-                \begin{itemize}
-                    \item \textbf{Port}: UDP 123.
-                    \item \textbf{Why?}: Log correlation, Authentication (Kerberos requires $<5$ min skew), Backups.
-                \end{itemize}
-            \end{block}
-            \begin{exampleblock}{Stratum Levels}
-                \small
-                Hierarchy of distance from the reference clock.
-                \begin{itemize}
-                    \item \textbf{Stratum 0}: Atomic Clock (The Source).
-                    \item \textbf{Stratum 1}: Server directly connected to Stratum 0.
-                    \item \textbf{Stratum 16}: Unsynchronized (Desync).
-                \end{itemize}
-            \end{exampleblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    \node[circle, draw, fill=yellow, minimum size=1.5cm] (sun) at (0, 3) {Stratum 0};
-                    \node (s1) at (0, 1.5) {\iconserver[0.6cm]};
-                    \node[right, font=\tiny] at (0.5, 1.5) {Stratum 1 (Google)};
-                    
-                    \node (s2) at (0, 0) {\iconpc[0.6cm]};
-                    \node[right, font=\tiny] at (0.5, 0) {Stratum 2 (Paddy's)};
-                    
-                    \draw[->, thick] (sun) -- (s1);
-                    \draw[->, thick] (s1) -- (s2);
-                \end{tikzpicture}
-            \end{center}
-            \begin{exampleblock}{Analogy: Charlie Work}
-                \footnotesize
-                Charlie ensures all clocks match so the bar opens exactly at 11 AM. If the clocks are wrong, the scheme fails.
-            \end{exampleblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 9: NTP Architecture
-\begin{frame}{NTP Architecture: Hierarchy}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Best Practice Setup}
-                \small
-                Don't have every PC query the internet.
-                \begin{enumerate}
-                    \item \textbf{Router} queries Public NTP (pool.ntp.org).
-                    \item \textbf{Switch} queries Router.
-                    \item \textbf{PC/Server} queries Switch/Router.
-                \end{enumerate}
-                This reduces bandwidth and creates a single internal time source.
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.6]
-                    \node[cloud, draw=sunnyorange, fill=sunnyorange!10] (internet) at (0, 4) {Internet NTP};
-                    
-                    \node (router) at (0, 2) {\iconrouter[0.6cm]};
-                    \node[right, font=\tiny] at (0.5, 2) {Core Router};
-                    
-                    \node (pc1) at (-2, 0) {\iconpc[0.5cm]};
-                    \node (pc2) at (2, 0) {\iconpc[0.5cm]};
-                    
-                    \draw[->, thick, paddysgreen] (internet) -- (router);
-                    \draw[->, thick, tcpblue] (router) -- (pc1);
-                    \draw[->, thick, tcpblue] (router) -- (pc2);
-                \end{tikzpicture}
-            \end{center}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% SLIDE 10: PTP
-\begin{frame}{Precision Time Protocol (PTP)}
-    \begin{block}{When Milliseconds Aren't Good Enough}
-        \small
-        \textbf{NTP} is accurate to milliseconds (ms). \textbf{PTP (IEEE 1588)} is accurate to \textbf{microseconds ($\mu$s)} or even nanoseconds.
+% SLIDE 7: Case Study - Donkey's Waffles
+\begin{frame}{Case Study: Donkey's Unauthorized Wi-Fi}
+    \begin{alertblock}{Scenario: "I'm making Waffles... and Wi-Fi!"}
+        \footnotesize
+        Donkey wants to stream music in the Swamp. He buys a cheap \$20 Router from Best Buy and plugs it into the main Corporate Switch.
+        
+        \vspace{0.2em}
+        \textbf{The Result:}
+        \begin{itemize}
+            \item The Router broadcasts "Donkey-Guest" (Open/No Password).
+            \item The Router starts handing out bad IP addresses (Rogue DHCP).
+            \item Lord Farquaad's spies connect to it and access the internal Castle network.
+        \end{itemize}
+    \end{alertblock}
+    \begin{block}{Discussion}
+        \footnotesize
+        \begin{enumerate}
+            \item Which Change Management steps did Donkey skip?
+            \item What technical control could have stopped this immediately?
+        \end{enumerate}
     \end{block}
-    \vspace{0.3cm}
+\end{frame}
+
+% SLIDE 8: Case Study Solution
+\begin{frame}{Case Study Solution}
+    \begin{exampleblock}{The Fix}
+        \footnotesize
+        \begin{itemize}
+            \item \textbf{Process Failure}: Donkey skipped \textbf{Request}, \textbf{Impact Analysis}, and \textbf{Approval}. This was an "Unauthorized Change."
+            \item \textbf{Technical Fix}: Enable \textbf{Port Security} or \textbf{NAC (Network Access Control)}.
+            \item \textbf{Port Security}: Limits how many MAC addresses can use a port. (Donkey's router + all his guests = violation!).
+        \end{itemize}
+    \end{exampleblock}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.7]
+            \node (switch) at (0, 2) {\iconswitch[0.8cm]};
+            \node (donkey) at (0, 0) {\faIcon{wifi}};
+            \node[below, font=\tiny] at (0, -0.4) {Donkey's AP};
+            
+            % Port Security
+            \draw[thick, red] (0, 1.5) -- (0, 0.5);
+            \node[draw, circle, fill=red, text=white, font=\bfseries\tiny] at (0, 1) {X};
+            \node[right, font=\tiny, text=red] at (0.2, 1) {Port Security: Shutdown!};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+
+% =============================================================================
+% Module 8.0: Slides 9-20 (Inventory, Lifecycle, IPAM, Discovery)
+% =============================================================================
+
+% SLIDE 9: Asset Inventory
+\begin{frame}{8.1 Asset Inventory: Counting the Swamp Creatures}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Use Cases}
-                \small
-                \begin{itemize}
-                    \item \textbf{5G Cellular Towers}: Synchronization.
-                    \item \textbf{Financial Trading}: High-frequency trading.
-                    \item \textbf{Industrial Automation}: Robotics.
-                \end{itemize}
+            \begin{block}{The Problem}
+                \footnotesize
+                If you don't know what you own, you can't patch it, and you certainly can't secure it.
             \end{block}
+            \begin{exampleblock}{What to Track (The Tags)}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Hardware}: "Switch-01" (Serial \#).
+                    \item \textbf{Location}: "Swamp Hut, Rack 2".
+                    \item \textbf{Owner}: "Donkey".
+                    \item \textbf{Lifecycle}: "Purchase Date" vs "Death Date".
+                \end{itemize}
+            \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Analogy: The Nightman Cometh}
-                \small
-                In a complex musical, lights, audio, and pyrotechnics must sync perfectly. Being off by 1ms ruins the show.
-            \end{alertblock}
             \begin{center}
-                \begin{tikzpicture}
-                    \node[draw, circle, fill=black, text=white, minimum size=1.5cm] {$\mu$s};
+                \begin{tikzpicture}[scale=0.7]
+                    % Asset Tag Visual
+                    \node[draw, fill=white, drop shadow, minimum width=3cm, minimum height=4cm, rotate=5] (tag) at (0,0) {};
+                    \node[above=1.5cm, font=\bfseries] at (tag.center) {ASSET TAG};
+                    \node[below=1.5cm, font=\tiny] at (tag.center) {Property of Farquaad};
+                    
+                    % Details (Fixed alignment)
+                    \node[font=\tiny, align=left] at (0, 0) {
+                        \textbf{ID:} SW-CORE-01\\
+                        \textbf{IP:} 10.1.1.1\\
+                        \textbf{Loc:} Dungeon\\
+                        \textbf{Supp:} Active
+                    };
+                    
+                    % Barcode representation
+                    \foreach \x in {-1, -0.8, -0.5, -0.3, 0, 0.2, 0.4, 0.8, 1}
+                        \draw[fill=black] (\x, -1) rectangle (\x+0.1, -0.5);
                 \end{tikzpicture}
             \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% SLIDE 10: Lifecycle Management
+\begin{frame}{Lifecycle Management: The Circle of Life}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{block}{Hardware has a lifespan}
+                \footnotesize
+                Like onions (and ogres), hardware gets old and smelly.
+            \end{block}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.7, transform shape]
+                    % Timeline
+                    \draw[->, thick, gray] (0,0) -- (8,0);
+                    
+                    % Milestones
+                    \fill[tcpblue] (1,0) circle (3pt) node[above=0.2cm] {Buy};
+                    \fill[ogregreen] (3,0) circle (3pt) node[above=0.2cm] {Deploy};
+                    \fill[orange] (5,0) circle (3pt) node[above=0.2cm] {EOL};
+                    \fill[alertred] (7,0) circle (3pt) node[above=0.2cm] {Dead};
+                    
+                    % Labels (Fixed alignment)
+                    \node[align=center, font=\tiny] at (3, -1) {\textbf{Production}\\(It Works)};
+                    \node[align=center, font=\tiny, text=alertred] at (5, -1) {\textbf{Risk Zone}\\(No Patches!)};
+                    \node[align=center, font=\tiny] at (7, -1) {\textbf{Disposal}\\(Wipe Data)};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{alertblock}{The "EoL" Danger}
+                \footnotesize
+                \textbf{End of Life (EoL)} means the vendor stops making security patches.
+                If you keep an EoL firewall, you are inviting the Dragon in.
+            \end{alertblock}
+            \begin{exampleblock}{Decommissioning}
+                \footnotesize
+                \textbf{Wipe the disk!} Don't sell a router on eBay with the Castle passwords still on it.
+            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
@@ -789,8 +785,7 @@
         \begin{column}{0.55\textwidth}
             % Simulated Terminal Window
             \begin{tikzpicture}
-                \node[draw, fill=black, text=white, font=\ttfamily\scriptsize, align=left, inner sep=5pt, rounded corners=3pt] (term) {
-                    \vspace{1em}\\
+                \node[draw, fill=black, text=white, font=\ttfamily\tiny, align=left, inner sep=5pt, rounded corners=3pt] (term) {
                     \textbf{root@swamp:\~{}\# nmap -A 10.1.1.5}\\
                     Starting Nmap 7.94...\\
                     Nmap scan report for \textbf{donkey-pc} (10.1.1.5)\\
