@@ -54,28 +54,28 @@
                        minimum width=1.8cm, minimum height=0.5cm, font=\footnotesize, align=center]
 \tikzstyle{attacker} = [draw=alertred, fill=alertred!15, rounded corners, font=\footnotesize]
 
-% Icon commands
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
-\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{network-wired}}}
-\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{sitemap}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
-\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{lock}}}
+% Icon commands (Using custom PNG icons from images/icons/ where available)
+\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_pc.png}}}
+\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_server.png}}}
+\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_router.png}}}
+\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_switch.png}}}
+\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_firewall.png}}}
+\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_cloud.png}}}
+\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_lock.png}}}
 \newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
 \newcommand{\iconhacker}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user-secret}}}
 \newcommand{\iconkey}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{key}}}
 \newcommand{\iconfile}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}} % Fixed definition
-\newcommand{\icondog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{dog}}} % Agent Snoopy
-\newcommand{\iconcat}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cat}}} % Hacker Cat
+\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_db.png}}}
+\newcommand{\icondog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{dog}}}
+\newcommand{\iconcat}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cat}}}
 
 % Document info
-\title[Module 9.0]{Module 9.0: Security Concepts}
-\subtitle{Network+ Certification Course}
-\author{Introduction to Networking}
-\institute{RCTC}
-\date{Fall 2025}
+\title[Security Concepts]{Module 9.0: Security Concepts}
+\subtitle{Intro to Networks}
+\author{Brendan Shea, PhD}
+\institute{Rochester Community and Technical College}
+\date{}
 
 \begin{document}
 

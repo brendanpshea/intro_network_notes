@@ -24,7 +24,7 @@
 \setbeamercolor{palette secondary}{bg=rctcblue!80, fg=white}
 \setbeamercolor{palette tertiary}{bg=rctcblue!60, fg=white}
 \setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=rctcblue}
+\setbeamercolor{title}{fg=white, bg=rctcblue}
 \setbeamercolor{frametitle}{fg=rctcblue, bg=rctcblue!10}
 \setbeamercolor{block title}{bg=rctcblue, fg=white}
 \setbeamercolor{block body}{bg=rctcblue!5}
@@ -49,20 +49,20 @@
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
                 backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
 
-% --- ICON DEFINITIONS (RESTORED) ---
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
-\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
-\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{network-wired}}}
-\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{sitemap}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
-\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}}
+% --- ICON DEFINITIONS (Using custom PNG icons from images/icons/ where available) ---
+\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_pc.png}}}
+\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_laptop.png}}}
+\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_server.png}}}
+\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_router.png}}}
+\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_switch.png}}}
+\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_firewall.png}}}
+\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_cloud.png}}}
+\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_phone.png}}}
+\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_db.png}}}
 \newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
 \newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
-\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{lock}}}
-\newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}
+\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_lock.png}}}
+\newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}% Icon: clock
 \newcommand{\iconmail}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{envelope}}}
 \newcommand{\icondoc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
 \newcommand{\iconsearch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{search}}}
@@ -73,11 +73,11 @@
 \newcommand{\iconeye}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{eye}}}
 
 % Document info
-\title[Module 8.0]{Module 8.0: Network Operations}
+\title[Network Operations]{Module 8: Network Operations}
 \subtitle{Maintaining the Swamp (Network+)}
-\author{Introduction to Networking}
-\institute{RCTC}
-\date{Fall 2025}
+\author{Brendan Shea, PhD}
+\institute{Rochester Community and Technical College}
+\date{}
 
 \begin{document}
 % =============================================================================
@@ -88,7 +88,7 @@
 \begin{frame}
     \titlepage
     \begin{center}
-        \begin{tikzpicture}[scale=0.8]
+        \begin{tikzpicture}[scale=0.7, transform shape]
             % The Swamp
             \node[cloud, draw=ogregreen, fill=ogregreen!20, minimum width=3.5cm, minimum height=2.5cm] (swamp) at (0,0) {};
             \node[below=0.1cm, text=ogregreen, font=\bfseries] at (swamp.south) {The Network Swamp};
@@ -163,27 +163,34 @@
             \end{exampleblock}
         \end{column}
         \begin{column}{0.45\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.65]
-                    % Messy Network
-                    \node[font=\bfseries\tiny, text=swampbrown] at (0, 3.5) {Undocumented Swamp};
-                    \node (r1) at (-1, 2) {\iconrouter[0.4cm]};
-                    \node (s1) at (1, 2.5) {\iconswitch[0.4cm]};
-                    \draw[thick, swampbrown, bend left] (r1) -- (s1);
-                    \node[font=\tiny, text=red] at (0, 2.2) {???};
+                    \begin{center}
+                        \begin{tikzpicture}[scale=0.75]
+                            % Messy Network (Top)
+                            \node[font=\bfseries\tiny, text=swampbrown] at (0, 5) {Undocumented Swamp};
+                            \node (r1) at (-1, 3.5) {\iconrouter[0.5cm]};
+                            \node (s1) at (1, 4) {\iconswitch[0.5cm]};
+                            \node (pc1) at (0, 2.5) {\iconpc[0.4cm]};
+                            \draw[thick, swampbrown, bend left] (r1) -- (s1);
+                            \draw[thick, swampbrown] (s1) -- (pc1);
+                            \node[font=\tiny, text=red] at (0.5, 3.2) {???};
+                            \node[font=\tiny, text=red] at (0.7, 3) {???};
 
-                    % Clean Network
-                    \node[font=\bfseries\tiny, text=ogregreen] at (4, 3.5) {Documented Castle};
-                    \node[draw, rectangle, fill=white, align=left, font=\tiny] at (4, 2) {
-                        \textbf{Logical Map:}\\
-                        R1: 192.168.1.1\\
-                        SW1: 192.168.1.2\\
-                        \textbf{Physical Map:}\\
-                        Rack 2, U14\\
-                        Port G0/1
-                    };
-                \end{tikzpicture}
-            \end{center}
+                            % Arrow
+                            \draw[->, thick, gray] (0, 2) -- (0, 1.5);
+
+                            % Clean Network (Bottom)
+                            \node[font=\bfseries\tiny, text=ogregreen] at (0, 0.8) {Documented Castle};
+                            \node[draw, rectangle, fill=white, align=left, font=\tiny] at (0, -0.8) {
+                                \textbf{Logical Map:}\\
+                                R1: 192.168.1.1\\
+                                SW1: 192.168.1.2\\
+                                PC1: 192.168.1.10\\
+                                \textbf{Physical Map:}\\
+                                Rack 2, U14\\
+                                Port G0/1
+                            };
+                        \end{tikzpicture}
+                    \end{center}
         \end{column}
     \end{columns}
 \end{frame}
@@ -347,23 +354,15 @@
     \begin{exampleblock}{The Fix}
         \footnotesize
         \begin{itemize}
-            \item \textbf{Process Failure}: Donkey skipped \textbf{Request}, \textbf{Impact Analysis}, and \textbf{Approval}. This was an "Unauthorized Change."
-            \item \textbf{Technical Fix}: Enable \textbf{Port Security} or \textbf{NAC (Network Access Control)}.
-            \item \textbf{Port Security}: Limits how many MAC addresses can use a port. (Donkey's router + all his guests = violation!).
+            \item \textbf{Process Failure}: Donkey skipped \textbf{Request}, \textbf{Impact Analysis}, and \textbf{Approval}. This was an "Unauthorized Change." No Change Advisory Board (CAB) existed to say "Wait, what are you doing?"
+            
+            \item \textbf{Technical Fix}: Enable \textbf{Port Security} on the network switch. This feature limits how many MAC addresses (devices) can connect to a single port. When Donkey plugged in his router, it immediately tried to broadcast multiple MAC addresses (one for itself, plus virtual ones for DHCP). The port security rule would have violated the limit and \textbf{shutdown the port automatically}.
+            
+            \item \textbf{Alternative Control}: Implement \textbf{NAC (Network Access Control)}. This would scan Donkey's unauthorized router, see it is not on the approved device list, and either block it or quarantine it in a "guest" VLAN with restricted access.
+            
+            \item \textbf{Lesson}: Never skip the Change Management process, and always enforce technical controls like Port Security on access ports where regular users (and Donkeys) can plug things in.
         \end{itemize}
     \end{exampleblock}
-    \begin{center}
-        \begin{tikzpicture}[scale=0.7]
-            \node (switch) at (0, 2) {\iconswitch[0.8cm]};
-            \node (donkey) at (0, 0) {\faIcon{wifi}};
-            \node[below, font=\tiny] at (0, -0.4) {Donkey's AP};
-            
-            % Port Security
-            \draw[thick, red] (0, 1.5) -- (0, 0.5);
-            \node[draw, circle, fill=red, text=white, font=\bfseries\tiny] at (0, 1) {X};
-            \node[right, font=\tiny, text=red] at (0.2, 1) {Port Security: Shutdown!};
-        \end{tikzpicture}
-    \end{center}
 \end{frame}
 
 
@@ -590,22 +589,22 @@
             \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    % Chair (IP)
-                    \node[draw, circle, minimum size=1.5cm, fill=yellow!20] (ip) at (0,0) {10.1.1.5};
-                    
-                    % PC 1
-                    \node (pc1) at (-2, 1) {\iconpc[0.6cm]};
-                    \draw[->, thick, red] (pc1) -- (ip);
-                    
-                    % PC 2
-                    \node (pc2) at (2, 1) {\iconlaptop[0.6cm]};
-                    \draw[->, thick, red] (pc2) -- (ip);
-                    
-                    % Boom
-                    \node[star, star points=7, fill=alertred, text=white, font=\tiny] at (0, 1.5) {CONFLICT!};
-                \end{tikzpicture}
+                    \begin{center}
+                        \begin{tikzpicture}[scale=0.7]
+                            % Chair (IP)
+                            \node[draw, circle, minimum size=1.5cm, fill=yellow!20] (ip) at (0,0) {10.1.1.5};
+                            
+                            % PC 1
+                            \node (pc1) at (-2, 1) {\iconpc[0.6cm]};
+                            \draw[->, thick, red] (pc1) -- (ip);
+                            
+                            % PC 2
+                            \node (pc2) at (2, 1) {\iconlaptop[0.6cm]};
+                            \draw[->, thick, red] (pc2) -- (ip);
+                            
+                            % Boom
+                            \node[star, star points=5, fill=alertred, text=white, font=\tiny, inner sep=2pt] at (0, -2.2) {CONFLICT!};
+                        \end{tikzpicture}
             \end{center}
         \end{column}
     \end{columns}
@@ -666,9 +665,9 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.65]
+                \begin{tikzpicture}[scale=0.75]
                     \node (nms) at (0, 0) {\iconserver[0.6cm]};
-                    \node[font=\tiny] at (0, -0.6) {Scanner};
+                    \node[font=\tiny] at (0, -1) {Scanner};
                     
                     % Targets
                     \node (t1) at (3, 1) {\iconpc[0.4cm]};
@@ -786,6 +785,7 @@
             % Simulated Terminal Window
             \begin{tikzpicture}
                 \node[draw, fill=black, text=white, font=\ttfamily\tiny, align=left, inner sep=5pt, rounded corners=3pt] (term) {
+                     \vspace{0.2em}\\
                     \textbf{root@swamp:\~{}\# nmap -A 10.1.1.5}\\
                     Starting Nmap 7.94...\\
                     Nmap scan report for \textbf{donkey-pc} (10.1.1.5)\\
@@ -1048,7 +1048,7 @@
                     \node[font=\tiny] at (4.3, 0.5) {Up};
                     
                     % Alert
-                    \node[star, star points=5, fill=yellow, draw] at (2.5, 1.5) {Alert!};
+                    \node[star, star points=5, fill=yellow, draw] at (2.5, 3.5) {Alert!};
                     \draw[->, dashed] (2.5, 1.2) -- (2.5, 0.8);
                 \end{tikzpicture}
             \end{center}
@@ -1069,7 +1069,7 @@
                 The network rots over time because people make quick, manual changes and forget to undo them.
                 \begin{itemize}
                     \item "I'll just open the firewall for testing."
-                    \item *3 months later* -> Firewall is still open.
+                    \item *3 months later* $\rightarrow$ Firewall is still open.
                 \end{itemize}
             \end{block}
             \begin{exampleblock}{The Solution (RANCID)}
@@ -1172,15 +1172,19 @@
     \end{columns}
     \vspace{0.5cm}
     \begin{center}
-        \begin{tikzpicture}[scale=0.8]
-            \node[draw, fill=white] (mgr) at (0,0) {Manager};
-            \node[draw, fill=white] (agt) at (5,0) {Agent};
+        \begin{tikzpicture}[scale=0.85]
+            \node (mgr) at (0,0) {\iconserver[0.6cm]};
+            \node[below=0.2cm of mgr, font=\tiny] {Manager (NMS)};
             
-            \draw[->, thick, blue] (0, 0.2) -- (5, 0.2) node[midway, above, font=\tiny] {GET (CPU?)};
-            \draw[->, thick, blue] (5, -0.2) -- (0, -0.2) node[midway, below, font=\tiny] {Response (15\%)};
+            \node (agt) at (5,0) {\iconrouter[0.6cm]};
+            \node[below=0.2cm of agt, font=\tiny] {Agent (Device)};
             
-            \node[draw, fill=alertred!20] (fire) at (5, -1.5) {Agent};
-            \draw[->, ultra thick, red] (fire) -- (0, -1.5) node[midway, above, font=\tiny] {TRAP (Cable Cut!)};
+            \draw[->, thick, tcpblue] (0.4, 0.2) -- (4.6, 0.2) node[midway, above, font=\tiny] {GET (CPU?)};
+            \draw[->, thick, tcpblue] (4.6, -0.2) -- (0.4, -0.2) node[midway, below, font=\tiny] {Response (15\%)};
+            
+            \node (agt2) at (5, -1.5) {\iconswitch[0.6cm]};
+            \node[below=0.2cm of agt2, font=\tiny] {Agent (Alert)};
+            \draw[->, ultra thick, alertred] (agt2) -- (0, -1.5) node[midway, above, font=\tiny] {TRAP (Link Down!)};
         \end{tikzpicture}
     \end{center}
 \end{frame}
@@ -1208,16 +1212,18 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    % v2 Packet
-                    \node[draw, fill=red!10, text width=2cm, align=center] at (0, 2) {v2 Packet\\Comm: "public"};
-                    \node[right, font=\tiny, text=red] at (1.2, 2) {Insecure!};
-                    
-                    % v3 Packet
-                    \node[draw, fill=green!10, text width=2cm, align=center] at (0, 0) {v3 Packet\\User: Shrek\\(Encrypted)};
-                    \node[right, font=\tiny, text=ogregreen] at (1.2, 0) {Secure (AES)};
-                    \node at (0, -0.8) {\iconlock[0.5cm]};
-                \end{tikzpicture}
+                \footnotesize
+                \setlength{\tabcolsep}{3pt}
+                \renewcommand{\arraystretch}{1.1}
+                \begin{tabular}{>{\bfseries}p{1.2cm} p{2.1cm} p{2.3cm}}
+                    \toprule
+                    Ver & Security & Notes \\
+                    \midrule
+                    v1 & None & Original; cleartext \\
+                    v2c & None & Faster (bulk); cleartext \\
+                    v3 & Auth + Enc & Users, AES/3DES, hashes \\
+                    \bottomrule
+                \end{tabular}
             \end{center}
         \end{column}
     \end{columns}
@@ -1592,6 +1598,7 @@
             % Simulated Terminal Window
             \begin{tikzpicture}
                 \node[draw, fill=black, text=white, font=\ttfamily\scriptsize, align=left, inner sep=8pt, rounded corners=3pt, text width=8cm] (term) {
+                    \vspace{2mm}
                     \textbf{root@swamp:\~{}\# tcpdump -i eth0 -n port 80}\\
                     tcpdump: verbose output suppressed...\\
                     listening on eth0, link-type EN10MB...\\[0.1em]
