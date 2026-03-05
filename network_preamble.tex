@@ -1,0 +1,469 @@
+% =============================================================================
+% Common Preamble for Network+ Lecture Series
+% This file provides consistent formatting, colors, packages, and styles
+% across all lecture modules for both beamer presentations and article mode
+% =============================================================================
+
+% =============================================================================
+% THEME AND COLORS
+% =============================================================================
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% Custom colors - standardized across all lectures
+\definecolor{rctcblue}{RGB}{0, 74, 136}
+\definecolor{rctcgold}{RGB}{255, 199, 44}
+\definecolor{networkgreen}{RGB}{0, 128, 64}
+\definecolor{alertred}{RGB}{180, 0, 0}
+\definecolor{aborange}{RGB}{230, 126, 34}
+\definecolor{copperbrown}{RGB}{184, 115, 51}
+\definecolor{faborange}{RGB}{255, 165, 0}
+\definecolor{fiberyellow}{RGB}{255, 215, 0}
+\definecolor{shirepurple}{RGB}{102, 51, 153}
+\definecolor{ipblue}{RGB}{52, 152, 219}
+\definecolor{ippurple}{RGB}{155, 89, 182}
+\definecolor{vlangreen}{RGB}{39, 174, 96}
+\definecolor{tcpblue}{RGB}{30, 100, 180}
+\definecolor{udpgreen}{RGB}{50, 160, 80}
+\definecolor{dhcppurple}{RGB}{120, 60, 160}
+\definecolor{dnsyellow}{RGB}{200, 170, 50}
+\definecolor{batblack}{RGB}{30, 30, 40}
+\definecolor{gothamgray}{RGB}{80, 85, 95}
+\definecolor{paddysgreen}{RGB}{19, 77, 33}
+\definecolor{beerlight}{RGB}{255, 199, 44}
+\definecolor{sunnyorange}{RGB}{255, 140, 0}
+\definecolor{ogregreen}{RGB}{34, 139, 34}
+\definecolor{swampbrown}{RGB}{101, 67, 33}
+
+% Set theme colors
+\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
+\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
+\setbeamercolor{structure}{fg=rctcblue}
+\setbeamercolor{title}{fg=white,bg=rctcblue}
+\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
+\setbeamercolor{block title}{bg=rctcblue,fg=white}
+\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
+\setbeamercolor{block title alerted}{bg=alertred,fg=white}
+\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
+\setbeamercolor{block title example}{bg=networkgreen,fg=white}
+\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
+
+% =============================================================================
+% PACKAGES
+% =============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}  % Better font rendering
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{calc}
+\usepackage{fontawesome5}
+% xcolor with [table] option: avoid colortbl.4ht hook conflict in tex4ht
+\ifdefined\HCode
+  \usepackage{xcolor}
+  \usepackage{colortbl}  % provides \rowcolor etc.
+\else
+  \usepackage[table]{xcolor}  % includes colortbl for pdflatex
+\fi
+
+% =============================================================================
+% TIKZ LIBRARIES AND SETUP
+% =============================================================================
+\usetikzlibrary{
+    shapes.geometric,
+    shapes.symbols,
+    shapes.misc,
+    arrows.meta,
+    positioning,
+    calc,
+    fit,
+    backgrounds,
+    decorations.pathreplacing,
+    decorations.pathmorphing,
+    matrix,
+    chains
+}
+% shadows library causes pgfuseshading errors with tex4ht;
+% only load it when NOT building HTML
+\ifdefined\HCode\else
+    \usetikzlibrary{shadows}
+\fi
+
+% Graphics path for icons and chapter images
+\graphicspath{
+    {../images/icons/}
+    {./images/icons/}
+    {images/icons/}
+    {../images/ch1/}
+    {./images/ch1/}
+    {images/ch1/}
+    {../images/ch2/}
+    {./images/ch2/}
+    {images/ch2/}
+    {../images/ch3/}
+    {./images/ch3/}
+    {images/ch3/}
+    {../images/ch4/}
+    {./images/ch4/}
+    {images/ch4/}
+    {../images/ch5/}
+    {./images/ch5/}
+    {images/ch5/}
+    {../images/ch6/}
+    {./images/ch6/}
+    {images/ch6/}
+    {../images/ch7/}
+    {./images/ch7/}
+    {images/ch7/}
+    {../images/ch8/}
+    {./images/ch8/}
+    {images/ch8/}
+    {../images/ch9/}
+    {./images/ch9/}
+    {images/ch9/}
+}
+
+% =============================================================================
+% NETWORK DIAGRAM STYLES
+% =============================================================================
+\tikzset{
+    % Node styles for network devices
+    device/.style={
+        inner sep=2pt,
+        label distance=2pt
+    },
+    pc/.style={device},
+    laptop/.style={device},
+    server/.style={device},
+    router/.style={device},
+    switch/.style={device},
+    firewall/.style={device},
+    cloud/.style={device},
+    phone/.style={device},
+    tablet/.style={device},
+    wifi/.style={device},
+    % Connection styles
+    ethernet/.style={
+        draw=rctcblue,
+        line width=1.5pt,
+        -{Stealth[length=3mm]}
+    },
+    ethernet noarrow/.style={
+        draw=rctcblue,
+        line width=1.5pt
+    },
+    wireless/.style={
+        draw=aborange,
+        line width=1.5pt,
+        dashed,
+        -{Stealth[length=3mm]}
+    },
+    wireless noarrow/.style={
+        draw=aborange,
+        line width=1.5pt,
+        dashed
+    },
+    wan/.style={
+        draw=alertred,
+        line width=2pt,
+        -{Stealth[length=3mm]}
+    },
+    wan noarrow/.style={
+        draw=alertred,
+        line width=2pt
+    },
+    copper/.style={
+        draw=copperbrown,
+        line width=2pt,
+        -{Stealth[length=3mm]}
+    },
+    copper noarrow/.style={
+        draw=copperbrown,
+        line width=2pt
+    },
+    fiber/.style={
+        draw=fiberyellow,
+        line width=2pt,
+        -{Stealth[length=3mm]}
+    },
+    fiber noarrow/.style={
+        draw=fiberyellow,
+        line width=2pt
+    },
+    trunk/.style={
+        draw=shirepurple,
+        line width=2pt,
+        -{Stealth[length=3mm]}
+    },
+    trunk noarrow/.style={
+        draw=shirepurple,
+        line width=2pt
+    },
+    % Packet/segment styles
+    pktseg/.style={
+        draw=rctcblue,
+        fill=rctcblue!10,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    pktseg tcp/.style={
+        draw=tcpblue,
+        fill=tcpblue!15,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    pktseg udp/.style={
+        draw=udpgreen,
+        fill=udpgreen!15,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    pktseg highlight/.style={
+        draw=aborange,
+        fill=aborange!20,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    % Box styles
+    ipbox/.style={
+        draw=rctcblue,
+        fill=rctcblue!10,
+        rounded corners,
+        minimum height=0.4cm,
+        font=\small
+    },
+    portbox/.style={
+        draw=tcpblue,
+        fill=tcpblue!10,
+        rounded corners,
+        minimum height=0.4cm,
+        font=\small
+    },
+    dnsbox/.style={
+        draw=dnsyellow,
+        fill=dnsyellow!15,
+        rounded corners,
+        minimum height=0.4cm,
+        font=\small
+    },
+    routetable/.style={
+        draw=rctcblue,
+        fill=rctcblue!10,
+        rounded corners,
+        minimum height=0.4cm,
+        font=\small
+    },
+    macbox/.style={
+        draw=networkgreen,
+        fill=networkgreen!10,
+        rounded corners,
+        minimum height=0.4cm,
+        font=\small
+    },
+    % Frame segment styles (Ethernet frame diagrams)
+    frameseg/.style={
+        draw=rctcblue,
+        fill=rctcblue!10,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    frameseg highlight/.style={
+        draw=aborange,
+        fill=aborange!20,
+        minimum height=0.5cm,
+        font=\tiny,
+        rounded corners=2pt
+    },
+    % Process/flow styles
+    process/.style={
+        draw=rctcblue,
+        fill=rctcblue!15,
+        rounded corners,
+        minimum width=2cm,
+        minimum height=0.6cm,
+        font=\small,
+        align=center
+    },
+    decision/.style={
+        draw=aborange,
+        fill=aborange!15,
+        diamond,
+        aspect=2,
+        minimum width=1.5cm,
+        font=\small,
+        align=center
+    },
+    % OSI Layer styles
+    osilayer/.style={
+        draw=rctcblue,
+        fill=rctcblue!10,
+        minimum width=3cm,
+        minimum height=0.45cm,
+        font=\small
+    },
+    osilayer highlight/.style={
+        draw=aborange,
+        fill=aborange!20,
+        line width=1.5pt,
+        minimum width=3cm,
+        minimum height=0.45cm,
+        font=\small\bfseries
+    }
+}
+
+% =============================================================================
+% ICON COMMANDS - Standardized using PNG files and FontAwesome
+% =============================================================================
+% Network device icons (PNG)
+\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_pc}}}
+\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_laptop}}}
+\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_server}}}
+\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_router}}}
+\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_switch}}}
+\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_firewall}}}
+\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_cloud}}}
+\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_phone}}}
+\newcommand{\icontablet}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_tablet}}}
+\newcommand{\iconwifi}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_wifi}}}
+\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_db}}}
+\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{icon_lock}}}
+
+% For HTML/tex4ht builds: replace PNG icons with FontAwesome5 glyphs.
+% dvisvgm embeds font glyphs as vectors but silently ignores em:graph (PNG)
+% specials, so PNG icons would be blank in the output SVGs. FA5 glyphs work.
+\ifdefined\HCode
+  \renewcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
+  \renewcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
+  \renewcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
+  \renewcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{route}}}
+  \renewcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{network-wired}}}
+  \renewcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
+  \renewcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
+  \renewcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{mobile-alt}}}
+  \renewcommand{\icontablet}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{tablet-alt}}}
+  \renewcommand{\iconwifi}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{wifi}}}
+  \renewcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}}
+  \renewcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{lock}}}
+\fi
+
+% FontAwesome icons
+\newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
+\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
+\newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}
+\newcommand{\iconmail}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{envelope}}}
+\newcommand{\icondoc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
+\newcommand{\iconsearch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{search}}}
+\newcommand{\icontools}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{tools}}}
+\newcommand{\iconchart}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{chart-line}}}
+\newcommand{\iconalert}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{bell}}}
+\newcommand{\iconlog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clipboard-list}}}
+\newcommand{\iconeye}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{eye}}}
+\newcommand{\iconhacker}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user-secret}}}
+\newcommand{\iconkey}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{key}}}
+\newcommand{\iconfile}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
+\newcommand{\icondog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{dog}}}
+\newcommand{\iconcat}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cat}}}
+\newcommand{\iconvoip}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone-volume}}}
+\newcommand{\iconmoney}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{money-bill-wave}}}
+\newcommand{\icontrash}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{trash}}}
+\newcommand{\iconbuilding}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{building}}}
+
+% =============================================================================
+% CUSTOM COMMANDS AND ENVIRONMENTS
+% =============================================================================
+
+% Key term formatting
+\newcommand{\keyterm}[1]{\textbf{#1}}
+
+% Slide section marker
+\newcommand{\sectionslide}[1]{
+    \begin{frame}
+        \vfill
+        \centering
+        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+            \usebeamerfont{title}\Huge #1
+        \end{beamercolorbox}
+        \vfill
+    \end{frame}
+}
+
+% Case study frame environment
+\newenvironment{casestudy}[1]{%
+    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
+}{%
+    \end{alertblock}
+}
+
+% Solution frame environment  
+\newenvironment{casesolution}[1]{%
+    \begin{exampleblock}{$\checkmark$ Solution: #1}
+}{%
+    \end{exampleblock}
+}
+
+% =============================================================================
+% FOOTER WITH SLIDE NUMBERS
+% =============================================================================
+\setbeamertemplate{footline}{
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+        \end{beamercolorbox}}%
+    \vskip0pt%
+}
+
+% =============================================================================
+% ARTICLE MODE SUPPORT
+% =============================================================================
+% The following commands help with beamerarticle mode for HTML conversion
+
+% In article mode, add proper section/subsection support and override environments
+\mode<article>{
+    % Make sure figure captions work properly
+    \setbeamertemplate{caption}[numbered]
+    \setbeamertemplate{caption label separator}{: }
+    
+    % Add some spacing for readability
+    \setlength{\parskip}{0.5em}
+    \setlength{\parindent}{0pt}
+    
+    % Article mode versions of case study environments
+    \renewenvironment{casestudy}[1]{%
+        \vspace{0.3cm}\noindent\textbf{Case Study: #1}\newline\begin{itshape}
+    }{%
+        \end{itshape}\vspace{0.3cm}
+    }
+    
+    \renewenvironment{casesolution}[1]{%
+        \vspace{0.3cm}\noindent\textbf{Solution: #1}\newline\begin{itshape}
+    }{%
+        \end{itshape}\vspace{0.3cm}
+    }
+}
+
+% Command to mark content that only appears in article mode
+\newcommand{\articleonly}[1]{\mode<article>{#1}}
+
+% Command to mark content that only appears in presentation mode
+\newcommand{\presentationonly}[1]{\mode<presentation>{#1}}

@@ -1,0 +1,1192 @@
+﻿<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title></title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='network_06_nw_services_article_tmp.css' rel='stylesheet' type='text/css' /> 
+<meta content='network_06_nw_services_article_tmp.tex' name='src' /> 
+<link href='../articles.css' rel='stylesheet' type='text/css' />
+</head><body>
+<p><a id='x1-2r1'></a>
+</p><div class='center'>
+<!-- l. 37 --><p class='noindent'>
+</p><!-- l. 66 --><p class='noindent'>   <img alt='�CxDxDxW1234lHNe....ieCSb G R C RnPeeoetSetsonsprvIPlvneoeecnrtse ' src='network_06_nw_services_article_tmp0x.svg' />
+</p><!-- l. 66 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<h3 class='likesectionHead' id='review-from-module-'><a id='x1-1000'></a>Review from Module 5</h3>
+<p><a id='x1-1001r2'></a>
+<!-- l. 85 --></p><p class='noindent'><span class='likeparagraphHead' id='review-building-on-module-'><a id='x1-2000'></a>Review: Building on Module 5</span>
+ 
+</p><!-- l. 85 --><p class='noindent'>
+</p><!-- l. 87 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What We Learned (Module 5)</span>
+</p><!-- l. 87 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Routing</span><span class='ec-lmr-10'>: How packets find their way</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>NAT/PAT</span><span class='ec-lmr-10'>: Address translation</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>VLANs</span><span class='ec-lmr-10'>: Network segmentation</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Firewalls</span><span class='ec-lmr-10'>: Traffic filtering</span></li></ul>
+<!-- l. 98 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The Missing Piece</span>
+</p><!-- l. 98 --><p class='noindent'><span class='ec-lmr-10'>We can route packets, but how do devices </span><span class='ec-lmbx-10'>get their addresses</span><span class='ec-lmr-10'>? How do they </span><span class='ec-lmbx-10'>find
+services </span><span class='ec-lmr-10'>by name?</span>
+</p>
+<div class='center'>
+<!-- l. 104 --><p class='noindent'>
+</p><!-- l. 126 --><p class='noindent'>        <img alt='Module 6
+7654321FM.......oo A P S T N D Pcdprereahuupesssantwtyslelieiosoasi5cnnpr Lcattaokinaliotrtknion ' src='network_06_nw_services_article_tmp1x.svg' />
+</p><!-- l. 126 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 129 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Module 6 Focus</span>
+</p><!-- l. 129 --><p class='noindent'><span class='ec-lmbx-10'>Services </span><span class='ec-lmr-10'>that make networks usable: TCP/UDP, DHCP, DNS</span>
+</p><!-- l. 140 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='learning-outcomes'><a id='x1-3000'></a>Learning Outcomes</h3>
+<p><a id='x1-3001r3'></a>
+                                                                     
+
+                                                                     
+<!-- l. 143 --></p><p class='noindent'><span class='likeparagraphHead' id='module-overview'><a id='x1-4000'></a>Module 6 Overview</span>
+ 
+</p><!-- l. 143 --><p class='noindent'>
+</p><!-- l. 145 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Topics Covered</span>
+</p><!-- l. 145 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 148 --><p class='noindent'><span class='ec-lmbx-10'>Transport Protocols  </span><span class='ec-lmr-8'>TCP, UDP, ports, connections</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 150 --><p class='noindent'><span class='ec-lmbx-10'>DHCP  </span><span class='ec-lmr-8'>Automatic IP configuration</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 152 --><p class='noindent'><span class='ec-lmbx-10'>APIPA &amp; SLAAC  </span><span class='ec-lmr-8'>Fallback and IPv6 auto-config</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>4.</span> </dt><dd class='enumerate'>
+     <!-- l. 154 --><p class='noindent'><span class='ec-lmbx-10'>DHCP Troubleshooting  </span><span class='ec-lmr-8'>Relay agents, common issues</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>5.</span> </dt><dd class='enumerate'>
+     <!-- l. 156 --><p class='noindent'><span class='ec-lmbx-10'>DNS Fundamentals  </span><span class='ec-lmr-8'>Name resolution, records</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>6.</span> </dt><dd class='enumerate'>
+     <!-- l. 158 --><p class='noindent'><span class='ec-lmbx-10'>DNS Troubleshooting  </span><span class='ec-lmr-8'>nslookup, dig, common problems</span></p></dd></dl>
+<!-- l. 164 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Learning Outcomes</span>
+</p><!-- l. 164 --><p class='noindent'><span class='ec-lmr-10'>By the end of this module, you will be able to:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Explain TCP vs UDP and when to use each</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Describe the DHCP DORA process</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Configure DHCP scopes and options</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Explain DNS hierarchy and record types</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Use nslookup and dig for troubleshooting</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Identify common service misconfigurations</span></li></ul>
+<!-- l. 178 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Batman Universe</span>
+</p><!-- l. 178 --><p class='noindent'><span class='ec-lmr-10'>Case studies featuring Batman, Oracle, Batgirl, Alfred, Catwoman, and The
+Riddler!</span>
+<a id='x1-4007r4'></a>
+</p>
+<!-- l. 187 --><p class='noindent'><span class='likeparagraphHead' id='learning-outcomes1'><a id='x1-5000'></a>Learning Outcomes</span>
+ 
+</p><!-- l. 187 --><p class='noindent'>
+</p><!-- l. 187 --><p class='noindent'>After completing this module, you will be able to: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Explain the differences between <span class='ec-lmbx-10x-x-109'>TCP </span>(reliable, connection-oriented)
+     and <span class='ec-lmbx-10x-x-109'>UDP </span>(fast, connectionless) and identify appropriate use cases for
+     each protocol.
+     </li>
+     <li class='itemize'>Describe how <span class='ec-lmbx-10x-x-109'>ports </span>(0–65535) identify services and how <span class='ec-lmbx-10x-x-109'>sockets </span>(IP
+     address + port) establish connections between applications.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Configure  and  manage  <span class='ec-lmbx-10x-x-109'>DHCP </span>servers,  including  defining  <span class='ec-lmbx-10x-x-109'>scopes</span>,
+     creating <span class='ec-lmbx-10x-x-109'>reservations</span>, and setting <span class='ec-lmbx-10x-x-109'>DHCP options </span>(gateway, DNS,
+     lease time).
+     </li>
+     <li class='itemize'>Explain the <span class='ec-lmbx-10x-x-109'>DORA </span>process (Discover, Offer, Request, Acknowledge)
+     used by DHCP clients to obtain IP addresses.
+     </li>
+     <li class='itemize'>Configure <span class='ec-lmbx-10x-x-109'>DHCP relay agents </span>to forward DHCP messages across
+     subnets and troubleshoot common DHCP issues.
+     </li>
+     <li class='itemize'>Describe  <span class='ec-lmbx-10x-x-109'>APIPA </span>(169.254.x.x/16)  as  a  fallback  mechanism  when
+     DHCP is unavailable and explain its limitations (link-local only).
+     </li>
+     <li class='itemize'>Explain IPv6 <span class='ec-lmbx-10x-x-109'>SLAAC </span>(Stateless Address Autoconfiguration) using
+     Router Advertisements and <span class='ec-lmbx-10x-x-109'>DHCPv6 </span>(stateful and stateless modes).
+     </li>
+     <li class='itemize'>Describe the <span class='ec-lmbx-10x-x-109'>DNS </span>hierarchy (Root, TLD, Domain, Host) and explain
+     how DNS resolves domain names to IP addresses.
+     </li>
+     <li class='itemize'>Identify  common  DNS  record  types:  <span class='ec-lmbx-10x-x-109'>A  </span>(IPv4),  <span class='ec-lmbx-10x-x-109'>AAAA  </span>(IPv6),
+     <span class='ec-lmbx-10x-x-109'>CNAME </span>(alias), <span class='ec-lmbx-10x-x-109'>MX </span>(mail server), <span class='ec-lmbx-10x-x-109'>PTR </span>(reverse lookup).
+     </li>
+     <li class='itemize'>Use DNS troubleshooting tools like <span class='ec-lmbx-10x-x-109'>nslookup </span>and <span class='ec-lmbx-10x-x-109'>dig </span>to query DNS
+     records, diagnose resolution issues, and verify zone transfers.</li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 206 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='transport-layer-services'><span class='titlemark'>1   </span> <a id='x1-60001'></a>Transport Layer Services</h3>
+<!-- l. 207 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='ports-tcp-and-udp'><span class='titlemark'>1.1   </span> <a id='x1-70001.1'></a>Ports, TCP, and UDP</h4>
+<!-- l. 211 --><p class='noindent'>This section reviews transport-layer behavior, port roles, and protocol tradeoffs
+between reliable and low-latency communication.
+<a id='x1-7001r5'></a>
+</p>
+<!-- l. 214 --><p class='noindent'><span class='likeparagraphHead' id='transport-layer-and-ports'><a id='x1-8000'></a>Transport Layer and Ports</span>
+ 
+</p><!-- l. 214 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Layer 4 </span>provides host-to-host communication.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Ports </span>identify specific services/applications.
+     </li>
+     <li class='itemize'>Port range: <span class='ec-lmbx-10x-x-109'>0–65535</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>socket </span>= IP address + port number</li></ul>
+<!-- l. 224 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Example</span>
+</p><!-- l. 224 --><p class='noindent'><span class='ec-lmr-10'>Web server: </span><span class='ec-lmtt-10'>10.0.0.5:443</span>
+<a id='x1-8001r6'></a>
+</p>
+<!-- l. 236 --><p class='noindent'><span class='likeparagraphHead' id='tcp-reliable-delivery'><a id='x1-9000'></a>TCP: Reliable Delivery</span>
+ 
+</p><!-- l. 236 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Transmission Control Protocol</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Connection-oriented</span>: Establishes session first
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Reliable</span>: Guarantees delivery
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Ordered</span>: Packets arrive in sequence
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Error-checked</span>: Detects corruption
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Flow control</span>: Prevents overwhelming receiver</li></ul>
+<!-- l. 248 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Trade-off</span>
+</p><!-- l. 248 --><p class='noindent'><span class='ec-lmr-10'>Reliability costs </span><span class='ec-lmbx-10'>speed </span><span class='ec-lmr-10'>and </span><span class='ec-lmbx-10'>overhead</span><span class='ec-lmr-10'>. TCP headers are 20+ bytes.</span>
+</p><!-- l. 254 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>TCP Header (20+ bytes)</span>
+</p><!-- l. 254 --><p class='noindent'> <!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-1'><colgroup id='TBL-1-1g'><col id='TBL-1-1' /></colgroup><colgroup id='TBL-1-2g'><col id='TBL-1-2' /></colgroup><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-1-'><td class='td11' id='TBL-1-1-1' style='white-space:nowrap; text-align:center;'><span class='ec-lmbx-9'>Source Port</span></td><td class='td11' id='TBL-1-1-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmbx-9'>Dest Port  </span></td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-2-'><td class='td11' colspan='2' id='TBL-1-2-1' style='white-space:nowrap; text-align:center;'> <div class='multicolumn' style='white-space:nowrap; text-align:center;'><span class='ec-lmbx-9'>Sequence Number</span></div>
+</td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-3-'><td class='td11' colspan='2' id='TBL-1-3-1' style='white-space:nowrap; text-align:center;'> <div class='multicolumn' style='white-space:nowrap; text-align:center;'><span class='ec-lmbx-9'>Acknowledgment Number</span></div>  
+</td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-4-'><td class='td11' id='TBL-1-4-1' style='white-space:nowrap; text-align:center;'><span class='ec-lmr-9'>Offset | </span><span class='colorbox' id='colorbox1'><span class='ec-lmbx-9'>Flags</span></span> </td><td class='td11' id='TBL-1-4-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-9'>Window Size  </span></td>
+</tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-5-'><td class='td11' id='TBL-1-5-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>Checksum   </span></td><td class='td11' id='TBL-1-5-2' style='white-space:nowrap; text-align:center;'><span class='ec-lmr-9'>Urgent Pointer</span></td>
+</tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-6-'><td class='td11' colspan='2' id='TBL-1-6-1' style='white-space:nowrap; text-align:center;'>      <div class='multicolumn' style='white-space:nowrap; text-align:center;'><span class='ec-lmr-9'>Options (variable)</span></div>         
+</td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-1-7-'><td class='td11' id='TBL-1-7-1' style='white-space:nowrap; text-align:center;'>            </td></tr></table>                                                             </div>
+<div class='colorbox' id='colorbox2'><span class='ec-lmr-8'>Flags</span></div>
+<!-- l. 276 --><p class='noindent'><span class='ec-lmr-8'>: SYN, ACK, FIN, RST, PSH, URG</span>
+</p><!-- l. 280 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common TCP Applications</span>
+</p><!-- l. 280 --><p class='noindent'><span class='ec-lmr-10'>HTTP/S, FTP, SSH, SMTP, Telnet</span>
+<a id='x1-9001r7'></a>
+</p>
+<!-- l. 292 --><p class='noindent'><span class='likeparagraphHead' id='tcp-threeway-handshake'><a id='x1-10000'></a>TCP Three-Way Handshake</span>
+ 
+</p><!-- l. 292 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 292 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 323 --><p class='noindent'>    <img alt='SSAEECQQK===13300000,1ACK=101
+�CxS1“2“3“Cle.I.O.COirwKoNevSaS,AnNneYntYICneEtrNtNaKcCocktiTcnonIo-AoeOnnCwsNeKletactdgb”elis”hed” ESTABLISHED ' src='network_06_nw_services_article_tmp2x.svg' />
+</p><!-- l. 323 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 329 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Purpose</span>
+</p><!-- l. 329 --><p class='noindent'><span class='ec-lmr-10'>Synchronize sequence numbers and confirm both sides are ready to communicate.</span>
+</p><!-- l. 335 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Memory Tip</span>
+</p><!-- l. 335 --><p class='noindent'><span class='ec-lmr-10'>Think: “</span><span class='ec-lmbx-10'>S</span><span class='ec-lmr-10'>end </span><span class='lmsy-10'>→ </span><span class='ec-lmbx-10'>S</span><span class='ec-lmr-10'>end back with </span><span class='ec-lmbx-10'>A</span><span class='ec-lmr-10'>ck </span><span class='lmsy-10'>→ </span><span class='ec-lmbx-10'>A</span><span class='ec-lmr-10'>cknowledge”</span>
+<a id='x1-10001r8'></a>
+</p>
+<!-- l. 347 --><p class='noindent'><span class='likeparagraphHead' id='tcp-connection-teardown'><a id='x1-11000'></a>TCP Connection Teardown</span>
+ 
+</p><!-- l. 347 --><p class='noindent'>
+</p><!-- l. 349 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Graceful Close (4-way)</span>
+</p><!-- l. 349 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 352 --><p class='noindent'><span class='ec-lmbx-10'>FIN</span><span class='ec-lmr-10'>: “I’m done sending”</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 353 --><p class='noindent'><span class='ec-lmbx-10'>ACK</span><span class='ec-lmr-10'>: “Got it”</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 354 --><p class='noindent'><span class='ec-lmbx-10'>FIN</span><span class='ec-lmr-10'>: “I’m done too”</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>4.</span> </dt><dd class='enumerate'>
+     <!-- l. 355 --><p class='noindent'><span class='ec-lmbx-10'>ACK</span><span class='ec-lmr-10'>: “Goodbye”</span></p></dd></dl>
+<!-- l. 360 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Abrupt Close (RST)</span>
+</p><!-- l. 360 --><p class='noindent'><span class='ec-lmbx-10'>RST </span><span class='ec-lmr-10'>flag immediately terminates. Used when something goes wrong.</span>
+</p><!-- l. 366 --><p class='noindent'><span class='ec-lmri-10x-x-109'>TIME_WAIT</span>
+</p><!-- l. 366 --><p class='noindent'><span class='ec-lmr-10'>Socket waits  2 min before reuse to avoid confusion with late packets.</span>
+</p>
+<div class='center'>
+<!-- l. 372 --><p class='noindent'>
+</p><!-- l. 397 --><p class='noindent'>    <img alt='CS1234le....irevFAFAneICICtrNKNK ' src='network_06_nw_services_article_tmp3x.svg' />
+</p><!-- l. 397 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 400 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Key Point</span>
+</p><!-- l. 400 --><p class='noindent'><span class='ec-lmr-10'>Either side can initiate close. Process is bidirectional.</span>
+<a id='x1-11005r9'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 412 --><p class='noindent'><span class='likeparagraphHead' id='udp-fast-and-simple'><a id='x1-12000'></a>UDP: Fast and Simple</span>
+ 
+</p><!-- l. 412 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>User Datagram Protocol</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Connectionless</span>: No handshake
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Unreliable</span>: No delivery guarantee
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Unordered</span>: May arrive out of order
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>No flow control</span>: Send as fast as possible
+     </li>
+     <li class='itemize'>“Fire and forget”</li></ul>
+<!-- l. 424 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Why Use UDP?</span>
+</p><!-- l. 424 --><p class='noindent'><span class='ec-lmr-10'>When </span><span class='ec-lmbx-10'>speed </span><span class='ec-lmr-10'>matters more than perfection: streaming, gaming, VoIP, DNS
+queries.</span>
+</p><!-- l. 430 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common UDP Applications</span>
+</p><!-- l. 430 --><p class='noindent'><span class='ec-lmr-10'>DNS, DHCP, TFTP, SNMP, VoIP, Streaming, Gaming</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 436 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>UDP Header (8 bytes only!)</span>
+</p><!-- l. 436 --><p class='noindent'> <!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-2'><colgroup id='TBL-2-1g'><col id='TBL-2-1' /></colgroup><colgroup id='TBL-2-2g'><col id='TBL-2-2' /></colgroup><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-2-1-'><td class='td11' id='TBL-2-1-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-10'>Source Port </span></td><td class='td11' id='TBL-2-1-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-10'>Dest Port </span></td></tr><tr id='TBL-2-2-'><td class='td11' id='TBL-2-2-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>16 bits </span></td> <td class='td11' id='TBL-2-2-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>16 bits</span></td>
+</tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-2-3-'><td class='td11' id='TBL-2-3-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmbx-10'>Length    </span></td><td class='td11' id='TBL-2-3-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-10'>Checksum </span></td>
+</tr><tr id='TBL-2-4-'><td class='td11' id='TBL-2-4-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>16 bits      </span></td><td class='td11' id='TBL-2-4-2' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>16 bits    </span></td>
+</tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-2-5-'><td class='td11' colspan='2' id='TBL-2-5-1' style='white-space:nowrap; text-align:center;'>       <div class='multicolumn' style='white-space:nowrap; text-align:center;'><span class='ec-lmr-10'>Data (Payload)</span></div>          
+</td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td></tr><tr id='TBL-2-6-'><td class='td11' id='TBL-2-6-1' style='white-space:nowrap; text-align:center;'>              </td></tr></table>                                                     </div>
+<!-- l. 454 --><p class='noindent'><span id='textcolor3'><span class='ec-lmbx-9'>Only 8 bytes</span></span> <span class='ec-lmr-9'>vs TCP’s 20+ bytes!</span>
+</p><!-- l. 458 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>No Handshake Needed</span>
+</p><!-- l. 458 --><p class='noindent'><span class='ec-lmr-10'>Data sent immediately—no connection setup overhead. Trade-off: no delivery
+guarantee.</span>
+<a id='x1-12001r10'></a>
+</p>
+<!-- l. 470 --><p class='noindent'><span class='likeparagraphHead' id='tcp-vs-udp-comparison'><a id='x1-13000'></a>TCP vs UDP Comparison</span>
+ 
+</p><!-- l. 470 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 470 --><p class='noindent'>
+</p><!-- l. 494 --><p class='noindent'>        <img alt='FTUCCCRGBOINSSFH28eCDoooeuern-oploae0 baPPnnnliasd oewsta+ytnnnarterdoredeed btuecececban effriedrreryesrtttilitongreteioioiotyer driSiesnnnedtenz-leligeorsviesernyted ' src='network_06_nw_services_article_tmp4x.svg' />
+</p><!-- l. 494 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 500 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Use TCP When...</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 500 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Data must arrive complete (files, email)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Order matters (web pages)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Errors are unacceptable (banking)</span></li></ul>
+<!-- l. 510 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Use UDP When...</span>
+</p><!-- l. 510 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Speed is critical (gaming, video)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Small queries (DNS lookups)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Loss is tolerable (streaming)</span></li></ul>
+<p><a id='x1-13001r11'></a>
+<!-- l. 526 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-batman-oracle'><a id='x1-14000'></a>Case Study: Batman &amp; Oracle</span>
+ 
+</p><!-- l. 526 --><p class='noindent'>
+</p><!-- l. 526 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: The Mission Communications Problem</span><br class='newline' /> <span class='ec-lmri-10'>Batman is pursuing criminals through Gotham while coordinating with Oracle at the
+Clocktower. He needs to accomplish two things simultaneously:</span>
+</p><!-- l. 531 --><p class='noindent'>
+                                                                     
+
+                                                                     
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 532 --><p class='noindent'><span class='ec-lmri-10'>Transfer surveillance footage from the Batmobile cameras to Oracle’s servers
+     (large video files, </span><span class='ec-lmbxi-10'>must not lose any frames</span><span class='ec-lmri-10'>).</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 533 --><p class='noindent'><span class='ec-lmri-10'>Maintain  </span><span class='ec-lmbxi-10'>real-time  voice  communication  </span><span class='ec-lmri-10'>with  Oracle  during  the
+     high-speed chase (some audio glitches are acceptable).</span></p></dd></dl>
+<!-- l. 537 --><p class='noindent'><span class='ec-lmri-10'>The Batcomputer must choose the right transport protocol for each task.</span>
+</p><!-- l. 540 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 540 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 543 --><p class='noindent'><span class='ec-lmr-10'>Which protocol should be used for the video file transfer? Why?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 544 --><p class='noindent'><span class='ec-lmr-10'>Which protocol should be used for the voice communication? Why?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 545 --><p class='noindent'><span class='ec-lmr-10'>What would happen if the protocols were swapped?</span></p></dd></dl>
+<p><a id='x1-14006r12'></a>
+<!-- l. 554 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-batman-oracle'><a id='x1-15000'></a>Case Study Solution: Batman &amp; Oracle</span>
+ 
+</p><!-- l. 554 --><p class='noindent'>
+</p><!-- l. 554 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: The Mission Communications Problem</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 557 --><p class='noindent'><span class='ec-lmbxi-10'>Video files </span><span class='lmsy-10'>→ </span><span class='ec-lmbxi-10'>TCP</span><span class='ec-lmri-10'>: Missing frames corrupt evidence. TCP guarantees
+     delivery.</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 558 --><p class='noindent'><span class='ec-lmbxi-10'>Voice comms </span><span class='lmsy-10'>→ </span><span class='ec-lmbxi-10'>UDP</span><span class='ec-lmri-10'>: Real-time essential. Brief glitches beat lag. UDP
+     wins.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 559 --><p class='noindent'><span class='ec-lmri-10'>If swapped: Corrupted files (UDP) or unacceptable voice delay (TCP).</span></p></dd></dl>
+<div class='center'>
+<!-- l. 563 --><p class='noindent'>
+</p><!-- l. 581 --><p class='noindent'>    <img alt='xBxCTUatloCDmckPPot::biowleeVVriodieceo Files ' src='network_06_nw_services_article_tmp5x.svg' />
+</p><!-- l. 581 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 584 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+</p><!-- l. 584 --><p class='noindent'><span class='ec-lmr-10'>“The mission requires choosing the right tool.” Match protocol to need: reliability vs
+speed.</span>
+<a id='x1-15004r13'></a>
+</p>
+<!-- l. 594 --><p class='noindent'><span class='likeparagraphHead' id='common-tcp-and-udp-ports'><a id='x1-16000'></a>Common TCP and UDP Ports</span>
+ 
+</p><!-- l. 594 --><p class='noindent'>
+</p>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 594 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-3'><colgroup id='TBL-3-1g'><col id='TBL-3-1' /><col id='TBL-3-2' /><col id='TBL-3-3' /><col id='TBL-3-4' /></colgroup><tr id='TBL-3-1-'><td class='td11' id='TBL-3-1-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-10'>Port  </span></td><td class='td11' id='TBL-3-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Protocol   </span></td><td class='td11' id='TBL-3-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Service  </span></td><td class='td11' id='TBL-3-1-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Description                  </span></td>
+</tr><tr id='TBL-3-2-'><td class='td11' id='TBL-3-2-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>20-21  </span></td><td class='td11' id='TBL-3-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>FTP      </span></td><td class='td11' id='TBL-3-2-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>File Transfer Protocol         </span></td></tr><tr id='TBL-3-3-'><td class='td11' id='TBL-3-3-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>22 </span></td><td class='td11' id='TBL-3-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP </span></td><td class='td11' id='TBL-3-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>SSH </span></td><td class='td11' id='TBL-3-3-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Secure Shell</span></td>
+</tr><tr id='TBL-3-4-'><td class='td11' id='TBL-3-4-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>23    </span></td><td class='td11' id='TBL-3-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Telnet    </span></td><td class='td11' id='TBL-3-4-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Remote terminal (insecure)  </span></td>
+</tr><tr id='TBL-3-5-'><td class='td11' id='TBL-3-5-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>25    </span></td><td class='td11' id='TBL-3-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-5-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>SMTP    </span></td><td class='td11' id='TBL-3-5-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Email sending                   </span></td>
+</tr><tr id='TBL-3-6-'><td class='td11' id='TBL-3-6-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>53    </span></td><td class='td11' id='TBL-3-6-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP/UDP  </span></td><td class='td11' id='TBL-3-6-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>DNS      </span></td><td class='td11' id='TBL-3-6-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Domain Name System        </span></td>
+</tr><tr id='TBL-3-7-'><td class='td11' id='TBL-3-7-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>67-68  </span></td><td class='td11' id='TBL-3-7-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>UDP          </span></td><td class='td11' id='TBL-3-7-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>DHCP    </span></td><td class='td11' id='TBL-3-7-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Dynamic Host Config         </span></td>
+</tr><tr id='TBL-3-8-'><td class='td11' id='TBL-3-8-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>80    </span></td><td class='td11' id='TBL-3-8-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-8-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>HTTP    </span></td><td class='td11' id='TBL-3-8-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Web (unencrypted)            </span></td>
+</tr><tr id='TBL-3-9-'><td class='td11' id='TBL-3-9-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-10'>110   </span></td><td class='td11' id='TBL-3-9-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-9-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>POP3     </span></td><td class='td11' id='TBL-3-9-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Email retrieval                  </span></td>
+</tr><tr id='TBL-3-10-'><td class='td11' id='TBL-3-10-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-10'>143   </span></td><td class='td11' id='TBL-3-10-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-10-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>IMAP    </span></td><td class='td11' id='TBL-3-10-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Email retrieval                  </span></td>
+</tr><tr id='TBL-3-11-'><td class='td11' id='TBL-3-11-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-10'>443   </span></td><td class='td11' id='TBL-3-11-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-11-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>HTTPS  </span></td><td class='td11' id='TBL-3-11-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Web (encrypted)                </span></td>
+</tr><tr id='TBL-3-12-'><td class='td11' id='TBL-3-12-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-10'>3389   </span></td><td class='td11' id='TBL-3-12-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TCP          </span></td><td class='td11' id='TBL-3-12-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>RDP      </span></td><td class='td11' id='TBL-3-12-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Remote Desktop                </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 618 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Color Key</span>
+</p><!-- l. 618 --><p class='noindent'><span class='colorbox' id='colorbox4'><span class='ec-lmr-10'>TCP</span></span>    <span class='colorbox' id='colorbox5'><span class='ec-lmr-10'>UDP</span></span>    <span class='colorbox' id='colorbox6'><span class='ec-lmr-10'>Both</span></span>
+</p><!-- l. 624 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Exam Tip</span>
+</p><!-- l. 624 --><p class='noindent'><span class='ec-lmr-10'>Memorize these ports! They appear frequently on the Network+ exam.</span>
+<a id='x1-16001r14'></a>
+</p>
+<!-- l. 636 --><p class='noindent'><span class='likeparagraphHead' id='the-netstat-command'><a id='x1-17000'></a>The netstat Command</span>
+ 
+</p><!-- l. 636 --><p class='noindent'>
+</p><!-- l. 638 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is netstat?</span>
+</p><!-- l. 638 --><p class='noindent'><span class='ec-lmbx-10'>netstat </span><span class='ec-lmr-10'>displays active connections, listening ports, and network statistics.</span>
+</p><!-- l. 644 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common Options</span>
+</p><!-- l. 644 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-4'><colgroup id='TBL-4-1g'><col id='TBL-4-1' /><col id='TBL-4-2' /></colgroup><tr id='TBL-4-1-'><td class='td11' id='TBL-4-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-9'>-a    </span></td><td class='td11' id='TBL-4-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Show all connections  </span></td>
+</tr><tr id='TBL-4-2-'><td class='td11' id='TBL-4-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-9'>-n    </span></td><td class='td11' id='TBL-4-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Numeric (no DNS)    </span></td>
+</tr><tr id='TBL-4-3-'><td class='td11' id='TBL-4-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-9'>-t/-u </span></td><td class='td11' id='TBL-4-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>TCP/UDP only        </span></td>
+</tr><tr id='TBL-4-4-'><td class='td11' id='TBL-4-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-9'>-l    </span></td><td class='td11' id='TBL-4-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Listening ports only   </span></td>
+</tr><tr id='TBL-4-5-'><td class='td11' id='TBL-4-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-9'>-p    </span></td><td class='td11' id='TBL-4-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Show process ID       </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 656 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Security Use</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 656 --><p class='noindent'><span class='ec-lmr-10'>Identify suspicious connections or unexpected services.</span>
+</p><!-- l. 662 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Sample Output</span>
+</p><!-- l. 662 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-5'><colgroup id='TBL-5-1g'><col id='TBL-5-1' /><col id='TBL-5-2' /><col id='TBL-5-3' /><col id='TBL-5-4' /></colgroup><tr id='TBL-5-1-'><td class='td11' id='TBL-5-1-1' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>Proto  </span></td><td class='td11' id='TBL-5-1-2' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>Local         </span></td><td class='td11' id='TBL-5-1-3' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>Foreign         </span></td><td class='td11' id='TBL-5-1-4' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>State   </span></td>
+</tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td><td></td><td></td></tr><tr id='TBL-5-2-'><td class='td11' id='TBL-5-2-1' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>tcp     </span></td><td class='td11' id='TBL-5-2-2' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>0.0.0.0:22    </span></td><td class='td11' id='TBL-5-2-3' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>*:*             </span></td><td class='td11' id='TBL-5-2-4' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>LISTEN  </span></td>
+</tr><tr id='TBL-5-3-'><td class='td11' id='TBL-5-3-1' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>tcp     </span></td><td class='td11' id='TBL-5-3-2' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>0.0.0.0:80    </span></td><td class='td11' id='TBL-5-3-3' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>*:*             </span></td><td class='td11' id='TBL-5-3-4' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>LISTEN  </span></td>
+</tr><tr id='TBL-5-4-'><td class='td11' id='TBL-5-4-1' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>tcp     </span></td><td class='td11' id='TBL-5-4-2' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>10.0.0.5:443  </span></td><td class='td11' id='TBL-5-4-3' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>52.1.2.3:54321  </span></td><td class='td11' id='TBL-5-4-4' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>ESTAB   </span></td>
+</tr><tr id='TBL-5-5-'><td class='td11' id='TBL-5-5-1' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>udp     </span></td><td class='td11' id='TBL-5-5-2' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>0.0.0.0:53    </span></td><td class='td11' id='TBL-5-5-3' style='white-space:nowrap; text-align:left;'>  <span class='ec-lmtt-8x-x-75'>*:*             </span></td><td class='td11' id='TBL-5-5-4' style='white-space:nowrap; text-align:left;'>          </td>
+</tr></table>                                                                     </div>
+<!-- l. 675 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Reading Output</span>
+</p><!-- l. 675 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>LISTEN</span><span class='ec-lmr-10'>: Waiting for connections</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>ESTABLISHED</span><span class='ec-lmr-10'>: Active session</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>0.0.0.0</span><span class='ec-lmr-10'>: All interfaces</span></li></ul>
+<!-- l. 690 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='dhcp-address-management'><span class='titlemark'>2   </span> <a id='x1-180002'></a>DHCP Address Management</h3>
+<!-- l. 691 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='dora-and-scope-configuration'><span class='titlemark'>2.1   </span> <a id='x1-190002.1'></a>DORA and Scope Configuration</h4>
+<!-- l. 695 --><p class='noindent'>DHCP automates IPv4 addressing and options distribution; this section covers
+leasing flow, scope design, and relay operation.
+<a id='x1-19001r15'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 698 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-overview'><a id='x1-20000'></a>DHCP Overview</span>
+ 
+</p><!-- l. 698 --><p class='noindent'>
+</p><!-- l. 700 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Problem</span>
+</p><!-- l. 700 --><p class='noindent'><span class='ec-lmr-10'>Manually configuring IP addresses on every device doesn’t scale. Imagine a network with
+500 devices!</span>
+</p><!-- l. 706 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Solution: DHCP</span>
+</p><!-- l. 706 --><p class='noindent'><span class='ec-lmbx-10'>Dynamic Host Configuration Protocol </span><span class='ec-lmr-10'>automatically assigns:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>IP address</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Subnet mask</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Default gateway</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>DNS server addresses</span></li></ul>
+<!-- l. 719 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Details</span>
+</p><!-- l. 719 --><p class='noindent'><span class='ec-lmr-10'>Uses </span><span class='ec-lmbx-10'>UDP ports 67 </span><span class='ec-lmr-10'>(server) and </span><span class='ec-lmbx-10'>68 </span><span class='ec-lmr-10'>(client). Client-server model with lease-based
+addressing.</span>
+</p>
+<div class='center'>
+<!-- l. 724 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 752 --><p class='noindent'> <img alt='W����CWxD����AioiHutntCthfihPomoguaurStteDericeaHve!cCrDhPHmCaPnually? ' src='network_06_nw_services_article_tmp6x.svg' />
+</p><!-- l. 752 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-20001r16'></a>
+<!-- l. 762 --></p><p class='noindent'><span class='likeparagraphHead' id='dhcp-dora-process'><a id='x1-21000'></a>DHCP DORA Process</span>
+ 
+</p><!-- l. 762 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 762 --><p class='noindent'>
+</p><!-- l. 795 --><p class='noindent'>    <img alt='�C(xD1B2“3“4“lNH.r.H.I’.ItioCoaerll’seIPPDdOeRtaAynicaff’sekcotyesse1qekurtct:r92utns)So “.1ehaofoevA6stwrren8tol8vryo.1neehen.1!dore00”guh”ersav”eanIP?” ' src='network_06_nw_services_article_tmp7x.svg' />
+</p><!-- l. 795 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+                                                                     
+
+                                                                     
+</div>
+<!-- l. 801 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Memory Trick</span>
+</p><!-- l. 801 --><p class='noindent'><span class='ec-lmbx-10'>DORA </span><span class='ec-lmr-10'>the Explorer finds IP addresses!</span>
+</p><!-- l. 807 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Lease Time</span>
+</p><!-- l. 807 --><p class='noindent'><span class='ec-lmr-10'>IP is “rented” for a set period. Client must renew before expiration.</span>
+<a id='x1-21001r17'></a>
+</p>
+<!-- l. 819 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-server-configuration'><a id='x1-22000'></a>DHCP Server Configuration</span>
+ 
+</p><!-- l. 819 --><p class='noindent'>
+</p><!-- l. 821 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Scope (Address Pool)</span>
+</p><!-- l. 821 --><p class='noindent'><span class='ec-lmr-10'>A </span><span class='ec-lmbx-10'>scope </span><span class='ec-lmr-10'>defines the range of IP addresses the DHCP server can assign.</span>
+</p>
+<div class='tabular'> <table class='tabular' id='TBL-6'><colgroup id='TBL-6-1g'><col id='TBL-6-1' /><col id='TBL-6-2' /></colgroup><tr id='TBL-6-1-'><td class='td11' id='TBL-6-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Start IP  </span></td><td class='td11' id='TBL-6-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>192.168.1.100  </span></td></tr><tr id='TBL-6-2-'><td class='td11' id='TBL-6-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>End IP </span></td><td class='td11' id='TBL-6-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>192.168.1.200</span></td>
+</tr><tr id='TBL-6-3-'><td class='td11' id='TBL-6-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Subnet    </span></td><td class='td11' id='TBL-6-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>255.255.255.0  </span></td>
+</tr><tr id='TBL-6-4-'><td class='td11' id='TBL-6-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Available  </span></td><td class='td11' id='TBL-6-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>101 addresses  </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 835 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Lease Duration</span>
+</p><!-- l. 835 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Typical: 8 hours to 8 days</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Short leases: Mobile environments</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Long leases: Stable networks</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Client renews at 50% of lease time</span></li></ul>
+<!-- l. 846 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Required Settings</span>
+</p><!-- l. 846 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>IP range</span><span class='ec-lmr-10'>: Start and end addresses</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Subnet mask</span><span class='ec-lmr-10'>: Network size</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Default gateway</span><span class='ec-lmr-10'>: Router IP</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DNS servers</span><span class='ec-lmr-10'>: Name resolution</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Lease time</span><span class='ec-lmr-10'>: How long to keep IP</span></li></ul>
+<!-- l. 858 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Best Practice</span>
+</p><!-- l. 858 --><p class='noindent'><span class='ec-lmr-10'>Leave some addresses outside the scope for static assignments (servers, printers,
+routers).</span>
+<a id='x1-22001r18'></a>
+</p>
+<!-- l. 870 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-options'><a id='x1-23000'></a>DHCP Options</span>
+ 
+</p><!-- l. 870 --><p class='noindent'>
+</p><!-- l. 872 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common DHCP Options</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 872 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'>
+ <table class='tabular' id='TBL-7'><colgroup id='TBL-7-1g'><col id='TBL-7-1' /><col id='TBL-7-2' /><col id='TBL-7-3' /></colgroup><tr id='TBL-7-1-'><td class='td11' id='TBL-7-1-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-10'>Option  </span></td><td class='td11' id='TBL-7-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Name             </span></td><td class='td11' id='TBL-7-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Purpose              </span></td>
+</tr><tr id='TBL-7-2-'><td class='td11' id='TBL-7-2-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>1       </span></td><td class='td11' id='TBL-7-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Subnet Mask       </span></td><td class='td11' id='TBL-7-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Network size           </span></td></tr><tr id='TBL-7-3-'><td class='td11' id='TBL-7-3-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>3 </span></td><td class='td11' id='TBL-7-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Default Gateway </span></td><td class='td11' id='TBL-7-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Router address</span></td>
+</tr><tr id='TBL-7-4-'><td class='td11' id='TBL-7-4-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>6       </span></td><td class='td11' id='TBL-7-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>DNS Servers       </span></td><td class='td11' id='TBL-7-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Name resolution       </span></td>
+</tr><tr id='TBL-7-5-'><td class='td11' id='TBL-7-5-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>15      </span></td><td class='td11' id='TBL-7-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Domain Name     </span></td><td class='td11' id='TBL-7-5-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>DNS suffix              </span></td>
+</tr><tr id='TBL-7-6-'><td class='td11' id='TBL-7-6-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>51      </span></td><td class='td11' id='TBL-7-6-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Lease Time         </span></td><td class='td11' id='TBL-7-6-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Duration in seconds  </span></td>
+</tr><tr id='TBL-7-7-'><td class='td11' id='TBL-7-7-1' style='white-space:nowrap; text-align:center;'>    <span class='ec-lmr-10'>66      </span></td><td class='td11' id='TBL-7-7-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>TFTP Server      </span></td><td class='td11' id='TBL-7-7-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Boot server             </span></td>
+</tr><tr id='TBL-7-8-'><td class='td11' id='TBL-7-8-1' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-10'>150     </span></td><td class='td11' id='TBL-7-8-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>VoIP Server        </span></td><td class='td11' id='TBL-7-8-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Phone config           </span></td>
+
+</tr></table>                                                                     </div>
+<!-- l. 890 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Vendor Options</span>
+</p><!-- l. 890 --><p class='noindent'><span class='ec-lmr-10'>Options 43 and 60 allow vendor-specific settings for specialized devices.</span>
+</p><!-- l. 896 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>How Options Work</span>
+</p><!-- l. 896 --><p class='noindent'><span class='ec-lmr-10'>DHCP options are sent with the Offer and Acknowledge messages.</span>
+</p><!-- l. 901 --><p class='noindent'><span class='ec-lmr-10'>Client receives:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>IP: 192.168.1.100</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Mask: 255.255.255.0</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Gateway: 192.168.1.1</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>DNS: 8.8.8.8</span></li></ul>
+<!-- l. 911 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>NTP Option</span>
+</p><!-- l. 911 --><p class='noindent'><span class='ec-lmr-10'>Option 42 provides time servers—critical for authentication!</span>
+<a id='x1-23001r19'></a>
+</p>
+<!-- l. 923 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-reservations-and-exclusions'><a id='x1-24000'></a>DHCP Reservations and Exclusions</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 923 --><p class='noindent'>
+</p><!-- l. 925 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Reservations</span>
+</p><!-- l. 925 --><p class='noindent'><span class='ec-lmr-10'>A </span><span class='ec-lmbx-10'>reservation </span><span class='ec-lmr-10'>binds a specific IP to a MAC address. The device always gets the same
+IP.</span>
+</p><!-- l. 930 --><p class='noindent'><span class='ec-lmbx-10'>Use for:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Servers</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Network printers</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Security cameras</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>VoIP phones</span></li></ul>
+<!-- l. 940 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Reservation Example</span>
+</p><!-- l. 940 --><p class='noindent'><span class='ec-lmr-10'>MAC: </span><span class='ec-lmtt-10'>AA:BB:CC:11:22:33 </span><span class='ec-lmr-10'>Reserved IP: </span><span class='ec-lmtt-10'>192.168.1.50</span>
+</p><!-- l. 947 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Exclusions</span>
+</p><!-- l. 947 --><p class='noindent'><span class='ec-lmr-10'>An </span><span class='ec-lmbx-10'>exclusion </span><span class='ec-lmr-10'>removes addresses from the DHCP pool. These IPs will never be
+assigned.</span>
+</p><!-- l. 952 --><p class='noindent'><span class='ec-lmbx-10'>Use for:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Statically configured devices</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Router interfaces</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Addresses already in use</span></li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 961 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Difference</span>
+</p><!-- l. 961 --><p class='noindent'><span class='ec-lmbx-10'>Reservation</span><span class='ec-lmr-10'>: DHCP assigns specific IP to specific MAC.  </span><span class='ec-lmbx-10'>Exclusion</span><span class='ec-lmr-10'>: DHCP never
+touches these IPs.</span>
+<a id='x1-24001r20'></a>
+</p>
+<!-- l. 974 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-relay-and-ip-helper'><a id='x1-25000'></a>DHCP Relay and IP Helper</span>
+ 
+</p><!-- l. 974 --><p class='noindent'>
+</p><!-- l. 976 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Problem</span>
+</p><!-- l. 976 --><p class='noindent'><span class='ec-lmr-10'>DHCP Discover is a </span><span class='ec-lmbx-10'>broadcast</span><span class='ec-lmr-10'>. Broadcasts don’t cross routers! How do remote subnets
+get DHCP?</span>
+</p><!-- l. 982 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Solution</span>
+</p><!-- l. 982 --><p class='noindent'><span class='ec-lmbx-10'>DHCP Relay </span><span class='ec-lmr-10'>(IP Helper) forwards DHCP broadcasts to a remote server as
+unicast.</span>
+</p><!-- l. 987 --><p class='noindent'><span class='ec-lmtt-10'>ip helper-address 10.0.0.5</span>
+</p><!-- l. 991 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Configure On</span>
+</p><!-- l. 991 --><p class='noindent'><span class='ec-lmr-10'>The router interface facing the clients (not the server).</span>
+</p>
+<div class='center'>
+<!-- l. 997 --><p class='noindent'>
+</p><!-- l. 1037 --><p class='noindent'>  <img alt=' Relay
+S19��xRS10xDBUcoub2eub.Hronnn.1lan0.Caicvee6ye0.Pdcasrt8.t0/atts A1. B2st04/24 ' src='network_06_nw_services_article_tmp8x.svg' />
+</p><!-- l. 1037 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+                                                                     
+
+                                                                     
+</p>
+</div>
+<!-- l. 1041 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Result</span>
+</p><!-- l. 1041 --><p class='noindent'><span class='ec-lmr-10'>One DHCP server can serve multiple subnets through relay agents.</span>
+<a id='x1-25001r21'></a>
+</p>
+<!-- l. 1053 --><p class='noindent'><span class='likeparagraphHead' id='case-study-batgirl-alfred'><a id='x1-26000'></a>Case Study: Batgirl &amp; Alfred</span>
+ 
+</p><!-- l. 1053 --><p class='noindent'>
+</p><!-- l. 1053 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: The Wayne Manor Network Problem</span><br class='newline' /> <span class='ec-lmri-10'>Batgirl installed new training equipment in the Wayne Manor gym (</span><span class='ec-lmbxi-10'>VLAN 30</span><span class='ec-lmri-10'>). All
+devices are getting </span><span class='ec-lmtti-10'>169.254.x.x </span><span class='ec-lmri-10'>addresses! The DHCP server is on </span><span class='ec-lmbxi-10'>VLAN 10 </span><span class='ec-lmri-10'>and
+works fine there.</span>
+</p>
+<div class='center'>
+<!-- l. 1059 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-8'><colgroup id='TBL-8-1g'><col id='TBL-8-1' /><col id='TBL-8-2' /><col id='TBL-8-3' /></colgroup><tr id='TBL-8-1-'><td class='td11' id='TBL-8-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>VLAN   </span></td><td class='td11' id='TBL-8-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Subnet           </span></td><td class='td11' id='TBL-8-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Purpose                    </span></td>
+</tr><tr id='TBL-8-2-'><td class='td11' id='TBL-8-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>VLAN 10  </span></td><td class='td11' id='TBL-8-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.10.0/24  </span></td><td class='td11' id='TBL-8-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Main house (DHCP here)  </span></td>
+</tr><tr id='TBL-8-3-'><td class='td11' id='TBL-8-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>VLAN 30  </span></td><td class='td11' id='TBL-8-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.30.0/24  </span></td><td class='td11' id='TBL-8-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Gym (problem devices)     </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 1071 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1071 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1074 --><p class='noindent'><span class='ec-lmr-10'>What does the 169.254.x.x address indicate?</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1075 --><p class='noindent'><span class='ec-lmr-10'>Why can’t devices on VLAN 30 reach the DHCP server?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1076 --><p class='noindent'><span class='ec-lmr-10'>What solution would fix this problem?</span></p></dd></dl>
+<p><a id='x1-26004r22'></a>
+<!-- l. 1085 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-batgirl-alfred'><a id='x1-27000'></a>Case Study Solution: Batgirl &amp; Alfred</span>
+ 
+</p><!-- l. 1085 --><p class='noindent'>
+</p><!-- l. 1085 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: The Wayne Manor Network Problem</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1088 --><p class='noindent'><span class='ec-lmbxi-10'>169.254.x.x </span><span class='ec-lmri-10'>= APIPA address. DHCP failed, device assigned link-local IP.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1089 --><p class='noindent'><span class='ec-lmbxi-10'>DHCP  broadcasts  don’t  cross  VLANs/subnets</span><span class='ec-lmri-10'>.  The  router  blocks
+     them.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1090 --><p class='noindent'><span class='ec-lmri-10'>Configure   </span><span class='ec-lmbxi-10'>DHCP   Relay   </span><span class='ec-lmri-10'>on   VLAN   30’s   router   interface:      </span><span class='ec-lmtti-10'>ip
+     helper-address 192.168.10.5</span></p></dd></dl>
+<div class='center'>
+<!-- l. 1095 --><p class='noindent'>
+</p><!-- l. 1120 --><p class='noindent'>      <img alt='�GVxipxDVBUIPymLA hHLAroniANeCNadcasElpPcssq3eS1atigui0rer0stnp- avedmder!endtress ' src='network_06_nw_services_article_tmp9x.svg' />
+                                                                     
+
+                                                                     
+</p><!-- l. 1120 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1123 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+</p><!-- l. 1123 --><p class='noindent'><span class='ec-lmr-10'>“Even the Bat-family needs proper network configuration, Miss Barbara.” — Alfred.
+DHCP relay enables centralized DHCP across multiple subnets.</span>
+<a id='x1-27004r23'></a>
+</p>
+<!-- l. 1134 --><p class='noindent'><span class='likeparagraphHead' id='apipa-automatic-private-ip-addressing'><a id='x1-28000'></a>APIPA: Automatic Private IP Addressing</span>
+ 
+</p><!-- l. 1134 --><p class='noindent'>
+</p><!-- l. 1136 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is APIPA?</span>
+</p><!-- l. 1136 --><p class='noindent'><span class='ec-lmr-10'>When DHCP fails, devices assign themselves an IP from the </span><span class='ec-lmbx-10'>169.254.0.0/16
+</span><span class='ec-lmr-10'>range.</span>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Automatic fallback mechanism</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Link-local addresses only</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>No gateway, no DNS</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Can only talk to local subnet</span></li></ul>
+<!-- l. 1150 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Symptom Alert</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1150 --><p class='noindent'><span class='ec-lmr-10'>If you see </span><span class='ec-lmtt-10'>169.254.x.x</span><span class='ec-lmr-10'>, DHCP is broken! Check server, network path, or relay.</span>
+</p>
+<div class='center'>
+<!-- l. 1156 --><p class='noindent'>
+</p><!-- l. 1177 --><p class='noindent'>      <img alt='Self-assign
+�CDxN1liHoA6enCrP9tPesI.pPA2Do5isns4coe.vxer.x ' src='network_06_nw_services_article_tmp10x.svg' />
+</p><!-- l. 1177 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1181 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Limited Connectivity</span>
+</p><!-- l. 1181 --><p class='noindent'><span class='ec-lmr-10'>APIPA devices can communicate with each other but cannot reach the internet or other
+subnets.</span>
+<a id='x1-28001r24'></a>
+</p>
+<!-- l. 1193 --><p class='noindent'><span class='likeparagraphHead' id='dhcp-troubleshooting'><a id='x1-29000'></a>DHCP Troubleshooting</span>
+ 
+</p><!-- l. 1193 --><p class='noindent'>
+</p><!-- l. 1195 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common DHCP Issues</span>
+</p><!-- l. 1195 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Server down</span><span class='ec-lmr-10'>: Service stopped</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Scope exhausted</span><span class='ec-lmr-10'>: No IPs left</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Wrong VLAN</span><span class='ec-lmr-10'>: Client isolated</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Firewall blocking</span><span class='ec-lmr-10'>: Ports 67/68</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Rogue DHCP</span><span class='ec-lmr-10'>: Unauthorized server</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Relay missing</span><span class='ec-lmr-10'>: Cross-subnet issue</span></li></ul>
+<!-- l. 1208 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Rogue DHCP</span>
+</p><!-- l. 1208 --><p class='noindent'><span class='ec-lmr-10'>Unauthorized DHCP servers can give wrong IPs, gateways, or DNS—security
+risk!</span>
+</p><!-- l. 1214 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Troubleshooting Commands</span>
+</p><!-- l. 1214 --><p class='noindent'><span class='ec-lmbx-8'>Windows:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmtt-8'>ipconfig /release</span>
+     </li>
+     <li class='itemize'><span class='ec-lmtt-8'>ipconfig /renew</span>
+     </li>
+     <li class='itemize'><span class='ec-lmtt-8'>ipconfig /all</span></li></ul>
+<!-- l. 1225 --><p class='noindent'><span class='ec-lmbx-8'>Linux:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmtt-8'>dhclient -r </span><span class='ec-lmr-8'>(release)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmtt-8'>dhclient </span><span class='ec-lmr-8'>(renew)</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmtt-8'>ip addr show</span></li></ul>
+<!-- l. 1234 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Quick Check</span>
+</p><!-- l. 1234 --><p class='noindent'><span class='ec-lmr-10'>Got 169.254.x.x? </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>DHCP failed  Got 0.0.0.0? </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>No address assigned</span>
+</p><!-- l. 1246 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='ipv-address-assignment'><span class='titlemark'>3   </span> <a id='x1-300003'></a>IPv6 Address Assignment</h3>
+<!-- l. 1247 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='slaac-and-dhcpv'><span class='titlemark'>3.1   </span> <a id='x1-310003.1'></a>SLAAC and DHCPv6</h4>
+<!-- l. 1251 --><p class='noindent'>IPv6 hosts can self-configure through router advertisements or use DHCPv6
+depending on deployment requirements and policy.
+<a id='x1-31001r25'></a>
+</p>
+<!-- l. 1254 --><p class='noindent'><span class='likeparagraphHead' id='ipv-slaac-stateless-address-autoconfiguration'><a id='x1-32000'></a>IPv6 SLAAC: Stateless Address Autoconfiguration</span>
+ 
+</p><!-- l. 1254 --><p class='noindent'>
+</p><!-- l. 1256 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is SLAAC?</span>
+</p><!-- l. 1256 --><p class='noindent'><span class='ec-lmbx-10'>SLAAC </span><span class='ec-lmr-10'>lets IPv6 hosts configure themselves </span><span class='ec-lmbx-10'>without a DHCP server</span><span class='ec-lmr-10'>.</span>
+</p><!-- l. 1261 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1262 --><p class='noindent'><span class='ec-lmr-10'>Router sends </span><span class='ec-lmbx-10'>prefix </span><span class='ec-lmr-10'>(RA)</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1263 --><p class='noindent'><span class='ec-lmr-10'>Host generates </span><span class='ec-lmbx-10'>interface ID</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1264 --><p class='noindent'><span class='ec-lmr-10'>Combines: prefix + interface ID</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>4.</span> </dt><dd class='enumerate'>
+     <!-- l. 1265 --><p class='noindent'><span class='ec-lmr-10'>Result: Full IPv6 address</span></p></dd></dl>
+<!-- l. 1270 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>EUI-64</span>
+</p><!-- l. 1270 --><p class='noindent'><span class='ec-lmr-10'>Interface ID created from MAC address:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Insert </span><span class='ec-lmtt-10'>FF:FE </span><span class='ec-lmr-10'>in middle</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Flip 7th bit</span></li></ul>
+<div class='center'>
+<!-- l. 1280 --><p class='noindent'>
+</p><!-- l. 1304 --><p class='noindent'>   <img alt='  Router
+xRAP�H20PEoudvreos01reUtefit:fiI-errtx:dbx64is 28:em0:e01a1n:dbtb2:8c3::f/6f:4fe45:6789 ' src='network_06_nw_services_article_tmp11x.svg' />
+</p><!-- l. 1304 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1308 --><p class='noindent'><span class='ec-lmri-10x-x-109'>No Server Needed</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1308 --><p class='noindent'><span class='ec-lmr-10'>SLAAC is truly stateless—router just advertises prefix, host does the rest!</span>
+<a id='x1-32005r26'></a>
+</p>
+<!-- l. 1320 --><p class='noindent'><span class='likeparagraphHead' id='dhcpv-ipv-address-assignment'><a id='x1-33000'></a>DHCPv6: IPv6 Address Assignment</span>
+ 
+</p><!-- l. 1320 --><p class='noindent'>
+</p><!-- l. 1322 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>DHCPv6 Modes</span>
+</p><!-- l. 1322 --><p class='noindent'><span class='ec-lmbx-10'>Stateful DHCPv6:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Server assigns full address</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Tracks leases like DHCPv4</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Full control over addressing</span></li></ul>
+<!-- l. 1332 --><p class='noindent'><span class='ec-lmbx-10'>Stateless DHCPv6:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>SLAAC provides address</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>DHCPv6 provides options only</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>DNS, NTP, domain name</span></li></ul>
+<!-- l. 1341 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Router Advertisement Flags</span>
+</p><!-- l. 1341 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-9'><colgroup id='TBL-9-1g'><col id='TBL-9-1' /><col id='TBL-9-2' /></colgroup><tr id='TBL-9-1-'><td class='td11' id='TBL-9-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>M flag  </span></td><td class='td11' id='TBL-9-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Managed (use DHCPv6)  </span></td>
+</tr><tr id='TBL-9-2-'><td class='td11' id='TBL-9-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>O flag   </span></td><td class='td11' id='TBL-9-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Other (get options)         </span></td>
+</tr></table>                                                                     </div>
+                                                                     
+
+                                                                     
+<div class='tabular'> <table class='tabular' id='TBL-10'><colgroup id='TBL-10-1g'><col id='TBL-10-1' /><col id='TBL-10-2' /><col id='TBL-10-3' /></colgroup><tr id='TBL-10-1-'><td class='td11' id='TBL-10-1-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-9'>M  </span></td><td class='td11' id='TBL-10-1-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmbx-9'>O  </span></td><td class='td11' id='TBL-10-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-9'>Result                         </span></td></tr><tr class='hline' style='border-top:1px solid #000'><td></td><td></td><td></td></tr><tr id='TBL-10-2-'><td class='td11' id='TBL-10-2-1' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-9'>0 </span></td><td class='td11' id='TBL-10-2-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-9'>0 </span></td><td class='td11' id='TBL-10-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>SLAAC only</span></td>
+</tr><tr id='TBL-10-3-'><td class='td11' id='TBL-10-3-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>0   </span></td><td class='td11' id='TBL-10-3-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>1  </span></td><td class='td11' id='TBL-10-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>SLAAC + DHCPv6 options  </span></td>
+</tr><tr id='TBL-10-4-'><td class='td11' id='TBL-10-4-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>1   </span></td><td class='td11' id='TBL-10-4-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>0  </span></td><td class='td11' id='TBL-10-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Stateful DHCPv6                </span></td>
+</tr><tr id='TBL-10-5-'><td class='td11' id='TBL-10-5-1' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>1   </span></td><td class='td11' id='TBL-10-5-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-9'>1  </span></td><td class='td11' id='TBL-10-5-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-9'>Stateful + options               </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 1361 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Difference</span>
+</p><!-- l. 1361 --><p class='noindent'><span class='ec-lmr-10'>DHCPv4 uses broadcast; DHCPv6 uses multicast (ff02::1:2).</span>
+</p><!-- l. 1372 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='dns-resolution-services'><span class='titlemark'>4   </span> <a id='x1-340004'></a>DNS Resolution Services</h3>
+<!-- l. 1373 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='hierarchy-records-and-operations'><span class='titlemark'>4.1   </span> <a id='x1-350004.1'></a>Hierarchy, Records, and Operations</h4>
+<!-- l. 1377 --><p class='noindent'>This section covers DNS hierarchy, record types, recursion, and operational
+troubleshooting for name resolution services.
+<a id='x1-35001r27'></a>
+</p>
+<!-- l. 1380 --><p class='noindent'><span class='likeparagraphHead' id='dns-the-internets-phone-book'><a id='x1-36000'></a>DNS: The Internet’s Phone Book</span>
+ 
+</p><!-- l. 1380 --><p class='noindent'>
+</p><!-- l. 1382 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Problem</span>
+</p><!-- l. 1382 --><p class='noindent'><span class='ec-lmr-10'>Humans remember </span><span class='ec-lmbx-10'>names</span><span class='ec-lmr-10'>, computers use </span><span class='ec-lmbx-10'>numbers</span><span class='ec-lmr-10'>.</span>
+</p><!-- l. 1387 --><p class='noindent'><span class='ec-lmr-10'>Which is easier to remember?</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmtt-10'>www.google.com</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmtt-10'>142.250.80.100</span></li></ul>
+<!-- l. 1395 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Solution: DNS</span>
+</p><!-- l. 1395 --><p class='noindent'><span class='ec-lmbx-10'>Domain Name System </span><span class='ec-lmr-10'>translates names to IP addresses (and vice versa).</span>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Uses </span><span class='ec-lmbx-10'>UDP port 53 </span><span class='ec-lmr-10'>(queries)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Uses </span><span class='ec-lmbx-10'>TCP port 53 </span><span class='ec-lmr-10'>(zone transfers)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Hierarchical, distributed database</span></li></ul>
+<div class='center'>
+<!-- l. 1408 --><p class='noindent'>
+</p><!-- l. 1431 --><p class='noindent'>     <img alt='�UgxD1soN4erogS2.lS2ee5.rv0coe.8mr0?.100 ' src='network_06_nw_services_article_tmp12x.svg' />
+</p><!-- l. 1431 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1435 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Critical Service</span>
+</p><!-- l. 1435 --><p class='noindent'><span class='ec-lmr-10'>Without DNS, you’d need to memorize IP addresses for every website!</span>
+<a id='x1-36001r28'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1447 --><p class='noindent'><span class='likeparagraphHead' id='dns-hierarchy'><a id='x1-37000'></a>DNS Hierarchy</span>
+ 
+</p><!-- l. 1447 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 1447 --><p class='noindent'>
+</p><!-- l. 1474 --><p class='noindent'>                          <img alt='..cgowmam.ow.emRTDHoowaarikditoLoomgwilzgipuoDmstleoetsasndinias ' src='network_06_nw_services_article_tmp13x.svg' />
+</p><!-- l. 1474 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1480 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>FQDN Example</span>
+</p><!-- l. 1480 --><p class='noindent'><span class='ec-lmtt-10'>www.google.com. </span><span class='ec-lmr-9'>Host.Domain.TLD.Root</span>
+</p><!-- l. 1488 --><p class='noindent'><span class='ec-lmri-10x-x-109'>13 Root Servers</span>
+</p><!-- l. 1488 --><p class='noindent'><span class='ec-lmr-10'>Named A through M, distributed globally with anycast.</span>
+<a id='x1-37001r29'></a>
+</p>
+<!-- l. 1500 --><p class='noindent'><span class='likeparagraphHead' id='dns-name-resolution-process'><a id='x1-38000'></a>DNS Name Resolution Process</span>
+ 
+</p><!-- l. 1500 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p>
+<div class='center'>
+<!-- l. 1500 --><p class='noindent'>
+</p><!-- l. 1543 --><p class='noindent'>   <img alt='�CxRxRx.xg12345leocooiesomonoltgltveTe.rLcoDm ' src='network_06_nw_services_article_tmp14x.svg' />
+</p><!-- l. 1543 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1549 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Resolution Steps</span>
+</p><!-- l. 1549 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1552 --><p class='noindent'><span class='ec-lmr-9'>Client asks resolver</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1553 --><p class='noindent'><span class='ec-lmr-9'>Resolver asks root </span><span class='lmsy9-'>→ </span><span class='ec-lmr-9'>“Try .com”</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1554 --><p class='noindent'><span class='ec-lmr-9'>Resolver asks .com </span><span class='lmsy9-'>→ </span><span class='ec-lmr-9'>“Try google.com NS”</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>4.</span> </dt><dd class='enumerate'>
+     <!-- l. 1555 --><p class='noindent'><span class='ec-lmr-9'>Resolver asks google.com </span><span class='lmsy9-'>→ </span><span class='ec-lmr-9'>IP!</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>5.</span> </dt><dd class='enumerate'>
+     <!-- l. 1556 --><p class='noindent'><span class='ec-lmr-9'>Resolver returns IP to client</span></p></dd></dl>
+<!-- l. 1561 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Caching</span>
+</p><!-- l. 1561 --><p class='noindent'><span class='ec-lmr-10'>Results cached based on </span><span class='ec-lmbx-10'>TTL </span><span class='ec-lmr-10'>(Time To Live). Reduces repeated lookups!</span>
+<a id='x1-38006r30'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1573 --><p class='noindent'><span class='likeparagraphHead' id='dns-records-a-aaaa-cname'><a id='x1-39000'></a>DNS Records: A, AAAA, CNAME</span>
+ 
+</p><!-- l. 1573 --><p class='noindent'>
+</p><!-- l. 1575 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>A Record (Address)</span>
+</p><!-- l. 1575 --><p class='noindent'><span class='ec-lmr-10'>Maps hostname to </span><span class='ec-lmbx-10'>IPv4 </span><span class='ec-lmr-10'>address.</span>
+</p><!-- l. 1581 --><p class='noindent'><span class='ec-lmtt-9'>www.example.com. IN A 93.184.216.34</span>
+</p><!-- l. 1585 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>AAAA Record (Quad-A)</span>
+</p><!-- l. 1585 --><p class='noindent'><span class='ec-lmr-10'>Maps hostname to </span><span class='ec-lmbx-10'>IPv6 </span><span class='ec-lmr-10'>address.</span>
+</p><!-- l. 1591 --><p class='noindent'><span class='ec-lmtt-9'>www.example.com. IN AAAA 2606:2800:220:1::248</span>
+</p><!-- l. 1595 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Memory Tip</span>
+</p><!-- l. 1595 --><p class='noindent'><span class='ec-lmr-10'>AAAA = 4 A’s = IPv</span><span class='ec-lmbx-10'>4 </span><span class='ec-lmr-10'>Ã— </span><span class='ec-lmbx-10'>4 </span><span class='ec-lmr-10'>= IPv6 (4Ã— longer)</span>
+</p><!-- l. 1601 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>CNAME Record (Alias)</span>
+</p><!-- l. 1601 --><p class='noindent'><span class='ec-lmr-10'>Creates an </span><span class='ec-lmbx-10'>alias </span><span class='ec-lmr-10'>pointing to another name (not an IP).</span>
+</p><!-- l. 1607 --><p class='noindent'><span class='ec-lmtt-9'>mail.example.com. IN CNAME     mailserver.example.com.</span>
+</p><!-- l. 1612 --><p class='noindent'><span class='ec-lmr-10'>Use cases:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Multiple names </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>same server</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>CDN redirects</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Service migrations</span></li></ul>
+<!-- l. 1621 --><p class='noindent'><span class='ec-lmri-10x-x-109'>CNAME Rule</span>
+</p><!-- l. 1621 --><p class='noindent'><span class='ec-lmr-10'>CNAME cannot coexist with other records for the same name.</span>
+<a id='x1-39001r31'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1633 --><p class='noindent'><span class='likeparagraphHead' id='dns-records-mx-srv-txt-ptr'><a id='x1-40000'></a>DNS Records: MX, SRV, TXT, PTR</span>
+ 
+</p><!-- l. 1633 --><p class='noindent'>
+</p><!-- l. 1634 --><p class='noindent'><span class='ec-lmbx-10'>Record Types</span>
+</p><!-- l. 1634 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'>
+ <table class='tabular' id='TBL-11'><colgroup id='TBL-11-1g'><col id='TBL-11-1' /><col id='TBL-11-2' /><col id='TBL-11-3' /></colgroup><tr id='TBL-11-1-'><td class='td11' id='TBL-11-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Type  </span></td><td class='td11' id='TBL-11-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Purpose                      </span></td><td class='td11' id='TBL-11-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Example                                                               </span></td>
+</tr><tr id='TBL-11-2-'><td class='td11' id='TBL-11-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>MX    </span></td><td class='td11' id='TBL-11-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Mail server routing             </span></td><td class='td11' id='TBL-11-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>example.com. MX 10 mail.example.com.                  </span></td>
+</tr><tr id='TBL-11-3-'><td class='td11' id='TBL-11-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>SRV   </span></td><td class='td11' id='TBL-11-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Service location                 </span></td><td class='td11' id='TBL-11-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>_sip._tcp.example.com. SRV 10 5 5060 sip.example.com. </span></td>
+</tr><tr id='TBL-11-4-'><td class='td11' id='TBL-11-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>TXT   </span></td><td class='td11' id='TBL-11-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Text data (SPF, DKIM)      </span></td><td class='td11' id='TBL-11-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>example.com. TXT "v=spf1 include:_spf.google.com"     </span></td>
+</tr><tr id='TBL-11-5-'><td class='td11' id='TBL-11-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>PTR   </span></td><td class='td11' id='TBL-11-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Reverse lookup (IP</span><span class='lmsy-10'>→</span><span class='ec-lmr-10'>name)  </span></td><td class='td11' id='TBL-11-5-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>34.216.184.93.in-addr.arpa. PTR www.example.com.      </span></td>
+
+</tr></table>                                                                                              </div>
+<!-- l. 1650 --><p class='noindent'><span class='ec-lmri-10'>MX Priority</span>
+</p><!-- l. 1650 --><p class='noindent'><span class='ec-lmr-10'>Lower number = higher priority.  MX 10 tried before MX 20.</span>
+</p><!-- l. 1657 --><p class='noindent'><span class='ec-lmbxi-10'>PTR for Email</span>
+</p><!-- l. 1657 --><p class='noindent'><span class='ec-lmr-10'>Many mail servers require valid PTR records to accept email (anti-spam).</span>
+<a id='x1-40001r32'></a>
+</p>
+<!-- l. 1669 --><p class='noindent'><span class='likeparagraphHead' id='dns-server-configuration'><a id='x1-41000'></a>DNS Server Configuration</span>
+ 
+</p><!-- l. 1669 --><p class='noindent'>
+</p><!-- l. 1671 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Zone Types</span>
+</p><!-- l. 1671 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Primary</span><span class='ec-lmr-10'>: Read-write, authoritative</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Secondary</span><span class='ec-lmr-10'>: Read-only copy</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Forward</span><span class='ec-lmr-10'>: Passes queries elsewhere</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Reverse</span><span class='ec-lmr-10'>: IP-to-name lookups</span></li></ul>
+<!-- l. 1682 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Zone Transfers</span>
+</p><!-- l. 1682 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>AXFR</span><span class='ec-lmr-10'>: Full transfer</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>IXFR</span><span class='ec-lmr-10'>: Incremental</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Uses TCP port 53</span></li></ul>
+<!-- l. 1692 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Internal vs External DNS</span>
+</p><!-- l. 1692 --><p class='noindent'><span class='ec-lmbx-10'>Internal</span><span class='ec-lmr-10'>: Resolves private hostnames, not internet-accessible.</span>
+</p><!-- l. 1697 --><p class='noindent'><span class='ec-lmbx-10'>External</span><span class='ec-lmr-10'>: Public records (www, mail) hosted by registrar.</span>
+</p><!-- l. 1701 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Split DNS</span>
+</p><!-- l. 1701 --><p class='noindent'><span class='ec-lmr-10'>Different answers for internal vs external queries—security best practice.</span>
+</p><!-- l. 1707 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Restrict Transfers</span>
+</p><!-- l. 1707 --><p class='noindent'><span class='ec-lmr-10'>Only allow zone transfers to authorized secondary servers!</span>
+<a id='x1-41001r33'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1719 --><p class='noindent'><span class='likeparagraphHead' id='case-study-catwoman-the-riddler'><a id='x1-42000'></a>Case Study: Catwoman &amp; The Riddler</span>
+ 
+</p><!-- l. 1719 --><p class='noindent'>
+</p><!-- l. 1719 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: The Suspicious Bank Website</span><br class='newline' /> <span class='ec-lmri-10'>Catwoman is accessing </span><span class='ec-lmtti-10'>gotham-bank.com </span><span class='ec-lmri-10'>but the site looks off and asks for extra info.
+She runs </span><span class='ec-lmtti-10'>nslookup</span><span class='ec-lmri-10'>:</span>
+</p>
+<div class='tabular'> <table class='tabular' id='TBL-12'><colgroup id='TBL-12-1g'><col id='TBL-12-1' /><col id='TBL-12-2' /></colgroup><tr id='TBL-12-1-'><td class='td11' id='TBL-12-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtti-10x-x-90'>Name:   </span></td><td class='td11' id='TBL-12-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtti-10x-x-90'>gotham-bank.com </span></td>
+</tr><tr id='TBL-12-2-'><td class='td11' id='TBL-12-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtti-10x-x-90'>Address: </span></td><td class='td11' id='TBL-12-2-2' style='white-space:nowrap; text-align:left;'> <span id='textcolor7'><span class='ec-lmtti-10x-x-90'>10.66.6.66</span></span>      </td>
+</tr></table>                                                                     </div>
+<!-- l. 1732 --><p class='noindent'><span class='ec-lmr-10'>The real bank IP should be </span><span class='ec-lmtt-10'>203.0.113.50</span><span class='ec-lmr-10'>. She suspects The Riddler.</span>
+</p><!-- l. 1735 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1735 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1738 --><p class='noindent'><span class='ec-lmr-10'>What type of attack is this?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1739 --><p class='noindent'><span class='ec-lmr-10'>How could Riddler have accomplished this?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1740 --><p class='noindent'><span class='ec-lmr-10'>How can Catwoman fix and prevent this?</span></p></dd></dl>
+<p><a id='x1-42004r34'></a>
+<!-- l. 1749 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-catwoman-the-riddler'><a id='x1-43000'></a>Case Study Solution: Catwoman &amp; The Riddler</span>
+ 
+</p><!-- l. 1749 --><p class='noindent'>
+</p><!-- l. 1749 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: The Suspicious Bank Website</span><br class='newline' />
+                                                                     
+
+                                                                     
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1752 --><p class='noindent'><span class='ec-lmbxi-10'>DNS Cache Poisoning </span><span class='ec-lmri-10'>(or DNS Spoofing)—fake DNS records redirect to
+     malicious site.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1753 --><p class='noindent'><span class='ec-lmri-10'>Riddler could have: poisoned her local DNS cache, compromised the router’s
+     DNS, or set up a rogue DNS server.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1754 --><p class='noindent'><span class='ec-lmbxi-10'>Fix</span><span class='ec-lmri-10'>:  Flush  DNS  cache,  verify  DNS  server  settings,  use  secure  DNS
+     (DoH/DoT), check with external DNS (8.8.8.8).</span></p></dd></dl>
+<!-- l. 1761 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Flush DNS Cache</span>
+</p><!-- l. 1761 --><p class='noindent'><span class='ec-lmtt-10'>Windows: ipconfig /flushdns  Linux: systemd-resolve –flush-caches  Mac:
+sudo dscacheutil -flushcache</span>
+</p><!-- l. 1769 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Verify with External DNS</span>
+</p><!-- l. 1769 --><p class='noindent'><span class='ec-lmtt-10'>nslookup gotham-bank.com 8.8.8.8</span>
+</p><!-- l. 1777 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+</p><!-- l. 1777 --><p class='noindent'><span class='ec-lmr-10'>“Curiosity and caution, darling.” Always verify suspicious websites. DNS attacks can
+redirect you to convincing fakes!</span>
+<a id='x1-43004r35'></a>
+</p>
+<!-- l. 1787 --><p class='noindent'><span class='likeparagraphHead' id='dns-troubleshooting-tools'><a id='x1-44000'></a>DNS Troubleshooting Tools</span>
+ 
+</p><!-- l. 1787 --><p class='noindent'>
+</p><!-- l. 1789 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>nslookup</span>
+</p><!-- l. 1789 --><p class='noindent'><span class='ec-lmr-10'>Basic DNS query tool (Windows/Linux/Mac).</span>
+</p><!-- l. 1795 --><p class='noindent'><span class='ec-lmtt-9'>nslookup google.com  nslookup -type=MX google.com  nslookup google.com
+8.8.8.8</span>
+                                                                     
+
+                                                                     
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Simple, quick lookups</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Specify record type</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Query specific server</span></li></ul>
+<!-- l. 1809 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>dig (Domain Information Groper)</span>
+</p><!-- l. 1809 --><p class='noindent'><span class='ec-lmr-10'>Advanced DNS tool (Linux/Mac).</span>
+</p><!-- l. 1815 --><p class='noindent'><span class='ec-lmtt-9'>dig google.com  dig google.com MX  dig +trace google.com</span>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Detailed output</span>
+     </li>
+     <li class='itemize'><span class='ec-lmtt-10'>+trace</span><span class='ec-lmr-10'>: Show full resolution path</span>
+     </li>
+     <li class='itemize'><span class='ec-lmtt-10'>+short</span><span class='ec-lmr-10'>: Minimal output</span></li></ul>
+<!-- l. 1831 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Troubleshooting Steps</span>
+</p><!-- l. 1831 --><p class='noindent'><span class='ec-lmr-10'>1. Check local DNS settings (</span><span class='ec-lmtt-10'>ipconfig /all</span><span class='ec-lmr-10'>) </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>2. Query local resolver </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>3. Query
+external DNS (8.8.8.8) </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>4. Compare results</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1843 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='module-summary'><a id='x1-45000'></a>Module Summary</h3>
+<p><a id='x1-45001r36'></a>
+<!-- l. 1846 --></p><p class='noindent'><span class='likeparagraphHead' id='module-summary1'><a id='x1-46000'></a>Module 6.0 Summary</span>
+ 
+</p><!-- l. 1846 --><p class='noindent'>
+</p><!-- l. 1847 --><p class='noindent'><span class='ec-lmbx-10'>Key Concepts:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>TCP </span><span class='ec-lmr-10'>(Transmission Control Protocol): Reliable, connection-oriented, with
+     error checking and retransmission. Use for data integrity.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>UDP  </span><span class='ec-lmr-10'>(User   Datagram   Protocol):   Fast,   connectionless,   no   delivery
+     guarantees. Use for real-time applications (VoIP, streaming).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Ports  </span><span class='ec-lmr-10'>identify   services   (0–65535):   Well-known   (0–1023),   Registered
+     (1024–49151), Dynamic (49152–65535).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Socket </span><span class='ec-lmr-10'>= IP address + port number. Use </span><span class='ec-lmbx-10'>netstat </span><span class='ec-lmr-10'>to view active connections.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DHCP </span><span class='ec-lmr-10'>automates IP configuration via </span><span class='ec-lmbx-10'>DORA</span><span class='ec-lmr-10'>: Discover, Offer, Request,
+     Acknowledge.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DHCP   scope</span><span class='ec-lmr-10'>:   Range   of   assignable   IPs.   </span><span class='ec-lmbx-10'>Reservation</span><span class='ec-lmr-10'>:   permanent
+     assignment for specific MAC. </span><span class='ec-lmbx-10'>Options</span><span class='ec-lmr-10'>: gateway, DNS servers, lease time.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DHCP  relay  agent  </span><span class='ec-lmr-10'>forwards  DHCP  messages  across  subnets  (uses
+     broadcast-to-unicast conversion).</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>APIPA  </span><span class='ec-lmr-10'>(169.254.x.x/16):  Automatic  fallback  when  DHCP  unavailable
+     (link-local only, no routing).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>IPv6 </span><span class='ec-lmbx-10'>SLAAC </span><span class='ec-lmr-10'>(Stateless): Auto-config using Router Advertisement (RA) +
+     </span><span class='ec-lmbx-10'>EUI-64 </span><span class='ec-lmr-10'>(MAC-derived host portion).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DHCPv6</span><span class='ec-lmr-10'>: Stateful (assigns addresses) or stateless (provides options only).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DNS </span><span class='ec-lmr-10'>resolves names to IPs. Hierarchy: Root, TLD (Top-Level Domain),
+     Domain, Host.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>DNS records: </span><span class='ec-lmbx-10'>A </span><span class='ec-lmr-10'>(IPv4), </span><span class='ec-lmbx-10'>AAAA </span><span class='ec-lmr-10'>(IPv6), </span><span class='ec-lmbx-10'>CNAME </span><span class='ec-lmr-10'>(alias), </span><span class='ec-lmbx-10'>MX </span><span class='ec-lmr-10'>(mail server),
+     </span><span class='ec-lmbx-10'>PTR </span><span class='ec-lmr-10'>(reverse lookup).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Troubleshooting  tools:  </span><span class='ec-lmbx-10'>nslookup </span><span class='ec-lmr-10'>(basic  queries),  </span><span class='ec-lmbx-10'>dig </span><span class='ec-lmr-10'>(detailed  analysis).
+     Check cache poisoning, TTL issues, zone transfers.</span></li></ul>
+<!-- l. 1868 --><p class='noindent'>
+</p>
+<h4 class='likesubsectionHead' id='conclusion'><a id='x1-47000'></a>Conclusion</h4>
+<!-- l. 1868 --><p class='noindent'>This module covered essential network services: TCP/UDP transport
+protocols, DHCP for IPv4/IPv6 address assignment, and DNS for name
+resolution. You learned how these services work together to automate
+host configuration and enable user-friendly domain names. In the next
+module, we’ll explore application-layer services including HTTP, email, and
+VoIP.
+</p>
+ 
+</body> 
+</html>

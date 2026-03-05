@@ -1,0 +1,1194 @@
+﻿<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title></title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='network_05_routing_article_tmp.css' rel='stylesheet' type='text/css' /> 
+<meta content='network_05_routing_article_tmp.tex' name='src' /> 
+<link href='../articles.css' rel='stylesheet' type='text/css' />
+</head><body>
+<p><a id='x1-2r1'></a>
+</p><div class='center'>
+<!-- l. 38 --><p class='noindent'>
+</p><!-- l. 78 --><p class='noindent'>   <img alt='xSoxxRxInxRxxDPauouteouescrctrttikeeerneernatttJioounrney ' src='network_05_routing_article_tmp0x.svg' />
+</p><!-- l. 78 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<h3 class='likesectionHead' id='review-from-module-'><a id='x1-1000'></a>Review from Module 4</h3>
+<p><a id='x1-1001r2'></a>
+<!-- l. 97 --></p><p class='noindent'><span class='likeparagraphHead' id='review-from-ip-addressing-to-routing'><a id='x1-2000'></a>Review: From IP Addressing to Routing</span>
+ 
+</p><!-- l. 97 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Module   4   covered   <span class='ec-lmbx-10x-x-109'>IP   addresses  </span>and   <span class='ec-lmbx-10x-x-109'>subnetting  </span>(Layer   3
+     addressing).
+     </li>
+     <li class='itemize'>Today’s question: How does data actually <span class='ec-lmri-10x-x-109'>get </span>to its destination?
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>IP addresses tell us <span class='ec-lmbx-10x-x-109'>where </span>to go, but <span class='ec-lmbx-10x-x-109'>routing </span>tells us <span class='ec-lmbx-10x-x-109'>how </span>to get
+     there.
+     </li>
+     <li class='itemize'>Routers make decisions about the best path for each packet.</li></ul>
+<!-- l. 107 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The Journey Ahead</span>
+</p><!-- l. 107 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Module 4</span>: Addressing (naming the destination)  <span class='ec-lmbx-10x-x-109'>Module 5</span>: Routing (finding
+the path there)
+</p>
+<div class='center'>
+<!-- l. 113 --><p class='noindent'>
+</p><!-- l. 130 --><p class='noindent'>        <img alt='Routing
+7654321TD.......oe A P S T D PdciprerNahasipesaetyyonlssntas!sieioswicnnpoLcatoriatarknliotitknon ' src='network_05_routing_article_tmp1x.svg' />
+</p><!-- l. 130 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-2001r3'></a>
+<!-- l. 140 --></p><p class='noindent'><span class='likeparagraphHead' id='module-overview-and-learning-outcomes'><a id='x1-3000'></a>Module Overview and Learning Outcomes</span>
+ 
+</p><!-- l. 140 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 142 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Topics Covered</span>
+</p><!-- l. 142 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 144 --><p class='noindent'>Routing Technologies and Tables
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 145 --><p class='noindent'>Dynamic Routing Protocols
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 146 --><p class='noindent'>Network Address Translation (NAT)
+     </p></dd><dt class='enumerate'>
+   4. </dt><dd class='enumerate'>
+     <!-- l. 147 --><p class='noindent'>Firewalls and Security
+     </p></dd><dt class='enumerate'>
+   5. </dt><dd class='enumerate'>
+     <!-- l. 148 --><p class='noindent'>Enterprise Network Topologies
+     </p></dd><dt class='enumerate'>
+   6. </dt><dd class='enumerate'>
+     <!-- l. 149 --><p class='noindent'>Virtual LANs (VLANs)</p></dd></dl>
+<!-- l. 154 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Learning Outcomes</span>
+</p><!-- l. 154 --><p class='noindent'>After this module, you will be able to: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Explain how routers forward packets using routing tables
+     </li>
+     <li class='itemize'>Compare static vs. dynamic routing protocols
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Describe NAT and PAT operation
+     </li>
+     <li class='itemize'>Identify firewall types and proper placement
+     </li>
+     <li class='itemize'>Design networks using three-tier hierarchy
+     </li>
+     <li class='itemize'>Configure and troubleshoot VLANs</li></ul>
+<!-- l. 174 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='routing-foundations'><span class='titlemark'>1   </span> <a id='x1-40001'></a>Routing Foundations</h3>
+<!-- l. 175 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='routers-and-path-selection'><span class='titlemark'>1.1   </span> <a id='x1-50001.1'></a>Routers and Path Selection</h4>
+<!-- l. 179 --><p class='noindent'>This section introduces router roles, routing tables, and packet forwarding
+behavior across network boundaries.
+<a id='x1-5001r4'></a>
+</p>
+<!-- l. 182 --><p class='noindent'><span class='likeparagraphHead' id='the-router-gateway-between-networks'><a id='x1-6000'></a>The Router: Gateway Between Networks</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 182 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Routers </span>connect different networks at Layer 3.
+     </li>
+     <li class='itemize'>Each router interface has its own IP address on a <span class='ec-lmbx-10x-x-109'>different subnet</span>.
+     </li>
+     <li class='itemize'>Routers make <span class='ec-lmbx-10x-x-109'>forwarding decisions </span>based on the destination IP
+     address.
+     </li>
+     <li class='itemize'>Every packet passing through decrements its <span class='ec-lmbx-10x-x-109'>TTL </span>by 1.</li></ul>
+<!-- l. 192 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Difference from Switches</span>
+</p><!-- l. 192 --><p class='noindent'><span class='ec-lmbx-10'>Switches</span><span class='ec-lmr-10'>: MAC addresses (Layer 2)  </span><span class='ec-lmbx-10'>Routers</span><span class='ec-lmr-10'>: IP addresses (Layer 3)</span>
+</p>
+<div class='center'>
+<!-- l. 199 --><p class='noindent'>
+</p><!-- l. 235 --><p class='noindent'> <img alt='xRN1xxN1xx..xIoe9e011nutw2.tw.0teto16o.0rner8r.erk.1k0/tA.0B24/24 ' src='network_05_routing_article_tmp2x.svg' />
+</p><!-- l. 235 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+                                                                     
+
+                                                                     
+</p>
+</div>
+<p><a id='x1-6001r5'></a>
+<!-- l. 245 --></p><p class='noindent'><span class='likeparagraphHead' id='routing-tables-and-path-selection'><a id='x1-7000'></a>Routing Tables and Path Selection</span>
+ 
+</p><!-- l. 245 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Every router maintains a <span class='ec-lmbx-10x-x-109'>routing table </span>listing known networks.
+     </li>
+     <li class='itemize'>
+     <!-- l. 249 --><p class='noindent'>Key components of each entry: </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmbx-10x-x-109'>Destination network </span>and prefix/mask
+          </li>
+          <li class='itemize'><span class='ec-lmbx-10x-x-109'>Next hop </span>(next router’s IP) OR exit interface
+          </li>
+          <li class='itemize'><span class='ec-lmbx-10x-x-109'>Metric </span>(cost to reach destination)</li></ul>
+     </li>
+     <li class='itemize'>Router uses <span class='ec-lmbx-10x-x-109'>longest prefix match </span>to find best route.</li></ul>
+<!-- l. 259 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Longest Prefix Match</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 259 --><p class='noindent'>If a packet for <span class='ec-lmtt-10x-x-109'>192.168.1.50 </span>matches both <span class='ec-lmtt-10x-x-109'>192.168.0.0/16 </span>and <span class='ec-lmtt-10x-x-109'>192.168.1.0/24</span>,
+the <span class='ec-lmbx-10x-x-109'>/24 wins </span>because it’s more specific.
+</p>
+<div class='center'>
+<!-- l. 264 --><p class='noindent'>
+</p><!-- l. 298 --><p class='noindent'>          <img alt='Longest
+prefix
+PRSFFwaeeainoincardrws!kdcaet DhBreedAsRsrtottriu Moivnta NeaintestgcxiohtnTaHIPbolpe ' src='network_05_routing_article_tmp3x.svg' />
+</p><!-- l. 298 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-7001r6'></a>
+<!-- l. 308 --></p><p class='noindent'><span class='likeparagraphHead' id='static-and-default-routes'><a id='x1-8000'></a>Static and Default Routes</span>
+ 
+</p><!-- l. 308 --><p class='noindent'>
+</p><!-- l. 310 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Static Routes</span>
+</p><!-- l. 310 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Manually configured </span><span class='ec-lmr-10'>by administrator</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Don’t change unless admin modifies</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Good for: small networks, specific paths</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Downside: won’t adapt to failures</span></li></ul>
+<!-- l. 321 --><p class='noindent'><span class='ec-lmtt-9'>ip route 10.0.0.0 255.0.0.0 192.168.1.1</span>
+</p><!-- l. 325 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>When to Use Static</span>
+</p><!-- l. 325 --><p class='noindent'><span class='ec-lmr-10'>Small networks, stub networks (one exit), or when you need security control over
+paths.</span>
+</p><!-- l. 331 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Default Route</span>
+</p><!-- l. 331 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>The “</span><span class='ec-lmbx-10'>route of last resort</span><span class='ec-lmr-10'>”</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Used when </span><span class='ec-lmbx-10'>no specific match </span><span class='ec-lmr-10'>found</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Points to gateway for “everything else”</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Written as </span><span class='ec-lmtt-10'>0.0.0.0/0</span></li></ul>
+<!-- l. 342 --><p class='noindent'><span class='ec-lmtt-9'>ip route 0.0.0.0 0.0.0.0 203.0.113.1</span>
+</p><!-- l. 346 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Analogy</span>
+</p><!-- l. 346 --><p class='noindent'><span class='ec-lmbx-10'>Static</span><span class='ec-lmr-10'>: “Take Highway 10 to Grandma’s.”  </span><span class='ec-lmbx-10'>Default</span><span class='ec-lmr-10'>: “For anywhere else, head to the
+main highway.”</span>
+<a id='x1-8001r7'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 359 --><p class='noindent'><span class='likeparagraphHead' id='routing-table-example'><a id='x1-9000'></a>Routing Table Example</span>
+ 
+</p><!-- l. 359 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 359 --><p class='noindent'>
+</p><!-- l. 440 --><p class='noindent'>                         <img alt='SNMNMT1/G0D1/G0D1/11S0/11DDSDxTx1x1x1x1xInaeaeey92ii02ii710t.009eirtaeh920.0.72tmtsxtp24gre.04gre26.0at.2fectifais.10.0..1erpwktre.10c.00c.1.0i0..1autcul R60.0.6nloi6/0t./1t6.c06llyRto8.02.0eterHc80.028tCoRu1/2.0ko.1..1outot.04/p.0.neute/216R025ner4o4ecutetding   Table ' src='network_05_routing_article_tmp4x.svg' />
+</p><!-- l. 440 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 444 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Reading the Table</span>
+</p><!-- l. 444 --><p class='noindent'><span class='ec-lmr-10'>To reach </span><span class='ec-lmtt-10'>172.16.0.0/16</span><span class='ec-lmr-10'>, send packets to next hop </span><span class='ec-lmtt-10'>10.0.0.2</span><span class='ec-lmr-10'>. For unknown destinations,
+use the </span><span class='ec-lmbx-10'>default route </span><span class='ec-lmr-10'>via </span><span class='ec-lmtt-10'>192.168.1.254</span><span class='ec-lmr-10'>.</span>
+<a id='x1-9001r8'></a>
+</p>
+<!-- l. 454 --><p class='noindent'><span class='likeparagraphHead' id='packet-forwarding-process'><a id='x1-10000'></a>Packet Forwarding Process</span>
+ 
+</p><!-- l. 454 --><p class='noindent'>
+</p>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 454 --><p class='noindent'>
+</p><!-- l. 503 --><p class='noindent'>                         <img alt='  Layer 2 headers change at each hop (new MACs )
+ISDSDxR1.2.3.ONNSDLLLLLnrcstrcsto R L DueercstaayayayaycMMIIueoetwwIIyeeeeoAAPPtaocgSDPPerrrrmCCedkreorsr2323irDupmictneen3gstRntgIouThPPtTPeaeLaaccdkkeeertts stay the same end-to- end (same IPs) ' src='network_05_routing_article_tmp5x.svg' />
+</p><!-- l. 503 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-10001r9'></a>
+<!-- l. 511 --></p><p class='noindent'><span class='likeparagraphHead' id='fragmentation-and-mtu'><a id='x1-11000'></a>Fragmentation and MTU</span>
+ 
+</p><!-- l. 511 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>MTU </span>(Maximum Transmission Unit) is the largest packet size a link
+     can carry.
+     </li>
+     <li class='itemize'>Standard Ethernet MTU: <span class='ec-lmbx-10x-x-109'>1500 bytes</span>.
+     </li>
+     <li class='itemize'>If packet <span class='lmmi-10x-x-109'>&gt; </span>MTU, router must <span class='ec-lmbx-10x-x-109'>fragment </span>it into smaller pieces.
+     </li>
+     <li class='itemize'>Fragments are reassembled at the <span class='ec-lmbx-10x-x-109'>destination</span>.</li></ul>
+<!-- l. 521 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Problems with Fragmentation</span>
+</p><!-- l. 521 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Adds processing overhead</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>If one fragment lost, entire packet must be retransmitted</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Slower overall performance</span></li></ul>
+<div class='center'>
+<!-- l. 531 --><p class='noindent'>
+</p><!-- l. 553 --><p class='noindent'>            <img alt='LFFFFEMarrrraTragagagagcUgmmmmheeeee≤nnnnPtttta123c(1(1(1k550e000t0)0)0) (4000 bytes) ' src='network_05_routing_article_tmp6x.svg' />
+</p><!-- l. 553 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 557 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Path MTU Discovery</span>
+</p><!-- l. 557 --><p class='noindent'><span class='ec-lmr-10'>Modern systems discover the smallest MTU along the entire path to avoid
+fragmentation.</span>
+                                                                     
+
+                                                                     
+<a id='x1-11001r10'></a>
+</p>
+<!-- l. 569 --><p class='noindent'><span class='likeparagraphHead' id='case-study-westleys-journey-to-florin'><a id='x1-12000'></a>Case Study: Westley’s Journey to Florin</span>
+ 
+</p><!-- l. 569 --><p class='noindent'>
+</p><!-- l. 569 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: Westley’s Journey to Florin</span><br class='newline' /> <span class='ec-lmri-10'>Westley is sending a message from the Pirate Ship network (</span><span class='ec-lmtti-10'>172.16.0.0/24</span><span class='ec-lmri-10'>) to
+Princess Buttercup at Castle Florin (</span><span class='ec-lmtti-10'>10.0.0.0/24</span><span class='ec-lmri-10'>). The ship’s router has this routing
+table:</span>
+</p>
+<div class='center'>
+<!-- l. 575 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-1'><colgroup id='TBL-1-1g'><col id='TBL-1-1' /><col id='TBL-1-2' /><col id='TBL-1-3' /></colgroup><tr id='TBL-1-1-'><td class='td11' id='TBL-1-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Network      </span></td><td class='td11' id='TBL-1-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Next Hop          </span></td><td class='td11' id='TBL-1-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Type    </span></td>
+</tr><tr id='TBL-1-2-'><td class='td11' id='TBL-1-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>172.16.0.0/24  </span></td><td class='td11' id='TBL-1-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Directly Connected  </span></td><td class='td11' id='TBL-1-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Direct   </span></td>
+</tr><tr id='TBL-1-3-'><td class='td11' id='TBL-1-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>10.0.0.0/24     </span></td><td class='td11' id='TBL-1-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.50.1         </span></td><td class='td11' id='TBL-1-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Static    </span></td>
+</tr><tr id='TBL-1-4-'><td class='td11' id='TBL-1-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>0.0.0.0/0        </span></td><td class='td11' id='TBL-1-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>203.0.113.1           </span></td><td class='td11' id='TBL-1-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Default  </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 588 --><p class='noindent'><span class='ec-lmri-10'>Westley’s PC: </span><span class='ec-lmtti-10'>172.16.0.25   </span><span class='ec-lmri-10'>Buttercup’s PC: </span><span class='ec-lmtti-10'>10.0.0.100</span>
+</p><!-- l. 591 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 591 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 594 --><p class='noindent'><span class='ec-lmr-10'>Which routing table entry will the router use for Westley’s packet?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 595 --><p class='noindent'><span class='ec-lmr-10'>What is the next hop IP address?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 596 --><p class='noindent'><span class='ec-lmr-10'>What would happen if someone deleted the </span><span class='ec-lmtt-10'>10.0.0.0/24 </span><span class='ec-lmr-10'>entry?</span></p></dd></dl>
+                                                                     
+
+                                                                     
+<p><a id='x1-12004r11'></a>
+<!-- l. 605 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-westleys-journey-to-florin'><a id='x1-13000'></a>Case Study Solution: Westley’s Journey to Florin</span>
+ 
+</p><!-- l. 605 --><p class='noindent'>
+</p><!-- l. 605 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: Westley’s Journey to Florin</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 608 --><p class='noindent'><span class='ec-lmri-10'>Router uses </span><span class='ec-lmbxi-10'>10.0.0.0/24</span><span class='ec-lmri-10'>—longest prefix match for </span><span class='ec-lmtti-10'>10.0.0.100</span><span class='ec-lmri-10'>.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 609 --><p class='noindent'><span class='ec-lmri-10'>Next hop is </span><span class='ec-lmbxi-10'>192.168.50.1 </span><span class='ec-lmri-10'>(path to Castle Florin).</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 610 --><p class='noindent'><span class='ec-lmri-10'>If  deleted,  router  uses  </span><span class='ec-lmbxi-10'>default  route </span><span class='ec-lmri-10'>(</span><span class='ec-lmtti-10'>0.0.0.0/0</span><span class='ec-lmri-10'>)  via  </span><span class='ec-lmtti-10'>203.0.113.1</span><span class='ec-lmri-10'>—a
+     longer path through the kingdom!</span></p></dd></dl>
+<div class='center'>
+<!-- l. 614 --><p class='noindent'>
+</p><!-- l. 641 --><p class='noindent'>   <img alt='xWxx1xBxInBBe92uteast.1tterstckle6ernpuy8cetap.5upth0.1 ' src='network_05_routing_article_tmp7x.svg' />
+</p><!-- l. 641 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 644 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 644 --><p class='noindent'><span class='ec-lmr-10'>“As you wish!” Specific routes always win over the default. Without proper entries,
+packets may take the long way—or never arrive!</span>
+</p><!-- l. 653 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='router-configuration-and-tools'><span class='titlemark'>2   </span> <a id='x1-140002'></a>Router Configuration and Tools</h3>
+<!-- l. 654 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='static-routing-and-diagnostics'><span class='titlemark'>2.1   </span> <a id='x1-150002.1'></a>Static Routing and Diagnostics</h4>
+<!-- l. 658 --><p class='noindent'>This section focuses on practical router setup, route verification, and path
+diagnostics using common operational tools.
+<a id='x1-15001r12'></a>
+</p>
+<!-- l. 661 --><p class='noindent'><span class='likeparagraphHead' id='basic-router-configuration'><a id='x1-16000'></a>Basic Router Configuration</span>
+ 
+</p><!-- l. 661 --><p class='noindent'>
+</p><!-- l. 663 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Essential Settings</span>
+</p><!-- l. 663 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Hostname </span><span class='ec-lmr-10'>– Identify the router</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Interface IPs </span><span class='ec-lmr-10'>– Address each port</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Enable interfaces </span><span class='ec-lmr-10'>– </span><span class='ec-lmtt-10'>no shutdown</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Routes </span><span class='ec-lmr-10'>– Static and/or default</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Passwords </span><span class='ec-lmr-10'>– Secure access</span></li></ul>
+<!-- l. 675 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Two Configuration Methods</span>
+</p><!-- l. 675 --><p class='noindent'><span class='ec-lmbx-10'>CLI</span><span class='ec-lmr-10'>: Command-line interface (Cisco IOS)  </span><span class='ec-lmbx-10'>GUI</span><span class='ec-lmr-10'>: Web-based management interface</span>
+</p><!-- l. 682 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Sample CLI Commands</span>
+</p><!-- l. 682 --><p class='noindent'><span class='ec-lmtt-8'>Router&gt; enable  Router# configure terminal  Router(config)# hostname Florin-GW
+Florin-GW(config)# interface g0/0  Florin-GW(config-if)# ip address    192.168.1.1
+255.255.255.0  Florin-GW(config-if)# no shutdown  Florin-GW(config-if)# exit
+Florin-GW(config)# ip route 0.0.0.0    0.0.0.0 203.0.113.1</span>
+</p><!-- l. 697 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Tip</span>
+</p><!-- l. 697 --><p class='noindent'><span class='ec-lmr-10'>Always save config: </span><span class='ec-lmtt-10'>copy run start</span>
+<a id='x1-16001r13'></a>
+</p>
+<!-- l. 709 --><p class='noindent'><span class='likeparagraphHead' id='routing-table-tools'><a id='x1-17000'></a>Routing Table Tools</span>
+ 
+</p><!-- l. 709 --><p class='noindent'>
+</p><!-- l. 711 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Cisco IOS Commands</span>
+</p><!-- l. 711 --><p class='noindent'><span class='ec-lmtk-10'>show ip route </span><span class='ec-lmr-10'>Display full routing table</span>
+</p><!-- l. 717 --><p class='noindent'><span class='ec-lmtk-10'>show ip route </span><span class='ec-lmtti-10'>network  </span><span class='ec-lmr-10'>Show specific route entry</span>
+</p><!-- l. 721 --><p class='noindent'><span class='ec-lmtk-10'>show ip interface brief </span><span class='ec-lmr-10'>Interface status summary</span>
+</p><!-- l. 725 --><p class='noindent'><span class='ec-lmtk-10'>show running-config </span><span class='ec-lmr-10'>View current configuration</span>
+</p><!-- l. 730 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Windows / Linux Commands</span>
+</p><!-- l. 730 --><p class='noindent'><span class='ec-lmtk-10'>route print </span><span class='ec-lmr-10'>(Windows)  </span><span class='ec-lmtk-10'>netstat -r </span><span class='ec-lmr-10'>(Windows/Linux)  Display host routing
+table</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 737 --><p class='noindent'><span class='ec-lmtk-10'>ip route </span><span class='ec-lmr-10'>(Linux)  Modern Linux routing display</span>
+</p><!-- l. 741 --><p class='noindent'><span class='ec-lmtk-10'>netstat -rn </span><span class='ec-lmr-10'>Numeric output (no DNS lookup)</span>
+</p><!-- l. 746 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Quick Check</span>
+</p><!-- l. 746 --><p class='noindent'><span class='ec-lmr-10'>Use </span><span class='ec-lmtt-10'>ip route get </span><span class='ec-lmtti-10'>IP </span><span class='ec-lmr-10'>on Linux to see which route would be used for a specific
+destination.</span>
+<a id='x1-17001r14'></a>
+</p>
+<!-- l. 758 --><p class='noindent'><span class='likeparagraphHead' id='tracert-and-traceroute'><a id='x1-18000'></a>tracert and traceroute</span>
+ 
+</p><!-- l. 758 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Shows the <span class='ec-lmbx-10x-x-109'>path </span>packets take to a destination.
+     </li>
+     <li class='itemize'>
+     <!-- l. 762 --><p class='noindent'>Uses <span class='ec-lmbx-10x-x-109'>TTL manipulation</span>: </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-8'>Send packet with TTL=1</span>
+          </li>
+          <li class='itemize'><span class='ec-lmr-8'>First router sends back error</span>
+          </li>
+          <li class='itemize'><span class='ec-lmr-8'>Increment TTL, repeat</span></li></ul>
+     </li>
+     <li class='itemize'>Each router returns <span class='ec-lmbx-10x-x-109'>ICMP Time Exceeded</span>.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmtt-10x-x-109'>tracert </span>(Windows)  <span class='ec-lmtt-10x-x-109'>traceroute </span>(Linux/Mac)</li></ul>
+<!-- l. 775 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Use Cases</span>
+</p><!-- l. 775 --><p class='noindent'><span class='ec-lmr-10'>Find where packets get stuck, identify slow links, verify routing path.</span>
+</p>
+<div class='center'>
+<!-- l. 781 --><p class='noindent'>
+</p><!-- l. 816 --><p class='noindent'>   <img alt='xSoxHxHxHxDTTTuopopopesTTTrctL=L=L=e123123 ' src='network_05_routing_article_tmp8x.svg' />
+</p><!-- l. 816 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 820 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Sample Output</span>
+</p><!-- l. 820 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'> <table class='tabular' id='TBL-2'><colgroup id='TBL-2-1g'><col id='TBL-2-1' /><col id='TBL-2-2' /><col id='TBL-2-3' /><col id='TBL-2-4' /><col id='TBL-2-5' /></colgroup><tr id='TBL-2-1-'><td class='td11' id='TBL-2-1-1' style='white-space:nowrap; text-align:right;'> <span class='ec-lmtt-10'>1 </span></td><td class='td11' id='TBL-2-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>2ms  </span></td><td class='td11' id='TBL-2-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>1ms  </span></td><td class='td11' id='TBL-2-1-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>1ms  </span></td><td class='td11' id='TBL-2-1-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>192.168.1.1  </span></td></tr><tr id='TBL-2-2-'><td class='td11' id='TBL-2-2-1' style='white-space:nowrap; text-align:right;'> <span class='ec-lmtt-10'>2 </span></td><td class='td11' id='TBL-2-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>10ms </span></td><td class='td11' id='TBL-2-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>9ms </span></td><td class='td11' id='TBL-2-2-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>11ms </span></td><td class='td11' id='TBL-2-2-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>10.0.0.1</span></td>
+</tr><tr id='TBL-2-3-'><td class='td11' id='TBL-2-3-1' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmtt-10'>3 </span></td><td class='td11' id='TBL-2-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>15ms </span></td><td class='td11' id='TBL-2-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>14ms </span></td><td class='td11' id='TBL-2-3-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>15ms </span></td><td class='td11' id='TBL-2-3-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmtt-10'>203.0.113.50 </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 835 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='dynamic-routing-protocols'><span class='titlemark'>3   </span> <a id='x1-190003'></a>Dynamic Routing Protocols</h3>
+<!-- l. 836 --><p class='noindent'>
+</p>
+                                                                     
+
+                                                                     
+<h4 class='subsectionHead' id='rip-eigrp-ospf-and-bgp'><span class='titlemark'>3.1   </span> <a id='x1-200003.1'></a>RIP, EIGRP, OSPF, and BGP</h4>
+<!-- l. 840 --><p class='noindent'>Dynamic routing protocols exchange topology information automatically and
+select best paths based on protocol metrics and policies.
+<a id='x1-20001r15'></a>
+</p>
+<!-- l. 843 --><p class='noindent'><span class='likeparagraphHead' id='dynamic-routing-protocols-overview'><a id='x1-21000'></a>Dynamic Routing Protocols Overview</span>
+ 
+</p><!-- l. 843 --><p class='noindent'>
+</p><!-- l. 845 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Why Dynamic Routing?</span>
+</p><!-- l. 845 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Static routes don’t adapt to failures</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Large networks have hundreds of routes</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Dynamic protocols </span><span class='ec-lmbx-10'>share route info automatically</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Network changes propagate without admin intervention</span></li></ul>
+<!-- l. 856 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Two Categories</span>
+</p><!-- l. 856 --><p class='noindent'><span class='ec-lmbx-10'>IGP </span><span class='ec-lmr-10'>(Interior Gateway Protocol)  Within an organization: RIP, OSPF, EIGRP</span>
+</p><!-- l. 862 --><p class='noindent'><span class='ec-lmbx-10'>EGP </span><span class='ec-lmr-10'>(Exterior Gateway Protocol)  Between organizations: BGP</span>
+</p>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 867 --><p class='noindent'>
+</p><!-- l. 895 --><p class='noindent'>  <img alt='A(YxxOA(IxxOBBSoSSSSGet 1uP 2PPPw0rF0)Fe0C0enoAmSpaensy) ' src='network_05_routing_article_tmp9x.svg' />
+</p><!-- l. 895 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 899 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Autonomous System (AS)</span>
+</p><!-- l. 899 --><p class='noindent'><span class='ec-lmr-10'>A network under single administrative control. Each AS has a unique number
+(ASN).</span>
+<a id='x1-21001r16'></a>
+</p>
+<!-- l. 911 --><p class='noindent'><span class='likeparagraphHead' id='rip-and-eigrp'><a id='x1-22000'></a>RIP and EIGRP</span>
+ 
+</p><!-- l. 911 --><p class='noindent'>
+</p><!-- l. 913 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>RIP (Routing Information Protocol)</span>
+</p><!-- l. 913 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Simple, easy to configure</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Uses </span><span class='ec-lmbx-10'>hop count </span><span class='ec-lmr-10'>as metric</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Maximum 15 hops (16 = unreachable)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Broadcasts updates every 30 seconds</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Slow convergence</span></li></ul>
+<!-- l. 924 --><p class='noindent'><span class='ec-lmbx-10'>Best for</span><span class='ec-lmr-10'>: Small, simple networks</span>
+</p><!-- l. 928 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>RIP Limitation</span>
+</p><!-- l. 928 --><p class='noindent'><span class='ec-lmr-10'>Hop count ignores link speed! A 10 Gbps path with 3 hops loses to a 1 Mbps path with 2
+hops.</span>
+</p><!-- l. 934 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>EIGRP (Enhanced Interior Gateway RP)</span>
+</p><!-- l. 934 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Cisco-developed (now partially open)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Uses </span><span class='ec-lmbx-10'>bandwidth + delay </span><span class='ec-lmr-10'>for metric</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Fast convergence</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Only sends updates when changes occur</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Supports unequal-cost load balancing</span></li></ul>
+<!-- l. 945 --><p class='noindent'><span class='ec-lmbx-10'>Best for</span><span class='ec-lmr-10'>: Cisco enterprise networks</span>
+</p><!-- l. 949 --><p class='noindent'><span class='ec-lmri-10x-x-109'>EIGRP Advantage</span>
+</p><!-- l. 949 --><p class='noindent'><span class='ec-lmr-10'>Keeps backup routes ready—failover is nearly instant!</span>
+<a id='x1-22001r17'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 961 --><p class='noindent'><span class='likeparagraphHead' id='ospf-open-shortest-path-first'><a id='x1-23000'></a>OSPF (Open Shortest Path First)</span>
+ 
+</p><!-- l. 961 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Industry standard </span>(open protocol)
+     </li>
+     <li class='itemize'>Uses <span class='ec-lmbx-10x-x-109'>cost </span>based on bandwidth
+     </li>
+     <li class='itemize'>Creates complete network map (<span class='ec-lmbx-10x-x-109'>link-state</span>)
+     </li>
+     <li class='itemize'>Fast convergence
+     </li>
+     <li class='itemize'>Supports <span class='ec-lmbx-10x-x-109'>hierarchical design </span>with areas</li></ul>
+<!-- l. 972 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>OSPF Cost Formula</span>
+</p><!-- l. 972 --><p class='noindent'>Cost = <img alt='        8
+------10--------
+bandwidth (bps)' src='network_05_routing_article_tmp10x.svg' />
+</p>
+<div class='tabular'> <table class='tabular' id='TBL-3'><colgroup id='TBL-3-1g'><col id='TBL-3-1' /><col id='TBL-3-2' /></colgroup><tr id='TBL-3-1-'><td class='td11' id='TBL-3-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>100 Mbps  </span></td><td class='td11' id='TBL-3-1-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>Cost = 1  </span></td>
+</tr><tr id='TBL-3-2-'><td class='td11' id='TBL-3-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>10 Mbps    </span></td><td class='td11' id='TBL-3-2-2' style='white-space:nowrap; text-align:right;'> <span class='ec-lmr-10'>Cost = 10  </span></td>
+</tr><tr id='TBL-3-3-'><td class='td11' id='TBL-3-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>1 Gbps      </span></td><td class='td11' id='TBL-3-3-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>Cost = 1  </span></td>
+</tr></table>                                                                     </div>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 986 --><p class='noindent'>
+</p><!-- l. 1013 --><p class='noindent'>  <img alt='AxxxAxAAxArrBrBeeaReaRa120 (Backbone ) ' src='network_05_routing_article_tmp11x.svg' />
+</p><!-- l. 1013 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1017 --><p class='noindent'><span class='ec-lmri-10x-x-109'>ABR</span>
+</p><!-- l. 1017 --><p class='noindent'><span class='ec-lmbx-10'>Area Border Router </span><span class='ec-lmr-10'>connects areas to the backbone (Area 0).</span>
+<a id='x1-23001r18'></a>
+</p>
+<!-- l. 1029 --><p class='noindent'><span class='likeparagraphHead' id='bgp-border-gateway-protocol'><a id='x1-24000'></a>BGP (Border Gateway Protocol)</span>
+ 
+</p><!-- l. 1029 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>The <span class='ec-lmbx-10x-x-109'>routing protocol of the Internet</span>
+     </li>
+     <li class='itemize'>Connects different organizations (ASes)
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Path vector </span>protocol
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Uses <span class='ec-lmbx-10x-x-109'>policies </span>more than metrics
+     </li>
+     <li class='itemize'>Very slow, deliberate convergence</li></ul>
+<!-- l. 1040 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>When to Use BGP</span>
+</p><!-- l. 1040 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Connecting to multiple ISPs</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Running your own AS</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Need fine control over routing policy</span></li></ul>
+<!-- l. 1050 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Warning</span>
+</p><!-- l. 1050 --><p class='noindent'><span class='ec-lmr-10'>BGP misconfigurations can break parts of the Internet! Handle with care.</span>
+</p>
+<div class='center'>
+<!-- l. 1056 --><p class='noindent'>
+</p><!-- l. 1090 --><p class='noindent'>  <img alt='YAxIAxIAxeexoSSSSSBBuPPGGr65 A10 B20PP C0l0e0o01ptmhapaany ' src='network_05_routing_article_tmp12x.svg' />
+</p><!-- l. 1090 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+                                                                     
+
+                                                                     
+</p>
+</div>
+<!-- l. 1094 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Multihoming</span>
+</p><!-- l. 1094 --><p class='noindent'><span class='ec-lmr-10'>Connecting to multiple ISPs provides redundancy and load balancing.</span>
+<a id='x1-24001r19'></a>
+</p>
+<!-- l. 1106 --><p class='noindent'><span class='likeparagraphHead' id='route-selection-and-administrative-distance'><a id='x1-25000'></a>Route Selection and Administrative Distance</span>
+ 
+</p><!-- l. 1106 --><p class='noindent'>
+</p><!-- l. 1108 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Routing Protocol Metrics</span>
+</p><!-- l. 1108 --><p class='noindent'><!-- tex4ht:inline --></p><div class='tabular'>
+ <table class='tabular' id='TBL-4'><colgroup id='TBL-4-1g'><col id='TBL-4-1' /><col id='TBL-4-2' /></colgroup><tr id='TBL-4-1-'><td class='td11' id='TBL-4-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Protocol  </span></td><td class='td11' id='TBL-4-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Metric               </span></td>
+</tr><tr id='TBL-4-2-'><td class='td11' id='TBL-4-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>RIP          </span></td><td class='td11' id='TBL-4-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Hop count              </span></td>
+</tr><tr id='TBL-4-3-'><td class='td11' id='TBL-4-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>EIGRP      </span></td><td class='td11' id='TBL-4-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Bandwidth + delay  </span></td>
+</tr><tr id='TBL-4-4-'><td class='td11' id='TBL-4-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>OSPF        </span></td><td class='td11' id='TBL-4-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Cost (bandwidth)    </span></td>
+</tr><tr id='TBL-4-5-'><td class='td11' id='TBL-4-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>BGP         </span></td><td class='td11' id='TBL-4-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Path attributes       </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 1123 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>What If Multiple Protocols?</span>
+</p><!-- l. 1123 --><p class='noindent'><span class='ec-lmr-10'>When the same route is learned from different protocols, </span><span class='ec-lmbx-10'>Administrative Distance
+</span><span class='ec-lmr-10'>decides which to trust.</span>
+</p><!-- l. 1129 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Administrative Distance (AD)</span>
+</p><!-- l. 1129 --><p class='noindent'><span class='ec-lmr-10'>Lower AD = more trusted</span>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-5'><colgroup id='TBL-5-1g'><col id='TBL-5-1' /><col id='TBL-5-2' /></colgroup><tr id='TBL-5-1-'><td class='td11' id='TBL-5-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Route Source     </span></td><td class='td11' id='TBL-5-1-2' style='white-space:nowrap; text-align:right;'> <span class='ec-lmbx-10'>AD  </span></td>
+</tr><tr id='TBL-5-2-'><td class='td11' id='TBL-5-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Directly Connected  </span></td><td class='td11' id='TBL-5-2-2' style='white-space:nowrap; text-align:right;'>    <span class='ec-lmr-10'>0  </span></td>
+</tr><tr id='TBL-5-3-'><td class='td11' id='TBL-5-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Static Route           </span></td><td class='td11' id='TBL-5-3-2' style='white-space:nowrap; text-align:right;'>    <span class='ec-lmr-10'>1  </span></td>
+</tr><tr id='TBL-5-4-'><td class='td11' id='TBL-5-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>EIGRP (internal)    </span></td><td class='td11' id='TBL-5-4-2' style='white-space:nowrap; text-align:right;'>   <span class='ec-lmr-10'>90  </span></td>
+</tr><tr id='TBL-5-5-'><td class='td11' id='TBL-5-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>OSPF                   </span></td><td class='td11' id='TBL-5-5-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>110  </span></td>
+</tr><tr id='TBL-5-6-'><td class='td11' id='TBL-5-6-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>RIP                      </span></td><td class='td11' id='TBL-5-6-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>120  </span></td>
+</tr><tr id='TBL-5-7-'><td class='td11' id='TBL-5-7-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>External EIGRP     </span></td><td class='td11' id='TBL-5-7-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>170  </span></td>
+</tr><tr id='TBL-5-8-'><td class='td11' id='TBL-5-8-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Unknown               </span></td><td class='td11' id='TBL-5-8-2' style='white-space:nowrap; text-align:right;'>  <span class='ec-lmr-10'>255  </span></td>
+</tr></table>                                                                     </div>
+<!-- l. 1150 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Example</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1150 --><p class='noindent'><span class='ec-lmr-10'>If OSPF (AD 110) and RIP (AD 120) both know a route, OSPF wins!</span>
+<a id='x1-25001r20'></a>
+</p>
+<!-- l. 1162 --><p class='noindent'><span class='likeparagraphHead' id='case-study-inigos-path-to-count-rugen'><a id='x1-26000'></a>Case Study: Inigo’s Path to Count Rugen</span>
+ 
+</p><!-- l. 1162 --><p class='noindent'>
+</p><!-- l. 1162 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: Inigo’s Path to Count Rugen</span><br class='newline' /> <span class='ec-lmri-10'>Inigo Montoya has configured routers to help him find Count Rugen (the six-fingered
+man). His router has learned two paths to Rugen’s network (</span><span class='ec-lmtti-10'>10.20.30.0/24</span><span class='ec-lmri-10'>):</span>
+</p>
+<div class='center'>
+<!-- l. 1168 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-6'><colgroup id='TBL-6-1g'><col id='TBL-6-1' /><col id='TBL-6-2' /><col id='TBL-6-3' /><col id='TBL-6-4' /></colgroup><tr id='TBL-6-1-'><td class='td11' id='TBL-6-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Protocol  </span></td><td class='td11' id='TBL-6-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Next Hop  </span></td><td class='td11' id='TBL-6-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Metric   </span></td><td class='td11' id='TBL-6-1-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>AD  </span></td>
+</tr><tr id='TBL-6-2-'><td class='td11' id='TBL-6-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>OSPF       </span></td><td class='td11' id='TBL-6-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.1.1  </span></td><td class='td11' id='TBL-6-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Cost: 20  </span></td><td class='td11' id='TBL-6-2-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>110  </span></td>
+</tr><tr id='TBL-6-3-'><td class='td11' id='TBL-6-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>RIP         </span></td><td class='td11' id='TBL-6-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.2.1  </span></td><td class='td11' id='TBL-6-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Hops: 3   </span></td><td class='td11' id='TBL-6-3-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>120  </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 1181 --><p class='noindent'><span class='ec-lmri-10'>Both paths are currently working. Inigo needs to reach Rugen as quickly as possible!</span>
+</p><!-- l. 1184 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1184 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1187 --><p class='noindent'><span class='ec-lmr-10'>Which route will the router prefer and why?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1188 --><p class='noindent'><span class='ec-lmr-10'>What is Administrative Distance and how does it apply here?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1189 --><p class='noindent'><span class='ec-lmr-10'>If the OSPF path fails, what happens?</span></p></dd></dl>
+                                                                     
+
+                                                                     
+<p><a id='x1-26004r21'></a>
+<!-- l. 1198 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-inigos-path-to-count-rugen'><a id='x1-27000'></a>Case Study Solution: Inigo’s Path to Count Rugen</span>
+ 
+</p><!-- l. 1198 --><p class='noindent'>
+</p><!-- l. 1198 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: Inigo’s Path to Count Rugen</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1201 --><p class='noindent'><span class='ec-lmri-10'>Router prefers </span><span class='ec-lmbxi-10'>OSPF route</span><span class='ec-lmri-10'>—AD of 110 beats RIP’s AD of 120.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1202 --><p class='noindent'><span class='ec-lmbxi-10'>Administrative Distance </span><span class='ec-lmri-10'>is a “trustworthiness” rating. Lower AD = more
+     trusted. When multiple protocols know a route, lowest AD wins.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1203 --><p class='noindent'><span class='ec-lmri-10'>If OSPF fails, router automatically uses </span><span class='ec-lmbxi-10'>RIP route </span><span class='ec-lmri-10'>as backup!</span></p></dd></dl>
+<div class='center'>
+<!-- l. 1207 --><p class='noindent'>
+</p><!-- l. 1235 --><p class='noindent'>  <img alt='xIxxOxRxRAAniSIuDDgoPPgFpen1112pat00ah(thbackup) ' src='network_05_routing_article_tmp13x.svg' />
+</p><!-- l. 1235 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1238 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1238 --><p class='noindent'><span class='ec-lmr-10'>“Hello. My name is Inigo Montoya...” Administrative Distance determines which protocol
+to trust. The backup route is ready if the primary fails!</span>
+</p><!-- l. 1247 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='edge-services-and-translation'><span class='titlemark'>4   </span> <a id='x1-280004'></a>Edge Services and Translation</h3>
+<!-- l. 1248 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='nat-pat-and-firewalls'><span class='titlemark'>4.1   </span> <a id='x1-290004.1'></a>NAT, PAT, and Firewalls</h4>
+<!-- l. 1252 --><p class='noindent'>At the network edge, address translation and filtering enforce policy while
+enabling internal hosts to reach external networks.
+<a id='x1-29001r22'></a>
+</p>
+<!-- l. 1255 --><p class='noindent'><span class='likeparagraphHead' id='edge-routers-and-network-boundaries'><a id='x1-30000'></a>Edge Routers and Network Boundaries</span>
+ 
+</p><!-- l. 1255 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Edge router </span>connects internal network to outside (ISP).
+     </li>
+     <li class='itemize'>Also called: border router, gateway router.
+     </li>
+     <li class='itemize'>
+                                                                     
+
+                                                                     
+     <!-- l. 1260 --><p class='noindent'>Key responsibilities: </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-10'>Route between internal and external</span>
+          </li>
+          <li class='itemize'><span class='ec-lmr-10'>Apply </span><span class='ec-lmbx-10'>NAT </span><span class='ec-lmr-10'>(translate IPs)</span>
+          </li>
+          <li class='itemize'><span class='ec-lmr-10'>First line of security (ACLs)</span>
+          </li>
+          <li class='itemize'><span class='ec-lmr-10'>Connect to ISP via WAN link</span></li></ul>
+     </li></ul>
+<!-- l. 1271 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Demarcation Point</span>
+</p><!-- l. 1271 --><p class='noindent'><span class='ec-lmr-10'>The boundary where your network ends and the ISP’s begins. Usually at the edge
+router.</span>
+</p>
+<div class='center'>
+<!-- l. 1277 --><p class='noindent'>
+</p><!-- l. 1306 --><p class='noindent'>    <img alt='IxxxxxEDxIndeStgmPeear Rrc/noat Iauionltent NrPeeorntinewttork ' src='network_05_routing_article_tmp14x.svg' />
+</p><!-- l. 1306 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+                                                                     
+
+                                                                     
+<p><a id='x1-30001r23'></a>
+<!-- l. 1316 --></p><p class='noindent'><span class='likeparagraphHead' id='network-address-translation-nat'><a id='x1-31000'></a>Network Address Translation (NAT)</span>
+ 
+</p><!-- l. 1316 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>NAT </span>translates private IPs to public IPs.
+     </li>
+     <li class='itemize'>Allows many internal devices to share limited public addresses.
+     </li>
+     <li class='itemize'>Essential because IPv4 addresses are exhausted!
+     </li>
+     <li class='itemize'>Performed by edge router or firewall.</li></ul>
+<!-- l. 1326 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>NAT Terminology</span>
+</p><!-- l. 1326 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Inside Local</span><span class='ec-lmr-10'>: Private IP (192.168.1.10)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Inside Global</span><span class='ec-lmr-10'>: Public IP seen by internet</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Outside</span><span class='ec-lmr-10'>: External destination</span></li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 1336 --><p class='noindent'>
+</p><!-- l. 1363 --><p class='noindent'>    <img alt='x1PxNxIT2P92rAntr03u.ivTean.b16atrns0.lic8.eela111tte3.1s.50t0o ' src='network_05_routing_article_tmp15x.svg' />
+</p><!-- l. 1363 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1367 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Why NAT Matters</span>
+</p><!-- l. 1367 --><p class='noindent'><span class='ec-lmr-10'>Your home network might have 20 devices, but your ISP only gives you </span><span class='ec-lmbx-10'>one </span><span class='ec-lmr-10'>public IP.
+NAT makes this work!</span>
+<a id='x1-31001r24'></a>
+</p>
+<!-- l. 1379 --><p class='noindent'><span class='likeparagraphHead' id='nat-types'><a id='x1-32000'></a>NAT Types</span>
+ 
+</p><!-- l. 1379 --><p class='noindent'>
+</p><!-- l. 1381 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Static NAT</span>
+</p><!-- l. 1381 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>One private IP </span><span class='lmsy-10'>↔ </span><span class='ec-lmr-10'>One public IP</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Permanent, fixed mapping</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Use: Servers needing consistent public address</span></li></ul>
+<!-- l. 1391 --><p class='noindent'><span class='ec-lmtt-10'>192.168.1.10 </span><span class='lmsy-10'>↔ </span><span class='ec-lmtt-10'>203.0.113.10</span>
+</p><!-- l. 1395 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Dynamic NAT</span>
+</p><!-- l. 1395 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Pool of private </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>Pool of public</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>First-come, first-served</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Mapping changes over time</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Use: When you have several public IPs</span></li></ul>
+<div class='center'>
+<!-- l. 1406 --><p class='noindent'>
+</p><!-- l. 1431 --><p class='noindent'>           <img alt='S.1.5D.1.1.1.5.5.5PPt00y012012riuanvabltaticicmeiNcATNAT(1:1)(Pool ) ' src='network_05_routing_article_tmp16x.svg' />
+</p><!-- l. 1431 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+                                                                     
+
+                                                                     
+<!-- l. 1435 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Limitation</span>
+</p><!-- l. 1435 --><p class='noindent'><span class='ec-lmr-10'>Both Static and Dynamic NAT require one public IP per active connection. Not
+scalable!</span>
+<a id='x1-32001r25'></a>
+</p>
+<!-- l. 1447 --><p class='noindent'><span class='likeparagraphHead' id='pat-port-address-translation'><a id='x1-33000'></a>PAT: Port Address Translation</span>
+ 
+</p><!-- l. 1447 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>PAT </span>= Many private IPs share ONE public IP
+     </li>
+     <li class='itemize'>Uses <span class='ec-lmbx-10x-x-109'>port numbers </span>to track connections
+     </li>
+     <li class='itemize'>Also called: NAT Overload, NAPT
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Most common </span>type in homes and businesses</li></ul>
+<!-- l. 1457 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>How PAT Works</span>
+</p><!-- l. 1457 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1460 --><p class='noindent'><span class='ec-lmr-10'>Host sends packet (src port 12345)</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1461 --><p class='noindent'><span class='ec-lmr-10'>Router changes src IP to public</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1462 --><p class='noindent'><span class='ec-lmr-10'>Router assigns unique port (e.g., 40001)</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>4.</span> </dt><dd class='enumerate'>
+     <!-- l. 1463 --><p class='noindent'><span class='ec-lmr-10'>Tracks mapping in NAT table</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>5.</span> </dt><dd class='enumerate'>
+     <!-- l. 1464 --><p class='noindent'><span class='ec-lmr-10'>Return traffic uses port to find host</span></p></dd></dl>
+<div class='center'>
+<!-- l. 1469 --><p class='noindent'>
+</p><!-- l. 1507 --><p class='noindent'>        <img alt='x.1x.1x.1xPx222p012A030303Sub:1:1:5T.0.0.0al224...mic343432111111eI551333P.1.1.1!:4:4:4000000000123 ' src='network_05_routing_article_tmp17x.svg' />
+</p><!-- l. 1507 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1511 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Capacity</span>
+</p><!-- l. 1511 --><p class='noindent'><span class='ec-lmr-10'>With  65,000 available ports, one public IP can support thousands of simultaneous
+connections!</span>
+<a id='x1-33006r26'></a>
+</p>
+<!-- l. 1523 --><p class='noindent'><span class='likeparagraphHead' id='firewall-uses-and-types'><a id='x1-34000'></a>Firewall Uses and Types</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 1523 --><p class='noindent'>
+</p><!-- l. 1525 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What Firewalls Do</span>
+</p><!-- l. 1525 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Filter traffic based on rules</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Block unauthorized access</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Allow legitimate traffic through</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Log security events</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Enforce security policies</span></li></ul>
+<!-- l. 1537 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Default Behavior</span>
+</p><!-- l. 1537 --><p class='noindent'><span class='ec-lmr-10'>Most firewalls: </span><span class='ec-lmbx-10'>Deny all, permit by exception</span><span class='ec-lmr-10'>. Only explicitly allowed traffic
+passes.</span>
+</p><!-- l. 1543 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Firewall Types</span>
+</p><!-- l. 1543 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Packet Filtering  </span><span class='ec-lmr-8'>Checks IP/port only (stateless)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Stateful Inspection  </span><span class='ec-lmr-8'>Tracks connection state</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Application Layer  </span><span class='ec-lmr-8'>Inspects content (Layer 7)</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Next-Gen (NGFW)  </span><span class='ec-lmr-8'>All above + IPS, deep inspection</span></li></ul>
+<!-- l. 1558 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Trend</span>
+</p><!-- l. 1558 --><p class='noindent'><span class='ec-lmr-10'>Modern networks use NGFW for comprehensive protection.</span>
+<a id='x1-34001r27'></a>
+</p>
+<!-- l. 1570 --><p class='noindent'><span class='likeparagraphHead' id='firewall-placement-and-dmz'><a id='x1-35000'></a>Firewall Placement and DMZ</span>
+ 
+</p><!-- l. 1570 --><p class='noindent'>
+</p><!-- l. 1572 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Placement Options</span>
+</p><!-- l. 1572 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Perimeter</span><span class='ec-lmr-10'>: Between LAN and internet</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Internal</span><span class='ec-lmr-10'>: Between network segments</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Host-based</span><span class='ec-lmr-10'>: On individual devices</span></li></ul>
+<!-- l. 1582 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>DMZ (Demilitarized Zone)</span>
+</p><!-- l. 1582 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Screened subnet for public servers</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Web, email, DNS servers go here</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Isolated from internal LAN</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>If compromised, LAN still protected</span></li></ul>
+<div class='center'>
+<!-- l. 1593 --><p class='noindent'>
+</p><!-- l. 1637 --><p class='noindent'>   <img alt='xIxDxWxMxDxIxxxOIntMeaNntunnerZbilSeteenrnrretaFFlWW LAN ' src='network_05_routing_article_tmp18x.svg' />
+</p><!-- l. 1637 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1640 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Defense in Depth</span>
+</p><!-- l. 1640 --><p class='noindent'><span class='ec-lmr-10'>Multiple firewall layers provide better protection than a single firewall.</span>
+</p><!-- l. 1651 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='vlan-segmentation-and-trunking'><span class='titlemark'>5   </span> <a id='x1-360005'></a>VLAN Segmentation and Trunking</h3>
+                                                                     
+
+                                                                     
+<!-- l. 1652 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='vlan-design-and-security'><span class='titlemark'>5.1   </span> <a id='x1-370005.1'></a>VLAN Design and Security</h4>
+<!-- l. 1656 --><p class='noindent'>This section introduces VLAN segmentation, trunking, and security practices for
+multi-segment switched environments.
+<a id='x1-37001r28'></a>
+</p>
+<!-- l. 1659 --><p class='noindent'><span class='likeparagraphHead' id='introduction-to-vlans'><a id='x1-38000'></a>Introduction to VLANs</span>
+ 
+</p><!-- l. 1659 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>VLAN </span>= Virtual Local Area Network
+     </li>
+     <li class='itemize'>Logically  separates  one  physical  switch  into  multiple  <span class='ec-lmbx-10x-x-109'>broadcast
+     domains</span>.
+     </li>
+     <li class='itemize'>Devices  on  different  VLANs  cannot  communicate  directly—need  a
+     router.
+     </li>
+     <li class='itemize'>Configured per switch port.</li></ul>
+<!-- l. 1669 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Benefits of VLANs</span>
+</p><!-- l. 1669 --><p class='noindent'></p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Security</span><span class='ec-lmr-10'>: Isolate sensitive traffic</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Performance</span><span class='ec-lmr-10'>: Reduce broadcast traffic</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Flexibility</span><span class='ec-lmr-10'>: Group by function, not location</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Cost</span><span class='ec-lmr-10'>: One switch, many networks</span></li></ul>
+<div class='center'>
+<!-- l. 1680 --><p class='noindent'>
+</p><!-- l. 1705 --><p class='noindent'>    <img alt='xOxxVSxxVELnLaLnoeAleAggNsNinicealP12ersh00inepygasraitcioanl Switch ' src='network_05_routing_article_tmp19x.svg' />
+</p><!-- l. 1705 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1709 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Point</span>
+</p><!-- l. 1709 --><p class='noindent'><span class='ec-lmr-10'>VLANs create Layer 2 isolation. Cross-VLAN traffic requires Layer 3 routing!</span>
+<a id='x1-38001r29'></a>
+</p>
+<!-- l. 1721 --><p class='noindent'><span class='likeparagraphHead' id='vlan-trunking-and-q'><a id='x1-39000'></a>VLAN Trunking and 802.1Q</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 1721 --><p class='noindent'>
+</p><!-- l. 1723 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Problem</span>
+</p><!-- l. 1723 --><p class='noindent'><span class='ec-lmr-10'>How do VLANs span multiple switches? We need a way to carry VLAN info between
+switches.</span>
+</p><!-- l. 1729 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Trunk Ports</span>
+</p><!-- l. 1729 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Carry traffic for </span><span class='ec-lmbx-10'>multiple VLANs</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Connect switches to switches</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Connect switches to routers</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Use </span><span class='ec-lmbx-10'>802.1Q tagging</span></li></ul>
+<!-- l. 1740 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Access vs Trunk</span>
+</p><!-- l. 1740 --><p class='noindent'><span class='ec-lmbx-10'>Access port</span><span class='ec-lmr-10'>: One VLAN, untagged  </span><span class='ec-lmbx-10'>Trunk port</span><span class='ec-lmr-10'>: Multiple VLANs, tagged</span>
+</p>
+<div class='center'>
+<!-- l. 1747 --><p class='noindent'>
+</p><!-- l. 1776 --><p class='noindent'>         <img alt='xSxSTxxVVxxVVwwrLLLLiiuAAAAtctcnkNNNNhh 1 2(81010202002.1Q) ' src='network_05_routing_article_tmp20x.svg' />
+                                                                     
+
+                                                                     
+</p><!-- l. 1776 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1780 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>802.1Q Tag</span>
+</p><!-- l. 1780 --><p class='noindent'><span class='ec-lmr-10'>Adds 4-byte tag to Ethernet frame:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>VLAN ID</span><span class='ec-lmr-10'>: 12 bits (1–4094)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Priority</span><span class='ec-lmr-10'>: 3 bits (QoS)</span></li></ul>
+<p><a id='x1-39001r30'></a>
+<!-- l. 1796 --></p><p class='noindent'><span class='likeparagraphHead' id='voice-vlans'><a id='x1-40000'></a>Voice VLANs</span>
+ 
+</p><!-- l. 1796 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>VoIP phones need <span class='ec-lmbx-10x-x-109'>priority treatment </span>for quality calls.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Voice VLAN </span>separates phone traffic from data traffic.
+     </li>
+     <li class='itemize'>
+     <!-- l. 1801 --><p class='noindent'>One port supports both: </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-10'>Data VLAN (for PC)</span>
+                                                                     
+
+                                                                     
+          </li>
+          <li class='itemize'><span class='ec-lmr-10'>Voice VLAN (for phone)</span></li></ul>
+     </li>
+     <li class='itemize'>Phone traffic gets higher QoS priority.</li></ul>
+<!-- l. 1811 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Configuration Example</span>
+</p><!-- l. 1811 --><p class='noindent'><span class='ec-lmtt-10'>switchport mode access  switchport access vlan 10  switchport voice vlan
+50</span>
+</p>
+<div class='center'>
+<!-- l. 1819 --><p class='noindent'>
+</p><!-- l. 1849 --><p class='noindent'>    <img alt='xSIxPVVOcwPCLLnaiPVADAebthoiNaNlechoceta!n51e00 ' src='network_05_routing_article_tmp21x.svg' />
+</p><!-- l. 1849 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1853 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Why Separate?</span>
+</p><!-- l. 1853 --><p class='noindent'><span class='ec-lmr-10'>Voice is sensitive to delay and jitter. Separating it ensures calls stay clear even when data
+traffic is heavy.</span>
+<a id='x1-40001r31'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1865 --><p class='noindent'><span class='likeparagraphHead' id='native-vlan-and-security'><a id='x1-41000'></a>Native VLAN and Security</span>
+ 
+</p><!-- l. 1865 --><p class='noindent'>
+</p><!-- l. 1867 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is Native VLAN?</span>
+</p><!-- l. 1867 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Traffic on trunk that has </span><span class='ec-lmbx-10'>no 802.1Q tag</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Default: VLAN 1</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Used for backward compatibility</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Both ends of trunk must match!</span></li></ul>
+<!-- l. 1878 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Security Risk</span>
+</p><!-- l. 1878 --><p class='noindent'><span class='ec-lmr-10'>Attackers can exploit native VLAN mismatches to hop between VLANs. This is called
+</span><span class='ec-lmbx-10'>VLAN hopping</span><span class='ec-lmr-10'>. Best practices:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-8'>Change native VLAN from default</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-8'>Use unused VLAN for native</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-8'>Ensure both trunk ends match</span></li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 1890 --><p class='noindent'>
+</p><!-- l. 1914 --><p class='noindent'>   <img alt='802.1Q
+UDSTDGTDSTTDVnsrcyaoasrcayaLttptaegtgptaAaMMesgeNgAAtoegCCNdIDeadtivFerFVarLmaAemNe ' src='network_05_routing_article_tmp22x.svg' />
+</p><!-- l. 1914 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1918 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Configuration</span>
+</p><!-- l. 1918 --><p class='noindent'><span class='ec-lmtt-10'>switchport trunk native vlan 999</span>
+</p><!-- l. 1924 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>VLAN 1 Concerns</span>
+</p><!-- l. 1924 --><p class='noindent'><span class='ec-lmr-10'>VLAN 1 carries management traffic by default. Keep it separate from user
+data!</span>
+<a id='x1-41001r32'></a>
+</p>
+<!-- l. 1936 --><p class='noindent'><span class='likeparagraphHead' id='case-study-miracle-maxs-potion-shop'><a id='x1-42000'></a>Case Study: Miracle Max’s Potion Shop</span>
+ 
+</p><!-- l. 1936 --><p class='noindent'>
+</p><!-- l. 1936 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: Miracle Max’s Potion Shop</span><br class='newline' /> <span class='ec-lmri-10'>Miracle Max runs a potion shop with three departments, each on its own VLAN:</span>
+</p>
+<div class='center'>
+<!-- l. 1942 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-7'><colgroup id='TBL-7-1g'><col id='TBL-7-1' /><col id='TBL-7-2' /><col id='TBL-7-3' /></colgroup><tr id='TBL-7-1-'><td class='td11' id='TBL-7-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Department   </span></td><td class='td11' id='TBL-7-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>VLAN    </span></td><td class='td11' id='TBL-7-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbxi-10x-x-90'>Subnet           </span></td>
+</tr><tr id='TBL-7-2-'><td class='td11' id='TBL-7-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Potion Brewing  </span></td><td class='td11' id='TBL-7-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>VLAN 10  </span></td><td class='td11' id='TBL-7-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.10.0/24  </span></td>
+</tr><tr id='TBL-7-3-'><td class='td11' id='TBL-7-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Customer Sales  </span></td><td class='td11' id='TBL-7-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>VLAN 20  </span></td><td class='td11' id='TBL-7-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.20.0/24  </span></td>
+</tr><tr id='TBL-7-4-'><td class='td11' id='TBL-7-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>Billing Office     </span></td><td class='td11' id='TBL-7-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>VLAN 30  </span></td><td class='td11' id='TBL-7-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmri-9'>192.168.30.0/24  </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 1956 --><p class='noindent'><span class='ec-lmri-10'>The Sales team (</span><span class='ec-lmtti-10'>192.168.20.50</span><span class='ec-lmri-10'>) needs to check inventory on the Brewing server
+(</span><span class='ec-lmtti-10'>192.168.10.10</span><span class='ec-lmri-10'>), but their packets aren’t getting through!</span>
+</p><!-- l. 1959 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1959 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1962 --><p class='noindent'><span class='ec-lmr-10'>Why can’t Sales communicate directly with Brewing?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1963 --><p class='noindent'><span class='ec-lmr-10'>What device is needed to enable this communication?</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1964 --><p class='noindent'><span class='ec-lmr-10'>What is this process called?</span></p></dd></dl>
+<p><a id='x1-42004r33'></a>
+<!-- l. 1973 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-miracle-maxs-potion-shop'><a id='x1-43000'></a>Case Study Solution: Miracle Max’s Potion Shop</span>
+ 
+</p><!-- l. 1973 --><p class='noindent'>
+</p><!-- l. 1973 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: Miracle Max’s Potion Shop</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmri-10'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1976 --><p class='noindent'><span class='ec-lmri-10'>VLANs are separate broadcast domains—</span><span class='ec-lmbxi-10'>Layer 2 isolation </span><span class='ec-lmri-10'>prevents direct
+     communication between VLANs.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1977 --><p class='noindent'><span class='ec-lmri-10'>A </span><span class='ec-lmbxi-10'>router </span><span class='ec-lmri-10'>(or Layer 3 switch) is needed to route between VLANs.</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmri-10'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1978 --><p class='noindent'><span class='ec-lmri-10'>This is called </span><span class='ec-lmbxi-10'>inter-VLAN routing</span><span class='ec-lmri-10'>.</span></p></dd></dl>
+<div class='center'>
+<!-- l. 1982 --><p class='noindent'>
+</p><!-- l. 2016 --><p class='noindent'>    <img alt='xxRTxBVxSVxBVorrLaLiLuueAleAllAtnkwNsNinNeingrg123000 ' src='network_05_routing_article_tmp23x.svg' />
+</p><!-- l. 2016 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 2019 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+</p><!-- l. 2019 --><p class='noindent'><span class='ec-lmr-10'>“Have fun storming the castle!” VLANs provide security through isolation, but
+inter-VLAN routing lets authorized traffic flow when needed.</span>
+</p><!-- l. 2028 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='module-summary'><a id='x1-44000'></a>Module Summary</h3>
+<p><a id='x1-44001r34'></a>
+<!-- l. 2031 --></p><p class='noindent'><span class='likeparagraphHead' id='module-summary1'><a id='x1-45000'></a>Module 5.0 Summary</span>
+                                                                     
+
+                                                                     
+ 
+</p><!-- l. 2031 --><p class='noindent'>
+</p><!-- l. 2032 --><p class='noindent'><span class='ec-lmbx-8'>Key Concepts:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-8'>Routers </span><span class='ec-lmr-8'>connect networks at Layer 3. </span><span class='ec-lmbx-8'>Routing tables </span><span class='ec-lmr-8'>store known destinations; </span><span class='ec-lmbx-8'>longest
+     prefix match </span><span class='ec-lmr-8'>selects best route.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Static routes</span><span class='ec-lmr-8'>: Manually configured, predictable. </span><span class='ec-lmbx-8'>Default route </span><span class='ec-lmr-8'>(0.0.0.0/0) is gateway
+     of last resort.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-8'>Dynamic routing: </span><span class='ec-lmbx-8'>RIP </span><span class='ec-lmr-8'>(hop count, max 15), </span><span class='ec-lmbx-8'>EIGRP </span><span class='ec-lmr-8'>(Cisco, fast convergence), </span><span class='ec-lmbx-8'>OSPF
+     </span><span class='ec-lmr-8'>(open standard, link-state), </span><span class='ec-lmbx-8'>BGP </span><span class='ec-lmr-8'>(internet backbone).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Administrative  Distance  (AD) </span><span class='ec-lmr-8'>determines  protocol  trustworthiness:  Direct  (0)  &gt;
+     Static (1) &gt; EIGRP (90) &gt; OSPF (110) &gt; RIP (120).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>NAT </span><span class='ec-lmr-8'>translates private IPs to public. Types: </span><span class='ec-lmbx-8'>Static NAT </span><span class='ec-lmr-8'>(1:1), </span><span class='ec-lmbx-8'>Dynamic NAT </span><span class='ec-lmr-8'>(pool),
+     </span><span class='ec-lmbx-8'>PAT </span><span class='ec-lmr-8'>(many-to-one using ports).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Firewalls    </span><span class='ec-lmr-8'>filter    traffic:    Packet    filter,    Stateful,    Application-level,    </span><span class='ec-lmbx-8'>NGFW
+     </span><span class='ec-lmr-8'>(Next-Generation). </span><span class='ec-lmbx-8'>DMZ </span><span class='ec-lmr-8'>= screened subnet for servers.</span></li></ul>
+<!-- l. 2045 --><p class='noindent'><span class='ec-lmbx-8'>VLANs &amp; Network Design:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-8'>VLANs </span><span class='ec-lmr-8'>logically segment networks on one switch, creating separate broadcast domains
+     for security, performance, and flexibility.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>802.1Q </span><span class='ec-lmr-8'>tags frames with VLAN ID (1-4094). </span><span class='ec-lmbx-8'>Trunk ports </span><span class='ec-lmr-8'>carry multiple VLANs. </span><span class='ec-lmbx-8'>Native
+     VLAN</span><span class='ec-lmr-8'>: untagged traffic.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Voice VLANs </span><span class='ec-lmr-8'>separate voice from data traffic, apply QoS priority (one port, two VLANs).</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Inter-VLAN routing </span><span class='ec-lmr-8'>requires Layer 3 device (router or Layer 3 switch with </span><span class='ec-lmbx-8'>SVI </span><span class='ec-lmr-8'>-
+     Switched Virtual Interface).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Three-tier  hierarchy</span><span class='ec-lmr-8'>:  </span><span class='ec-lmbx-8'>Core  </span><span class='ec-lmr-8'>(backbone),  </span><span class='ec-lmbx-8'>Distribution  </span><span class='ec-lmr-8'>(policy/routing),  </span><span class='ec-lmbx-8'>Access
+     </span><span class='ec-lmr-8'>(end-device connection).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-8'>Spine-leaf architecture</span><span class='ec-lmr-8'>: Modern data center design with predictable latency and no
+     oversubscription.</span></li></ul>
+<!-- l. 2059 --><p class='noindent'>
+</p>
+<h4 class='likesubsectionHead' id='conclusion'><a id='x1-46000'></a>Conclusion</h4>
+<!-- l. 2059 --><p class='noindent'>This module explored routing protocols, network address translation, firewalls,
+VLANs, and enterprise network design. You learned how routers make
+forwarding decisions, how dynamic routing protocols adapt to topology
+changes, how NAT/PAT conserve addresses, and how VLANs provide logical
+segmentation. In the next module, we’ll examine network services including
+DHCP and DNS.
+</p>
+ 
+</body> 
+</html>

@@ -1,0 +1,50 @@
+  aborange -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex
+  alertred -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  black -> network_07_nw_app.tex, network_08_operations_monitor.tex
+  blue -> network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  copper -> network_02_phys_inf.tex, network_03_switches_interfaces.tex
+  dhcppurple -> network_06_nw_services.tex
+  ethernet -> network_05_routing.tex
+  ethernet noarrow -> network_01_basics.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex
+  fiber -> network_02_phys_inf.tex, network_03_switches_interfaces.tex
+  firewall -> network_05_routing.tex
+  frameseg -> network_03_switches_interfaces.tex
+  frameseg highlight -> network_03_switches_interfaces.tex
+  gray -> network_01_basics.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  green -> network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  ipblue -> network_04_IP.tex, network_05_routing.tex
+  ipbox -> network_04_IP.tex, network_05_routing.tex
+  ippurple -> network_04_IP.tex
+  laptop -> network_01_basics.tex, network_03_switches_interfaces.tex
+  macbox -> network_04_IP.tex
+  networkgreen -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_09_security_concepts.tex
+  ogregreen -> network_08_operations_monitor.tex
+  orange -> network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  osilayer -> network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex
+  osilayer highlight -> network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex
+  paddysgreen -> network_07_nw_app.tex
+  pc -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex
+  phone -> network_01_basics.tex, network_03_switches_interfaces.tex
+  pktseg -> network_04_IP.tex, network_05_routing.tex
+  pktseg highlight -> network_04_IP.tex, network_05_routing.tex
+  purple -> network_07_nw_app.tex
+  rctcblue -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  rctcgold -> network_05_routing.tex
+  red -> network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  router -> network_01_basics.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex
+  routetable -> network_05_routing.tex
+  server -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex, network_06_nw_services.tex, network_07_nw_app.tex
+  sunnyorange -> network_07_nw_app.tex
+  swampbrown -> network_08_operations_monitor.tex
+  switch -> network_01_basics.tex, network_02_phys_inf.tex, network_03_switches_interfaces.tex, network_04_IP.tex, network_05_routing.tex
+  tablet -> network_01_basics.tex
+  tcpblue -> network_06_nw_services.tex, network_07_nw_app.tex, network_08_operations_monitor.tex
+  toponode -> network_01_basics.tex
+  trunk -> network_05_routing.tex
+  udpgreen -> network_06_nw_services.tex
+  wan -> network_01_basics.tex
+  wan noarrow -> network_01_basics.tex, network_04_IP.tex, network_05_routing.tex
+  white -> network_07_nw_app.tex, network_08_operations_monitor.tex, network_09_security_concepts.tex
+  wifi -> network_03_switches_interfaces.tex
+  wireless noarrow -> network_01_basics.tex
+  yellow -> network_08_operations_monitor.tex

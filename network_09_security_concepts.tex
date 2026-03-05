@@ -1,81 +1,32 @@
+﻿% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
+
 % =============================================================================
-% Module 9.0: Security Concepts
-% Network+ Course - LaTeX Beamer Presentation
-% Theme: The Adventures of Agent Snoopy
+% COMMON PREAMBLE
 % =============================================================================
+\input{network_preamble.tex}
 
-\documentclass[aspectratio=169, 11pt]{beamer}
-
-% Theme and colors
-\usetheme{Madrid}
-\usecolortheme{default}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 150, 100}
-\definecolor{alertred}{RGB}{200, 50, 50}
-\definecolor{aborange}{RGB}{230, 120, 0}
-\definecolor{tcpblue}{RGB}{30, 100, 180}
-\definecolor{udpgreen}{RGB}{50, 160, 80}
-
-% Set theme colors
-\setbeamercolor{palette primary}{bg=rctcblue, fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80, fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60, fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=rctcblue}
-\setbeamercolor{frametitle}{fg=rctcblue, bg=rctcblue!10}
-\setbeamercolor{block title}{bg=rctcblue, fg=white}
-\setbeamercolor{block body}{bg=rctcblue!5}
-\setbeamercolor{block title alerted}{bg=alertred, fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=networkgreen, fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!5}
-
-% Packages
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{fontawesome5}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{array}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% TikZ libraries (Including the fix for snake decoration)
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
-                backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc, decorations.pathmorphing}
-
-% TikZ Styles
-\tikzstyle{process} = [draw=rctcblue, fill=rctcblue!15, rounded corners,
-                       minimum width=1.8cm, minimum height=0.5cm, font=\footnotesize, align=center]
-\tikzstyle{attacker} = [draw=alertred, fill=alertred!15, rounded corners, font=\footnotesize]
-
-% Icon commands (Using custom PNG icons from images/icons/ where available)
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_pc.png}}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_server.png}}}
-\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_router.png}}}
-\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_switch.png}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_firewall.png}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_cloud.png}}}
-\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_lock.png}}}
-\newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
-\newcommand{\iconhacker}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user-secret}}}
-\newcommand{\iconkey}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{key}}}
-\newcommand{\iconfile}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_db.png}}}
-\newcommand{\icondog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{dog}}}
-\newcommand{\iconcat}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cat}}}
-
-% Document info
+% =============================================================================
+% DOCUMENT INFO
+% =============================================================================
 \title[Security Concepts]{Module 9.0: Security Concepts}
 \subtitle{Intro to Networks}
 \author{Brendan Shea, PhD}
 \institute{Rochester Community and Technical College}
 \date{}
+
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
+}
 
 \begin{document}
 
@@ -106,36 +57,64 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+\section*{Review from Module 8}
+
+\begin{frame}{Review: Operations and Monitoring Foundations}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Key Module 8 Ideas}
+                \begin{itemize}
+                    \item Documentation and change control reduce operational risk.
+                    \item Monitoring data (SNMP, syslog, flow, packet capture) improves visibility.
+                    \item Baselines and alerts help teams detect and respond to anomalies quickly.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Why This Matters in Module 9}
+                Security operations depend on reliable telemetry and disciplined operational processes.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 % SLIDE 2: Roadmap
-\begin{frame}{Module 9 Roadmap}
-    \begin{center}
-        \begin{tikzpicture}[scale=0.85, transform shape]
-            \node[process] (concepts) at (0, 3) {9.1 Concepts};
-            \node[process] (threats) at (3, 1.5) {9.2 Threats};
-            \node[process] (spoofing) at (6, 3) {9.3 Spoofing};
-            \node[process] (rogue) at (9, 1.5) {9.4 Rogue Systems};
-            \node[process] (social) at (12, 3) {9.5 Social Eng.};
+\section*{Learning Outcomes}
 
-            \draw[->, thick, rctcblue] (concepts) -- (threats);
-            \draw[->, thick, rctcblue] (threats) -- (spoofing);
-            \draw[->, thick, rctcblue] (spoofing) -- (rogue);
-            \draw[->, thick, rctcblue] (rogue) -- (social);
-
-            \node[below=0.1cm of concepts] {\iconlock[0.5cm]};
-            \node[below=0.1cm of threats] {\iconhacker[0.5cm]};
-            \node[below=0.1cm of spoofing] {\faIcon{mask}};
-            \node[below=0.1cm of rogue] {\faIcon{wifi}};
-            \node[below=0.1cm of social] {\faIcon{user-tie}};
-        \end{tikzpicture}
-    \end{center}
-    \vspace{0.5cm}
-    \begin{alertblock}{The Mission}
-        \footnotesize
-        Help Agent Snoopy defend the KibbleCorp network from the Hacker Cat's attacks using industry-standard tools and techniques.
-    \end{alertblock}
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \small
+    \begin{itemize}
+        \item Explain the \keyterm{CIA Triad}: \keyterm{Confidentiality} (data secrecy), \keyterm{Integrity} (data accuracy), and \keyterm{Availability} (reliable access).
+        \item Distinguish between \keyterm{authentication} (proving identity), \keyterm{authorization} (granting permissions), and \keyterm{accounting} (logging actions) in the AAA framework.
+        \item Describe common threats: \keyterm{DoS/DDoS} (denial of service), \keyterm{malware} (viruses, worms, ransomware), and \keyterm{insider threats} (malicious or negligent employees).
+        \item Explain \keyterm{social engineering} attacks including \keyterm{phishing} (fake emails), \keyterm{vishing} (voice phishing), \keyterm{smishing} (SMS phishing), and \keyterm{tailgating} (physical access).
+        \item Describe \keyterm{spoofing} attacks: \keyterm{MAC spoofing} (impersonating devices), \keyterm{IP spoofing} (forging source addresses), \keyterm{ARP poisoning} (cache manipulation), and \keyterm{DNS poisoning} (name resolution hijacking).
+        \item Identify rogue devices: \keyterm{rogue DHCP servers} (unauthorized IP assignment), \keyterm{rogue access points} (evil twins), and explain mitigation using DHCP snooping and 802.1X authentication.
+        \item Explain password attacks: \keyterm{brute force} (trying all combinations), \keyterm{dictionary attacks} (common words), \keyterm{rainbow tables} (precomputed hashes), and defenses (complexity, length, salting, MFA).
+        \item Describe \keyterm{Defense in Depth} using layered controls: physical security, firewalls, IDS/IPS, access control lists (ACLs), encryption, and security awareness training.
+        \item Use \keyterm{Wireshark} to analyze packet captures and identify security indicators: DoS patterns, ARP poisoning, plaintext credentials, and suspicious traffic.
+        \item Explain the role of \keyterm{penetration testing}, \keyterm{vulnerability scanning}, \keyterm{honeypots} (decoy systems), and \keyterm{SIEM} tools in proactive security operations.
+    \end{itemize}
 \end{frame}
 
 % SLIDE 3: CIA Triad (Analogy Enhanced)
+\section{Security Foundations}
+\subsection{Core Principles and Controls}
+
+\articleonly{
+This section introduces core security principles, governance terms, and foundational controls used in enterprise environments.
+}
+
 \begin{frame}{9.1 Security Terminology: The CIA Triad}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -340,6 +319,13 @@
 \end{frame}
 
 % SLIDE 8: Threat Assessment (Detail Enhanced)
+\section{Threats and Risk Assessment}
+\subsection{DoS, Botnets, and Malware}
+
+\articleonly{
+Threat analysis identifies disruptive and malicious behaviors so teams can prioritize controls and response readiness.
+}
+
 \begin{frame}{9.2 Threat Types and Assessment}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -613,6 +599,13 @@
 \end{frame}
 
 % SLIDE 15: Spoofing Defined
+\section{Spoofing and On-Path Attacks}
+\subsection{Identity and Traffic Manipulation}
+
+\articleonly{
+This section examines identity and traffic manipulation attacks such as spoofing, poisoning, and interception techniques.
+}
+
 \begin{frame}{9.3 Spoofing: The Fake Return Address}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -872,6 +865,13 @@
 % =============================================================================
 
 % SLIDE 22: Rogue Devices
+\section{Rogue Services and Infrastructure Attacks}
+\subsection{Rogue DHCP, DNS, and Access Points}
+
+\articleonly{
+Rogue infrastructure services can redirect or intercept traffic; this section covers common patterns and mitigations.
+}
+
 \begin{frame}{9.4 Rogue Devices and Evil Twins}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1043,6 +1043,13 @@
 \end{frame}
 
 % SLIDE 26: Social Engineering
+\section{Human-Centered Threats}
+\subsection{Social Engineering and Credential Attacks}
+
+\articleonly{
+Human-targeted attacks remain a primary risk vector, requiring awareness, verification processes, and credential hardening.
+}
+
 \begin{frame}{9.5 Social Engineering: Hacking the Human}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1263,6 +1270,13 @@
 \end{frame}
 
 % SLIDE 33: Recap
+\section{Mitigation and Security Operations}
+\subsection{Analysis, Defense in Depth, and Next Steps}
+
+\articleonly{
+The final section synthesizes offensive/defensive perspectives and maps them to layered mitigations and operational response.
+}
+
 \begin{frame}{Recap: Offensive vs. Defensive}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1408,6 +1422,40 @@
 \end{frame}
 
 % SLIDE 37: Questions
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 9.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{CIA Triad}: \keyterm{Confidentiality} (encryption, access control), \keyterm{Integrity} (hashing, digital signatures), \keyterm{Availability} (redundancy, DDoS mitigation).
+        \item \keyterm{AAA}: \keyterm{Authentication} (who are you?), \keyterm{Authorization} (what can you do?), \keyterm{Accounting} (what did you do?). Use TACACS+ or RADIUS.
+        \item \keyterm{DoS/DDoS}: Denial of Service attacks flood targets with traffic. Mitigate with rate limiting, traffic filtering, and CDN protection.
+        \item \keyterm{Malware types}: Viruses (attach to files), Worms (self-replicate), Trojans (disguised), Ransomware (encrypt files for payment). Use antivirus, patching, and backups.
+        \item \keyterm{Social engineering}: Human-based attacks. \keyterm{Phishing} (fake emails), \keyterm{Vishing} (voice calls), \keyterm{Smishing} (SMS), \keyterm{Tailgating} (physical access). Defense: training and awareness.
+        \item \keyterm{Spoofing}: \keyterm{MAC spoofing} (change NIC address), \keyterm{IP spoofing} (forge source IP), \keyterm{ARP poisoning} (man-in-the-middle), \keyterm{DNS poisoning} (redirect to malicious sites).
+        \item Rogue devices: \keyterm{Rogue DHCP} (unauthorized IP assignment, VLAN hopping). \keyterm{Rogue AP} (evil twin). Mitigate with DHCP snooping, 802.1X (port-based NAC), and wireless IDS.
+        \item Password attacks: \keyterm{Brute force} (all combinations), \keyterm{Dictionary} (common words), \keyterm{Rainbow tables} (precomputed hashes). Defense: complexity (8+ chars, mixed case, symbols), \keyterm{salting}, \keyterm{MFA}.
+        \item \keyterm{Defense in Depth}: Layered security. Physical security, network segmentation, firewalls, \keyterm{IDS} (detect), \keyterm{IPS} (prevent), ACLs, encryption (TLS, VPN), security training.
+        \item \keyterm{Wireshark}: Packet capture for forensics. Identify DoS floods, ARP poisoning (duplicate MACs), plaintext passwords (HTTP, Telnet). Filter by protocol, IP, port.
+    \end{itemize}
+    \framebreak
+    \vspace{0.3em}
+    \textbf{Security Operations:}
+    \begin{itemize}
+        \item \keyterm{Penetration testing}: Authorized simulated attacks (red team) to find vulnerabilities before attackers do.
+        \item \keyterm{Vulnerability scanning}: Automated tool (Nessus, OpenVAS) identifying known CVEs and misconfigurations.
+        \item \keyterm{Honeypots}: Decoy systems to lure attackers, gather intelligence, and distract from production assets.
+        \item \keyterm{SIEM}: Security Information and Event Management. Aggregate logs, correlate events, generate alerts. Examples: Splunk, QRadar.
+        \item Security policies: Acceptable Use Policy (AUP), Incident Response Plan, Password Policy, Data Classification, Physical Access Controls.
+    \end{itemize}
+\end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module covered network security concepts: the CIA Triad and AAA framework, common threats (DoS, malware, social engineering), spoofing attacks (MAC, IP, ARP, DNS), rogue devices and password cracking, and Defense in Depth strategies. You learned how to analyze attacks using Wireshark and implement layered security controls. This concludes the network fundamentals series---you are now equipped with foundational knowledge to secure, monitor, and operate enterprise networks.
+}
+
 \begin{frame}{Questions?}
     \begin{center}
         \begin{tikzpicture}[scale=1.5]

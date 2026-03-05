@@ -1,251 +1,12 @@
-\documentclass[aspectratio=169]{beamer}
+﻿% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
 
 % =============================================================================
-% THEME AND COLORS
+% COMMON PREAMBLE
 % =============================================================================
-\usetheme{Madrid}
-\usecolortheme{whale}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 128, 64}
-\definecolor{alertred}{RGB}{180, 0, 0}
-\definecolor{aborange}{RGB}{230, 126, 34}
-\definecolor{copperbrown}{RGB}{184, 115, 51}
-\definecolor{fiberyellow}{RGB}{255, 215, 0}
-\definecolor{ipblue}{RGB}{52, 152, 219}
-\definecolor{ippurple}{RGB}{155, 89, 182}
-\definecolor{vlangreen}{RGB}{39, 174, 96}
-\definecolor{aborange}{RGB}{230, 126, 34}
-
-\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white,bg=rctcblue}
-\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
-\setbeamercolor{block title}{bg=rctcblue,fg=white}
-\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
-\setbeamercolor{block title alerted}{bg=alertred,fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
-\setbeamercolor{block title example}{bg=networkgreen,fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
-
-% =============================================================================
-% PACKAGES
-% =============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[table]{xcolor}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{amssymb}
-\usepackage{calc}
-
-% =============================================================================
-% TIKZ LIBRARIES AND SETUP
-% =============================================================================
-\usetikzlibrary{
-    shapes.geometric,
-    shapes.symbols,
-    shapes.misc,
-    arrows.meta,
-    positioning,
-    calc,
-    fit,
-    backgrounds,
-    decorations.pathreplacing,
-    matrix,
-    chains
-}
-
-% Graphics path for icons
-\graphicspath{
-    {../images/icons/}
-    {./images/icons/}
-    {images/icons/}
-    {../images/ch5/}
-    {./images/ch5/}
-    {images/ch5/}
-}
-
-% =============================================================================
-% NETWORK DIAGRAM STYLES
-% =============================================================================
-\tikzset{
-    % Node styles for network devices
-    device/.style={
-        inner sep=2pt,
-        label distance=2pt
-    },
-    pc/.style={device},
-    laptop/.style={device},
-    server/.style={device},
-    router/.style={device},
-    switch/.style={device},
-    firewall/.style={device},
-    cloud/.style={device},
-    phone/.style={device},
-    tablet/.style={device},
-    wifi/.style={device},
-    % Connection styles
-    ethernet/.style={
-        draw=rctcblue,
-        line width=1.5pt,
-        -{Stealth[length=3mm]}
-    },
-    ethernet noarrow/.style={
-        draw=rctcblue,
-        line width=1.5pt
-    },
-    wireless/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed,
-        -{Stealth[length=3mm]}
-    },
-    wireless noarrow/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed
-    },
-    wan/.style={
-        draw=alertred,
-        line width=2pt,
-        -{Stealth[length=3mm]}
-    },
-    wan noarrow/.style={
-        draw=alertred,
-        line width=2pt
-    },
-    trunk/.style={
-        draw=ippurple,
-        line width=2.5pt,
-        double
-    },
-    % OSI layer style
-    osilayer/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=4cm,
-        minimum height=0.55cm,
-        font=\small
-    },
-    osilayer highlight/.style={
-        draw=rctcblue,
-        line width=2pt,
-        minimum width=4cm,
-        minimum height=0.55cm,
-        font=\small\bfseries,
-        fill=rctcgold!30
-    },
-    % Packet segment style
-    pktseg/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum height=0.7cm,
-        font=\footnotesize,
-        fill=rctcblue!10
-    },
-    pktseg highlight/.style={
-        draw=ipblue,
-        line width=1.5pt,
-        minimum height=0.7cm,
-        font=\footnotesize\bfseries,
-        fill=ipblue!20
-    },
-    % IP address box style
-    ipbox/.style={
-        draw=ipblue,
-        line width=1pt,
-        minimum height=0.6cm,
-        minimum width=1.2cm,
-        font=\small\ttfamily,
-        fill=ipblue!10,
-        rounded corners=2pt
-    },
-    % MAC address box style
-    macbox/.style={
-        draw=networkgreen,
-        line width=1pt,
-        minimum height=0.6cm,
-        minimum width=1.5cm,
-        font=\small\ttfamily,
-        fill=networkgreen!10,
-        rounded corners=2pt
-    },
-    % Routing table style
-    routetable/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=2cm,
-        minimum height=0.5cm,
-        font=\small\ttfamily,
-        fill=rctcblue!5
-    },
-    % VLAN box style
-    vlanbox/.style={
-        draw=vlangreen,
-        line width=1.5pt,
-        rounded corners=4pt,
-        fill=vlangreen!10
-    }
-}
-
-% =============================================================================
-% ICON COMMANDS
-% =============================================================================
-\newcommand{\iconpc}[1][0.6cm]{\includegraphics[height=#1]{icon_pc}}
-\newcommand{\iconlaptop}[1][0.6cm]{\includegraphics[height=#1]{icon_laptop}}
-\newcommand{\iconserver}[1][0.6cm]{\includegraphics[height=#1]{icon_server}}
-\newcommand{\iconrouter}[1][0.6cm]{\includegraphics[height=#1]{icon_router}}
-\newcommand{\iconswitch}[1][0.6cm]{\includegraphics[height=#1]{icon_switch}}
-\newcommand{\iconfirewall}[1][0.6cm]{\includegraphics[height=#1]{icon_firewall}}
-\newcommand{\iconcloud}[1][0.6cm]{\includegraphics[height=#1]{icon_cloud}}
-\newcommand{\iconphone}[1][0.6cm]{\includegraphics[height=#1]{icon_phone}}
-\newcommand{\icontablet}[1][0.6cm]{\includegraphics[height=#1]{icon_tablet}}
-\newcommand{\iconwifi}[1][0.6cm]{\includegraphics[height=#1]{icon_wifi}}
-\newcommand{\iconlock}[1][0.6cm]{\includegraphics[height=#1]{icon_lock}}
-\newcommand{\icondb}[1][0.6cm]{\includegraphics[height=#1]{icon_db}}
-\newcommand{\iconvoip}[1][0.6cm]{\includegraphics[height=#1]{icon_voip_phone}}
-
-% =============================================================================
-% CUSTOM COMMANDS
-% =============================================================================
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{#1}}
-
-% Slide section marker
-\newcommand{\sectionslide}[1]{
-    \begin{frame}
-        \vfill
-        \centering
-        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-            \usebeamerfont{title}\Huge #1
-        \end{beamercolorbox}
-        \vfill
-    \end{frame}
-}
-
-% Case study frame environment
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
-}{%
-    \end{alertblock}
-}
-
-% Solution frame environment  
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{$\checkmark$ Solution: #1}
-}{%
-    \end{exampleblock}
-}
+\input{network_preamble.tex}
 
 % =============================================================================
 % DOCUMENT INFO
@@ -256,26 +17,17 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-% Slide numbers
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-            \usebeamerfont{title in head/foot}\insertshorttitle
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-        \end{beamercolorbox}}%
-    \vskip0pt%
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
 }
 
-% =============================================================================
-% DOCUMENT BEGINS
-% =============================================================================
 \begin{document}
 
 % =============================================================================
@@ -327,9 +79,20 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+
 % =============================================================================
 % SLIDE 2: Review - From IP Addressing to Routing
 % =============================================================================
+\section*{Review from Module 4}
+
 \begin{frame}{Review: From IP Addressing to Routing}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -373,7 +136,7 @@
 % =============================================================================
 % SLIDE 3: Module Overview and Learning Outcomes
 % =============================================================================
-\begin{frame}{Module Overview and Learning Outcomes}
+\begin{frame}[t,shrink=10]{Module Overview and Learning Outcomes}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Topics Covered}
@@ -403,56 +166,18 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 4: Key Terms Preview
-% =============================================================================
-\begin{frame}{Key Terms Preview}
-    \small
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Routing Concepts}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{Routing Table} -- Known destinations
-                    \item \keyterm{Default Route} -- Path when no match
-                    \item \keyterm{Hop} -- Each router along path
-                    \item \keyterm{Metric} -- Cost to choose best route
-                \end{itemize}
-            \end{block}
-            
-            \begin{block}{Routing Protocols}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{RIP} -- Simple, hop-count based
-                    \item \keyterm{OSPF} -- Open standard, link-state
-                    \item \keyterm{EIGRP} -- Cisco enhanced protocol
-                    \item \keyterm{BGP} -- Internet backbone routing
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Network Services}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{NAT} -- Private to public IP translation
-                    \item \keyterm{PAT} -- Many hosts, one public IP
-                    \item \keyterm{Firewall} -- Filters traffic
-                    \item \keyterm{Edge Router} -- Gateway to outside
-                \end{itemize}
-            \end{block}
-            
-            \begin{block}{VLAN Concepts}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{VLAN} -- Virtual LAN segmentation
-                    \item \keyterm{Trunk} -- Carries multiple VLANs
-                    \item \keyterm{802.1Q} -- VLAN tagging standard
-                    \item \keyterm{Native VLAN} -- Untagged traffic
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
+
 
 % =============================================================================
 % SLIDE 5: The Router - Gateway Between Networks
 % =============================================================================
+\section{Routing Foundations}
+\subsection{Routers and Path Selection}
+
+\articleonly{
+This section introduces router roles, routing tables, and packet forwarding behavior across network boundaries.
+}
+
 \begin{frame}{The Router: Gateway Between Networks}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -925,6 +650,13 @@
 % =============================================================================
 % SLIDE 13: Basic Router Configuration
 % =============================================================================
+\section{Router Configuration and Tools}
+\subsection{Static Routing and Diagnostics}
+
+\articleonly{
+This section focuses on practical router setup, route verification, and path diagnostics using common operational tools.
+}
+
 \begin{frame}{Basic Router Configuration}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1100,6 +832,13 @@
 % =============================================================================
 % SLIDE 16: Dynamic Routing Protocols Overview
 % =============================================================================
+\section{Dynamic Routing Protocols}
+\subsection{RIP, EIGRP, OSPF, and BGP}
+
+\articleonly{
+Dynamic routing protocols exchange topology information automatically and select best paths based on protocol metrics and policies.
+}
+
 \begin{frame}{Dynamic Routing Protocols Overview}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1505,6 +1244,13 @@
 % =============================================================================
 % SLIDE 23: Edge Routers and Network Boundaries
 % =============================================================================
+\section{Edge Services and Translation}
+\subsection{NAT, PAT, and Firewalls}
+
+\articleonly{
+At the network edge, address translation and filtering enforce policy while enabling internal hosts to reach external networks.
+}
+
 \begin{frame}{Edge Routers and Network Boundaries}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1902,6 +1648,13 @@
 % =============================================================================
 % SLIDE 29: Introduction to VLANs
 % =============================================================================
+\section{VLAN Segmentation and Trunking}
+\subsection{VLAN Design and Security}
+
+\articleonly{
+This section introduces VLAN segmentation, trunking, and security practices for multi-segment switched environments.
+}
+
 \begin{frame}{Introduction to VLANs}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -2216,7 +1969,7 @@
 % =============================================================================
 % SLIDE 34: Case Study Solution - Miracle Max's Potion Shop
 % =============================================================================
-\begin{frame}{Case Study Solution: Miracle Max's Potion Shop}
+\begin{frame}[t,shrink=12]{Case Study Solution: Miracle Max's Potion Shop}
     \begin{casesolution}{Miracle Max's Potion Shop}
         \small
         \begin{enumerate}\setlength{\itemsep}{1pt}
@@ -2270,103 +2023,39 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 35: Module Summary (Part 1)
+% SLIDE 35: Module 5.0 Summary
 % =============================================================================
-\begin{frame}{Module 5 Summary (Part 1)}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Routing Fundamentals}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item Routers connect networks at Layer 3
-                    \item \textbf{Routing tables} store known destinations
-                    \item \textbf{Longest prefix match} selects best route
-                    \item \textbf{Static routes}: Manual, predictable
-                    \item \textbf{Default route}: Gateway of last resort
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.2em}
-            \begin{block}{Dynamic Routing}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item \textbf{RIP}: Simple, hop count (max 15)
-                    \item \textbf{EIGRP}: Cisco, fast convergence
-                    \item \textbf{OSPF}: Open standard, link-state
-                    \item \textbf{BGP}: Internet backbone routing
-                    \item \textbf{AD} decides between protocols
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{NAT and PAT}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item \textbf{NAT} translates private to public IPs
-                    \item \textbf{Static NAT}: 1:1 mapping
-                    \item \textbf{Dynamic NAT}: Pool-based
-                    \item \textbf{PAT}: Many-to-one using ports
-                    \item PAT is most common (home routers)
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.2em}
-            \begin{block}{Firewalls}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item Filter traffic based on rules
-                    \item Types: Packet, Stateful, App, NGFW
-                    \item \textbf{DMZ}: Screened subnet for servers
-                    \item Defense in depth = multiple layers
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 5.0 Summary}
+    \scriptsize
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{Routers} connect networks at Layer 3. \keyterm{Routing tables} store known destinations; \keyterm{longest prefix match} selects best route.
+        \item \keyterm{Static routes}: Manually configured, predictable. \keyterm{Default route} (0.0.0.0/0) is gateway of last resort.
+        \item Dynamic routing: \keyterm{RIP} (hop count, max 15), \keyterm{EIGRP} (Cisco, fast convergence), \keyterm{OSPF} (open standard, link-state), \keyterm{BGP} (internet backbone).
+        \framebreak
+        \item \keyterm{Administrative Distance (AD)} determines protocol trustworthiness: Direct (0) > Static (1) > EIGRP (90) > OSPF (110) > RIP (120).
+        \item \keyterm{NAT} translates private IPs to public. Types: \keyterm{Static NAT} (1:1), \keyterm{Dynamic NAT} (pool), \keyterm{PAT} (many-to-one using ports).
+        \item \keyterm{Firewalls} filter traffic: Packet filter, Stateful, Application-level, \keyterm{NGFW} (Next-Generation). \keyterm{DMZ} = screened subnet for servers.
+    \end{itemize}
+    \framebreak
+    
+    \vspace{0.3em}
+    \textbf{VLANs \& Network Design:}
+    \begin{itemize}
+        \item \keyterm{VLANs} logically segment networks on one switch, creating separate broadcast domains for security, performance, and flexibility.
+        \item \keyterm{802.1Q} tags frames with VLAN ID (1-4094). \keyterm{Trunk ports} carry multiple VLANs. \keyterm{Native VLAN}: untagged traffic.
+        \item \keyterm{Voice VLANs} separate voice from data traffic, apply QoS priority (one port, two VLANs).
+        \item \keyterm{Inter-VLAN routing} requires Layer 3 device (router or Layer 3 switch with \keyterm{SVI} - Switched Virtual Interface).
+        \item \keyterm{Three-tier hierarchy}: \keyterm{Core} (backbone), \keyterm{Distribution} (policy/routing), \keyterm{Access} (end-device connection).
+        \item \keyterm{Spine-leaf architecture}: Modern data center design with predictable latency and no oversubscription.
+    \end{itemize}
 \end{frame}
 
-% =============================================================================
-% SLIDE 36: Module Summary (Part 2)
-% =============================================================================
-\begin{frame}{Module 5 Summary (Part 2)}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{VLANs}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item Logically segment one switch
-                    \item Create separate broadcast domains
-                    \item Benefits: Security, performance, flexibility
-                    \item \textbf{802.1Q} tags frames with VLAN ID
-                    \item \textbf{Trunk ports} carry multiple VLANs
-                    \item \textbf{Native VLAN}: Untagged traffic
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.2em}
-            \begin{block}{Voice VLANs}
-                \small
-                \begin{itemize}\setlength{\itemsep}{2pt}
-                    \item Separate voice from data traffic
-                    \item QoS priority for phone calls
-                    \item One port, two VLANs (data + voice)
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Key Takeaways}
-                \small
-                \begin{enumerate}\setlength{\itemsep}{3pt}
-                    \item Routers make forwarding decisions based on \textbf{destination IP} and routing table
-                    \item \textbf{Administrative Distance} determines protocol trustworthiness
-                    \item \textbf{NAT/PAT} conserve public IP addresses
-                    \item \textbf{Firewalls} protect network boundaries
-                    \item \textbf{VLANs} provide logical segmentation
-                    \item \textbf{Inter-VLAN routing} requires Layer 3
-                \end{enumerate}
-            \end{block}
-            
-        \end{column}
-    \end{columns}
-\end{frame}
+\articleonly{
+\subsection*{Conclusion}
+This module explored routing protocols, network address translation, firewalls, VLANs, and enterprise network design. You learned how routers make forwarding decisions, how dynamic routing protocols adapt to topology changes, how NAT/PAT conserve addresses, and how VLANs provide logical segmentation. In the next module, we'll examine network services including DHCP and DNS.
+}
 
 \end{document}

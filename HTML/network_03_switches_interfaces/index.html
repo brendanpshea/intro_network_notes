@@ -1,0 +1,1319 @@
+﻿<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title></title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='network_03_switches_interfaces_article_tmp.css' rel='stylesheet' type='text/css' /> 
+<meta content='network_03_switches_interfaces_article_tmp.tex' name='src' /> 
+<link href='../articles.css' rel='stylesheet' type='text/css' />
+</head><body>
+<p><a id='x1-2r1'></a>
+</p><div class='center'>
+<!-- l. 38 --><p class='noindent'>
+</p><!-- l. 57 --><p class='noindent'>      <img alt='�NxSw�NAAAAICiIC::tcBBBBh:C:CCC:1:41:4:252:5:3366 ' src='network_03_switches_interfaces_article_tmp0x.svg' />
+</p><!-- l. 57 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<h3 class='likesectionHead' id='review-from-module-'><a id='x1-1000'></a>Review from Module 2</h3>
+<p><a id='x1-1001r2'></a>
+<!-- l. 76 --></p><p class='noindent'><span class='likeparagraphHead' id='review-from-cables-to-connections'><a id='x1-2000'></a>Review: From Cables to Connections</span>
+ 
+</p><!-- l. 76 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Module 2 covered <span class='ec-lmbx-10x-x-109'>physical cables</span>—copper, fiber, and connectors.
+     </li>
+     <li class='itemize'>Today’s question: What do those cables <span class='ec-lmri-10x-x-109'>plug into</span>?
+     </li>
+     <li class='itemize'>
+     <!-- l. 81 --><p class='noindent'>Two key components: </p>
+                                                                     
+
+                                                                     
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmbx-10x-x-109'>NICs</span>—in computers (endpoints)
+          </li>
+          <li class='itemize'><span class='ec-lmbx-10x-x-109'>Switches</span>—connecting everything together</li></ul>
+     </li>
+     <li class='itemize'>We’re moving from Layer 1 (Physical) into Layer 2 (Data Link).</li></ul>
+<!-- l. 90 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Layer 2 Focus</span>
+</p><!-- l. 90 --><p class='noindent'>Cables carry bits, but NICs and switches work with <span class='ec-lmbx-10x-x-109'>frames </span>and <span class='ec-lmbx-10x-x-109'>MAC
+addresses</span>.
+</p>
+<div class='center'>
+<!-- l. 95 --><p class='noindent'>
+</p><!-- l. 115 --><p class='noindent'>               <img alt='7654321TM.......oo A P S T N PddprereDha2pesatayylssnwts!ieiosoaicnnprcatokLatariliotitnnokn ' src='network_03_switches_interfaces_article_tmp1x.svg' />
+</p><!-- l. 115 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-2001r3'></a>
+                                                                     
+
+                                                                     
+<!-- l. 125 --></p><p class='noindent'><span class='likeparagraphHead' id='learning-outcomes'><a id='x1-3000'></a>Learning Outcomes</span>
+ 
+</p><!-- l. 125 --><p class='noindent'>
+</p><!-- l. 125 --><p class='noindent'>After completing this module, you will be able to: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Explain the function of <span class='ec-lmbx-10x-x-109'>Network Interface Cards (NICs) </span>and their
+     role in host connectivity.
+     </li>
+     <li class='itemize'>Identify and describe <span class='ec-lmbx-10x-x-109'>modular transceivers </span>including SFP, SFP+,
+     and QSFP.
+     </li>
+     <li class='itemize'>Interpret <span class='ec-lmbx-10x-x-109'>MAC addresses </span>and explain the <span class='ec-lmbx-10x-x-109'>OUI </span>(Organizationally
+     Unique Identifier) format.
+     </li>
+     <li class='itemize'>Describe the structure of an <span class='ec-lmbx-10x-x-109'>Ethernet frame </span>and identify its key
+     fields.
+     </li>
+     <li class='itemize'>Compare  and  contrast  <span class='ec-lmbx-10x-x-109'>hubs</span>,  <span class='ec-lmbx-10x-x-109'>bridges</span>,  and  <span class='ec-lmbx-10x-x-109'>switches </span>as  Layer  2
+     devices.
+     </li>
+     <li class='itemize'>Explain how switches use <span class='ec-lmbx-10x-x-109'>MAC address tables </span>to make forwarding
+     decisions.
+     </li>
+     <li class='itemize'>Configure basic switch settings including hostnames, IP addresses, and
+     <span class='ec-lmbx-10x-x-109'>link aggregation</span>.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Describe advanced switch features including <span class='ec-lmbx-10x-x-109'>STP</span>, <span class='ec-lmbx-10x-x-109'>PoE</span>, and Layer 3
+     switching.
+     </li>
+     <li class='itemize'>Troubleshoot common switch problems using LED indicators, <span class='ec-lmbx-10x-x-109'>show
+     commands</span>, and error counters.</li></ul>
+<!-- l. 145 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='network-interface-foundations'><span class='titlemark'>1   </span> <a id='x1-40001'></a>Network Interface Foundations</h3>
+<!-- l. 146 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='nic-fundamentals'><span class='titlemark'>1.1   </span> <a id='x1-50001.1'></a>NIC Fundamentals</h4>
+<!-- l. 150 --><p class='noindent'>This section introduces network interfaces and transceivers, the hardware
+endpoints that connect hosts to Ethernet networks and expose physical and
+data-link functions.
+<a id='x1-5001r4'></a>
+</p>
+<!-- l. 153 --><p class='noindent'><span class='likeparagraphHead' id='what-is-a-network-interface-card-nic'><a id='x1-6000'></a>What is a Network Interface Card (NIC)?</span>
+ 
+</p><!-- l. 153 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>NIC </span>is the hardware that connects a computer to the network.
+     </li>
+     <li class='itemize'>Every NIC has a unique <span class='ec-lmbx-10x-x-109'>MAC address </span>burned in at the factory.
+     </li>
+     <li class='itemize'>NICs translate between computer data and network signals (electrical
+     or optical).
+     </li>
+     <li class='itemize'>Modern computers usually have NICs built into the motherboard.</li></ul>
+<!-- l. 163 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>NIC Responsibilities</span>
+</p><!-- l. 163 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Create and process Ethernet frames
+     </li>
+     <li class='itemize'>Convert data to/from network signals
+     </li>
+     <li class='itemize'>Manage link speed and duplex settings</li></ul>
+<div class='center'>
+<!-- l. 172 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 192 --><p class='noindent'> <img alt='CNTo00oIM:1mCSwAApiC:2utcAB:thd3edC:rre4Dss:5E ' src='network_03_switches_interfaces_article_tmp2x.svg' />
+</p><!-- l. 192 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 196 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Point</span>
+</p><!-- l. 196 --><p class='noindent'>Without a NIC, your computer is an island—no network access!
+<a id='x1-6001r5'></a>
+</p>
+<!-- l. 210 --><p class='noindent'><span class='likeparagraphHead' id='nic-examples'><a id='x1-7000'></a>NIC Examples</span>
+ 
+</p><!-- l. 210 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 210 --><p class='noindent'>
+</p><!-- l. 213 --><p class='noindent'><img alt='PIC' height='288' src='./images/ch3/three_NICs.png' width='288' /><br />
+<span class='ec-lmri-10'>Figure: Examples of network interface cards with different ports and form factors.</span>
+</p>
+</div>
+<div class='center'>
+<!-- l. 215 --><p class='noindent'>
+</p><!-- l. 217 --><p class='noindent'><span class='ec-lmr-10'>Examples of different network interface cards showing various form factors and
+connector types.</span></p></div>
+                                                                     
+
+                                                                     
+<p><a id='x1-7001r6'></a>
+<!-- l. 225 --></p><p class='noindent'><span class='likeparagraphHead' id='nic-features-and-specifications'><a id='x1-8000'></a>NIC Features and Specifications</span>
+ 
+</p><!-- l. 225 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Speed ratings</span>: 1 Gbps, 10 Gbps, 25 Gbps, 100 Gbps.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Connector types</span>: RJ-45 (copper) or SFP/SFP+ (fiber).
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Wake-on-LAN (WoL)</span>: Start a powered-off computer remotely over
+     the network.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Offloading</span>:  NIC  handles  checksums,  segmentation—reduces  CPU
+     load.
+     </li>
+     <li class='itemize'>Server NICs often have multiple ports.</li></ul>
+<!-- l. 236 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Auto-Negotiation</span>
+</p><!-- l. 236 --><p class='noindent'>NICs automatically negotiate the best speed and duplex with the switch. Usually
+“just works”!
+</p>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 241 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-1'><colgroup id='TBL-1-1g'><col id='TBL-1-1' /><col id='TBL-1-2' /></colgroup><tr id='TBL-1-1-'><td class='td11' id='TBL-1-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>NIC Type     </span></td><td class='td11' id='TBL-1-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>Typical Use      </span></td>
+</tr><tr id='TBL-1-2-'><td class='td11' id='TBL-1-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>1 Gbps RJ-45    </span></td><td class='td11' id='TBL-1-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Desktops, laptops  </span></td>
+</tr><tr id='TBL-1-3-'><td class='td11' id='TBL-1-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>10 Gbps RJ-45  </span></td><td class='td11' id='TBL-1-3-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Workstations        </span></td>
+</tr><tr id='TBL-1-4-'><td class='td11' id='TBL-1-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>10 Gbps SFP+  </span></td><td class='td11' id='TBL-1-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Servers                </span></td>
+</tr><tr id='TBL-1-5-'><td class='td11' id='TBL-1-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>25/100 Gbps     </span></td><td class='td11' id='TBL-1-5-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Data centers        </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 256 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Dual-Port NICs</span>
+</p><!-- l. 256 --><p class='noindent'>Servers use multiple NIC ports for: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Redundancy (failover)
+     </li>
+     <li class='itemize'>Increased bandwidth
+     </li>
+     <li class='itemize'>Separate networks</li></ul>
+<p><a id='x1-8001r7'></a>
+<!-- l. 270 --></p><p class='noindent'><span class='likeparagraphHead' id='what-is-a-transceiver'><a id='x1-9000'></a>What is a Transceiver?</span>
+ 
+</p><!-- l. 270 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>transceiver </span>is a device that both <span class='ec-lmbx-10x-x-109'>transmits </span>and <span class='ec-lmbx-10x-x-109'>receives </span>signals.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Converts between electrical signals (inside the device) and optical or
+     electrical signals (on the cable).
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>TX</span>: Transmit (outgoing signal)
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>RX</span>: Receive (incoming signal)
+     </li>
+     <li class='itemize'>Think  of  it  as  a  translator  between  two  different  “languages”  of
+     communication.</li></ul>
+<!-- l. 281 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Why Transceivers Matter</span>
+</p><!-- l. 281 --><p class='noindent'>Without a transceiver, your switch can’t understand fiber optic light signals—it
+only speaks electrical!
+</p>
+<div class='center'>
+<!-- l. 286 --><p class='noindent'>
+</p><!-- l. 289 --><p class='noindent'><img alt='PIC' height='360' src='./images/ch3/transceiver_cutaway.png' width='360' /><br />
+<span class='ec-lmri-10'>Figure: Transceiver cutaway showing optical/electrical conversion components.</span>
+</p>
+</div>
+<!-- l. 293 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Components</span>
+</p><!-- l. 293 --><p class='noindent'><span class='ec-lmbx-10'>Laser/LED</span><span class='ec-lmr-10'>: Converts electrical </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>light  </span><span class='ec-lmbx-10'>Photodetector</span><span class='ec-lmr-10'>: Converts light </span><span class='lmsy-10'>→ </span><span class='ec-lmr-10'>electrical
+</span><span class='ec-lmbx-10'>Circuit board</span><span class='ec-lmr-10'>: Manages the conversion</span>
+<a id='x1-9001r8'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 305 --><p class='noindent'><span class='likeparagraphHead' id='table-types-of-transceivers'><a id='x1-10000'></a>Table: Types of Transceivers</span>
+ 
+</p><!-- l. 305 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 305 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-2'><colgroup id='TBL-2-1g'><col id='TBL-2-1' /><col id='TBL-2-2' /><col id='TBL-2-3' /><col id='TBL-2-4' /><col id='TBL-2-5' /></colgroup><tr id='TBL-2-1-'><td class='td11' id='TBL-2-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Transceiver  </span></td><td class='td11' id='TBL-2-1-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Speed     </span></td><td class='td11' id='TBL-2-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Cable Type   </span></td><td class='td11' id='TBL-2-1-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Connector  </span></td><td class='td11' id='TBL-2-1-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Distance         </span></td>
+</tr><tr id='TBL-2-2-'><td class='td11' id='TBL-2-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>SFP               </span></td><td class='td11' id='TBL-2-2-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>1 Gbps     </span></td><td class='td11' id='TBL-2-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MMF or SMF   </span></td><td class='td11' id='TBL-2-2-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>LC              </span></td><td class='td11' id='TBL-2-2-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>550m (MMF)      </span></td>
+</tr><tr id='TBL-2-3-'><td class='td11' id='TBL-2-3-1' style='white-space:nowrap; text-align:left;'>               </td><td class='td11' id='TBL-2-3-2' style='white-space:nowrap; text-align:left;'>           </td><td class='td11' id='TBL-2-3-3' style='white-space:nowrap; text-align:left;'>                </td><td class='td11' id='TBL-2-3-4' style='white-space:nowrap; text-align:left;'>             </td><td class='td11' id='TBL-2-3-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10km (SMF)       </span></td>
+</tr><tr id='TBL-2-4-'><td class='td11' id='TBL-2-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>SFP+            </span></td><td class='td11' id='TBL-2-4-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10 Gbps    </span></td><td class='td11' id='TBL-2-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MMF or SMF   </span></td><td class='td11' id='TBL-2-4-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>LC              </span></td><td class='td11' id='TBL-2-4-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>300m (MMF)      </span></td>
+</tr><tr id='TBL-2-5-'><td class='td11' id='TBL-2-5-1' style='white-space:nowrap; text-align:left;'>               </td><td class='td11' id='TBL-2-5-2' style='white-space:nowrap; text-align:left;'>           </td><td class='td11' id='TBL-2-5-3' style='white-space:nowrap; text-align:left;'>                </td><td class='td11' id='TBL-2-5-4' style='white-space:nowrap; text-align:left;'>             </td><td class='td11' id='TBL-2-5-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10–80km (SMF)  </span></td>
+</tr><tr id='TBL-2-6-'><td class='td11' id='TBL-2-6-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>QSFP            </span></td><td class='td11' id='TBL-2-6-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>40 Gbps    </span></td><td class='td11' id='TBL-2-6-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MMF or SMF   </span></td><td class='td11' id='TBL-2-6-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MPO/MTP  </span></td><td class='td11' id='TBL-2-6-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>100m (MMF)      </span></td>
+</tr><tr id='TBL-2-7-'><td class='td11' id='TBL-2-7-1' style='white-space:nowrap; text-align:left;'>               </td><td class='td11' id='TBL-2-7-2' style='white-space:nowrap; text-align:left;'>           </td><td class='td11' id='TBL-2-7-3' style='white-space:nowrap; text-align:left;'>                </td><td class='td11' id='TBL-2-7-4' style='white-space:nowrap; text-align:left;'>             </td><td class='td11' id='TBL-2-7-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10km (SMF)       </span></td>
+</tr><tr id='TBL-2-8-'><td class='td11' id='TBL-2-8-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>QSFP28         </span></td><td class='td11' id='TBL-2-8-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>100 Gbps  </span></td><td class='td11' id='TBL-2-8-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MMF or SMF   </span></td><td class='td11' id='TBL-2-8-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MPO/MTP  </span></td><td class='td11' id='TBL-2-8-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>100m (MMF)      </span></td>
+</tr><tr id='TBL-2-9-'><td class='td11' id='TBL-2-9-1' style='white-space:nowrap; text-align:left;'>               </td><td class='td11' id='TBL-2-9-2' style='white-space:nowrap; text-align:left;'>           </td><td class='td11' id='TBL-2-9-3' style='white-space:nowrap; text-align:left;'>                </td><td class='td11' id='TBL-2-9-4' style='white-space:nowrap; text-align:left;'>             </td><td class='td11' id='TBL-2-9-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10km (SMF)       </span></td>
+
+</tr><tr id='TBL-2-10-'><td class='td11' id='TBL-2-10-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>GBIC             </span></td><td class='td11' id='TBL-2-10-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>1 Gbps     </span></td><td class='td11' id='TBL-2-10-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>MMF or SMF   </span></td><td class='td11' id='TBL-2-10-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>SC              </span></td><td class='td11' id='TBL-2-10-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>550m (MMF)      </span></td>
+</tr><tr id='TBL-2-11-'><td class='td11' id='TBL-2-11-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>(legacy)          </span></td><td class='td11' id='TBL-2-11-2' style='white-space:nowrap; text-align:left;'>           </td><td class='td11' id='TBL-2-11-3' style='white-space:nowrap; text-align:left;'>                </td><td class='td11' id='TBL-2-11-4' style='white-space:nowrap; text-align:left;'>             </td><td class='td11' id='TBL-2-11-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10km (SMF)       </span></td>
+
+</tr><tr id='TBL-2-12-'><td class='td11' id='TBL-2-12-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>SFP-T            </span></td><td class='td11' id='TBL-2-12-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>1 Gbps     </span></td><td class='td11' id='TBL-2-12-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>Copper (UTP)  </span></td><td class='td11' id='TBL-2-12-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>RJ-45          </span></td><td class='td11' id='TBL-2-12-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>100m                </span></td>
+
+</tr><tr id='TBL-2-13-'><td class='td11' id='TBL-2-13-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>SFP+ DAC     </span></td><td class='td11' id='TBL-2-13-2' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>10 Gbps    </span></td><td class='td11' id='TBL-2-13-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>Twinax copper  </span></td><td class='td11' id='TBL-2-13-4' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>Integrated    </span></td><td class='td11' id='TBL-2-13-5' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>3–7m                </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 335 --><p class='noindent'><span class='ec-lmbx-8'>MMF </span><span class='ec-lmr-8'>= Multimode Fiber    </span><span class='ec-lmbx-8'>SMF </span><span class='ec-lmr-8'>= Single-mode Fiber    </span><span class='ec-lmbx-8'>DAC </span><span class='ec-lmr-8'>= Direct Attach Cable.</span><br />
+<span class='ec-lmr-8'>Always match transceiver type to cable type and required distance.</span>  <a id='x1-10001r9'></a>
+</p>
+<!-- l. 343 --><p class='noindent'><span class='likeparagraphHead' id='layer-physical-infrastructure-at-the-green-dragon'><a id='x1-11000'></a>Layer 1: Physical Infrastructure at the Green Dragon</span>
+ 
+</p><!-- l. 343 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 343 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 368 --><p class='noindent'>     <img alt='xCxC�FxK�MxIMCCCSeoriaSMaaaMllrontcnPFt6t6t5Faetha Uer S Degp Sweneleisrinrvtckkehr ' src='network_03_switches_interfaces_article_tmp3x.svg' />
+</p><!-- l. 368 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 372 --><p class='noindent'><span class='ec-lmr-8'>Layer 1 maps physical links between endpoints, switching infrastructure, and uplinks.</span>
+<a id='x1-11001r10'></a>
+</p>
+<!-- l. 379 --><p class='noindent'><span class='likeparagraphHead' id='transceiver-issues'><a id='x1-12000'></a>Transceiver Issues</span>
+ 
+</p><!-- l. 379 --><p class='noindent'>
+</p><!-- l. 381 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Mismatch Issues</span>
+</p><!-- l. 381 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>SFP in SFP+ port: May work at reduced speed</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>SFP+ in SFP port: </span><span class='ec-lmbx-10'>Won’t work</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Different vendors may be incompatible (some switches are picky!)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Fiber type mismatch: MMF transceiver + SMF cable = no link</span></li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 392 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Vendor Lock-In</span>
+</p><!-- l. 392 --><p class='noindent'>Some manufacturers only accept their own branded transceivers. Third-party
+modules are cheaper but may not work.
+</p><!-- l. 397 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Signal Strength Issues</span>
+</p><!-- l. 397 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>TX power</span><span class='ec-lmr-10'>: How strong the transmit signal is</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>RX sensitivity</span><span class='ec-lmr-10'>: Minimum signal the receiver can detect</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Too little power = signal doesn’t reach</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Too much power = overwhelms receiver</span></li></ul>
+<!-- l. 408 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Troubleshooting Tip: Transceivers</span>
+</p><!-- l. 408 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 410 --><p class='noindent'>Transceiver compatibility
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 411 --><p class='noindent'>Fiber type (MMF vs SMF)
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 412 --><p class='noindent'>Cable distance vs. transceiver rating</p></dd></dl>
+                                                                     
+
+                                                                     
+<!-- l. 422 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='ethernet-frames-and-mac-addressing'><span class='titlemark'>2   </span> <a id='x1-130002'></a>Ethernet Frames and MAC Addressing</h3>
+<!-- l. 423 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='frame-structure-and-addressing'><span class='titlemark'>2.1   </span> <a id='x1-140002.1'></a>Frame Structure and Addressing</h4>
+<!-- l. 427 --><p class='noindent'>Here we examine Ethernet frame structure and MAC addressing, which form the
+basis of Layer 2 switching decisions and local delivery.
+<a id='x1-14001r11'></a>
+</p>
+<!-- l. 430 --><p class='noindent'><span class='likeparagraphHead' id='ethernet-frame-format'><a id='x1-15000'></a>Ethernet Frame Format</span>
+ 
+</p><!-- l. 430 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Data doesn’t travel as raw bits—it’s packaged into <span class='ec-lmbx-10x-x-109'>frames</span>.
+     </li>
+     <li class='itemize'>Frames contain addressing information so switches know where to send
+     them.
+     </li>
+     <li class='itemize'>Standard  maximum  frame  size:  <span class='ec-lmbx-10x-x-109'>1518  bytes </span>(or  9000+  for  jumbo
+     frames).</li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 437 --><p class='noindent'>
+</p><!-- l. 455 --><p class='noindent'>    <img alt='PDSTPF866244reryaC6escpySBBBB–BamtMelo15bMAa0lACd0eC(DBata) ' src='network_03_switches_interfaces_article_tmp4x.svg' />
+</p><!-- l. 455 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 461 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Header Fields</span>
+</p><!-- l. 461 --><p class='noindent'><span class='ec-lmbx-10'>Preamble</span><span class='ec-lmr-10'>: Synchronization bits  </span><span class='ec-lmbx-10'>Dest/Src MAC</span><span class='ec-lmr-10'>: Who it’s going to/from  </span><span class='ec-lmbx-10'>Type</span><span class='ec-lmr-10'>:
+What protocol is inside</span>
+</p><!-- l. 469 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Trailer Field</span>
+</p><!-- l. 469 --><p class='noindent'><span class='ec-lmbx-10'>FCS (Frame Check Sequence)</span><span class='ec-lmr-10'>: Error detection—receiver recalculates to verify frame
+wasn’t corrupted.</span>
+<a id='x1-15001r12'></a>
+</p>
+<!-- l. 481 --><p class='noindent'><span class='likeparagraphHead' id='mac-address-format'><a id='x1-16000'></a>MAC Address Format</span>
+ 
+</p><!-- l. 481 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>MAC (Media Access Control) </span>address: The hardware address of
+     a NIC.
+     </li>
+     <li class='itemize'>48 bits (6 bytes), written in hexadecimal.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Also  called:  physical  address,  hardware  address,  or  <span class='ec-lmbx-10x-x-109'>burned-in
+     address (BIA)</span>.
+     </li>
+     <li class='itemize'>Every NIC has a unique MAC assigned by the manufacturer.
+     </li>
+     <li class='itemize'>Operates at <span class='ec-lmbx-10x-x-109'>Layer 2 </span>(Data Link) of the OSI model.</li></ul>
+<!-- l. 492 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>MAC vs IP</span>
+</p><!-- l. 492 --><p class='noindent'>MAC = permanent hardware address (Layer 2).  IP = changeable logical address
+(Layer 3).
+</p>
+<div class='center'>
+<!-- l. 498 --><p class='noindent'>
+</p><!-- l. 511 --><p class='noindent'>           <img alt='0FL0iras:stt133Abb:yy2teteBss:3C:4D:5E ' src='network_03_switches_interfaces_article_tmp5x.svg' />
+</p><!-- l. 511 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 515 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common Formats</span>
+</p><!-- l. 515 --><p class='noindent'><span class='ec-lmtt-10'>00:1A:2B:3C:4D:5E </span><span class='ec-lmr-10'>(colons)  </span><span class='ec-lmtt-10'>00-1A-2B-3C-4D-5E </span><span class='ec-lmr-10'>(dashes)  </span><span class='ec-lmtt-10'>001A.2B3C.4D5E
+</span><span class='ec-lmr-10'>(dots—Cisco)</span>
+<a id='x1-16001r13'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 529 --><p class='noindent'><span class='likeparagraphHead' id='mac-address-deep-dive'><a id='x1-17000'></a>MAC Address Deep Dive</span>
+ 
+</p><!-- l. 529 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>First                                                                                   3
+     bytes: <span class='ec-lmbx-10x-x-109'>OUI (Organizationally Unique Identifier)</span>—identifies the
+     manufacturer.
+     </li>
+     <li class='itemize'>Last   3   bytes:   <span class='ec-lmbx-10x-x-109'>Device   ID</span>—unique   to   each   NIC   from   that
+     manufacturer.
+     </li>
+     <li class='itemize'>OUIs are assigned by IEEE—you can look them up online!</li></ul>
+<div class='center'>
+<!-- l. 538 --><p class='noindent'>
+</p><!-- l. 545 --><p class='noindent'>        <img alt='003COD:5:Ue04DIvi:5: (c65MeEa IDnu(faUcntuiqrueer)) ' src='network_03_switches_interfaces_article_tmp6x.svg' />
+</p><!-- l. 545 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 548 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Example OUIs</span>
+</p><!-- l. 548 --><p class='noindent'><span class='ec-lmtt-8'>00:50:56 </span><span class='ec-lmr-8'>= VMware  </span><span class='ec-lmtt-8'>00:0C:29 </span><span class='ec-lmr-8'>= VMware (alternate)  </span><span class='ec-lmtt-8'>00:1A:A0 </span><span class='ec-lmr-8'>= Dell</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 556 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Special MAC Addresses</span>
+</p><!-- l. 556 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Broadcast</span>: <span class='ec-lmtt-10x-x-109'>FF:FF:FF:FF:FF:FF </span>Goes to ALL devices on the network.
+</p><!-- l. 561 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Multicast</span>: Starts with <span class='ec-lmtt-10x-x-109'>01:00:5E </span>Goes to a group of devices.
+</p><!-- l. 566 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Can MACs Be Changed?</span>
+</p><!-- l. 566 --><p class='noindent'>Yes! Software can “spoof” a different MAC. Useful for troubleshooting, but also a
+security concern.
+<a id='x1-17001r14'></a>
+</p>
+<!-- l. 577 --><p class='noindent'><span class='likeparagraphHead' id='case-study-sams-first-nic-installation'><a id='x1-18000'></a>Case Study: Sam’s First NIC Installation</span>
+ 
+</p><!-- l. 577 --><p class='noindent'>
+</p><!-- l. 577 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: Sam’s First NIC Installation</span><br class='newline' /> <span class='ec-lmri-10x-x-109'>Samwise Gamgee is setting up the new admin burrow network for the Shire. He
+purchases 10 Gbps NICs for the hobbit-hole workstations, but the switches only
+have SFP ports (1 Gbps, not SFP+).</span>
+</p><!-- l. 581 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Sam also notices one workstation showing a MAC address of </span><span class='ec-lmtti-10x-x-109'>00:00:00:00:00:00
+</span><span class='ec-lmri-10x-x-109'>in the network settings.</span>
+</p><!-- l. 584 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 584 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 586 --><p class='noindent'>Will the 10 Gbps NICs work in the 1 Gbps switch ports?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 587 --><p class='noindent'>What speed will the connection actually operate at?
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+                                                                     
+
+                                                                     
+     <!-- l. 588 --><p class='noindent'>What might cause a MAC address of all zeros?</p></dd></dl>
+<p><a id='x1-18004r15'></a>
+<!-- l. 597 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-sams-first-nic-installation'><a id='x1-19000'></a>Case Study Solution: Sam’s First NIC Installation</span>
+ 
+</p><!-- l. 597 --><p class='noindent'>
+</p><!-- l. 597 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: Sam’s First NIC Installation</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 599 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Yes</span><span class='ec-lmri-10x-x-109'>—10 Gbps NICs will auto-negotiate down to match the switch’s 1
+     Gbps capability.</span>
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 600 --><p class='noindent'><span class='ec-lmri-10x-x-109'>The connection will operate at </span><span class='ec-lmbxi-10x-x-109'>1 Gbps</span><span class='ec-lmri-10x-x-109'>—limited by the slower device
+     (the switch).</span>
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 601 --><p class='noindent'><span class='ec-lmri-10x-x-109'>All-zeros MAC address typically means:</span> </p>
+          <ul class='itemize1'>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>NIC driver not installed or loaded</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>NIC hardware failure</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Virtual/unconfigured network adapter</span></li></ul>
+     </dd></dl>
+                                                                     
+
+                                                                     
+<!-- l. 611 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lessons</span>
+</p><!-- l. 611 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Always match NIC and switch capabilities for best performance—Sam
+     could save money using 1G NICs.
+     </li>
+     <li class='itemize'>A missing or abnormal MAC address points to driver or hardware
+     problems.</li></ul>
+<!-- l. 622 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='switching-concepts-and-forwarding'><span class='titlemark'>3   </span> <a id='x1-200003'></a>Switching Concepts and Forwarding</h3>
+<!-- l. 623 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='hubs-bridges-and-switches'><span class='titlemark'>3.1   </span> <a id='x1-210003.1'></a>Hubs, Bridges, and Switches</h4>
+<!-- l. 627 --><p class='noindent'>This section compares hub-, bridge-, and switch-based forwarding and explains
+how modern switches learn and forward traffic efficiently.
+<a id='x1-21001r16'></a>
+</p>
+<!-- l. 630 --><p class='noindent'><span class='likeparagraphHead' id='the-evolution-why-switches'><a id='x1-22000'></a>The Evolution: Why Switches?</span>
+ 
+</p><!-- l. 630 --><p class='noindent'>
+</p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'>Early networks used <span class='ec-lmbx-10x-x-109'>hubs</span>—cheap but problematic.
+     </li>
+     <li class='itemize'>Then came <span class='ec-lmbx-10x-x-109'>bridges</span>—smarter, but limited ports.
+     </li>
+     <li class='itemize'>Now we use <span class='ec-lmbx-10x-x-109'>switches</span>—best of both worlds.
+     </li>
+     <li class='itemize'>Understanding this evolution helps you troubleshoot legacy networks.</li></ul>
+<!-- l. 640 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Core Problem</span>
+</p><!-- l. 640 --><p class='noindent'>How do we connect multiple devices efficiently without wasting bandwidth or
+causing collisions?
+</p>
+<div class='center'>
+<!-- l. 645 --><p class='noindent'>
+</p><!-- l. 669 --><p class='noindent'>           <img alt=' MS2ah–4naryepopdrotsrts
+H1BLS2bledu99ratw00anaedb0iei0drnicsd1ts–wsag99cTidMtee0hodtAdsahCBysW ' src='network_03_switches_interfaces_article_tmp7x.svg' />
+</p><!-- l. 669 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+                                                                     
+
+                                                                     
+<p><a id='x1-22001r17'></a>
+<!-- l. 679 --></p><p class='noindent'><span class='likeparagraphHead' id='hubs-shared-bandwidth-and-problems'><a id='x1-23000'></a>Hubs: Shared Bandwidth (and Problems)</span>
+ 
+</p><!-- l. 679 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>hub </span>repeats every signal to <span class='ec-lmbx-10x-x-109'>every port</span>.
+     </li>
+     <li class='itemize'>Like shouting in a room—everyone hears everything.
+     </li>
+     <li class='itemize'>All devices share the same <span class='ec-lmbx-10x-x-109'>collision domain</span>.
+     </li>
+     <li class='itemize'>Only <span class='ec-lmbx-10x-x-109'>half-duplex </span>communication possible.
+     </li>
+     <li class='itemize'>More devices = more collisions = worse performance.</li></ul>
+<!-- l. 690 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Why Hubs Are Obsolete</span>
+</p><!-- l. 690 --><p class='noindent'>10 devices on a 100 Mbps hub = roughly 10 Mbps each (minus collision
+overhead). Terrible!
+</p>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 695 --><p class='noindent'>
+</p><!-- l. 723 --><p class='noindent'>         <img alt='H�����1UCBollision Domain ' src='network_03_switches_interfaces_article_tmp8x.svg' />
+</p><!-- l. 723 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 727 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Hub = Layer 1</span>
+</p><!-- l. 727 --><p class='noindent'><span class='ec-lmr-10'>Hubs operate at the Physical layer—they don’t understand MAC addresses.</span>
+<a id='x1-23001r18'></a>
+</p>
+<!-- l. 739 --><p class='noindent'><span class='likeparagraphHead' id='bridges-learning-mac-addresses'><a id='x1-24000'></a>Bridges: Learning MAC Addresses</span>
+ 
+</p><!-- l. 739 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>bridge </span>learns which devices are on which side.
+     </li>
+     <li class='itemize'>Maintains a <span class='ec-lmbx-10x-x-109'>MAC address table</span>.
+     </li>
+     <li class='itemize'>Only forwards traffic that needs to cross.
+     </li>
+     <li class='itemize'>Separates <span class='ec-lmbx-10x-x-109'>collision domains</span>—fewer collisions!
+     </li>
+     <li class='itemize'>Limited to 2–4 ports (not scalable).</li></ul>
+<!-- l. 750 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Bridge = Layer 2</span>
+</p><!-- l. 750 --><p class='noindent'>Bridges read MAC addresses and make forwarding decisions—smarter than
+hubs!
+</p>
+<div class='center'>
+<!-- l. 755 --><p class='noindent'>
+</p><!-- l. 783 --><p class='noindent'>           <img alt='B����CCRDDID12GE ' src='network_03_switches_interfaces_article_tmp9x.svg' />
+</p><!-- l. 783 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 787 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Selective Forwarding</span>
+</p><!-- l. 787 --><p class='noindent'><span class='ec-lmr-10'>Traffic between L1 and L2 stays on the left—the bridge doesn’t forward it right.</span>
+<a id='x1-24001r19'></a>
+</p>
+<!-- l. 799 --><p class='noindent'><span class='likeparagraphHead' id='switches-the-modern-solution'><a id='x1-25000'></a>Switches: The Modern Solution</span>
+                                                                     
+
+                                                                     
+ 
+</p><!-- l. 799 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>A <span class='ec-lmbx-10x-x-109'>switch </span>is essentially a multi-port bridge.
+     </li>
+     <li class='itemize'>Each port is its own <span class='ec-lmbx-10x-x-109'>collision domain</span>—no collisions!
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Full-duplex </span>communication on every port.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Dedicated bandwidth </span>per port (not shared).
+     </li>
+     <li class='itemize'>Learns MAC addresses automatically.</li></ul>
+<!-- l. 810 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Bandwidth Advantage</span>
+</p><!-- l. 810 --><p class='noindent'>A 24-port Gigabit switch = up to 24 Gbps total capacity (each port gets full 1
+Gbps).
+</p>
+<div class='center'>
+<!-- l. 815 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 844 --><p class='noindent'>        <img alt='S�����5WCIolTliCsiHon Domains ' src='network_03_switches_interfaces_article_tmp10x.svg' />
+</p><!-- l. 844 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 848 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Switch = Layer 2</span>
+</p><!-- l. 848 --><p class='noindent'><span class='ec-lmr-10'>Like bridges, switches read MAC addresses—but with many more ports and better
+performance.</span>
+<a id='x1-25001r20'></a>
+</p>
+<!-- l. 860 --><p class='noindent'><span class='likeparagraphHead' id='how-switches-learn-and-forward'><a id='x1-26000'></a>How Switches Learn and Forward</span>
+ 
+</p><!-- l. 860 --><p class='noindent'>
+</p><!-- l. 862 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Four Switch Actions</span>
+</p><!-- l. 862 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 864 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Learning</span>: See source MAC <span class='lmsy-10x-x-109'>→ </span>record which port it came from
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 865 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Forwarding</span>: Know destination MAC <span class='lmsy-10x-x-109'>→ </span>send only to that port
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 866 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Flooding</span>: Unknown destination <span class='lmsy-10x-x-109'>→ </span>send to ALL ports (except source)
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   4. </dt><dd class='enumerate'>
+     <!-- l. 867 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Filtering</span>: Same-segment traffic <span class='lmsy-10x-x-109'>→ </span>don’t forward</p></dd></dl>
+<div class='center'>
+<!-- l. 873 --><p class='noindent'>
+</p><!-- l. 903 --><p class='noindent'><img alt='AA:AA → P1
+SPPP���MBCW123ABCIC:B:CTBCCTHa→→blePP23' src='network_03_switches_interfaces_article_tmp11x.svg' />
+</p><!-- l. 903 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 907 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>MAC Address Table</span>
+</p><!-- l. 907 --><p class='noindent'>The switch builds a table mapping MAC addresses to ports. This is how it knows
+“who is where.”
+<a id='x1-26005r21'></a>
+</p>
+<!-- l. 919 --><p class='noindent'><span class='likeparagraphHead' id='layer-mac-address-communication-at-the-green-dragon'><a id='x1-27000'></a>Layer 2: MAC Address Communication at the Green Dragon</span>
+ 
+</p><!-- l. 919 --><p class='noindent'>
+</p>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 919 --><p class='noindent'>
+</p><!-- l. 985 --><p class='noindent'>       <img alt='GMPPPPP�FAxKB�MCxGDF××NrAooooorAiBaCuDraoeCrtrrrro:t:n:e:mte 1ttttnAchBaCsDe fon:tAeBgCtD:rA A1234 D:n:e:: DwDdAeABrCDsard:sABCDtrdarAk CegeACdos::nsAC TACa:SbCwlCiePto|crtSh 2rc: BABA::BABA::ABAB Port 3: CC:CC:CC Port 4: DD:DD:DD ' src='network_03_switches_interfaces_article_tmp12x.svg' />
+</p><!-- l. 985 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 989 --><p class='noindent'>Layer 2 uses <span class='ec-lmbx-10x-x-109'>MAC addresses </span>to forward frames. The switch sends traffic
+<span class='ec-lmbx-10x-x-109'>only to the destination port</span>—not everywhere.
+</p><!-- l. 995 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='switch-interfaces-and-management'><span class='titlemark'>4   </span> <a id='x1-280004'></a>Switch Interfaces and Management</h3>
+<!-- l. 996 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='switch-features-and-configuration'><span class='titlemark'>4.1   </span> <a id='x1-290004.1'></a>Switch Features and Configuration</h4>
+<!-- l. 1000 --><p class='noindent'>This section focuses on operational switch features and management choices used
+in real deployments.
+<a id='x1-29001r22'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1003 --><p class='noindent'><span class='likeparagraphHead' id='unmanaged-vs-managed-switches'><a id='x1-30000'></a>Unmanaged vs Managed Switches</span>
+ 
+</p><!-- l. 1003 --><p class='noindent'>
+</p><!-- l. 1005 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Unmanaged Switch</span>
+</p><!-- l. 1005 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Plug and play—no configuration
+     </li>
+     <li class='itemize'>No VLANs, no monitoring
+     </li>
+     <li class='itemize'>Cheapest option
+     </li>
+     <li class='itemize'>Best for: Home, very small office</li></ul>
+<!-- l. 1015 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Smart Switch</span>
+</p><!-- l. 1015 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Some management features
+     </li>
+     <li class='itemize'>Basic VLANs, simple web GUI
+     </li>
+     <li class='itemize'>Middle price range
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Best for: Small business</li></ul>
+<!-- l. 1025 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Managed Switch</span>
+</p><!-- l. 1025 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Full configuration options
+     </li>
+     <li class='itemize'>VLANs, STP, SNMP, port security
+     </li>
+     <li class='itemize'>CLI, web GUI, remote management
+     </li>
+     <li class='itemize'>Best for: Enterprise networks</li></ul>
+<!-- l. 1035 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Key Question</span>
+</p><!-- l. 1035 --><p class='noindent'>Do you need to separate traffic, monitor performance, or configure security? If
+yes <span class='lmsy-10x-x-109'>→ </span>managed switch.
+<a id='x1-30001r23'></a>
+</p>
+<!-- l. 1046 --><p class='noindent'><span class='likeparagraphHead' id='layer-vs-layer-switches'><a id='x1-31000'></a>Layer 2 vs Layer 3 Switches</span>
+ 
+</p><!-- l. 1046 --><p class='noindent'>
+</p><!-- l. 1048 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Layer 2 Switch (Standard)</span>
+</p><!-- l. 1048 --><p class='noindent'></p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'>Forwards based on <span class='ec-lmbx-10x-x-109'>MAC addresses</span>
+     </li>
+     <li class='itemize'>Cannot route between networks
+     </li>
+     <li class='itemize'>Needs a router for inter-VLAN traffic
+     </li>
+     <li class='itemize'>Less expensive</li></ul>
+<!-- l. 1063 --><p class='noindent'>    <img alt='xL2xRouSwtiertch ' src='network_03_switches_interfaces_article_tmp13x.svg' />
+</p><!-- l. 1063 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p><!-- l. 1067 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Layer 3 Switch (Multilayer)</span>
+</p><!-- l. 1067 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Also routes based on <span class='ec-lmbx-10x-x-109'>IP addresses</span>
+     </li>
+     <li class='itemize'>Can route between VLANs directly
+     </li>
+     <li class='itemize'>Faster than using separate router
+     </li>
+     <li class='itemize'>More expensive</li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 1080 --><p class='noindent'>      <img alt='xLR3oSutweitschinternally! ' src='network_03_switches_interfaces_article_tmp14x.svg' />
+</p><!-- l. 1080 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p><!-- l. 1086 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>When to Use Layer 3 Switches</span>
+</p><!-- l. 1086 --><p class='noindent'>Large networks with multiple VLANs benefit from Layer 3 switches—inter-VLAN
+traffic stays fast without bottlenecking through a router.
+<a id='x1-31001r24'></a>
+</p>
+<!-- l. 1095 --><p class='noindent'><span class='likeparagraphHead' id='switch-interface-configuration-basics'><a id='x1-32000'></a>Switch Interface Configuration Basics</span>
+ 
+</p><!-- l. 1095 --><p class='noindent'>
+</p><!-- l. 1097 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Access Methods</span>
+</p><!-- l. 1097 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Console cable</span>: Direct serial connection (initial setup)
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>SSH/Telnet</span>: Remote CLI over network
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Web GUI</span>: Browser-based (some models)</li></ul>
+<!-- l. 1106 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common Settings</span>
+</p><!-- l. 1106 --><p class='noindent'></p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'>Port speed (10/100/1000)
+     </li>
+     <li class='itemize'>Duplex mode (half/full/auto)
+     </li>
+     <li class='itemize'>VLAN assignment
+     </li>
+     <li class='itemize'>Port description/label</li></ul>
+<!-- l. 1116 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Speed/Duplex Mismatch</span>
+</p><!-- l. 1116 --><p class='noindent'>If one side is set to auto and the other is manually configured, they may
+negotiate incorrectly. Result: slow speeds, errors, packet loss.
+</p><!-- l. 1121 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Port Security</span>
+</p><!-- l. 1121 --><p class='noindent'>Limit which MAC addresses can connect to a port: </p>
+     <ul class='itemize1'>
+     <li class='itemize'>Prevent unauthorized devices
+     </li>
+     <li class='itemize'>Protect against MAC flooding attacks
+     </li>
+     <li class='itemize'>Can shut down port on violation</li></ul>
+<p><a id='x1-32001r25'></a>
+                                                                     
+
+                                                                     
+<!-- l. 1137 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-the-green-dragon-inn-network'><a id='x1-33000'></a>Case Study: The Green Dragon Inn Network</span>
+ 
+</p><!-- l. 1137 --><p class='noindent'>
+</p><!-- l. 1137 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: The Green Dragon Inn Network</span><br class='newline' /> <span class='ec-lmri-10x-x-109'>The Green Dragon Inn is expanding and needs a network for guest hobbits and
+staff. Frodo suggests a cheap unmanaged switch. Gandalf recommends a managed
+switch instead.</span>
+</p><!-- l. 1141 --><p class='noindent'><span class='ec-lmri-10x-x-109'>The network requirements:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmri-10x-x-109'>Separate guest traffic from staff traffic (security)</span>
+     </li>
+     <li class='itemize'><span class='ec-lmri-10x-x-109'>Support 20 devices total</span>
+     </li>
+     <li class='itemize'><span class='ec-lmri-10x-x-109'>Allow remote management (Gandalf travels frequently)</span></li></ul>
+<!-- l. 1149 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1149 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 1151 --><p class='noindent'>Which switch type should they choose and why?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 1152 --><p class='noindent'>What feature would separate guest from staff traffic?
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 1153 --><p class='noindent'>Why is remote management valuable for an inn?</p></dd></dl>
+                                                                     
+
+                                                                     
+<p><a id='x1-33004r26'></a>
+<!-- l. 1162 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-the-green-dragon-inn-network'><a id='x1-34000'></a>Case Study Solution: The Green Dragon Inn Network</span>
+ 
+</p><!-- l. 1162 --><p class='noindent'>
+</p><!-- l. 1162 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: The Green Dragon Inn Network</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1164 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Managed switch</span><span class='ec-lmri-10x-x-109'>—unmanaged switches cannot separate traffic or be
+     configured remotely.</span>
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1165 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>VLANs (Virtual LANs) </span><span class='ec-lmri-10x-x-109'>separate guest and staff traffic logically on
+     the same physical switch.</span>
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1166 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Remote management benefits:</span> </p>
+          <ul class='itemize1'>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Gandalf can troubleshoot from anywhere in Middle-earth</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Monitor bandwidth usage and detect problems</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Make changes without disrupting inn operations</span></li></ul>
+     </dd></dl>
+<!-- l. 1176 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1176 --><p class='noindent'>The extra cost of managed switches pays off in flexibility and security. For any
+business network, managed is the right choice.
+</p><!-- l. 1184 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='advanced-switching-topics'><span class='titlemark'>5   </span> <a id='x1-350005'></a>Advanced Switching Topics</h3>
+<!-- l. 1185 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='resiliency-and-performance-features'><span class='titlemark'>5.1   </span> <a id='x1-360005.1'></a>Resiliency and Performance Features</h4>
+<!-- l. 1189 --><p class='noindent'>Advanced switching capabilities improve resiliency, bandwidth utilization, and
+loop prevention in larger networks.
+<a id='x1-36001r27'></a>
+</p>
+<!-- l. 1192 --><p class='noindent'><span class='likeparagraphHead' id='link-aggregation-and-nic-teaming'><a id='x1-37000'></a>Link Aggregation and NIC Teaming</span>
+ 
+</p><!-- l. 1192 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>Problem: One cable isn’t fast enough for a busy server.
+     </li>
+     <li class='itemize'>Solution: Bundle multiple cables together!
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Link Aggregation (LAG)</span>: Combines switch ports into one logical
+     link.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>LACP    (802.3ad)</span>:    Protocol    that    negotiates    aggregation
+     automatically.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>NIC Teaming</span>: Same concept on the server side.</li></ul>
+<!-- l. 1203 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Benefits</span>
+</p><!-- l. 1203 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>More bandwidth</span>: 4 Ã— 1G = 4 Gbps total  <span class='ec-lmbx-10x-x-109'>Redundancy</span>: If one link fails,
+others continue
+</p>
+<div class='center'>
+<!-- l. 1209 --><p class='noindent'>
+</p><!-- l. 1230 --><p class='noindent'>      <img alt='xSSLeWArvIGeTrC (H4 NICs) ' src='network_03_switches_interfaces_article_tmp15x.svg' />
+</p><!-- l. 1230 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1234 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Both Ends Must Match</span>
+</p><!-- l. 1234 --><p class='noindent'>LAG must be configured on both the switch AND the server/other switch.
+<a id='x1-37001r28'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1245 --><p class='noindent'><span class='likeparagraphHead' id='maximum-transmission-unit-mtu'><a id='x1-38000'></a>Maximum Transmission Unit (MTU)</span>
+ 
+</p><!-- l. 1245 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>MTU</span>: Maximum frame payload size a network can handle.
+     </li>
+     <li class='itemize'>Standard Ethernet MTU: <span class='ec-lmbx-10x-x-109'>1500 bytes</span>.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Jumbo frames</span>: MTU up to <span class='ec-lmbx-10x-x-109'>9000 bytes</span>—more efficient for large
+     transfers.
+     </li>
+     <li class='itemize'>Larger frames = fewer frames = less overhead.</li></ul>
+<!-- l. 1255 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Critical Requirement</span>
+</p><!-- l. 1255 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Every device in the path </span>must support the same MTU! Mismatched MTU
+causes fragmentation or dropped packets.
+</p>
+<div class='center'>
+<!-- l. 1260 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 1273 --><p class='noindent'>       <img alt='S6J1tafufnramradmbmaeoerds ((9sa(100m50e0d0Ba B)ta)) ' src='network_03_switches_interfaces_article_tmp16x.svg' />
+</p><!-- l. 1273 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1277 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>When to Use Jumbo Frames</span>
+</p><!-- l. 1277 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Storage networks (iSCSI, NFS)
+     </li>
+     <li class='itemize'>Backup systems
+     </li>
+     <li class='itemize'>Data center internal traffic</li></ul>
+<p><a id='x1-38001r29'></a>
+<!-- l. 1292 --></p><p class='noindent'><span class='likeparagraphHead' id='spanning-tree-protocol-the-problem'><a id='x1-39000'></a>Spanning Tree Protocol: The Problem</span>
+ 
+</p><!-- l. 1292 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>What happens if you create a <span class='ec-lmbx-10x-x-109'>loop </span>in a switched network?
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Frames have no TTL (time-to-live) at Layer 2—they circulate forever!
+     </li>
+     <li class='itemize'>Result: <span class='ec-lmbx-10x-x-109'>Broadcast storm</span>—frames multiply exponentially.
+     </li>
+     <li class='itemize'>Network grinds to a halt in seconds.
+     </li>
+     <li class='itemize'>Loops happen accidentally (wrong cable) or intentionally (redundancy
+     gone wrong).</li></ul>
+<!-- l. 1303 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Real Danger</span>
+</p><!-- l. 1303 --><p class='noindent'>An accidental loop can crash an entire network in under 30 seconds!
+</p>
+<div class='center'>
+<!-- l. 1308 --><p class='noindent'>
+</p><!-- l. 1335 --><p class='noindent'>         <img alt='xxxSSS×WWW123 ' src='network_03_switches_interfaces_article_tmp17x.svg' />
+</p><!-- l. 1335 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+                                                                     
+
+                                                                     
+<!-- l. 1339 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Symptoms</span>
+</p><!-- l. 1339 --><p class='noindent'><span class='ec-lmr-10'>All switch LEDs flashing rapidly, network unresponsive, high CPU on switches.</span>
+<a id='x1-39001r30'></a>
+</p>
+<!-- l. 1351 --><p class='noindent'><span class='likeparagraphHead' id='spanning-tree-protocol-the-solution'><a id='x1-40000'></a>Spanning Tree Protocol: The Solution</span>
+ 
+</p><!-- l. 1351 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>STP (802.1D) </span>automatically detects and blocks redundant paths.
+     </li>
+     <li class='itemize'>Elects a <span class='ec-lmbx-10x-x-109'>root bridge</span>—the central reference point.
+     </li>
+     <li class='itemize'>Calculates best path from each switch to the root.
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Blocks </span>redundant ports to prevent loops.
+     </li>
+     <li class='itemize'>If active link fails, blocked port activates—redundancy preserved!</li></ul>
+<!-- l. 1362 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>STP Versions</span>
+</p><!-- l. 1362 --><p class='noindent'><span class='ec-lmbx-10'>802.1D (STP)</span><span class='ec-lmr-10'>: Original, slow (30–50 sec)  </span><span class='ec-lmbx-10'>802.1w (RSTP)</span><span class='ec-lmr-10'>: Rapid, fast (1–2 sec)
+</span><span class='ec-lmbx-10'>802.1s (MSTP)</span><span class='ec-lmr-10'>: Per-VLAN spanning trees</span>
+</p>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 1370 --><p class='noindent'>
+</p><!-- l. 1391 --><p class='noindent'>         <img alt='xxxRSSBoWWLot23OBCrKidEgDe ' src='network_03_switches_interfaces_article_tmp18x.svg' />
+</p><!-- l. 1391 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1395 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Key Insight</span>
+</p><!-- l. 1395 --><p class='noindent'>STP provides redundancy WITHOUT loops—blocked ports wait as backups.
+<a id='x1-40001r31'></a>
+</p>
+<!-- l. 1406 --><p class='noindent'><span class='likeparagraphHead' id='power-over-ethernet-poe'><a id='x1-41000'></a>Power over Ethernet (PoE)</span>
+ 
+</p><!-- l. 1406 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>PoE </span>delivers electrical power AND data over the same Ethernet cable.
+     </li>
+     <li class='itemize'>No separate power outlet needed at the device!
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Perfect for: IP phones, security cameras, wireless access points, IoT
+     devices.
+     </li>
+     <li class='itemize'>Switch must be <span class='ec-lmbx-10x-x-109'>PoE-capable </span>or use a separate <span class='ec-lmbx-10x-x-109'>PoE injector</span>.</li></ul>
+<!-- l. 1416 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Power Budget</span>
+</p><!-- l. 1416 --><p class='noindent'>Switches have a total PoE power budget (e.g., 370W). Plan carefully—you can’t
+power unlimited devices!
+</p>
+<div class='center'>
+<!-- l. 1421 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-3'><colgroup id='TBL-3-1g'><col id='TBL-3-1' /><col id='TBL-3-2' /><col id='TBL-3-3' /></colgroup><tr id='TBL-3-1-'><td class='td11' id='TBL-3-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Standard         </span></td><td class='td11' id='TBL-3-1-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmbx-8'>Power   </span></td><td class='td11' id='TBL-3-1-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-8'>Devices        </span></td>
+</tr><tr id='TBL-3-2-'><td class='td11' id='TBL-3-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>802.3af                </span></td><td class='td11' id='TBL-3-2-2' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-8'>15.4W    </span></td><td class='td11' id='TBL-3-2-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>IP phones        </span></td>
+</tr><tr id='TBL-3-3-'><td class='td11' id='TBL-3-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>802.3at (PoE+)     </span></td><td class='td11' id='TBL-3-3-2' style='white-space:nowrap; text-align:center;'>   <span class='ec-lmr-8'>30W     </span></td><td class='td11' id='TBL-3-3-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>Cameras, APs  </span></td>
+</tr><tr id='TBL-3-4-'><td class='td11' id='TBL-3-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>802.3bt (PoE++)  </span></td><td class='td11' id='TBL-3-4-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-8'>60–100W  </span></td><td class='td11' id='TBL-3-4-3' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-8'>PTZ cameras   </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 1435 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>PoE Advantage</span>
+</p><!-- l. 1435 --><p class='noindent'> <img alt='xxD(aotneac+aPbolew!)er ' src='network_03_switches_interfaces_article_tmp19x.svg' />
+</p><!-- l. 1450 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+<a id='x1-41001r32'></a>
+</p>
+<!-- l. 1460 --><p class='noindent'><span class='likeparagraphHead' id='power-over-ethernet-green-dragon-power-budget'><a id='x1-42000'></a>Power over Ethernet: Green Dragon Power Budget</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 1460 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 1460 --><p class='noindent'>
+</p><!-- l. 1520 --><p class='noindent'><img alt='GUAPPPPxBD7xM2xE1xG2rsv1234aaWa5n5a8eeartiWtWrWedianrdn:laP +yebhH Cn7loPaaD5e:nolmArWewlePa4er Arg5PaoWn PoE+   Switch (120W  Budget )' src='network_03_switches_interfaces_article_tmp20x.svg' />
+</p><!-- l. 1520 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1524 --><p class='noindent'>PoE delivers <span class='ec-lmbx-10x-x-109'>data and power </span>over one cable. Always track your <span class='ec-lmbx-10x-x-109'>power
+budget</span>—the switch has limits!
+<a id='x1-42001r33'></a>
+</p>
+<!-- l. 1531 --><p class='noindent'><span class='likeparagraphHead' id='case-study-bilbos-birthday-party-network-disaster'><a id='x1-43000'></a>Case Study: Bilbo’s Birthday Party Network Disaster</span>
+ 
+</p><!-- l. 1531 --><p class='noindent'>
+</p><!-- l. 1531 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Case Study: Bilbo’s Birthday Party Network Disaster</span><br class='newline' /> <span class='ec-lmri-10x-x-109'>Bilbo is hosting his 111th birthday party and needs a network for the event
+planners. Shortly after setup, the entire network crashes—all switches show
+frantically blinking lights, and no device can communicate.</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1535 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Merry investigates and discovers someone connected both ends of a patch cable to
+the same switch to “make the cables neater.”</span>
+</p><!-- l. 1538 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Review Questions</span>
+</p><!-- l. 1538 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 1540 --><p class='noindent'>What has happened to the network?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 1541 --><p class='noindent'>What protocol should have prevented this?
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 1542 --><p class='noindent'>What should they check on the switches?</p></dd></dl>
+<p><a id='x1-43004r34'></a>
+<!-- l. 1551 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-bilbos-birthday-party-network-disaster'><a id='x1-44000'></a>Case Study Solution: Bilbo’s Birthday Party Network Disaster</span>
+ 
+</p><!-- l. 1551 --><p class='noindent'>
+</p><!-- l. 1551 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Solution: Bilbo’s Birthday Party Network Disaster</span><br class='newline' />
+     </p><dl class='enumerate'><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1553 --><p class='noindent'><span class='ec-lmri-10x-x-109'>A  </span><span class='ec-lmbxi-10x-x-109'>switching  loop </span><span class='ec-lmri-10x-x-109'>caused  a  </span><span class='ec-lmbxi-10x-x-109'>broadcast  storm</span><span class='ec-lmri-10x-x-109'>—frames  multiplied
+     until they overwhelmed every switch.</span>
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1554 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Spanning  Tree  Protocol  (STP)  </span><span class='ec-lmri-10x-x-109'>should  block  redundant  paths
+     automatically.</span>
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+  <span class='ec-lmri-10x-x-109'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1555 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Immediate actions:</span> </p>
+          <ul class='itemize1'>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Remove the looped cable immediately</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Check if STP is enabled on all switches</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-10x-x-109'>Verify switches are managed (unmanaged switches may lack STP)</span></li></ul>
+     </dd></dl>
+<!-- l. 1565 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Lesson</span>
+</p><!-- l. 1565 --><p class='noindent'>Always use managed switches with STP enabled for any business network. A
+single accidental loop can take down everything!
+</p><!-- l. 1573 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='troubleshooting-interfaces-and-switches'><span class='titlemark'>6   </span> <a id='x1-450006'></a>Troubleshooting Interfaces and Switches</h3>
+<!-- l. 1574 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='operational-diagnostics'><span class='titlemark'>6.1   </span> <a id='x1-460006.1'></a>Operational Diagnostics</h4>
+<!-- l. 1578 --><p class='noindent'>The final section applies structured troubleshooting to interface and switch faults
+using indicators, commands, and counter analysis.
+<a id='x1-46001r35'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1581 --><p class='noindent'><span class='likeparagraphHead' id='hardware-failure-and-port-status-indicators'><a id='x1-47000'></a>Hardware Failure and Port Status Indicators</span>
+ 
+</p><!-- l. 1581 --><p class='noindent'>
+</p><!-- l. 1583 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>LED Indicators</span>
+</p><!-- l. 1583 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span id='textcolor1'><span class='ec-lmbx-10x-x-109'>Solid green</span></span>: Link up, connected
+     </li>
+     <li class='itemize'><span id='textcolor2'><span class='ec-lmbx-10x-x-109'>Flashing green</span></span>: Active traffic
+     </li>
+     <li class='itemize'><span id='textcolor3'><span class='ec-lmbx-10x-x-109'>Amber/Orange</span></span>: Error or disabled
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Off</span>: No link detected</li></ul>
+<!-- l. 1593 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>First Troubleshooting Step</span>
+</p><!-- l. 1593 --><p class='noindent'>Always look at the lights! LEDs tell you port status instantly without logging
+in.
+</p><!-- l. 1598 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common Hardware Failures</span>
+</p><!-- l. 1598 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Bad switch port (try another port)
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Failed transceiver module
+     </li>
+     <li class='itemize'>Power supply issues
+     </li>
+     <li class='itemize'>Overheating (check fans, vents)
+     </li>
+     <li class='itemize'>Failed backplane (multiple ports down)</li></ul>
+<!-- l. 1609 --><p class='noindent'><span class='ec-lmri-10x-x-109'>No Link Light?</span>
+</p><!-- l. 1609 --><p class='noindent'>Check in order: cable <span class='lmsy-10x-x-109'>→ </span>NIC <span class='lmsy-10x-x-109'>→ </span>switch port <span class='lmsy-10x-x-109'>→ </span>transceiver (if applicable).
+<a id='x1-47001r36'></a>
+</p>
+<!-- l. 1620 --><p class='noindent'><span class='likeparagraphHead' id='switch-show-commands'><a id='x1-48000'></a>Switch Show Commands</span>
+ 
+</p><!-- l. 1620 --><p class='noindent'>
+</p><!-- l. 1622 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Essential Commands</span>
+</p><!-- l. 1622 --><p class='noindent'><span class='ec-lmtk-10'>show interfaces </span><span class='ec-lmr-10'>Port status, speed, duplex, errors</span>
+</p><!-- l. 1628 --><p class='noindent'><span class='ec-lmtk-10'>show mac address-table </span><span class='ec-lmr-10'>Which MACs learned on which ports</span>
+</p><!-- l. 1632 --><p class='noindent'><span class='ec-lmtk-10'>show spanning-tree </span><span class='ec-lmr-10'>STP status, root bridge, blocked ports</span>
+</p><!-- l. 1636 --><p class='noindent'><span class='ec-lmtk-10'>show power inline </span><span class='ec-lmr-10'>PoE status and power consumption</span>
+</p><!-- l. 1641 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Example Output</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1641 --><p class='noindent'><span class='ec-lmtt-8'>Switch# show interfaces Gi0/1  GigabitEthernet0/1 is up    Speed: 1000 Mbps, Duplex: Full
+  Input errors: 0, CRC: 0    Output errors: 0, Collisions: 0</span>
+</p><!-- l. 1651 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Key Insight</span>
+</p><!-- l. 1651 --><p class='noindent'>These commands work on Cisco and many other managed switches. Learn them
+once, use them everywhere.
+<a id='x1-48001r37'></a>
+</p>
+<!-- l. 1662 --><p class='noindent'><span class='likeparagraphHead' id='interface-error-counters'><a id='x1-49000'></a>Interface Error Counters</span>
+ 
+</p><!-- l. 1662 --><p class='noindent'>
+</p><!-- l. 1664 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Error Types</span>
+</p><!-- l. 1664 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>CRC errors</span>: Damaged frames—bad cable, NIC, or interference.
+</p><!-- l. 1668 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Collisions</span>: Duplex mismatch or hub in path.
+</p><!-- l. 1671 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Runts</span>: Frames too small (<span class='lmmi-10x-x-109'>&lt;</span>64 bytes)—collision fragments.
+</p><!-- l. 1674 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Giants</span>: Frames too large—MTU mismatch.
+</p><!-- l. 1678 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Input/Output Errors</span>
+</p><!-- l. 1678 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Input errors</span>: Problems receiving frames.
+</p><!-- l. 1682 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Output errors</span>: Problems sending frames.
+</p><!-- l. 1685 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Discards</span>: Frames dropped (buffer full, policy).
+</p><!-- l. 1689 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Interpretation</span>
+</p><!-- l. 1689 --><p class='noindent'>A few errors = normal.  Rapidly increasing = active problem!
+</p><!-- l. 1697 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Pro Tip</span>
+</p><!-- l. 1697 --><p class='noindent'>Clear counters, wait 5 minutes, check again. If errors accumulate quickly,
+investigate that port.
+                                                                     
+
+                                                                     
+<a id='x1-49001r38'></a>
+</p>
+<!-- l. 1706 --><p class='noindent'><span class='likeparagraphHead' id='mac-address-table-troubleshooting'><a id='x1-50000'></a>MAC Address Table Troubleshooting</span>
+ 
+</p><!-- l. 1706 --><p class='noindent'>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'>The <span class='ec-lmbx-10x-x-109'>MAC address table </span>shows which devices the switch has learned.
+     </li>
+     <li class='itemize'>Use it to verify: Is the device connected? Which port?
+     </li>
+     <li class='itemize'>If a MAC appears on the wrong port—cable may be in wrong jack.
+     </li>
+     <li class='itemize'>If a MAC is missing—device may be off, disconnected, or NIC failed.</li></ul>
+<!-- l. 1716 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Command</span>
+</p><!-- l. 1716 --><p class='noindent'><span class='ec-lmtt-10x-x-109'>show mac address-table</span>
+</p><!-- l. 1721 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Example Output</span>
+</p><!-- l. 1721 --><p class='noindent'><span class='ec-lmtt-8'>VLAN   MAC Address      Port  ––   –––––-      ––  1     00:1A:2B:3C:4D:5E  Gi0/1  1
+    00:50:56:AA:BB:CC  Gi0/2  1     FF:FF:FF:FF:FF:FF  CPU</span>
+</p><!-- l. 1731 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>MAC Flapping</span>
+</p><!-- l. 1731 --><p class='noindent'>Same MAC appearing on multiple ports rapidly = possible loop or duplicate
+MAC address.
+                                                                     
+
+                                                                     
+<a id='x1-50001r39'></a>
+</p>
+<!-- l. 1742 --><p class='noindent'><span class='likeparagraphHead' id='poe-troubleshooting'><a id='x1-51000'></a>PoE Troubleshooting</span>
+ 
+</p><!-- l. 1742 --><p class='noindent'>
+</p><!-- l. 1744 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Common PoE Issues</span>
+</p><!-- l. 1744 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Device not powering on
+     </li>
+     <li class='itemize'>Insufficient power budget
+     </li>
+     <li class='itemize'>Wrong PoE class negotiated
+     </li>
+     <li class='itemize'>Cable quality problems</li></ul>
+<!-- l. 1754 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Troubleshooting Steps</span>
+</p><!-- l. 1754 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 1756 --><p class='noindent'>Verify switch supports PoE
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 1757 --><p class='noindent'>Check total power budget remaining
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 1758 --><p class='noindent'>Verify cable uses all 4 pairs
+     </p></dd><dt class='enumerate'>
+   4. </dt><dd class='enumerate'>
+     <!-- l. 1759 --><p class='noindent'>Check device PoE class requirements
+     </p></dd><dt class='enumerate'>
+   5. </dt><dd class='enumerate'>
+     <!-- l. 1760 --><p class='noindent'>Try known-good cable and port</p></dd></dl>
+<div class='center'>
+<!-- l. 1765 --><p class='noindent'>
+</p>
+<div class='tabular'>
+ <table class='tabular' id='TBL-4'><colgroup id='TBL-4-1g'><col id='TBL-4-1' /><col id='TBL-4-2' /></colgroup><tr id='TBL-4-1-'><td class='td11' id='TBL-4-1-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmbx-10'>PoE Class  </span></td><td class='td11' id='TBL-4-1-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmbx-10'>Max Power   </span></td>
+</tr><tr id='TBL-4-2-'><td class='td11' id='TBL-4-2-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Class 0         </span></td><td class='td11' id='TBL-4-2-2' style='white-space:nowrap; text-align:center;'> <span class='ec-lmr-10'>15.4W (default)  </span></td>
+</tr><tr id='TBL-4-3-'><td class='td11' id='TBL-4-3-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Class 1         </span></td><td class='td11' id='TBL-4-3-2' style='white-space:nowrap; text-align:center;'>      <span class='ec-lmr-10'>4.0W         </span></td>
+</tr><tr id='TBL-4-4-'><td class='td11' id='TBL-4-4-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Class 2         </span></td><td class='td11' id='TBL-4-4-2' style='white-space:nowrap; text-align:center;'>      <span class='ec-lmr-10'>7.0W         </span></td>
+</tr><tr id='TBL-4-5-'><td class='td11' id='TBL-4-5-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Class 3         </span></td><td class='td11' id='TBL-4-5-2' style='white-space:nowrap; text-align:center;'>     <span class='ec-lmr-10'>15.4W        </span></td>
+</tr><tr id='TBL-4-6-'><td class='td11' id='TBL-4-6-1' style='white-space:nowrap; text-align:left;'> <span class='ec-lmr-10'>Class 4         </span></td><td class='td11' id='TBL-4-6-2' style='white-space:nowrap; text-align:center;'>  <span class='ec-lmr-10'>30W (PoE+)    </span></td>
+
+</tr></table>                                                                     </div></div>
+<!-- l. 1781 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Cable Matters!</span>
+</p><!-- l. 1781 --><p class='noindent'>PoE requires all 4 pairs. A cable that “works for data” may fail for PoE if pairs
+are damaged.
+</p><!-- l. 1791 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='module-summary'><a id='x1-52000'></a>Module Summary</h3>
+<p><a id='x1-52001r40'></a>
+                                                                     
+
+                                                                     
+<!-- l. 1794 --></p><p class='noindent'><span class='likeparagraphHead' id='module-summary1'><a id='x1-53000'></a>Module 3.0 Summary</span>
+ 
+</p><!-- l. 1794 --><p class='noindent'>
+</p><!-- l. 1795 --><p class='noindent'><span class='ec-lmbx-10'>Key Concepts:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>NIC </span><span class='ec-lmr-10'>(Network Interface Card) connects hosts to networks. Each NIC has a
+     unique 48-bit </span><span class='ec-lmbx-10'>MAC address</span><span class='ec-lmr-10'>.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>MAC  address  format:  first  24  bits  =  </span><span class='ec-lmbx-10'>OUI </span><span class='ec-lmr-10'>(vendor  ID),  last  24  bits  =
+     device-specific.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Transceivers</span><span class='ec-lmr-10'>: </span><span class='ec-lmbx-10'>SFP </span><span class='ec-lmr-10'>(1 Gbps), </span><span class='ec-lmbx-10'>SFP+ </span><span class='ec-lmr-10'>(10 Gbps), </span><span class='ec-lmbx-10'>QSFP </span><span class='ec-lmr-10'>(40 Gbps) provide
+     modular connectivity.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Ethernet  frame</span><span class='ec-lmr-10'>:  Headers  include  destination  MAC,  source  MAC,  and
+     Type/Length. Trailer has FCS for error detection.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Hub </span><span class='ec-lmr-10'>(repeater) vs </span><span class='ec-lmbx-10'>Bridge </span><span class='ec-lmr-10'>(2-port switch) vs </span><span class='ec-lmbx-10'>Switch </span><span class='ec-lmr-10'>(multi-port bridge with
+     MAC learning).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Switches  forward  frames  based  on  destination  MAC,  flooding  only  to
+     unknown addresses or broadcasts.</span></li></ul>
+<!-- l. 1807 --><p class='noindent'><span class='ec-lmbx-10'>Configuration &amp; Troubleshooting:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Managed switches</span><span class='ec-lmr-10'>: VLANs, port security, SNMP monitoring. </span><span class='ec-lmbx-10'>Layer 3
+     switches </span><span class='ec-lmr-10'>add routing capability.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Link  aggregation  </span><span class='ec-lmr-10'>(LACP)  bundles  links  for  higher  bandwidth  and
+     redundancy.</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>STP </span><span class='ec-lmr-10'>(Spanning Tree Protocol) prevents Layer 2 loops automatically.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>PoE </span><span class='ec-lmr-10'>(Power over Ethernet) delivers power to devices like phones and APs
+     over Ethernet cables.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Troubleshooting: Check LED indicators, use </span><span class='ec-lmtt-10'>show </span><span class='ec-lmr-10'>commands, monitor error
+     counters, watch for broadcast storms.</span></li></ul>
+<!-- l. 1820 --><p class='noindent'>
+</p>
+<h4 class='likesubsectionHead' id='conclusion'><a id='x1-54000'></a>Conclusion</h4>
+<!-- l. 1820 --><p class='noindent'>This module explored Layer 2 networking devices and protocols. You learned
+about NICs, transceivers, MAC addresses, Ethernet frames, and the evolution
+from hubs to bridges to switches. You also examined switch configuration,
+advanced features (VLANs, link aggregation, STP, PoE), and troubleshooting
+techniques. In the next module, we’ll move up to Layer 3 and explore IP
+addressing and subnetting.
+</p>
+ 
+</body> 
+</html>
+

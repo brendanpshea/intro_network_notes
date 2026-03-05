@@ -1,133 +1,38 @@
-\documentclass[aspectratio=169]{beamer}
+% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
 
 % =============================================================================
-% THEME AND COLORS
+% COMMON PREAMBLE
 % =============================================================================
-\usetheme{Madrid}
-\usecolortheme{whale}
+\input{network_preamble.tex}
 
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 128, 64}
-\definecolor{alertred}{RGB}{180, 0, 0}
-\definecolor{aborange}{RGB}{230, 126, 34}
-
-\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white,bg=rctcblue}
-\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
-\setbeamercolor{block title}{bg=rctcblue,fg=white}
-\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
-\setbeamercolor{block title alerted}{bg=alertred,fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
-\setbeamercolor{block title example}{bg=networkgreen,fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
-
-% =============================================================================
-% PACKAGES
-% =============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{amssymb}
-\usepackage{calc}
-
-% =============================================================================
-% TIKZ LIBRARIES AND SETUP
-% =============================================================================
-\usetikzlibrary{
-    shapes.geometric,
-    shapes.symbols,
-    shapes.misc,
-    arrows.meta,
-    positioning,
-    calc,
-    fit,
-    backgrounds,
-    decorations.pathreplacing,
-    matrix,
-    chains
-}
-
-% Graphics path for icons
-\graphicspath{{../images/icons/}{./images/icons/}{images/icons/}}
-
-% =============================================================================
-% NETWORK DIAGRAM STYLES
-% =============================================================================
+% Additional TikZ styles specific to this lecture
 \tikzset{
-    % Node styles for network devices
-    device/.style={
-        inner sep=2pt,
-        label distance=2pt
-    },
-    pc/.style={device},
-    laptop/.style={device},
-    server/.style={device},
-    router/.style={device},
-    switch/.style={device},
-    firewall/.style={device},
-    cloud/.style={device},
-    phone/.style={device},
-    tablet/.style={device},
-    wifi/.style={device},
-    % Connection styles
-    ethernet/.style={
+    boxstyle/.style={
+        rectangle,
         draw=rctcblue,
-        line width=1.5pt,
-        -{Stealth[length=3mm]}
-    },
-    ethernet noarrow/.style={
-        draw=rctcblue,
-        line width=1.5pt
-    },
-    wireless/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed,
-        -{Stealth[length=3mm]}
-    },
-    wireless noarrow/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed
-    },
-    wan/.style={
-        draw=alertred,
-        line width=2pt,
-        -{Stealth[length=3mm]}
-    },
-    % Encapsulation box style
-    encap/.style={
-        draw=#1,
-        line width=1pt,
-        rounded corners=2pt,
-        fill=#1!10
-    },
-    % OSI layer style
-    osilayer/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=6cm,
-        minimum height=0.8cm,
+        fill=rctcblue!10,
+        rounded corners=3pt,
+        minimum width=2cm,
+        minimum height=0.6cm,
         font=\small
     },
-    % Topology node style
     toponode/.style={
         circle,
         draw=rctcblue,
-        fill=rctcblue!20,
-        minimum size=8mm,
-        font=\footnotesize\bfseries
+        fill=white,
+        minimum size=0.6cm,
+        font=\small\bfseries
+    },
+    encap/.style={
+        rectangle,
+        draw=#1,
+        fill=#1!10,
+        rounded corners=2pt,
+        minimum height=0.5cm,
+        font=\scriptsize
     },
     wan noarrow/.style={
         draw=alertred,
@@ -136,77 +41,23 @@
 }
 
 % =============================================================================
-% ICON COMMANDS (with fallback text if images not found)
-% =============================================================================
-\newcommand{\iconpc}[1][0.6cm]{\includegraphics[height=#1]{icon_pc}}
-\newcommand{\iconlaptop}[1][0.6cm]{\includegraphics[height=#1]{icon_laptop}}
-\newcommand{\iconserver}[1][0.6cm]{\includegraphics[height=#1]{icon_server}}
-\newcommand{\iconrouter}[1][0.6cm]{\includegraphics[height=#1]{icon_router}}
-\newcommand{\iconswitch}[1][0.6cm]{\includegraphics[height=#1]{icon_switch}}
-\newcommand{\iconfirewall}[1][0.6cm]{\includegraphics[height=#1]{icon_firewall}}
-\newcommand{\iconcloud}[1][0.6cm]{\includegraphics[height=#1]{icon_cloud}}
-\newcommand{\iconphone}[1][0.6cm]{\includegraphics[height=#1]{icon_phone}}
-\newcommand{\icontablet}[1][0.6cm]{\includegraphics[height=#1]{icon_tablet}}
-\newcommand{\iconwifi}[1][0.6cm]{\includegraphics[height=#1]{icon_wifi}}
-\newcommand{\iconlock}[1][0.6cm]{\includegraphics[height=#1]{icon_lock}}
-\newcommand{\icondb}[1][0.6cm]{\includegraphics[height=#1]{icon_db}}
-\newcommand{\iconvoip}[1][0.6cm]{\includegraphics[height=#1]{icon_voip_phone}}
-
-% =============================================================================
-% CUSTOM COMMANDS
-% =============================================================================
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{#1}}
-
-% Slide section marker
-\newcommand{\sectionslide}[1]{
-    \begin{frame}
-        \vfill
-        \centering
-        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-            \usebeamerfont{title}\Huge #1
-        \end{beamercolorbox}
-        \vfill
-    \end{frame}
-}
-
-% Case study frame environment
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
-}{%
-    \end{alertblock}
-}
-
-% Solution frame environment  
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{$\checkmark$ Solution: #1}
-}{%
-    \end{exampleblock}
-}
-
-% =============================================================================
 % DOCUMENT INFO
 % =============================================================================
 \title{Introduction to Networking Fundamentals}
+\subtitle{Module 1.0}
 \author[B. Shea]{Brendan Shea, PhD}
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-% Slide numbers
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-            \usebeamerfont{title in head/foot}\insertshorttitle
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-        \end{beamercolorbox}}%
-    \vskip0pt%
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
 }
 
 % =============================================================================
@@ -215,7 +66,7 @@
 \begin{document}
 
 % =============================================================================
-% SLIDE 1: Title Slide
+% TITLE SLIDE
 % =============================================================================
 \begin{frame}
     \titlepage
@@ -234,8 +85,12 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 2: Module Overview
+% SECTION 1: INTRODUCTION
 % =============================================================================
+\section{Introduction to Networks}
+\articleonly{\subsection*{Overview}}
+
+% Module Overview
 \begin{frame}{Module Overview}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
@@ -260,9 +115,11 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 3: Learning Outcomes
-% =============================================================================
+\articleonly{
+This module provides a foundational introduction to computer networking. We begin with basic networking concepts and terminology, explore different network types and topologies, and examine the OSI reference model. The module concludes with practical applications in SOHO (Small Office/Home Office) networks and introduces a systematic troubleshooting methodology.
+}
+
+% Learning Outcomes
 \begin{frame}{Learning Outcomes}
     After completing this module, you will be able to:
     \vspace{0.5em}
@@ -272,14 +129,11 @@
         \item Describe common \keyterm{network topologies} and explain their advantages and disadvantages.
         \item Explain the seven layers of the \keyterm{OSI model} and the function of each layer.
         \item Describe the components and functions of a \keyterm{SOHO router}.
+        \item Apply a systematic \keyterm{troubleshooting methodology} to diagnose network problems.
     \end{itemize}
-    
-
 \end{frame}
 
-% =============================================================================
-% SLIDE 4: Key Terms Preview
-% =============================================================================
+% Key Terms Preview
 \begin{frame}{Key Terms Preview}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -321,8 +175,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 5: What is a Network?
+% SECTION 2: NETWORKING FUNDAMENTALS
 % =============================================================================
+\section{Networking Fundamentals}
+\subsection{What is a Network?}
+
+\articleonly{
+A computer network is fundamentally about connectivity and resource sharing. In this section, we explore the basic concepts that define networks and the terminology used by networking professionals.
+}
+
 \begin{frame}{What is a Network?}
     \begin{columns}[T]
         \begin{column}{0.62\textwidth}
@@ -354,9 +215,8 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 6: Networking Concepts
-% =============================================================================
+\subsection{Basic Networking Concepts}
+
 \begin{frame}{Networking Concepts}
     \begin{itemize}
         \item A \keyterm{node} is any device connected to a network, including computers, printers, and smartphones.
@@ -371,9 +231,12 @@
     \end{exampleblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 7: Network Types
-% =============================================================================
+\subsection{Network Types}
+
+\articleonly{
+Networks are classified by their geographic scope and purpose. Understanding these classifications helps in designing, managing, and troubleshooting networks of different scales.
+}
+
 \begin{frame}{Network Types}
     \begin{itemize}
         \item A \keyterm{LAN (Local Area Network)} connects devices in a small geographic area like a home, office, or school building.
@@ -388,9 +251,7 @@
     \end{alertblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 8: Network Types Comparison Table
-% =============================================================================
+% Network Types Comparison Table
 \begin{frame}{Network Types Comparison}
     \begin{center}
         \begin{tabular}{>{\bfseries}l l l l}
@@ -423,8 +284,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 9: What is Network Topology?
+% SECTION 3: NETWORK TOPOLOGIES
 % =============================================================================
+\section{Network Topologies}
+\subsection{Understanding Network Topology}
+
+\articleonly{
+Network topology describes how devices are arranged and connected in a network. Understanding topologies is essential for network design, troubleshooting, and optimization.
+}
+
 \begin{frame}{What is Network Topology?}
     \begin{itemize}
         \item \keyterm{Network topology} describes the arrangement of nodes and connections in a network.
@@ -439,9 +307,8 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 10: Star Topology
-% =============================================================================
+\subsection{Star Topology}
+
 \begin{frame}{Star Topology}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -483,9 +350,8 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 11: Mesh Topology
-% =============================================================================
+\subsection{Mesh Topology}
+
 \begin{frame}{Mesh Topology}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -532,9 +398,8 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 12: Legacy Topologies
-% =============================================================================
+\subsection{Legacy Topologies}
+
 \begin{frame}{Legacy Topologies}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -588,9 +453,9 @@
     \end{alertblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 13: Case Study - Mystery Inc. Network
-% =============================================================================
+% Case Study: Mystery Inc. Network
+\subsection{Case Study: Network Topology Selection}
+
 \begin{frame}{Case Study: Mystery Inc. Opens a Detective Agency}
     \begin{casestudy}{Mystery Inc. Network Setup}
         The Mystery Inc. gang is opening a new detective agency headquarters and needs to set up a computer network for five workstations.
@@ -612,9 +477,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 14: Case Study Solution
-% =============================================================================
 \begin{frame}{Case Study Solution: Mystery Inc. Network Setup}
     \begin{casesolution}{Mystery Inc. Network Setup}
         \begin{enumerate}
@@ -637,8 +499,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 15: The OSI Model
+% SECTION 4: THE OSI MODEL
 % =============================================================================
+\section{The OSI Model}
+\subsection{Introduction to the OSI Model}
+
+\articleonly{
+The Open Systems Interconnection (OSI) model is one of the most important concepts in networking. This seven-layer framework provides a systematic way to understand network communication and serves as an essential troubleshooting tool for network professionals.
+}
+
 \begin{frame}{The OSI Model}
     \begin{itemize}
         \item The \keyterm{OSI (Open Systems Interconnection) Model} is a conceptual framework that standardizes network communication into seven layers.
@@ -654,9 +523,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 16: Why the OSI Model Matters
-% =============================================================================
 \begin{frame}{Why the OSI Model Matters}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -677,12 +543,14 @@
             \end{exampleblock}
         \end{column}
     \end{columns}
-    
 \end{frame}
 
-% =============================================================================
-% SLIDE 17: Data Encapsulation and Decapsulation
-% =============================================================================
+\subsection{Data Encapsulation and PDUs}
+
+\articleonly{
+As data moves through the OSI layers, each layer adds its own header information in a process called encapsulation. Understanding this process is crucial for comprehending how network communication actually works.
+}
+
 \begin{frame}{Data Encapsulation and Decapsulation}
     \begin{itemize}
         \item \keyterm{Encapsulation} is the process of wrapping data with protocol headers (and sometimes trailers) as it moves down the OSI layers.
@@ -722,9 +590,12 @@
     \end{center}
 \end{frame}
 
-% =============================================================================
-% SLIDE 18: Layer 1 - Physical
-% =============================================================================
+\subsection{The Seven Layers}
+
+\articleonly{
+Each of the seven OSI layers has specific responsibilities. We'll examine each layer from bottom to top, understanding what each layer does and what devices operate at that layer.
+}
+
 \begin{frame}{Layer 1: Physical}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
@@ -755,9 +626,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 19: Layer 2 - Data Link
-% =============================================================================
 \begin{frame}{Layer 2: Data Link}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
@@ -791,9 +659,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 20: Layer 3 - Network
-% =============================================================================
 \begin{frame}{Layer 3: Network}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
@@ -827,9 +692,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 21: Layer 4 - Transport (CORRECTED)
-% =============================================================================
 \begin{frame}{Layer 4: Transport}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
@@ -867,9 +729,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 22: Upper Layers (5, 6, 7)
-% =============================================================================
 \begin{frame}{Upper Layers: Session, Presentation, Application}
     \begin{columns}[T]
         \begin{column}{0.32\textwidth}
@@ -913,9 +772,8 @@
     \end{alertblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 23: OSI Model Summary Table
-% =============================================================================
+\subsection{OSI Model Summary}
+
 \begin{frame}{OSI Model Summary}
     \begin{center}
         \small
@@ -953,9 +811,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 24: OSI Memory Tricks
-% =============================================================================
 \begin{frame}{OSI Memory Tricks}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -997,9 +852,8 @@
     \end{exampleblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 25: Case Study - The Haunted Network
-% =============================================================================
+\subsection{Case Study: OSI Troubleshooting}
+
 \begin{frame}{Case Study: The Haunted Network}
     \begin{casestudy}{The Haunted Network}
         Daphne reports that she cannot access any websites from her computer at Mystery Inc. headquarters.
@@ -1023,9 +877,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 26: Case Study Solution - The Haunted Network
-% =============================================================================
 \begin{frame}{Case Study Solution: The Haunted Network}
     \begin{casesolution}{The Haunted Network}
         \begin{enumerate}
@@ -1052,8 +903,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 27: What is a SOHO Network?
+% SECTION 5: SOHO NETWORKS
 % =============================================================================
+\section{SOHO Networks}
+\subsection{Introduction to SOHO Networks}
+
+\articleonly{
+Small Office/Home Office (SOHO) networks demonstrate how the networking concepts we've learned apply in practice. These networks typically serve fewer than 10 users and use integrated devices that combine multiple networking functions.
+}
+
 \begin{frame}{What is a SOHO Network?}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1084,9 +942,12 @@
     \end{exampleblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 28: SOHO Router Overview
-% =============================================================================
+\subsection{SOHO Router Functions}
+
+\articleonly{
+The SOHO router is a remarkable device that performs functions across multiple OSI layers. Understanding these functions helps explain how a simple home network connects to the internet and keeps devices secure.
+}
+
 \begin{frame}{SOHO Router Overview}
     \begin{itemize}
         \small
@@ -1124,9 +985,6 @@
     \end{center}
 \end{frame}
 
-% =============================================================================
-% SLIDE 29: Physical Layer Functions
-% =============================================================================
 \begin{frame}{SOHO Router: Physical Layer Functions}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1161,9 +1019,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 30: Data Link Layer Functions
-% =============================================================================
 \begin{frame}{SOHO Router: Data Link Layer Functions}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1195,9 +1050,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 31: Network Layer Functions
-% =============================================================================
 \begin{frame}{SOHO Router: Network Layer Functions}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1231,9 +1083,6 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 32: Transport, Application, and Security Functions
-% =============================================================================
 \begin{frame}{SOHO Router: Transport, Application, and Security}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1271,9 +1120,8 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 33: The Internet
-% =============================================================================
+\subsection{Connecting to the Internet}
+
 \begin{frame}{The Internet}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1329,8 +1177,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 34: Why Binary and Hexadecimal Matter
+% SECTION 6: NUMBER SYSTEMS
 % =============================================================================
+\section{Number Systems for Networking}
+\subsection{Binary and Hexadecimal}
+
+\articleonly{
+Understanding binary and hexadecimal number systems is essential for working with IP addresses, subnet masks, and MAC addresses. These number systems form the foundation of how computers represent and process network information.
+}
+
 \begin{frame}{Why Binary and Hexadecimal Matter}
     \begin{itemize}
         \item Computers process everything as \keyterm{binary} (1s and 0s), including all network addresses and data.
@@ -1353,9 +1208,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 35: Binary Number System
-% =============================================================================
 \begin{frame}{Binary Number System}
     \begin{itemize}
         \item The \keyterm{binary} (base-2) system uses only two digits: 0 and 1.
@@ -1383,9 +1235,6 @@
     \end{alertblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 36: Hexadecimal Number System
-% =============================================================================
 \begin{frame}{Hexadecimal Number System}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -1433,9 +1282,8 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 37: Case Study - Scooby Snacks Café Wi-Fi
-% =============================================================================
+\subsection{Case Study: SOHO Network Troubleshooting}
+
 \begin{frame}{Case Study: Scooby Snacks Café Wi-Fi}
     \begin{casestudy}{Scooby Snacks Café Wi-Fi}
         Shaggy has opened ``Scooby Snacks Café'' and set up a SOHO router to provide free Wi-Fi for customers.
@@ -1457,9 +1305,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 38: Case Study Solution - Scooby Snacks Café
-% =============================================================================
 \begin{frame}{Case Study Solution: Scooby Snacks Café Wi-Fi}
     \begin{casesolution}{Scooby Snacks Café Wi-Fi}
         \begin{enumerate}
@@ -1482,8 +1327,15 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 39: Network Troubleshooting Methodology Overview
+% SECTION 7: NETWORK TROUBLESHOOTING
 % =============================================================================
+\section{Network Troubleshooting Methodology}
+\subsection{The CompTIA Troubleshooting Approach}
+
+\articleonly{
+Effective troubleshooting requires a systematic approach. CompTIA defines a seven-step methodology that provides structure to the problem-solving process, ensuring issues are resolved efficiently and completely.
+}
+
 \begin{frame}{Network Troubleshooting Methodology}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1508,12 +1360,10 @@
             \end{block}
         \end{column}
     \end{columns}
-    
 \end{frame}
 
-% =============================================================================
-% SLIDE 40: Step 1 - Identify the Problem
-% =============================================================================
+\subsection{Steps 1--3: Problem Identification and Theory}
+
 \begin{frame}{Step 1: Identify the Problem}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1538,12 +1388,8 @@
             \end{block}
         \end{column}
     \end{columns}
-    
 \end{frame}
 
-% =============================================================================
-% SLIDE 41: Step 2 - Establish a Theory of Probable Cause
-% =============================================================================
 \begin{frame}{Step 2: Establish a Theory of Probable Cause}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -1573,12 +1419,8 @@
     \begin{alertblock}{Occam's Razor}
         ``The simplest explanation is usually correct.'' Check the obvious things first---is it plugged in? Is it turned on?
     \end{alertblock}
-    
 \end{frame}
 
-% =============================================================================
-% SLIDE 42: Step 3 - Test the Theory to Determine the Cause
-% =============================================================================
 \begin{frame}{Step 3: Test the Theory to Determine the Cause}
     \begin{itemize}
         \item Once you have a theory, \keyterm{test it} to confirm or eliminate it as the cause.
@@ -1610,9 +1452,12 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 43: Steps 4 & 5 - Plan and Implement
-% =============================================================================
+\subsection{Steps 4--7: Implementation and Verification}
+
+\articleonly{
+Once the problem is identified and confirmed, the focus shifts to implementing a solution, verifying it works, and documenting the resolution for future reference.
+}
+
 \begin{frame}{Steps 4 \& 5: Establish a Plan and Implement the Solution}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1637,12 +1482,8 @@
             \end{block}
         \end{column}
     \end{columns}
-    
 \end{frame}
 
-% =============================================================================
-% SLIDE 44: Steps 6 & 7 - Verify and Document
-% =============================================================================
 \begin{frame}{Steps 6 \& 7: Verify Functionality and Document Findings}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1673,9 +1514,8 @@
     \end{exampleblock}
 \end{frame}
 
-% =============================================================================
-% SLIDE 45: Troubleshooting Methodology Summary
-% =============================================================================
+\subsection{Troubleshooting Summary}
+
 \begin{frame}{Troubleshooting Methodology Summary}
     \begin{center}
         \small
@@ -1695,20 +1535,14 @@
     \end{center}
     
     \vspace{0.5em}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Memory Tip}
-                \textbf{I} \textbf{E}at \textbf{T}acos \textbf{E}very \textbf{I}nstant \textbf{V}ery \textbf{D}eliciously \\
-                {\small (Identify, Establish, Test, Establish, Implement, Verify, Document)}
-            \end{block}
-        \end{column}
-
-    \end{columns}
+    \begin{block}{Memory Tip}
+        \textbf{I} \textbf{E}at \textbf{T}acos \textbf{E}very \textbf{I}nstant \textbf{V}ery \textbf{D}eliciously \\
+        {\small (Identify, Establish, Test, Establish, Implement, Verify, Document)}
+    \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 46: Case Study - The Mystery Machine Won't Connect
-% =============================================================================
+\subsection{Case Study: Applying the Methodology}
+
 \begin{frame}{Case Study: The Mystery Machine Won't Connect}
     \begin{casestudy}{The Mystery Machine Won't Connect}
         The gang is on a stakeout in the Mystery Machine. Velma's laptop suddenly cannot connect to Fred's mobile hotspot, but Daphne's tablet connects without any problems.
@@ -1726,9 +1560,6 @@
     \end{block}
 \end{frame}
 
-% =============================================================================
-% SLIDE 47: Case Study Solution - The Mystery Machine
-% =============================================================================
 \begin{frame}{Case Study Solution: The Mystery Machine Won't Connect}
     \begin{casesolution}{The Mystery Machine Won't Connect}
         \begin{enumerate}
@@ -1749,8 +1580,10 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 48: Module Summary
+% MODULE SUMMARY
 % =============================================================================
+\section*{Module Summary}
+
 \begin{frame}{Module 1.0 Summary}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1793,5 +1626,10 @@
         Review the key terms, practice binary/hex conversions, and memorize the OSI layers and troubleshooting steps for the exam!
     \end{alertblock}
 \end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module has provided a comprehensive introduction to networking fundamentals. You've learned about different network types and topologies, explored the seven-layer OSI model, examined practical SOHO networking, and studied a systematic troubleshooting methodology. These concepts form the foundation for all subsequent networking topics. In the next module, we'll dive deeper into the Physical layer and explore cabling and infrastructure.
+}
 
 \end{document}

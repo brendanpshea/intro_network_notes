@@ -1,238 +1,12 @@
-\documentclass[aspectratio=169]{beamer}
+% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
 
 % =============================================================================
-% THEME AND COLORS
+% COMMON PREAMBLE
 % =============================================================================
-\usetheme{Madrid}
-\usecolortheme{whale}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 128, 64}
-\definecolor{alertred}{RGB}{180, 0, 0}
-\definecolor{aborange}{RGB}{230, 126, 34}
-\definecolor{copperbrown}{RGB}{184, 115, 51}
-\definecolor{fiberyellow}{RGB}{255, 215, 0}
-\definecolor{ipblue}{RGB}{52, 152, 219}
-\definecolor{ippurple}{RGB}{155, 89, 182}
-
-\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white,bg=rctcblue}
-\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
-\setbeamercolor{block title}{bg=rctcblue,fg=white}
-\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
-\setbeamercolor{block title alerted}{bg=alertred,fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
-\setbeamercolor{block title example}{bg=networkgreen,fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
-
-% =============================================================================
-% PACKAGES
-% =============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[table]{xcolor} % adds rowcolor/column color support for tables
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{amssymb}
-\usepackage{calc}
-
-% =============================================================================
-% TIKZ LIBRARIES AND SETUP
-% =============================================================================
-\usetikzlibrary{
-    shapes.geometric,
-    shapes.symbols,
-    shapes.misc,
-    arrows.meta,
-    positioning,
-    calc,
-    fit,
-    backgrounds,
-    decorations.pathreplacing,
-    matrix,
-    chains
-}
-
-% Graphics path for icons and chapter images
-\graphicspath{
-    {../images/icons/}
-    {./images/icons/}
-    {images/icons/}
-    {../images/ch4/}
-    {./images/ch4/}
-    {images/ch4/}
-}
-
-% =============================================================================
-% NETWORK DIAGRAM STYLES
-% =============================================================================
-\tikzset{
-    % Node styles for network devices
-    device/.style={
-        inner sep=2pt,
-        label distance=2pt
-    },
-    pc/.style={device},
-    laptop/.style={device},
-    server/.style={device},
-    router/.style={device},
-    switch/.style={device},
-    firewall/.style={device},
-    cloud/.style={device},
-    phone/.style={device},
-    tablet/.style={device},
-    wifi/.style={device},
-    % Connection styles
-    ethernet/.style={
-        draw=rctcblue,
-        line width=1.5pt,
-        -{Stealth[length=3mm]}
-    },
-    ethernet noarrow/.style={
-        draw=rctcblue,
-        line width=1.5pt
-    },
-    wireless/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed,
-        -{Stealth[length=3mm]}
-    },
-    wireless noarrow/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed
-    },
-    wan/.style={
-        draw=alertred,
-        line width=2pt,
-        -{Stealth[length=3mm]}
-    },
-    wan noarrow/.style={
-        draw=alertred,
-        line width=2pt
-    },
-    % Copper cable style
-    copper/.style={
-        draw=copperbrown,
-        line width=2pt
-    },
-    % Fiber cable style
-    fiber/.style={
-        draw=fiberyellow,
-        line width=2pt
-    },
-    % OSI layer style
-    osilayer/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=4cm,
-        minimum height=0.55cm,
-        font=\small
-    },
-    osilayer highlight/.style={
-        draw=rctcblue,
-        line width=2pt,
-        minimum width=4cm,
-        minimum height=0.55cm,
-        font=\small\bfseries,
-        fill=rctcgold!30
-    },
-    % Frame/packet segment style
-    pktseg/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum height=0.7cm,
-        font=\footnotesize,
-        fill=rctcblue!10
-    },
-    pktseg highlight/.style={
-        draw=ipblue,
-        line width=1.5pt,
-        minimum height=0.7cm,
-        font=\footnotesize\bfseries,
-        fill=ipblue!20
-    },
-    % IP address box style
-    ipbox/.style={
-        draw=ipblue,
-        line width=1pt,
-        minimum height=0.6cm,
-        minimum width=1.2cm,
-        font=\small\ttfamily,
-        fill=ipblue!10,
-        rounded corners=2pt
-    },
-    % MAC address box style
-    macbox/.style={
-        draw=networkgreen,
-        line width=1pt,
-        minimum height=0.6cm,
-        minimum width=1.5cm,
-        font=\small\ttfamily,
-        fill=networkgreen!10,
-        rounded corners=2pt
-    }
-}
-
-% =============================================================================
-% ICON COMMANDS
-% =============================================================================
-\newcommand{\iconpc}[1][0.6cm]{\includegraphics[height=#1]{icon_pc}}
-\newcommand{\iconlaptop}[1][0.6cm]{\includegraphics[height=#1]{icon_laptop}}
-\newcommand{\iconserver}[1][0.6cm]{\includegraphics[height=#1]{icon_server}}
-\newcommand{\iconrouter}[1][0.6cm]{\includegraphics[height=#1]{icon_router}}
-\newcommand{\iconswitch}[1][0.6cm]{\includegraphics[height=#1]{icon_switch}}
-\newcommand{\iconfirewall}[1][0.6cm]{\includegraphics[height=#1]{icon_firewall}}
-\newcommand{\iconcloud}[1][0.6cm]{\includegraphics[height=#1]{icon_cloud}}
-\newcommand{\iconphone}[1][0.6cm]{\includegraphics[height=#1]{icon_phone}}
-\newcommand{\icontablet}[1][0.6cm]{\includegraphics[height=#1]{icon_tablet}}
-\newcommand{\iconwifi}[1][0.6cm]{\includegraphics[height=#1]{icon_wifi}}
-\newcommand{\iconlock}[1][0.6cm]{\includegraphics[height=#1]{icon_lock}}
-\newcommand{\icondb}[1][0.6cm]{\includegraphics[height=#1]{icon_db}}
-\newcommand{\iconvoip}[1][0.6cm]{\includegraphics[height=#1]{icon_voip_phone}}
-
-% =============================================================================
-% CUSTOM COMMANDS
-% =============================================================================
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{#1}}
-
-% Slide section marker
-\newcommand{\sectionslide}[1]{
-    \begin{frame}
-        \vfill
-        \centering
-        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-            \usebeamerfont{title}\Huge #1
-        \end{beamercolorbox}
-        \vfill
-    \end{frame}
-}
-
-% Case study frame environment
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
-}{%
-    \end{alertblock}
-}
-
-% Solution frame environment  
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{$\checkmark$ Solution: #1}
-}{%
-    \end{exampleblock}
-}
+\input{network_preamble.tex}
 
 % =============================================================================
 % DOCUMENT INFO
@@ -243,26 +17,17 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-% Slide numbers
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-            \usebeamerfont{title in head/foot}\insertshorttitle
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-        \end{beamercolorbox}}%
-    \vskip0pt%
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
 }
 
-% =============================================================================
-% DOCUMENT BEGINS
-% =============================================================================
 \begin{document}
 
 % =============================================================================
@@ -299,9 +64,20 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+
 % =============================================================================
 % SLIDE 2: Review - From Layer 2 to Layer 3
 % =============================================================================
+\section*{Review from Module 3}
+
 \begin{frame}{Review: From Layer 2 to Layer 3}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -345,89 +121,36 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 3: Module Overview and Learning Outcomes
+% SLIDE 3: Learning Outcomes
 % =============================================================================
-\begin{frame}{Module Overview and Learning Outcomes}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Topics Covered}
-                \begin{enumerate}
-                    \item Internet Protocol Basics
-                    \item IPv4 Address Format
-                    \item Subnetting and CIDR
-                    \item IP Troubleshooting Tools
-                    \item IPv6 Addressing
-                    \item IP Troubleshooting Scenarios
-                \end{enumerate}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Learning Outcomes}
-                After this module, you will be able to:
-                \begin{itemize}
-                    \item Explain Layer 2 vs Layer 3 addressing
-                    \item Calculate subnet masks and host ranges
-                    \item Configure IP addresses on devices
-                    \item Use ping, arp, and ipconfig
-                    \item Compare IPv4 and IPv6 formats
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-    
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \begin{itemize}
+        \item Explain the role of \keyterm{Layer 3 (IP) addressing} and how it differs from Layer 2 (MAC) addressing.
+        \item Describe \keyterm{ARP} (Address Resolution Protocol) and how it maps IP addresses to MAC addresses.
+        \item Interpret \keyterm{IPv4 addresses} in dotted decimal notation and understand the role of \keyterm{subnet masks}.
+        \item Calculate network addresses, broadcast addresses, and usable host ranges using \keyterm{CIDR notation}.
+        \item Apply \keyterm{VLSM} (Variable Length Subnet Masking) to create subnets of different sizes.
+        \item Identify \keyterm{private IP ranges} (RFC 1918) and explain \keyterm{NAT} (Network Address Translation).
+        \item Configure IP addresses, subnet masks, and \keyterm{default gateways} on network devices.
+        \item Use troubleshooting tools including \keyterm{ping}, \keyterm{arp}, \keyterm{ipconfig/ifconfig}, and \keyterm{traceroute}.
+        \item Compare \keyterm{IPv4} and \keyterm{IPv6} addressing formats and describe IPv6 adoption strategies.
+    \end{itemize}
 \end{frame}
 
-% =============================================================================
-% SLIDE 4: Key Terms Preview
-% =============================================================================
-\begin{frame}{Key Terms Preview}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Addressing Concepts}
-                \begin{itemize}
-                    \item \keyterm{IP Address} -- Logical Layer 3 address
-                    \item \keyterm{Subnet Mask} -- Defines network/host split
-                    \item \keyterm{Default Gateway} -- Router to other networks
-                    \item \keyterm{CIDR} -- Classless addressing notation
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Protocols}
-                \begin{itemize}
-                    \item \keyterm{ARP} -- Resolves IP to MAC
-                    \item \keyterm{ICMP} -- Ping and error messages
-                    \item \keyterm{IPv4} -- 32-bit addresses
-                    \item \keyterm{IPv6} -- 128-bit addresses
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Address Types}
-                \begin{itemize}
-                    \item \keyterm{Unicast} -- One-to-one
-                    \item \keyterm{Broadcast} -- One-to-all (local)
-                    \item \keyterm{Multicast} -- One-to-group
-                    \item \keyterm{Anycast} -- One-to-nearest
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Troubleshooting Tools}
-                \begin{itemize}
-                    \item \keyterm{ipconfig / ifconfig} -- View IP config
-                    \item \keyterm{ping} -- Test connectivity
-                    \item \keyterm{arp} -- View/manage ARP cache
-                    \item \keyterm{traceroute} -- Show path to destination
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
+
 
 % =============================================================================
 % SLIDE 5: The IPv4 Datagram Header
 % =============================================================================
+\section{IP Fundamentals and Address Resolution}
+\subsection{IPv4 Header and Address Roles}
+
+\articleonly{
+This section introduces IPv4 packet structure and the relationship between Layer 2 and Layer 3 addressing during local delivery and routing.
+}
+
 \begin{frame}{The IPv4 Datagram Header}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -847,6 +570,13 @@
 % =============================================================================
 % SLIDE 13: IPv4 Address Format
 % =============================================================================
+\section{Subnetting and Host Addressing}
+\subsection{Address Structure and Masks}
+
+\articleonly{
+This section covers IPv4 addressing structure, subnet masks, and host range calculations used in practical network design.
+}
+
 \begin{frame}{IPv4 Address Format}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -964,7 +694,7 @@
 % =============================================================================
 % SLIDE 15: Subnet Mask Examples
 % =============================================================================
-\begin{frame}{Subnet Mask Examples}
+\begin{frame}[t,shrink=15]{Subnet Mask Examples}
     \begin{center}
         \begin{tabular}{l c c c}
             \toprule
@@ -1091,7 +821,7 @@
         \begin{column}{0.48\textwidth}
             \begin{itemize}
                 \item The \keyterm{default gateway} is the router that connects your network to other networks.
-                \item If destination IP is NOT on your local subnet → send to the gateway.
+                \item If destination IP is NOT on your local subnet $\rightarrow$ send to the gateway.
                 \item Gateway must be on the \textbf{same subnet} as the host.
                 \item Typically the first or last usable address (e.g., \texttt{.1} or \texttt{.254}).
             \end{itemize}
@@ -1231,6 +961,13 @@
 % =============================================================================
 % SLIDE 20: Classful Addressing (Legacy)
 % =============================================================================
+\section{Address Planning Strategies}
+\subsection{Classful, CIDR, and VLSM}
+
+\articleonly{
+Address planning evolved from classful limits to CIDR and VLSM for efficient allocation and scalable route summarization.
+}
+
 \begin{frame}{Classful Addressing (Legacy)}
     \begin{itemize}
         \item The original IP design divided addresses into \textbf{classes} based on the first octet.
@@ -1436,10 +1173,10 @@
             \begin{block}{Example Requirement}
                 \small
                 Company needs: \\
-                • Sales: 100 hosts \\
-                • Engineering: 50 hosts \\
-                • Management: 25 hosts \\
-                • Point-to-point link: 2 hosts
+                $\rightarrow$ Sales: 100 hosts \\
+                $\rightarrow$ Engineering: 50 hosts \\
+                $\rightarrow$ Management: 25 hosts \\
+                $\rightarrow$ Point-to-point link: 2 hosts
             \end{block}
         \end{column}
         \begin{column}{0.55\textwidth}
@@ -1533,7 +1270,7 @@
 \begin{frame}{Case Study Solution: Springfield Elementary Network Design}
     \begin{casesolution}{Springfield Elementary Network Design}
         \begin{enumerate}
-            \item 28 hosts needs at least 30 usable addresses → \textbf{/27} (32 addresses, 30 usable).
+            \item 28 hosts needs at least 30 usable addresses $\rightarrow$ \textbf{/27} (32 addresses, 30 usable).
             \item Subnet assignments (largest first):
         \end{enumerate}
     \end{casesolution}
@@ -1546,21 +1283,21 @@
                 (0,0) rectangle (4,1.2);
             \node[font=\small\bfseries] at (2,0.9) {Computer Lab};
             \node[font=\small\ttfamily] at (2,0.5) {172.16.50.0/27};
-            \node[font=\tiny] at (2,0.15) {32 addresses → 30 usable};
+            \node[font=\tiny] at (2,0.15) {32 addresses $\rightarrow$ 30 usable};
             
             % Admin Office
             \draw[fill=networkgreen!25, draw=networkgreen, line width=1.5pt, rounded corners]
                 (4.5,0) rectangle (7.5,1.2);
             \node[font=\small\bfseries] at (6,0.9) {Admin Office};
             \node[font=\small\ttfamily] at (6,0.5) {172.16.50.32/28};
-            \node[font=\tiny] at (6,0.15) {16 addresses → 14 usable};
+            \node[font=\tiny] at (6,0.15) {16 addresses $\rightarrow$ 14 usable};
             
             % Teacher's Lounge
             \draw[fill=aborange!25, draw=aborange, line width=1.5pt, rounded corners]
                 (8,0) rectangle (10.2,1.2);
             \node[font=\small\bfseries] at (9.1,0.9) {Teachers};
             \node[font=\small\ttfamily] at (9.1,0.5) {.48/29};
-            \node[font=\tiny] at (9.1,0.15) {8 addr → 6 usable};
+            \node[font=\tiny] at (9.1,0.15) {8 addr $\rightarrow$ 6 usable};
             
             % Unused space indicator
             \draw[fill=gray!15, draw=gray, line width=1pt, dashed, rounded corners]
@@ -1592,6 +1329,13 @@
 % =============================================================================
 % SLIDE 27: ipconfig (Windows)
 % =============================================================================
+\section{IP Configuration and Diagnostics}
+\subsection{Host Tools and Connectivity Testing}
+
+\articleonly{
+This section reviews host-side IP tools and a systematic approach to connectivity testing and troubleshooting.
+}
+
 \begin{frame}{ipconfig (Windows)}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
@@ -1893,6 +1637,13 @@
 % =============================================================================
 % SLIDE 32: Why IPv6?
 % =============================================================================
+\section{IPv6 Fundamentals}
+\subsection{Addressing, Types, and Transition}
+
+\articleonly{
+The final section introduces IPv6 structure, address types, and migration approaches from IPv4 environments.
+}
+
 \begin{frame}{Why IPv6? The Problem with IPv4}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -2060,7 +1811,7 @@
 % =============================================================================
 % SLIDE 35: IPv6 Address Types Explained
 % =============================================================================
-\begin{frame}{IPv6 Address Types Explained}
+\begin{frame}[t,shrink=12]{IPv6 Address Types Explained}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Global Unicast -- GUA}
@@ -2124,7 +1875,7 @@
 % =============================================================================
 % SLIDE 36: IPv4 to IPv6 Transition
 % =============================================================================
-\begin{frame}{IPv4 to IPv6 Transition}
+\begin{frame}[t,shrink=20]{IPv4 to IPv6 Transition}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Dual Stack}
@@ -2169,102 +1920,48 @@
     \end{columns}
     
     \begin{exampleblock}{Recommendation}
-        \small
+        \scriptsize
         \textbf{Dual stack} is the preferred transition method. Run both protocols until IPv4 can be safely retired. Most modern operating systems support dual stack by default.
     \end{exampleblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 37: Module 4.0 Summary - Part 1
+% SLIDE 37: Module 4.0 Summary
 % =============================================================================
-\begin{frame}{Module 4.0 Summary: IPv4 Fundamentals}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{IP Basics}
-                \begin{itemize}
-                    \item IP operates at Layer 3
-                    \item MAC for local, IP for end-to-end
-                    \item ARP resolves IP to MAC
-                    \item TTL prevents routing loops
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{IPv4 Addressing}
-                \begin{itemize}
-                    \item 32-bit addresses in dotted decimal
-                    \item Subnet mask splits network/host
-                    \item Gateway must be on same subnet
-                    \item Private ranges for internal use
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Subnetting}
-                \begin{itemize}
-                    \item CIDR replaced classful addressing
-                    \item VLSM allows variable subnet sizes
-                    \item Usable hosts = $2^n - 2$
-                    \item Network + broadcast reserved
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Address Types}
-                \begin{itemize}
-                    \item Unicast -- one-to-one
-                    \item Broadcast -- one-to-all (local)
-                    \item Multicast -- one-to-group
-                    \item Anycast -- one-to-nearest
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 4.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{IP (Layer 3)} provides end-to-end addressing; \keyterm{MAC (Layer 2)} provides local delivery. \keyterm{ARP} resolves IP to MAC.
+        \item \keyterm{IPv4 addresses}: 32-bit dotted decimal (e.g., 192.168.1.100). \keyterm{Subnet mask} divides network and host portions.
+        \item \keyterm{CIDR notation} (e.g., /24) replaced classful addressing. Usable hosts = $2^n - 2$ (subtract network and broadcast addresses).
+        \item \keyterm{VLSM} (Variable Length Subnet Masking) allows subnets of different sizes for efficient IP allocation.
+        \item \keyterm{Private IP ranges}: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (RFC 1918). Use \keyterm{NAT} for internet access.
+        \item Address types: \keyterm{Unicast} (one-to-one), \keyterm{Broadcast} (one-to-all on subnet), \keyterm{Multicast} (one-to-group), \keyterm{Anycast} (one-to-nearest).
+        \item \keyterm{Default gateway} must be on the same subnet as the host. \keyterm{TTL} (Time to Live) prevents routing loops.
+    \end{itemize}
+    \framebreak
+    
+    \vspace{0.3em}
+    \textbf{Troubleshooting \& IPv6:}
+    \begin{itemize}
+        \item Tools: \keyterm{ipconfig/ifconfig} (view config), \keyterm{ping} (test connectivity), \keyterm{arp} (view MAC mappings), \keyterm{traceroute} (show path).
+        \item Methodology: Ping loopback (127.0.0.1) $\rightarrow$ local gateway $\rightarrow$ remote host to isolate problems.
+        \item \keyterm{169.254.x.x} = APIPA (DHCP failure). Empty ARP table indicates Layer 1/2 problem.
+        \item \keyterm{IPv6}: 128-bit addresses in hex notation (e.g., 2001:db8::1). Use :: to compress zeros.
+        \item IPv6 types: \keyterm{Link-local} (fe80::/10, auto-configured), \keyterm{Global unicast} (2000::/3), \keyterm{Unique local} (fc00::/7).
+        \item \keyterm{Dual stack}: Run IPv4 and IPv6 simultaneously during transition period.
+    \end{itemize}
 \end{frame}
 
-% =============================================================================
-% SLIDE 38: Module 4.0 Summary - Part 2
-% =============================================================================
-\begin{frame}{Module 4.0 Summary: IPv6 and Troubleshooting}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Troubleshooting Tools}
-                \begin{itemize}
-                    \item ipconfig/ifconfig -- view config
-                    \item ping -- test connectivity
-                    \item arp -- view MAC mappings
-                    \item Ping loopback $\rightarrow$ gateway $\rightarrow$ remote
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{IPv6 Addressing}
-                \begin{itemize}
-                    \item 128-bit addresses in hex notation
-                    \item Simplify with :: and drop leading zeros
-                    \item Link-local auto-configures (fe80::)
-                    \item Global unicast (2000::/3)
-                    \item Dual stack for transition
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Common Issues}
-                \begin{itemize}
-                    \item 169.254.x.x = DHCP failure
-                    \item Empty ARP table = Layer 1/2 issue
-                    \item Gateway wrong subnet = no routing
-                    \item TTL expired = routing loop
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{alertblock}{Key Takeaway}
-                IP addressing is the foundation of all network communication. Master subnetting and the ping methodology -- both are on the exam!
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
+\articleonly{
+\subsection*{Conclusion}
+This module covered IPv4 and IPv6 addressing, subnetting with CIDR and VLSM, address resolution with ARP, and troubleshooting tools. You learned to calculate subnet masks, plan IP address schemes, and diagnose connectivity problems systematically. In the next module, we'll explore routing protocols and how packets travel between networks.
+}
 
 
 \end{document}
+
+

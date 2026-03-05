@@ -1,216 +1,12 @@
-\documentclass[aspectratio=169]{beamer}
+% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
 
 % =============================================================================
-% THEME AND COLORS
+% COMMON PREAMBLE
 % =============================================================================
-\usetheme{Madrid}
-\usecolortheme{whale}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 128, 64}
-\definecolor{alertred}{RGB}{180, 0, 0}
-\definecolor{aborange}{RGB}{230, 126, 34}
-\definecolor{copperbrown}{RGB}{184, 115, 51}
-\definecolor{fiberyellow}{RGB}{255, 215, 0}
-\definecolor{shirepurple}{RGB}{102, 51, 153}
-
-\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white,bg=rctcblue}
-\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
-\setbeamercolor{block title}{bg=rctcblue,fg=white}
-\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
-\setbeamercolor{block title alerted}{bg=alertred,fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
-\setbeamercolor{block title example}{bg=networkgreen,fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
-
-% =============================================================================
-% PACKAGES
-% =============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{amssymb}
-\usepackage{calc}
-
-% =============================================================================
-% TIKZ LIBRARIES AND SETUP
-% =============================================================================
-\usetikzlibrary{
-    shapes.geometric,
-    shapes.symbols,
-    shapes.misc,
-    arrows.meta,
-    positioning,
-    calc,
-    fit,
-    backgrounds,
-    decorations.pathreplacing,
-    matrix,
-    chains
-}
-
-% Graphics path for icons and chapter images
-\graphicspath{
-    {../images/icons/}
-    {./images/icons/}
-    {images/icons/}
-    {../images/ch3/}
-    {./images/ch3/}
-    {images/ch3/}
-}
-
-% =============================================================================
-% NETWORK DIAGRAM STYLES
-% =============================================================================
-\tikzset{
-    % Node styles for network devices
-    device/.style={
-        inner sep=2pt,
-        label distance=2pt
-    },
-    pc/.style={device},
-    laptop/.style={device},
-    server/.style={device},
-    router/.style={device},
-    switch/.style={device},
-    firewall/.style={device},
-    cloud/.style={device},
-    phone/.style={device},
-    tablet/.style={device},
-    wifi/.style={device},
-    % Connection styles
-    ethernet/.style={
-        draw=rctcblue,
-        line width=1.5pt,
-        -{Stealth[length=3mm]}
-    },
-    ethernet noarrow/.style={
-        draw=rctcblue,
-        line width=1.5pt
-    },
-    wireless/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed,
-        -{Stealth[length=3mm]}
-    },
-    wireless noarrow/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed
-    },
-    wan/.style={
-        draw=alertred,
-        line width=2pt,
-        -{Stealth[length=3mm]}
-    },
-    wan noarrow/.style={
-        draw=alertred,
-        line width=2pt
-    },
-    % Copper cable style
-    copper/.style={
-        draw=copperbrown,
-        line width=2pt
-    },
-    % Fiber cable style
-    fiber/.style={
-        draw=fiberyellow,
-        line width=2pt
-    },
-    % OSI layer style
-    osilayer/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=4.5cm,
-        minimum height=0.6cm,
-        font=\small
-    },
-    osilayer highlight/.style={
-        draw=rctcblue,
-        line width=2pt,
-        minimum width=4.5cm,
-        minimum height=0.6cm,
-        font=\small\bfseries,
-        fill=rctcgold!30
-    },
-    % Frame segment style
-    frameseg/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum height=0.8cm,
-        font=\footnotesize,
-        fill=rctcblue!10
-    },
-    frameseg highlight/.style={
-        draw=rctcblue,
-        line width=1.5pt,
-        minimum height=0.8cm,
-        font=\footnotesize\bfseries,
-        fill=rctcgold!30
-    }
-}
-
-% =============================================================================
-% ICON COMMANDS
-% =============================================================================
-\newcommand{\iconpc}[1][0.6cm]{\includegraphics[height=#1]{icon_pc}}
-\newcommand{\iconlaptop}[1][0.6cm]{\includegraphics[height=#1]{icon_laptop}}
-\newcommand{\iconserver}[1][0.6cm]{\includegraphics[height=#1]{icon_server}}
-\newcommand{\iconrouter}[1][0.6cm]{\includegraphics[height=#1]{icon_router}}
-\newcommand{\iconswitch}[1][0.6cm]{\includegraphics[height=#1]{icon_switch}}
-\newcommand{\iconfirewall}[1][0.6cm]{\includegraphics[height=#1]{icon_firewall}}
-\newcommand{\iconcloud}[1][0.6cm]{\includegraphics[height=#1]{icon_cloud}}
-\newcommand{\iconphone}[1][0.6cm]{\includegraphics[height=#1]{icon_phone}}
-\newcommand{\icontablet}[1][0.6cm]{\includegraphics[height=#1]{icon_tablet}}
-\newcommand{\iconwifi}[1][0.6cm]{\includegraphics[height=#1]{icon_wifi}}
-\newcommand{\iconlock}[1][0.6cm]{\includegraphics[height=#1]{icon_lock}}
-\newcommand{\icondb}[1][0.6cm]{\includegraphics[height=#1]{icon_db}}
-\newcommand{\iconvoip}[1][0.6cm]{\includegraphics[height=#1]{icon_voip_phone}}
-
-% =============================================================================
-% CUSTOM COMMANDS
-% =============================================================================
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{#1}}
-
-% Slide section marker
-\newcommand{\sectionslide}[1]{
-    \begin{frame}
-        \vfill
-        \centering
-        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-            \usebeamerfont{title}\Huge #1
-        \end{beamercolorbox}
-        \vfill
-    \end{frame}
-}
-
-% Case study frame environment
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
-}{%
-    \end{alertblock}
-}
-
-% Solution frame environment  
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{$\checkmark$ Solution: #1}
-}{%
-    \end{exampleblock}
-}
+\input{network_preamble.tex}
 
 % =============================================================================
 % DOCUMENT INFO
@@ -221,26 +17,17 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-% Slide numbers
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-            \usebeamerfont{title in head/foot}\insertshorttitle
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-        \end{beamercolorbox}}%
-    \vskip0pt%
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
 }
 
-% =============================================================================
-% DOCUMENT BEGINS
-% =============================================================================
 \begin{document}
 
 % =============================================================================
@@ -271,9 +58,20 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+
 % =============================================================================
 % SLIDE 2: Review - From Cables to Connections
 % =============================================================================
+\section*{Review from Module 2}
+
 \begin{frame}{Review: From Cables to Connections}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -295,6 +93,7 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
+                % CAPTION: OSI model seven layers emphasizing Layer 2 Data Link
                 \begin{tikzpicture}[scale=0.7]
                     % OSI Stack
                     \node[osilayer] (l7) at (0, 3.5) {7. Application};
@@ -320,87 +119,36 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 3: Module Overview and Learning Outcomes
+% SLIDE 3: Learning Outcomes
 % =============================================================================
-\begin{frame}{Module Overview and Learning Outcomes}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Topics Covered}
-                \begin{enumerate}
-                    \item Network Interface Cards (NICs)
-                    \item Modular Transceivers
-                    \item Ethernet Frames \& MAC Addresses
-                    \item Hubs, Bridges, and Switches
-                    \item Switch Configuration
-                    \item Switch Troubleshooting
-                \end{enumerate}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Learning Outcomes}
-                After this module, you will be able to:
-                \begin{itemize}
-                    \item Explain NIC functions and features
-                    \item Interpret MAC address formats
-                    \item Compare hubs, bridges, and switches
-                    \item Configure basic switch settings
-                    \item Troubleshoot common switch issues
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-    
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \begin{itemize}
+        \item Explain the function of \keyterm{Network Interface Cards (NICs)} and their role in host connectivity.
+        \item Identify and describe \keyterm{modular transceivers} including SFP, SFP+, and QSFP.
+        \item Interpret \keyterm{MAC addresses} and explain the \keyterm{OUI} (Organizationally Unique Identifier) format.
+        \item Describe the structure of an \keyterm{Ethernet frame} and identify its key fields.
+        \item Compare and contrast \keyterm{hubs}, \keyterm{bridges}, and \keyterm{switches} as Layer 2 devices.
+        \item Explain how switches use \keyterm{MAC address tables} to make forwarding decisions.
+        \item Configure basic switch settings including hostnames, IP addresses, and \keyterm{link aggregation}.
+        \item Describe advanced switch features including \keyterm{STP}, \keyterm{PoE}, and Layer 3 switching.
+        \item Troubleshoot common switch problems using LED indicators, \keyterm{show commands}, and error counters.
+    \end{itemize}
 \end{frame}
 
-% =============================================================================
-% SLIDE 4: Key Terms Preview
-% =============================================================================
-\begin{frame}{Key Terms Preview}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Hardware}
-                \begin{itemize}
-                    \item \keyterm{NIC} -- Network Interface Card
-                    \item \keyterm{SFP/SFP+} -- Small Form-factor Pluggable
-                    \item \keyterm{QSFP} -- Quad SFP (4 channels)
-                    \item \keyterm{Transceiver} -- Converts signals
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Addressing}
-                \begin{itemize}
-                    \item \keyterm{MAC Address} -- Hardware address
-                    \item \keyterm{OUI} -- Manufacturer identifier
-                    \item \keyterm{Ethernet Frame} -- Data package
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Switching}
-                \begin{itemize}
-                    \item \keyterm{Hub} -- Repeats to all ports
-                    \item \keyterm{Bridge} -- Learns MACs (2 ports)
-                    \item \keyterm{Switch} -- Multi-port bridge
-                    \item \keyterm{Managed/Unmanaged} -- Config options
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Protocols \& Features}
-                \begin{itemize}
-                    \item \keyterm{STP} -- Spanning Tree Protocol
-                    \item \keyterm{LACP} -- Link Aggregation
-                    \item \keyterm{PoE} -- Power over Ethernet
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
+
 
 % =============================================================================
 % SLIDE 5: What is a Network Interface Card (NIC)?
 % =============================================================================
+\section{Network Interface Foundations}
+\subsection{NIC Fundamentals}
+
+\articleonly{
+This section introduces network interfaces and transceivers, the hardware endpoints that connect hosts to Ethernet networks and expose physical and data-link functions.
+}
+
 \begin{frame}{What is a Network Interface Card (NIC)?}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -422,6 +170,7 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
+                % CAPTION: Computer system with NIC hardware for network connectivity
                 \begin{tikzpicture}[scale=0.75]
                     % Computer
                     \draw[fill=gray!20, line width=1pt, rounded corners] (0,0) rectangle (2.5,3);
@@ -459,7 +208,9 @@
 % =============================================================================
 \begin{frame}{NIC Examples}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{three_NICs}
+        \mode<beamer>{\includegraphics[width=0.8\textwidth]{three_NICs}}
+        \articleonly{\includegraphics[width=0.8\textwidth]{three_NICs}\\
+        \small\emph{Figure: Examples of network interface cards with different ports and form factors.}}
     \end{center}
     \begin{center}
         \small
@@ -533,14 +284,16 @@
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{transceiver_cutaway}
+                \mode<beamer>{\includegraphics[width=\textwidth]{transceiver_cutaway}}
+                \articleonly{\includegraphics[width=\textwidth]{transceiver_cutaway}\\
+                \small\emph{Figure: Transceiver cutaway showing optical/electrical conversion components.}}
             \end{center}
             
             \vspace{0.3em}
             \begin{alertblock}{Key Components}
                 \small
-                \textbf{Laser/LED}: Converts electrical → light \\
-                \textbf{Photodetector}: Converts light → electrical \\
+                \textbf{Laser/LED}: Converts electrical $\rightarrow$ light \\
+                \textbf{Photodetector}: Converts light $\rightarrow$ electrical \\
                 \textbf{Circuit board}: Manages the conversion
             \end{alertblock}
         \end{column}
@@ -548,9 +301,9 @@
 \end{frame}
 
 
-\begin{frame}{Table: Types of Transceivers}
+\begin{frame}[t,shrink=20]{Table: Types of Transceivers}
     \begin{center}
-        \small
+        \scriptsize
         \begin{tabular}{l l l l l}
             \toprule
             \textbf{Transceiver} & \textbf{Speed} & \textbf{Cable Type} & \textbf{Connector} & \textbf{Distance} \\
@@ -577,107 +330,46 @@
         \end{tabular}
     \end{center}
     
-    \vspace{0.3em}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Key Abbreviations}
-                \small
-                \textbf{MMF}: Multimode Fiber \\
-                \textbf{SMF}: Single-mode Fiber \\
-                \textbf{DAC}: Direct Attach Cable
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Remember}
-                \small
-                Always match transceiver type to cable type and required distance!
-            \end{alertblock}
-        \end{column}
-    \end{columns}
+    \vspace{0.2em}
+    \centering\scriptsize
+    \textbf{MMF} = Multimode Fiber \quad \textbf{SMF} = Single-mode Fiber \quad \textbf{DAC} = Direct Attach Cable.
+    \\
+    Always match transceiver type to cable type and required distance.
 \end{frame}
 % =============================================================================
 % SLIDE A: Layer 1 Network Diagram - The Green Dragon Physical Infrastructure
 % =============================================================================
 \begin{frame}{Layer 1: Physical Infrastructure at the Green Dragon}
     \begin{center}
-        \begin{tikzpicture}[scale=0.9]
-            % === MAIN SWITCH ===
-            \draw[fill=rctcblue!20, draw=rctcblue, line width=1.5pt, rounded corners] 
-                (0,-0.6) rectangle (8,0.6);
-            \node[font=\small\bfseries] at (4,-1) {Green Dragon Core Switch};
-            
-            % SFP+ slot (left side for server)
-            \draw[fill=fiberyellow!60, line width=1pt] (0.3,-0.3) rectangle (0.8,0.3);
-            \node[font=\tiny] at (0.55,-0.55) {SFP+};
-            
-            % RJ-45 ports (middle)
-            \draw[fill=gray!30, line width=0.5pt] (2.8,-0.25) rectangle (3.2,0.25);
-            \draw[fill=gray!30, line width=0.5pt] (3.8,-0.25) rectangle (4.2,0.25);
-            \draw[fill=gray!30, line width=0.5pt] (4.8,-0.25) rectangle (5.2,0.25);
-            \draw[fill=gray!30, line width=0.5pt] (5.8,-0.25) rectangle (6.2,0.25);
-            \node[font=\tiny] at (4.5,-0.45) {RJ-45 Copper Ports};
-            
-            % SFP+ slot (right side for ISP)
-            \draw[fill=fiberyellow!60, line width=1pt] (7.2,-0.3) rectangle (7.7,0.3);
-            \node[font=\tiny] at (7.45,-0.45) {SFP+};
-            
-            % === FIBER CONNECTION TO SERVER (LEFT) ===
-            \node[server] (srv) at (-2.5,0) {\iconserver[0.8cm]};
-            \node[font=\small, below] at (-2.5,-0.6) {Cellar Server};
-            
-            % SFP+ transceiver at server
-            \draw[fill=fiberyellow!60, line width=1pt] (-1.6,-0.2) rectangle (-1.2,0.2);
-            \node[font=\tiny, above] at (-1.4,0.25) {SFP+};
-            
-            % Fiber cable (MMF - orange)
-            \draw[fiber, line width=3pt] (-1.2,0) -- (0.3,0);
-            \node[font=\scriptsize, fill=white, inner sep=2pt] at (-0.45,0) {MMF};
-            
-            % === COPPER CONNECTIONS TO DEVICES (TOP) ===
-            % Front desk PC
-            \node[pc] (pc1) at (3,3) {\iconpc[0.6cm]};
-            \node[font=\small, above] at (3,3.5) {Front Desk};
-            \draw[copper, line width=2pt] (3,0.6) -- (3,2.5);
-            \node[font=\scriptsize, fill=white, inner sep=2pt] at (3,1.5) {Cat6};
-            
-            % Kitchen laptop
-            \node[laptop] (pc2) at (5,3) {\iconlaptop[0.6cm]};
-            \node[font=\small, above] at (5,3.5) {Kitchen};
-            \draw[copper, line width=2pt] (5,0.6) -- (5,2.5);
-            \node[font=\scriptsize, fill=white, inner sep=2pt] at (5,1.5) {Cat6};
-            
-            % Manager office
-            \node[pc] (pc3) at (7,3) {\iconpc[0.6cm]};
-            \node[font=\small, above] at (7,3.5) {Manager};
-            \draw[copper, line width=2pt] (7,0.6) -- (7,2.5);
-            \node[font=\scriptsize, fill=white, inner sep=2pt] at (7,1.5) {Cat5e};
-            
-            % === UPLINK TO ISP (RIGHT) ===
-            \node[cloud] (cloud) at (10.5,0) {\iconcloud[0.8cm]};
-            \node[font=\small, below] at (10.5,-0.6) {To Bree ISP};
-            
-            % SFP+ transceiver at ISP side
-            \draw[fill=fiberyellow!60, line width=1pt] (9.2,-0.2) rectangle (9.6,0.2);
-            \node[font=\tiny, above] at (9.4,0.25) {SFP+};
-            
-            % SMF to ISP (yellow for single-mode)
-            \draw[draw=aborange, line width=3pt] (7.7,0) -- (9.2,0);
-            \node[font=\scriptsize, fill=white, inner sep=2pt] at (8.45,0) {SMF};
-            
-            % === LEGEND ===
-            \draw[copper, line width=3pt] (-2,-1.8) -- (-0.5,-1.8);
-            \node[font=\scriptsize, right] at (-0.3,-1.8) {Copper (UTP)};
-            
-            \draw[fiber, line width=3pt] (2.5,-1.8) -- (4,-1.8);
-            \node[font=\scriptsize, right] at (4.2,-1.8) {Multimode Fiber};
-            
-            \draw[draw=aborange, line width=3pt] (7,-1.8) -- (8.5,-1.8);
-            \node[font=\scriptsize, right] at (8.7,-1.8) {Single-mode Fiber};
+        \begin{tikzpicture}[scale=0.7]
+            \node[server] (srv) at (0,0) {\iconserver[0.7cm]};
+            \node[font=\scriptsize, below] at (0,-0.55) {Cellar Server};
+
+            \node[switch] (sw) at (3.3,0) {\iconswitch[0.75cm]};
+            \node[font=\scriptsize, below] at (3.3,-0.55) {Core Switch};
+
+            \node[pc] (pc1) at (6.2,1.4) {\iconpc[0.55cm]};
+            \node[font=\scriptsize, above] at (6.2,1.9) {Front Desk};
+
+            \node[laptop] (pc2) at (6.2,0) {\iconlaptop[0.55cm]};
+            \node[font=\scriptsize, above] at (6.2,0.55) {Kitchen};
+
+            \node[pc] (pc3) at (6.2,-1.4) {\iconpc[0.55cm]};
+            \node[font=\scriptsize, below] at (6.2,-1.9) {Manager};
+
+            \node[cloud] (wan) at (9.2,0) {\iconcloud[0.75cm]};
+            \node[font=\scriptsize, below] at (9.2,-0.55) {ISP Uplink};
+
+            \draw[fiber, line width=2pt] (srv) -- node[above, font=\tiny] {MMF} (sw);
+            \draw[copper, line width=1.8pt] (sw) -- node[above, font=\tiny] {Cat6} (pc1);
+            \draw[copper, line width=1.8pt] (sw) -- node[above, font=\tiny] {Cat6} (pc2);
+            \draw[copper, line width=1.8pt] (sw) -- node[below, font=\tiny] {Cat5e} (pc3);
+            \draw[draw=aborange, line width=2pt] (sw) -- node[above, font=\tiny] {SMF} (wan);
         \end{tikzpicture}
     \end{center}
-    
-    \vspace{0.3em}
-    {\centering Layer 1 focuses on \textbf{physical connections}: cables, connectors, transceivers, and the signals they carry.\par}
+
+    \vspace{0.2em}
+    {\centering \scriptsize Layer 1 maps physical links between endpoints, switching infrastructure, and uplinks.\par}
 \end{frame}
 
 % =============================================================================
@@ -727,6 +419,13 @@
 % =============================================================================
 % SLIDE 9: Ethernet Frame Format
 % =============================================================================
+\section{Ethernet Frames and MAC Addressing}
+\subsection{Frame Structure and Addressing}
+
+\articleonly{
+Here we examine Ethernet frame structure and MAC addressing, which form the basis of Layer 2 switching decisions and local delivery.
+}
+
 \begin{frame}{Ethernet Frame Format}
     \begin{itemize}
         \item Data doesn't travel as raw bits---it's packaged into \keyterm{frames}.
@@ -736,6 +435,7 @@
     
     \vspace{0.3em}
     \begin{center}
+        % CAPTION: Ethernet frame structure showing preamble, MAC addresses, type, payload, and FCS fields
         \begin{tikzpicture}[scale=0.85]
             % Frame segments
             \node[frameseg, minimum width=1.2cm] (pre) at (0,0) {Preamble};
@@ -919,6 +619,13 @@
 % =============================================================================
 % SLIDE 14: The Evolution - Why Switches?
 % =============================================================================
+\section{Switching Concepts and Forwarding}
+\subsection{Hubs, Bridges, and Switches}
+
+\articleonly{
+This section compares hub-, bridge-, and switch-based forwarding and explains how modern switches learn and forward traffic efficiently.
+}
+
 \begin{frame}{The Evolution: Why Switches?}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1154,10 +861,10 @@
         \begin{column}{0.48\textwidth}
             \begin{block}{The Four Switch Actions}
                 \begin{enumerate}
-                    \item \keyterm{Learning}: See source MAC → record which port it came from
-                    \item \keyterm{Forwarding}: Know destination MAC → send only to that port
-                    \item \keyterm{Flooding}: Unknown destination → send to ALL ports (except source)
-                    \item \keyterm{Filtering}: Same-segment traffic → don't forward
+                    \item \keyterm{Learning}: See source MAC $\rightarrow$ record which port it came from
+                    \item \keyterm{Forwarding}: Know destination MAC $\rightarrow$ send only to that port
+                    \item \keyterm{Flooding}: Unknown destination $\rightarrow$ send to ALL ports (except source)
+                    \item \keyterm{Filtering}: Same-segment traffic $\rightarrow$ don't forward
                 \end{enumerate}
             \end{block}
           
@@ -1189,9 +896,9 @@
                     \draw[fill=rctcblue!10, line width=0.5pt] (0,-0.8) rectangle (2.5,-2.2);
                     \node[font=\tiny\bfseries] at (1.25,-0.95) {MAC Table};
                     \node[font=\tiny, align=left] at (1.25,-1.55) {
-                        AA:AA → P1\\
-                        BB:BB → P2\\
-                        CC:CC → P3
+                        AA:AA $\rightarrow$ P1\\
+                        BB:BB $\rightarrow$ P2\\
+                        CC:CC $\rightarrow$ P3
                     };
                 \end{tikzpicture}
             \end{center}
@@ -1285,6 +992,13 @@
 % =============================================================================
 % SLIDE 19: Unmanaged vs Managed Switches
 % =============================================================================
+\section{Switch Interfaces and Management}
+\subsection{Switch Features and Configuration}
+
+\articleonly{
+This section focuses on operational switch features and management choices used in real deployments.
+}
+
 \begin{frame}{Unmanaged vs Managed Switches}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1319,7 +1033,7 @@
             
             \vspace{0.3em}
             \begin{exampleblock}{Key Question}
-                Do you need to separate traffic, monitor performance, or configure security? If yes → managed switch.
+                Do you need to separate traffic, monitor performance, or configure security? If yes $\rightarrow$ managed switch.
             \end{exampleblock}
         \end{column}
     \end{columns}
@@ -1467,6 +1181,13 @@
 % =============================================================================
 % SLIDE 24: Link Aggregation and NIC Teaming
 % =============================================================================
+\section{Advanced Switching Topics}
+\subsection{Resiliency and Performance Features}
+
+\articleonly{
+Advanced switching capabilities improve resiliency, bandwidth utilization, and loop prevention in larger networks.
+}
+
 \begin{frame}{Link Aggregation and NIC Teaming}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -1849,6 +1570,13 @@
 % =============================================================================
 % SLIDE 31: Hardware Failure and Port Status Indicators
 % =============================================================================
+\section{Troubleshooting Interfaces and Switches}
+\subsection{Operational Diagnostics}
+
+\articleonly{
+The final section applies structured troubleshooting to interface and switch faults using indicators, commands, and counter analysis.
+}
+
 \begin{frame}{Hardware Failure and Port Status Indicators}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1879,7 +1607,7 @@
             
             \vspace{0.3em}
             \begin{exampleblock}{No Link Light?}
-                Check in order: cable → NIC → switch port → transceiver (if applicable).
+                Check in order: cable $\rightarrow$ NIC $\rightarrow$ switch port $\rightarrow$ transceiver (if applicable).
             \end{exampleblock}
         \end{column}
     \end{columns}
@@ -2060,50 +1788,37 @@
 % =============================================================================
 % SLIDE 36: Module 3.0 Summary
 % =============================================================================
-\begin{frame}{Module 3.0 Summary}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Network Interfaces}
-                \begin{itemize}
-                    \item NICs connect computers to networks
-                    \item MAC address: 48-bit hardware ID
-                    \item OUI identifies manufacturer
-                    \item SFP/SFP+ transceivers add flexibility
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Switches}
-                \begin{itemize}
-                    \item Replaced hubs---dedicated bandwidth
-                    \item Learn MACs, forward intelligently
-                    \item Managed switches: VLANs, security
-                    \item Layer 3 switches can route
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Configuration}
-                \begin{itemize}
-                    \item Link aggregation bundles links
-                    \item MTU must match end-to-end
-                    \item STP prevents loops automatically
-                    \item PoE delivers power over Ethernet
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Troubleshooting}
-                \begin{itemize}
-                    \item Check LEDs first---instant status
-                    \item Use show commands for details
-                    \item Watch error counters for trends
-                    \item Beware loops and broadcast storms
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 3.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{NIC} (Network Interface Card) connects hosts to networks. Each NIC has a unique 48-bit \keyterm{MAC address}.
+        \item MAC address format: first 24 bits = \keyterm{OUI} (vendor ID), last 24 bits = device-specific.
+        \item \keyterm{Transceivers}: \keyterm{SFP} (1 Gbps), \keyterm{SFP+} (10 Gbps), \keyterm{QSFP} (40 Gbps) provide modular connectivity.
+        \item \keyterm{Ethernet frame}: Headers include destination MAC, source MAC, and Type/Length. Trailer has FCS for error detection.
+        \item \keyterm{Hub} (repeater) vs \keyterm{Bridge} (2-port switch) vs \keyterm{Switch} (multi-port bridge with MAC learning).
+        \item Switches forward frames based on destination MAC, flooding only to unknown addresses or broadcasts.
+    \end{itemize}
+    \framebreak
     
+    \vspace{0.3em}
+    \textbf{Configuration \& Troubleshooting:}
+    \begin{itemize}
+        \item \keyterm{Managed switches}: VLANs, port security, SNMP monitoring. \keyterm{Layer 3 switches} add routing capability.
+        \item \keyterm{Link aggregation} (LACP) bundles links for higher bandwidth and redundancy.
+        \item \keyterm{STP} (Spanning Tree Protocol) prevents Layer 2 loops automatically.
+        \item \keyterm{PoE} (Power over Ethernet) delivers power to devices like phones and APs over Ethernet cables.
+        \item Troubleshooting: Check LED indicators, use \texttt{show} commands, monitor error counters, watch for broadcast storms.
+    \end{itemize}
 \end{frame}
 
+\articleonly{
+\subsection*{Conclusion}
+This module explored Layer 2 networking devices and protocols. You learned about NICs, transceivers, MAC addresses, Ethernet frames, and the evolution from hubs to bridges to switches. You also examined switch configuration, advanced features (VLANs, link aggregation, STP, PoE), and troubleshooting techniques. In the next module, we'll move up to Layer 3 and explore IP addressing and subnetting.
+}
+
 \end{document}
+
+

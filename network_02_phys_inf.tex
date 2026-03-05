@@ -1,210 +1,12 @@
-\documentclass[aspectratio=169]{beamer}
+% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
 
 % =============================================================================
-% THEME AND COLORS
+% COMMON PREAMBLE
 % =============================================================================
-\usetheme{Madrid}
-\usecolortheme{whale}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 128, 64}
-\definecolor{alertred}{RGB}{180, 0, 0}
-\definecolor{aborange}{RGB}{230, 126, 34}
-\definecolor{copperbrown}{RGB}{184, 115, 51}
-\definecolor{faborange}{RGB}{255, 165, 0}
-\definecolor{fiberyellow}{RGB}{255, 215, 0}
-
-\setbeamercolor{palette primary}{bg=rctcblue,fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80,fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60,fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white,bg=rctcblue}
-\setbeamercolor{frametitle}{fg=white,bg=rctcblue}
-\setbeamercolor{block title}{bg=rctcblue,fg=white}
-\setbeamercolor{block body}{bg=rctcblue!10,fg=black}
-\setbeamercolor{block title alerted}{bg=alertred,fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!10,fg=black}
-\setbeamercolor{block title example}{bg=networkgreen,fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!10,fg=black}
-
-% =============================================================================
-% PACKAGES
-% =============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{colortbl}
-\usepackage{multirow}
-\usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{amssymb}
-\usepackage{calc}
-
-% =============================================================================
-% TIKZ LIBRARIES AND SETUP
-% =============================================================================
-\usetikzlibrary{
-    shapes.geometric,
-    shapes.symbols,
-    shapes.misc,
-    arrows.meta,
-    positioning,
-    calc,
-    fit,
-    backgrounds,
-    decorations.pathreplacing,
-    matrix,
-    chains
-}
-
-% Graphics path for icons and chapter images
-\graphicspath{
-    {../images/icons/}
-    {./images/icons/}
-    {images/icons/}
-    {../images/ch2/}
-    {./images/ch2/}
-    {images/ch2/}
-}
-
-% =============================================================================
-% NETWORK DIAGRAM STYLES
-% =============================================================================
-\tikzset{
-    % Node styles for network devices
-    device/.style={
-        inner sep=2pt,
-        label distance=2pt
-    },
-    pc/.style={device},
-    laptop/.style={device},
-    server/.style={device},
-    router/.style={device},
-    switch/.style={device},
-    firewall/.style={device},
-    cloud/.style={device},
-    phone/.style={device},
-    tablet/.style={device},
-    wifi/.style={device},
-    % Connection styles
-    ethernet/.style={
-        draw=rctcblue,
-        line width=1.5pt,
-        -{Stealth[length=3mm]}
-    },
-    ethernet noarrow/.style={
-        draw=rctcblue,
-        line width=1.5pt
-    },
-    wireless/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed,
-        -{Stealth[length=3mm]}
-    },
-    wireless noarrow/.style={
-        draw=aborange,
-        line width=1.5pt,
-        dashed
-    },
-    wan/.style={
-        draw=alertred,
-        line width=2pt,
-        -{Stealth[length=3mm]}
-    },
-    wan noarrow/.style={
-        draw=alertred,
-        line width=2pt
-    },
-    % Copper cable style
-    copper/.style={
-        draw=copperbrown,
-        line width=2pt
-    },
-    % Fiber cable style
-    fiber/.style={
-        draw=fiberyellow,
-        line width=2pt
-    },
-    % OSI layer style
-    osilayer/.style={
-        draw=rctcblue,
-        line width=1pt,
-        minimum width=5cm,
-        minimum height=0.7cm,
-        font=\small
-    },
-    osilayer highlight/.style={
-        draw=rctcblue,
-        line width=2pt,
-        minimum width=5cm,
-        minimum height=0.7cm,
-        font=\small\bfseries,
-        fill=rctcgold!30
-    },
-    % Topology node style
-    toponode/.style={
-        circle,
-        draw=rctcblue,
-        fill=rctcblue!20,
-        minimum size=8mm,
-        font=\footnotesize\bfseries
-    }
-}
-
-% =============================================================================
-% ICON COMMANDS
-% =============================================================================
-\newcommand{\iconpc}[1][0.6cm]{\includegraphics[height=#1]{icon_pc}}
-\newcommand{\iconlaptop}[1][0.6cm]{\includegraphics[height=#1]{icon_laptop}}
-\newcommand{\iconserver}[1][0.6cm]{\includegraphics[height=#1]{icon_server}}
-\newcommand{\iconrouter}[1][0.6cm]{\includegraphics[height=#1]{icon_router}}
-\newcommand{\iconswitch}[1][0.6cm]{\includegraphics[height=#1]{icon_switch}}
-\newcommand{\iconfirewall}[1][0.6cm]{\includegraphics[height=#1]{icon_firewall}}
-\newcommand{\iconcloud}[1][0.6cm]{\includegraphics[height=#1]{icon_cloud}}
-\newcommand{\iconphone}[1][0.6cm]{\includegraphics[height=#1]{icon_phone}}
-\newcommand{\icontablet}[1][0.6cm]{\includegraphics[height=#1]{icon_tablet}}
-\newcommand{\iconwifi}[1][0.6cm]{\includegraphics[height=#1]{icon_wifi}}
-\newcommand{\iconlock}[1][0.6cm]{\includegraphics[height=#1]{icon_lock}}
-\newcommand{\icondb}[1][0.6cm]{\includegraphics[height=#1]{icon_db}}
-\newcommand{\iconvoip}[1][0.6cm]{\includegraphics[height=#1]{icon_voip_phone}}
-
-% =============================================================================
-% CUSTOM COMMANDS
-% =============================================================================
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{#1}}
-
-% Slide section marker
-\newcommand{\sectionslide}[1]{
-    \begin{frame}
-        \vfill
-        \centering
-        \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
-            \usebeamerfont{title}\Huge #1
-        \end{beamercolorbox}
-        \vfill
-    \end{frame}
-}
-
-% Case study frame environment
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{$\blacktriangleright$ Case Study: #1}
-}{%
-    \end{alertblock}
-}
-
-% Solution frame environment  
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{$\checkmark$ Solution: #1}
-}{%
-    \end{exampleblock}
-}
+\input{network_preamble.tex}
 
 % =============================================================================
 % DOCUMENT INFO
@@ -215,26 +17,17 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-% Slide numbers
-\setbeamertemplate{footline}{
-    \leavevmode%
-    \hbox{%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-            \usebeamerfont{author in head/foot}\insertshortauthor
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-            \usebeamerfont{title in head/foot}\insertshorttitle
-        \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-            \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-        \end{beamercolorbox}}%
-    \vskip0pt%
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
 }
 
-% =============================================================================
-% DOCUMENT BEGINS
-% =============================================================================
 \begin{document}
 
 % =============================================================================
@@ -243,6 +36,7 @@
 \begin{frame}
     \titlepage
     \begin{center}
+        % CAPTION: Simple network connection with PC and switch
         \begin{tikzpicture}[scale=0.8]
             % Simple cable illustration for title
             \node[pc] (pc1) at (0,0) {\iconpc[0.5cm]};
@@ -259,6 +53,19 @@
         \end{tikzpicture}
     \end{center}
 \end{frame}
+
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+% =============================================================================
+% REVIEW FROM MODULE 1
+% =============================================================================
+\section*{Review from Module 1}
 
 % =============================================================================
 % SLIDE 2: Review - The OSI Model Foundation
@@ -280,6 +87,7 @@
         \end{column}
         \begin{column}{0.5\textwidth}
             \begin{center}
+                % CAPTION: OSI model seven layers with focus on Layer 1 Physical
                 \begin{tikzpicture}[scale=0.75]
                     % OSI Stack
                     \node[osilayer] (l7) at (0, 3.5) {7. Application};
@@ -335,89 +143,49 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 4: Module Overview and Learning Outcomes
+% LEARNING OUTCOMES
 % =============================================================================
-\begin{frame}{Module Overview and Learning Outcomes}
-    \begin{columns}[T]
-        \begin{column}{0.40\textwidth}
-            \begin{block}{What We'll Cover}
-                \small
-                \begin{itemize}
-                    \item Ethernet standards
-                    \item Copper cables (UTP, STP, coax)
-                    \item Fiber optic cables
-                    \item Installation best practices
-                    \item Cable troubleshooting
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{What You'll Learn}
-                \begin{itemize}
-                    \small
-                    \item Choose the right cable
-                    \item Install cables correctly
-                    \item Fix cable problems
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.6\textwidth}
-            \begin{center}
-                \includegraphics[width=\textwidth]{four_cable_types.jpg}
-            \end{center}
-        \end{column}
-    \end{columns}
-\end{frame}
+\section*{Learning Outcomes}
 
 % =============================================================================
-% SLIDE 5: Key Terms Preview
+% SLIDE 4: Learning Outcomes
 % =============================================================================
-\begin{frame}{Key Terms Preview}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Cable Types}
-                \begin{itemize}
-                    \item \keyterm{UTP} -- Unshielded Twisted Pair
-                    \item \keyterm{STP} -- Shielded Twisted Pair
-                    \item \keyterm{Coaxial} -- Single conductor with shield
-                    \item \keyterm{Fiber} -- Glass/plastic, uses light
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Cable Categories}
-                \begin{itemize}
-                    \item \keyterm{Cat5e} -- Gigabit Ethernet
-                    \item \keyterm{Cat6/6a} -- 10 Gigabit Ethernet
-                    \item \keyterm{SMF} -- Single-Mode Fiber
-                    \item \keyterm{MMF} -- Multimode Fiber
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Connectors \& Standards}
-                \begin{itemize}
-                    \item \keyterm{RJ-45} -- Standard Ethernet connector
-                    \item \keyterm{T568A/T568B} -- Wiring standards
-                    \item \keyterm{LC/SC/ST} -- Fiber connectors
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Problems \& Concepts}
-                \begin{itemize}
-                    \item \keyterm{Attenuation} -- Signal weakening
-                    \item \keyterm{Crosstalk} -- Signal interference
-                    \item \keyterm{Plenum} -- Fire-rated cable
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \begin{itemize}
+        \item Explain how \keyterm{electrical signals} and \keyterm{light pulses} represent data at the Physical Layer.
+        \item Identify and compare \keyterm{copper cable types} including UTP, STP, coaxial, and twinax.
+        \item Describe \keyterm{cable categories} (Cat5e, Cat6, Cat6a) and their speed/distance capabilities.
+        \item Differentiate between \keyterm{multimode fiber (MMF)} and \keyterm{single-mode fiber (SMF)}.
+        \item Apply \keyterm{T568A} and \keyterm{T568B} wiring standards for structured cabling installations.
+        \item Select appropriate \keyterm{connectors} (RJ-45, LC, SC, ST) for different cable types.
+        \item Diagnose common cabling problems using \keyterm{cable testers} and troubleshooting tools.
+        \item Plan physical infrastructure considering \keyterm{environmental factors}, safety codes, and best practices.
+    \end{itemize}
 \end{frame}
+
+\articleonly{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{four_cable_types.jpg}
+\caption{Four main cable types used in modern networks: UTP copper, STP copper, coaxial, and fiber optic cables.}
+\label{fig:four_cable_types}
+\end{figure}
+}
+
+
 
 % =============================================================================
 % SLIDE 6: How Does Data Travel on a Wire?
 % =============================================================================
+\section{Physical Layer Fundamentals}
+\subsection{Signal Transmission}
+
+\articleonly{
+Understanding how data travels at the physical layer is fundamental to network troubleshooting and design. In this section, we explore how electrical signals represent data and the key concepts of duplex communication.
+}
+
 \begin{frame}{How Does Data Travel on a Wire?}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
@@ -436,6 +204,7 @@
         \end{column}
         \begin{column}{0.38\textwidth}
             \begin{center}
+                % CAPTION: Digital signal representation showing voltage over time
                 \begin{tikzpicture}[scale=0.8]
                     % Signal representation
                     \draw[->] (0,0) -- (4.5,0) node[right, font=\tiny] {Time};
@@ -475,6 +244,8 @@
 % =============================================================================
 % SLIDE 7: Half-Duplex vs Full-Duplex
 % =============================================================================
+\subsection{Duplex Communication}
+
 \begin{frame}{Half-Duplex vs Full-Duplex}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -489,6 +260,7 @@
                 
                 \vspace{0.5em}
                 \centering
+                % CAPTION: Logical OR operation showing two PCs transmitting simultaneously
                 \begin{tikzpicture}[scale=0.7]
                     \node[pc] (pc1) at (0,0) {\iconpc[0.4cm]};
                     \node[pc] (pc2) at (3,0) {\iconpc[0.4cm]};
@@ -530,6 +302,12 @@
 % =============================================================================
 % SLIDE 8: Ethernet Standards - Reading the Code
 % =============================================================================
+\subsection{Ethernet Standards}
+
+\articleonly{
+Ethernet standards define how networks operate at the physical layer. Understanding these standards and their naming conventions is essential for selecting appropriate cabling and equipment.
+}
+
 \begin{frame}{Ethernet Standards: Reading the Code}
     \begin{itemize}
         \item The \keyterm{IEEE 802.3} committee defines Ethernet standards.
@@ -579,6 +357,8 @@
 % =============================================================================
 % SLIDE 9: Collisions - A Problem We Solved
 % =============================================================================
+\subsection{Collision Domains}
+
 \begin{frame}{Collisions: A Problem We Solved}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -646,6 +426,8 @@
 % =============================================================================
 % SLIDE 10: Ethernet Speeds - Then and Now
 % =============================================================================
+\subsection{Ethernet Evolution}
+
 \begin{frame}{Ethernet Speeds: Then and Now}
     \begin{itemize}
         \item Ethernet has evolved dramatically since the 1980s---each generation brought faster speeds.
@@ -857,6 +639,13 @@
 % =============================================================================
 % SLIDE 15: Why Twisted Pair? The Science of Interference
 % =============================================================================
+\section{Copper Cabling}
+\subsection{Twisted Pair Technology}
+
+\articleonly{
+Twisted pair cabling is the most common medium for LAN connectivity. The twisting of wire pairs provides protection against electromagnetic interference, making reliable high-speed data transmission possible.
+}
+
 \begin{frame}{Why Twisted Pair? The Science of Interference}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -878,7 +667,9 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{twisted_pair_annotated.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{twisted_pair_annotated.png}}
+                \articleonly{\includegraphics[width=\textwidth]{twisted_pair_annotated.png}\\
+                \small\emph{Figure: Annotated twisted-pair cable showing conductor pairs and protective layers.}}
             \end{center}
             
             \vspace{0.3em}
@@ -893,7 +684,9 @@
 % =============================================================================
 % SLIDE 16: Unshielded Twisted Pair (UTP)
 % =============================================================================
-\begin{frame}{Unshielded Twisted Pair (UTP)}
+\subsection{Unshielded Twisted Pair (UTP)}
+
+\begin{frame}[t,shrink=12]{Unshielded Twisted Pair (UTP)}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
             \begin{itemize}
@@ -919,7 +712,9 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=0.9\textwidth]{utp_cat6_rj45.png}
+                \mode<beamer>{\includegraphics[width=0.9\textwidth]{utp_cat6_rj45.png}}
+                \articleonly{\includegraphics[width=0.9\textwidth]{utp_cat6_rj45.png}\\
+                \small\emph{Figure: Cat6 UTP cable with RJ-45 connector and color-coded wire pairs.}}
             \end{center}
             
             \vspace{0.5em}
@@ -943,7 +738,9 @@
 % =============================================================================
 % SLIDE 17: Shielded Twisted Pair (STP)
 % =============================================================================
-\begin{frame}{Shielded Twisted Pair (STP)}
+\subsection{Shielded Twisted Pair (STP)}
+
+\begin{frame}[t,shrink=14]{Shielded Twisted Pair (STP)}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
             \begin{itemize}
@@ -965,7 +762,9 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=0.9\textwidth]{stp_cat7_rj45_sh.png}
+                \mode<beamer>{\includegraphics[width=0.9\textwidth]{stp_cat7_rj45_sh.png}}
+                \articleonly{\includegraphics[width=0.9\textwidth]{stp_cat7_rj45_sh.png}\\
+                \small\emph{Figure: Shielded twisted-pair cable with shielding layers and RJ-45 termination.}}
             \end{center}
             
             \vspace{0.3em}
@@ -988,7 +787,9 @@
 % =============================================================================
 % SLIDE 18: Cat Ratings - What the Numbers Mean
 % =============================================================================
-\begin{frame}{Cat Ratings: What Do the Numbers Mean?}
+\subsection{Category Ratings}
+
+\begin{frame}[t,shrink=10]{Cat Ratings: What Do the Numbers Mean?}
     \begin{columns}[T]
         \begin{column}{0.58\textwidth}
             \begin{itemize}
@@ -1035,7 +836,7 @@
 % =============================================================================
 % SLIDE 19: Cat Cable Comparison Table
 % =============================================================================
-\begin{frame}{Cat Cable Comparison}
+\begin{frame}[t,shrink=12]{Cat Cable Comparison}
     \begin{center}
         \scriptsize
         \begin{tabular}{l c c c c}
@@ -1078,6 +879,8 @@
 % =============================================================================
 % SLIDE 20: The RJ-45 Connector
 % =============================================================================
+\subsection{RJ-45 Connectors}
+
 \begin{frame}{The RJ-45 Connector}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1142,6 +945,8 @@
 % =============================================================================
 % SLIDE 21: Plenum and Riser Cable
 % =============================================================================
+\subsection{Cable Types (plenum, coax, twinax)}
+
 \begin{frame}{Plenum and Riser Cable: Fire Safety Matters}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1227,12 +1032,16 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{coaxial_cable_annotated.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{coaxial_cable_annotated.png}}
+                \articleonly{\includegraphics[width=\textwidth]{coaxial_cable_annotated.png}\\
+                \small\emph{Figure: Annotated coaxial cable showing center conductor, dielectric, shield, and jacket.}}
             \end{center}
             
             \vspace{0.3em}
             \begin{center}
-                \includegraphics[width=0.7\textwidth]{coaxial_rj6_f.png}
+                \mode<beamer>{\includegraphics[width=0.7\textwidth]{coaxial_rj6_f.png}}
+                \articleonly{\includegraphics[width=0.7\textwidth]{coaxial_rj6_f.png}\\
+                \small\emph{Figure: RG-6 coaxial cable terminated with an F-type connector.}}
             \end{center}
 
         \end{column}
@@ -1265,7 +1074,9 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{twin_ax_annotated.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{twin_ax_annotated.png}}
+                \articleonly{\includegraphics[width=\textwidth]{twin_ax_annotated.png}\\
+                \small\emph{Figure: Annotated twinax cable used for short-distance direct-attach links.}}
             \end{center}
             
             \vspace{0.5em}
@@ -1284,6 +1095,8 @@
 % =============================================================================
 % SLIDE 24: Case Study - Wiring the Addams Mansion Conservatory
 % =============================================================================
+\subsection{Case Study}
+
 \begin{frame}{Case Study: Wiring the Addams Mansion Conservatory}
     \begin{casestudy}{Wiring the Addams Mansion Conservatory}
         Morticia wants to add network connections to her conservatory (greenhouse) where she tends her carnivorous plants. The network cables need to run through the air handling space above the hallway ceiling.
@@ -1333,6 +1146,13 @@
 % =============================================================================
 % SLIDE 26: Structured Cabling System
 % =============================================================================
+\section{Structured Cabling Systems}
+\subsection{Cabling Organization}
+
+\articleonly{
+Structured cabling provides the physical organization that keeps network infrastructure reliable and maintainable over time. This section covers standards, termination methods, and installation practices that prevent costly troubleshooting later.
+}
+
 \begin{frame}{Structured Cabling: Organizing the Chaos}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -1393,6 +1213,8 @@
 % =============================================================================
 % SLIDE 27: T568A and T568B Wiring Standards
 % =============================================================================
+\subsection{Wiring Standards}
+
 \begin{frame}{T568A and T568B Wiring Standards}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1410,7 +1232,9 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{center}
-                \includegraphics[width=0.9\textwidth]{T568B_pins.png}
+                \mode<beamer>{\includegraphics[width=0.9\textwidth]{T568B_pins.png}}
+                \articleonly{\includegraphics[width=0.9\textwidth]{T568B_pins.png}\\
+                \small\emph{Figure: T568B RJ-45 pinout showing wire color order and pin assignments.}}
                 
                 \vspace{0.3em}
                 {\small T568B (Most Common)}
@@ -1418,7 +1242,9 @@
             
             \vspace{0.3em}
             \begin{center}
-                \includegraphics[width=0.9\textwidth]{T568A_pins.png}
+                \mode<beamer>{\includegraphics[width=0.9\textwidth]{T568A_pins.png}}
+                \articleonly{\includegraphics[width=0.9\textwidth]{T568A_pins.png}\\
+                \small\emph{Figure: T568A RJ-45 pinout showing alternate wire color order and pin assignments.}}
                 
                 \vspace{0.3em}
                 {\small T568A (Government Standard)}
@@ -1481,6 +1307,8 @@
 % =============================================================================
 % SLIDE 29: Patch Panels
 % =============================================================================
+\subsection{Patch Panels and Termination}
+
 \begin{frame}{Patch Panels}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -1504,7 +1332,9 @@
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{patch_paneLswitch_wall_jacks.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{patch_paneLswitch_wall_jacks.png}}
+                \articleonly{\includegraphics[width=\textwidth]{patch_paneLswitch_wall_jacks.png}\\
+                \small\emph{Figure: Patch panel, switch, and wall-jack cabling layout in structured cabling.}}
             \end{center}
             
         \end{column}
@@ -1525,7 +1355,9 @@
                     \item A bad crimp = unreliable network
                 \end{itemize}
                 \centering
-                \includegraphics[width=0.7\textwidth]{photo_cable_crimper.png}
+                    \mode<beamer>{\includegraphics[width=0.7\textwidth]{photo_cable_crimper.png}}
+                    \articleonly{\includegraphics[width=0.7\textwidth]{photo_cable_crimper.png}\\
+                    \small\emph{Figure: RJ-45 cable crimping tool used to terminate twisted-pair cables.}}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -1537,7 +1369,9 @@
                     \item Listen for the ``click''!
                 \end{itemize}
                 \centering
-                \includegraphics[width=0.7\textwidth]{photo_punch_down.png}
+                \mode<beamer>{\includegraphics[width=0.7\textwidth]{photo_punch_down.png}}
+                \articleonly{\includegraphics[width=0.7\textwidth]{photo_punch_down.png}\\
+                \small\emph{Figure: Punchdown tool used to seat conductors into patch panels and keystone jacks.}}
             \end{block}
         \end{column}
     \end{columns}
@@ -1547,6 +1381,8 @@
 % =============================================================================
 % SLIDE 31: Cable Installation Best Practices
 % =============================================================================
+\subsection{Installation Best Practices}
+
 \begin{frame}{Cable Installation Best Practices}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1582,6 +1418,13 @@
 % =============================================================================
 % SLIDE 32: Why Fiber Optic?
 % =============================================================================
+\section{Fiber Optic Cabling}
+\subsection{Introduction to Fiber}
+
+\articleonly{
+Fiber optic cabling uses light to transmit data at high speeds over long distances with excellent resistance to electromagnetic interference. In this section, we examine fiber construction, connector types, and practical deployment choices.
+}
+
 \begin{frame}{Why Fiber Optic?}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -1619,6 +1462,8 @@
 % =============================================================================
 % SLIDE 33: Fiber Optic Cable Structure
 % =============================================================================
+\subsection{Fiber Structure}
+
 \begin{frame}{Fiber Optic Cable Structure}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
@@ -1634,7 +1479,9 @@
         \end{column}
         \begin{column}{0.55\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{fiber_cable_annotated.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{fiber_cable_annotated.png}}
+                \articleonly{\includegraphics[width=\textwidth]{fiber_cable_annotated.png}\\
+                \small\emph{Figure: Annotated fiber-optic cable structure with core, cladding, coating, and jacket.}}
             \end{center}
             
         \end{column}
@@ -1648,7 +1495,9 @@
 % =============================================================================
 % SLIDE 34: Single-Mode vs Multimode Fiber
 % =============================================================================
-\begin{frame}{Single-Mode vs Multimode Fiber}
+\subsection{Single-Mode vs Multimode}
+
+\begin{frame}[t,shrink=14]{Single-Mode vs Multimode Fiber}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Multimode Fiber (MMF)}
@@ -1662,7 +1511,9 @@
                 \end{itemize}
                 
                 \centering
-                \includegraphics[width=0.8\textwidth]{om3_duplex_sc.png}
+                \mode<beamer>{\includegraphics[width=0.8\textwidth]{om3_duplex_sc.png}}
+                \articleonly{\includegraphics[width=0.8\textwidth]{om3_duplex_sc.png}\\
+                \small\emph{Figure: Multimode OM3 duplex fiber patch cable with SC connectors.}}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -1677,7 +1528,9 @@
                 \end{itemize}
                 
                 \centering
-                \includegraphics[width=0.8\textwidth]{os2_fiber_lc.png}
+                \mode<beamer>{\includegraphics[width=0.8\textwidth]{os2_fiber_lc.png}}
+                \articleonly{\includegraphics[width=0.8\textwidth]{os2_fiber_lc.png}\\
+                \small\emph{Figure: Single-mode OS2 fiber patch cable with LC connectors.}}
             \end{block}
         \end{column}
     \end{columns}
@@ -1691,7 +1544,9 @@
 % =============================================================================
 % SLIDE 35: Fiber Optic Connector Types
 % =============================================================================
-\begin{frame}{Fiber Optic Connector Types}
+\subsection{Fiber Connectors}
+
+\begin{frame}[t,shrink=6]{Fiber Optic Connector Types}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
             \begin{itemize}
@@ -1705,7 +1560,9 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{center}
-                \includegraphics[width=\textwidth]{six_labeled_connectors.png}
+                \mode<beamer>{\includegraphics[width=\textwidth]{six_labeled_connectors.png}}
+                \articleonly{\includegraphics[width=\textwidth]{six_labeled_connectors.png}\\
+                \small\emph{Figure: Comparison of common fiber connector types including LC, SC, ST, and MPO/MTP.}}
             \end{center}
             
             \vspace{0.3em}
@@ -1719,6 +1576,8 @@
 % =============================================================================
 % SLIDE 36: Fiber Splicing and WDM
 % =============================================================================
+\subsection{Advanced Fiber Techniques}
+
 \begin{frame}{Fiber Splicing and WDM}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1757,6 +1616,8 @@
 % =============================================================================
 % SLIDE 37: Case Study - Wednesday's Cemetery Office
 % =============================================================================
+\subsection{Case Study}
+
 \begin{frame}{Case Study: Wednesday's Cemetery Office}
     \begin{casestudy}{Wednesday's Cemetery Office}
         Wednesday is setting up a writing office in the cemetery gatehouse, which is 300 meters from the mansion. She needs a fast, reliable network connection for uploading her novels.
@@ -1806,7 +1667,14 @@
 % =============================================================================
 % SLIDE 39: Rack Systems
 % =============================================================================
-\begin{frame}{Rack Systems}
+\section{Network Infrastructure}
+\subsection{Rack Systems}
+
+\articleonly{
+Physical infrastructure design goes beyond cables. Rack layout, environmental controls, power systems, and fire protection all affect network uptime and safety.
+}
+
+\begin{frame}[t,shrink=14]{Rack Systems}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
             \begin{itemize}
@@ -1824,7 +1692,9 @@
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{center}
-                \includegraphics[width=0.75\textwidth]{rack_diagram.png}
+                \mode<beamer>{\includegraphics[width=0.75\textwidth]{rack_diagram.png}}
+                \articleonly{\includegraphics[width=0.75\textwidth]{rack_diagram.png}\\
+                \small\emph{Figure: Standard equipment rack layout showing rack units and mounted devices.}}
             \end{center}
             
             \vspace{0.3em}
@@ -1841,6 +1711,8 @@
 % =============================================================================
 % SLIDE 40: Environmental Factors
 % =============================================================================
+\subsection{Environmental Controls}
+
 \begin{frame}{Environmental Factors: Temperature and Humidity}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1878,6 +1750,8 @@
 % =============================================================================
 % SLIDE 41: Power Management
 % =============================================================================
+\subsection{Power Management}
+
 \begin{frame}{Power Management}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1918,6 +1792,8 @@
 % =============================================================================
 % SLIDE 42: Fire Suppression
 % =============================================================================
+\subsection{Fire Safety}
+
 \begin{frame}{Fire Suppression}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1951,6 +1827,13 @@
 % =============================================================================
 % SLIDE 43: Common Cable Problems
 % =============================================================================
+\section{Cable Testing and Troubleshooting}
+\subsection{Common Problems}
+
+\articleonly{
+Systematic cable testing helps identify and resolve physical-layer faults before they disrupt users. This section introduces practical troubleshooting workflows and the right tools for each problem type.
+}
+
 \begin{frame}{Common Cable Problems}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1993,7 +1876,9 @@
 % =============================================================================
 % SLIDE 44: Cable Testing Tools
 % =============================================================================
-\begin{frame}{Cable Testing Tools}
+\subsection{Basic Testing Tools}
+
+\begin{frame}[t,shrink=10]{Cable Testing Tools}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{block}{Basic Testers}
@@ -2004,7 +1889,9 @@
                 
                 \vspace{0.3em}
                 \centering
-                \includegraphics[width=0.28\textwidth]{photo_cable_tester.png}
+                \mode<beamer>{\includegraphics[width=0.28\textwidth]{photo_cable_tester.png}}
+                \articleonly{\includegraphics[width=0.28\textwidth]{photo_cable_tester.png}\\
+                \small\emph{Figure: Handheld cable tester used to verify continuity and wire mapping.}}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -2016,7 +1903,9 @@
                 
                 \vspace{0.3em}
                 \centering
-                \includegraphics[width=0.28\textwidth]{tone_generator.png}
+                \mode<beamer>{\includegraphics[width=0.28\textwidth]{tone_generator.png}}
+                \articleonly{\includegraphics[width=0.28\textwidth]{tone_generator.png}\\
+                \small\emph{Figure: Tone generator and probe used to trace cable runs through walls and racks.}}
             \end{block}
         \end{column}
     \end{columns}
@@ -2031,6 +1920,8 @@
 % =============================================================================
 % SLIDE 45: Advanced Testing Tools
 % =============================================================================
+\subsection{Advanced Testing Tools}
+
 \begin{frame}{Advanced Testing Tools}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -2076,6 +1967,8 @@
 % =============================================================================
 % SLIDE 46: Case Study - Pugsley's Flickering Connection
 % =============================================================================
+\subsection{Case Study}
+
 \begin{frame}{Case Study: Pugsley's Flickering Connection}
     \begin{casestudy}{Pugsley's Flickering Connection}
         Pugsley's computer keeps losing network connectivity intermittently. The link light on his switch port flickers randomly.
@@ -2124,55 +2017,35 @@
 % =============================================================================
 % SLIDE 48: Module 2.0 Summary
 % =============================================================================
-\begin{frame}{Module 2.0 Summary}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Ethernet \& Copper Cables}
-                \begin{itemize}
-                    \item Faster speeds need better cables
-                    \item UTP is standard; STP for high EMI
-                    \item Cat5e = Gigabit; Cat6a = 10 Gbps
-                    \item T568B on both ends = straight-through
-                    \item RJ-45 is the standard connector
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Fiber Optic}
-                \begin{itemize}
-                    \item Light pulses, immune to EMI
-                    \item MMF (orange): within buildings
-                    \item SMF (yellow): between buildings
-                    \item LC connectors most common
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Installation \& Safety}
-                \begin{itemize}
-                    \item Plenum cable in air spaces
-                    \item 100m max for copper runs
-                    \item Proper temperature/humidity
-                    \item UPS for power protection
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Troubleshooting}
-                \begin{itemize}
-                    \item Most problems = bad terminations
-                    \item Start at Layer 1 (physical)
-                    \item Cable testers, tone probes, TDR
-                    \item Certification for full testing
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 2.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item Physical Layer transmits data as electrical signals (copper) or light pulses (fiber).
+        \item \keyterm{UTP} (Unshielded Twisted Pair) is standard; \keyterm{STP} (Shielded Twisted Pair) for high-EMI environments.
+        \item Cable categories: \keyterm{Cat5e} supports Gigabit Ethernet; \keyterm{Cat6/6a} supports 10 Gigabit Ethernet.
+        \item \keyterm{Fiber optic}: \keyterm{MMF} (multimode, orange) for short distances within buildings; \keyterm{SMF} (single-mode, yellow) for long distances between buildings.
+        \item Wiring standards: \keyterm{T568A} and \keyterm{T568B}. Use same standard on both ends for straight-through cable.
+        \item Common connectors: \keyterm{RJ-45} (copper), \keyterm{LC/SC/ST} (fiber).
+    \end{itemize}
+    \framebreak
     
     \vspace{0.3em}
-    \begin{alertblock}{Remember}
-        If Layer 1 isn't working, nothing else matters. Check the cables first!
-    \end{alertblock}
+    \textbf{Installation \& Troubleshooting:}
+    \begin{itemize}
+        \item Use \keyterm{plenum}-rated cable in air handling spaces (fire code requirement).
+        \item Maximum copper run: 100 meters. Fiber can go much farther (300m MMF, 10+ km SMF).
+        \item Common problems: bad terminations, \keyterm{attenuation} (signal loss), \keyterm{crosstalk} (interference).
+        \item Tools: cable testers, tone generators, TDR (Time Domain Reflectometer), certification testers.
+        \item Always start troubleshooting at Layer 1---if the cable isn't working, nothing else matters!
+    \end{itemize}
 \end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module covered the Physical Layer infrastructure that forms the foundation of all network communication. You explored copper cabling (UTP, STP, coaxial, twinax), fiber optic cabling (MMF and SMF), structured cabling standards (T568A/B), connectors (RJ-45, LC, SC, ST), installation best practices, and troubleshooting techniques. Understanding these fundamentals is essential for network design, installation, and maintenance. In the next module, we'll build on this foundation by exploring network interfaces, Ethernet frames, and Layer 2 switching.
+}
 
 \end{document}

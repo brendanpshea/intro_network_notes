@@ -1,130 +1,31 @@
+% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
+
 % =============================================================================
-% Module 6.0: Implementing Network Services
-% Network+ Course - LaTeX Beamer Presentation
-% Theme: Batman Universe Characters
+% COMMON PREAMBLE
 % =============================================================================
+\input{network_preamble.tex}
 
-\documentclass[aspectratio=169, 11pt]{beamer}
-
-% Theme and colors
-\usetheme{Madrid}
-\usecolortheme{default}
-
-% Custom colors - RCTC and Network theme
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 150, 100}
-\definecolor{alertred}{RGB}{200, 50, 50}
-\definecolor{aborange}{RGB}{230, 120, 0}
-\definecolor{tcpblue}{RGB}{30, 100, 180}
-\definecolor{udpgreen}{RGB}{50, 160, 80}
-\definecolor{dhcppurple}{RGB}{120, 60, 160}
-\definecolor{dnsyellow}{RGB}{200, 170, 50}
-\definecolor{batblack}{RGB}{30, 30, 40}
-\definecolor{gothamgray}{RGB}{80, 85, 95}
-
-% Set theme colors
-\setbeamercolor{palette primary}{bg=rctcblue, fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80, fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60, fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white, bg=rctcblue}
-\setbeamercolor{frametitle}{fg=rctcblue, bg=rctcblue!10}
-\setbeamercolor{block title}{bg=rctcblue, fg=white}
-\setbeamercolor{block body}{bg=rctcblue!5}
-\setbeamercolor{block title alerted}{bg=alertred, fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=networkgreen, fg=white}
-\setbeamercolor{block body example}{bg=networkgreen!5}
-
-% Packages
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{fontawesome5}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{array}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% TikZ libraries
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
-                backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
-
-% Custom TikZ styles for network diagrams
-\tikzstyle{pc} = [inner sep=0pt]
-\tikzstyle{laptop} = [inner sep=0pt]
-\tikzstyle{server} = [inner sep=0pt]
-\tikzstyle{router} = [inner sep=0pt]
-\tikzstyle{switch} = [inner sep=0pt]
-\tikzstyle{firewall} = [inner sep=0pt]
-\tikzstyle{cloud} = [inner sep=0pt]
-\tikzstyle{phone} = [inner sep=0pt]
-
-% Connection styles
-\tikzstyle{ethernet} = [draw, line width=1.5pt, color=rctcblue, -{Stealth}]
-\tikzstyle{ethernet noarrow} = [draw, line width=1.5pt, color=rctcblue]
-\tikzstyle{wireless} = [draw, line width=1.5pt, color=networkgreen, dashed, -{Stealth}]
-\tikzstyle{wan} = [draw, line width=2pt, color=aborange, -{Stealth}]
-\tikzstyle{wan noarrow} = [draw, line width=2pt, color=aborange]
-
-% Packet/segment styles
-\tikzstyle{pktseg} = [draw=rctcblue, fill=rctcblue!10, minimum height=0.5cm, 
-                      font=\tiny, rounded corners=2pt]
-\tikzstyle{pktseg tcp} = [draw=tcpblue, fill=tcpblue!15, minimum height=0.5cm, 
-                          font=\tiny, rounded corners=2pt]
-\tikzstyle{pktseg udp} = [draw=udpgreen, fill=udpgreen!15, minimum height=0.5cm, 
-                          font=\tiny, rounded corners=2pt]
-\tikzstyle{pktseg highlight} = [draw=aborange, fill=aborange!20, minimum height=0.5cm, 
-                                font=\tiny, rounded corners=2pt]
-
-% Box styles
-\tikzstyle{ipbox} = [draw=rctcblue, fill=rctcblue!10, rounded corners, 
-                     minimum height=0.4cm, font=\small]
-\tikzstyle{portbox} = [draw=tcpblue, fill=tcpblue!10, rounded corners,
-                       minimum height=0.4cm, font=\small]
-\tikzstyle{dnsbox} = [draw=dnsyellow, fill=dnsyellow!15, rounded corners,
-                      minimum height=0.4cm, font=\small]
-
-% Process/flow styles
-\tikzstyle{process} = [draw=rctcblue, fill=rctcblue!15, rounded corners,
-                       minimum width=2cm, minimum height=0.6cm, font=\small, align=center]
-\tikzstyle{decision} = [draw=aborange, fill=aborange!15, diamond, aspect=2,
-                        minimum width=1.5cm, font=\small, align=center]
-
-% Icon commands using FontAwesome
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faDesktop}}
-\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faLaptop}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faServer}}
-\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\faNetworkWired}}
-\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\faSitemap}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faShieldAlt}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faCloud}}
-\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faPhone}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faDatabase}}
-\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faGlobe}}
-\newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faUser}}
-
-% Key term formatting
-\newcommand{\keyterm}[1]{\textbf{\textcolor{rctcblue}{#1}}}
-
-% Case study environments
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{#1}
-}{\end{alertblock}}
-
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{Solution: #1}
-}{\end{exampleblock}}
-
-% Document info
+% =============================================================================
+% DOCUMENT INFO
+% =============================================================================
 \title[Module 6.0]{Module 6.0: Implementing Network Services}
 \subtitle{Intro to Networks}
 \author{Brendan Shea, PhD}
 \date{Introduction to Networking}
-\institute{RCTC}
+
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
+}
 
 \begin{document}
 
@@ -166,9 +67,20 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+
 % =============================================================================
 % SLIDE 2: Review - Connecting to Module 5
 % =============================================================================
+\section*{Review from Module 5}
+
 \begin{frame}{Review: Building on Module 5}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -225,6 +137,8 @@
 % =============================================================================
 % SLIDE 3: Module 6 Overview
 % =============================================================================
+\section*{Learning Outcomes}
+
 \begin{frame}{Module 6 Overview}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -269,56 +183,33 @@
     \end{columns}
 \end{frame}
 
-% =============================================================================
-% SLIDE 4: Key Terms Preview
-% =============================================================================
-\begin{frame}{Key Terms Preview}
-    \small
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Transport Layer}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{TCP} -- Reliable, connection-oriented
-                    \item \keyterm{UDP} -- Fast, connectionless
-                    \item \keyterm{Port} -- Service identifier (0--65535)
-                    \item \keyterm{Socket} -- IP address + port combo
-                \end{itemize}
-            \end{block}
-            
-            \begin{block}{DHCP Concepts}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{DORA} -- Discover, Offer, Request, Ack
-                    \item \keyterm{Lease} -- Temporary IP assignment
-                    \item \keyterm{Scope} -- Range of IPs to assign
-                    \item \keyterm{Relay} -- Forwards DHCP across subnets
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Auto-Configuration}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{APIPA} -- 169.254.x.x fallback
-                    \item \keyterm{SLAAC} -- IPv6 self-configuration
-                    \item \keyterm{EUI-64} -- MAC-based IPv6 address
-                    \item \keyterm{DHCPv6} -- IPv6 address assignment
-                \end{itemize}
-            \end{block}
-            
-            \begin{block}{DNS Concepts}
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \keyterm{FQDN} -- Full domain name (host.domain.tld)
-                    \item \keyterm{Zone} -- Administrative DNS region
-                    \item \keyterm{Record} -- DNS entry (A, AAAA, MX, etc.)
-                    \item \keyterm{Resolver} -- DNS lookup service
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \begin{itemize}
+        \item Explain the differences between \keyterm{TCP} (reliable, connection-oriented) and \keyterm{UDP} (fast, connectionless) and identify appropriate use cases for each protocol.
+        \item Describe how \keyterm{ports} (0--65535) identify services and how \keyterm{sockets} (IP address + port) establish connections between applications.
+        \item Configure and manage \keyterm{DHCP} servers, including defining \keyterm{scopes}, creating \keyterm{reservations}, and setting \keyterm{DHCP options} (gateway, DNS, lease time).
+        \item Explain the \keyterm{DORA} process (Discover, Offer, Request, Acknowledge) used by DHCP clients to obtain IP addresses.
+        \item Configure \keyterm{DHCP relay agents} to forward DHCP messages across subnets and troubleshoot common DHCP issues.
+        \item Describe \keyterm{APIPA} (169.254.x.x/16) as a fallback mechanism when DHCP is unavailable and explain its limitations (link-local only).
+        \item Explain IPv6 \keyterm{SLAAC} (Stateless Address Autoconfiguration) using Router Advertisements and \keyterm{DHCPv6} (stateful and stateless modes).
+        \item Describe the \keyterm{DNS} hierarchy (Root, TLD, Domain, Host) and explain how DNS resolves domain names to IP addresses.
+        \item Identify common DNS record types: \keyterm{A} (IPv4), \keyterm{AAAA} (IPv6), \keyterm{CNAME} (alias), \keyterm{MX} (mail server), \keyterm{PTR} (reverse lookup).
+        \item Use DNS troubleshooting tools like \keyterm{nslookup} and \keyterm{dig} to query DNS records, diagnose resolution issues, and verify zone transfers.
+    \end{itemize}
 \end{frame}
 
 % =============================================================================
 % SLIDE 5: Transport Layer and Ports
 % =============================================================================
+\section{Transport Layer Services}
+\subsection{Ports, TCP, and UDP}
+
+\articleonly{
+This section reviews transport-layer behavior, port roles, and protocol tradeoffs between reliable and low-latency communication.
+}
+
 \begin{frame}{Transport Layer and Ports}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -328,47 +219,6 @@
                 \item Port range: \textbf{0--65535}
                 \item A \keyterm{socket} = IP address + port number
             \end{itemize}
-            
-            \vspace{0.2em}
-            \begin{block}{Port Ranges}
-                \small
-                \begin{tabular}{l l}
-                    \toprule
-                    \textbf{Range} & \textbf{Usage} \\
-                    \midrule
-                    0--1023 & Well-known (system) \\
-                    1024--49151 & Registered (applications) \\
-                    49152--65535 & Dynamic/Ephemeral \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{TCP/UDP Segment Structure}
-                \centering
-                \small
-                \setlength{\tabcolsep}{2pt}
-                \begin{tabular}{|>{\columncolor{tcpblue!20}}c|>{\columncolor{tcpblue!20}}c|}
-                    \hline
-                    \textbf{Source Port} & \textbf{Dest Port} \\
-                    \footnotesize 16 bits & \footnotesize 16 bits \\
-                    \hline
-                    \multicolumn{2}{|>{\columncolor{rctcblue!10}}c|}{Other Header Fields} \\
-                    \hline
-                    \multicolumn{2}{|>{\columncolor{gray!10}}c|}{Data (Payload)} \\
-                    \hline
-                \end{tabular}
-            \end{block}
-            
-            \vspace{0.3em}
-            \begin{block}{Socket Example}
-                \centering
-                \texttt{\colorbox{rctcblue!15}{192.168.1.10}:\colorbox{tcpblue!20}{443}}
-                
-                \vspace{0.2em}
-                \small
-                \textcolor{rctcblue}{IP Address} + \textcolor{tcpblue}{Port} = Socket
-            \end{block}
             
             \vspace{0.2em}
             \begin{exampleblock}{Example}
@@ -484,7 +334,7 @@
         \begin{column}{0.48\textwidth}
             \begin{exampleblock}{Memory Tip}
                 \small
-                Think: ``\textbf{S}end → \textbf{S}end back with \textbf{A}ck → \textbf{A}cknowledge''
+                Think: ``\textbf{S}end $\rightarrow$ \textbf{S}end back with \textbf{A}ck $\rightarrow$ \textbf{A}cknowledge''
             \end{exampleblock}
         \end{column}
     \end{columns}
@@ -704,8 +554,8 @@
     \begin{casesolution}{The Mission Communications Problem}
         \small
         \begin{enumerate}\setlength{\itemsep}{1pt}
-            \item \textbf{Video files → TCP}: Missing frames corrupt evidence. TCP guarantees delivery.
-            \item \textbf{Voice comms → UDP}: Real-time essential. Brief glitches beat lag. UDP wins.
+            \item \textbf{Video files $\rightarrow$ TCP}: Missing frames corrupt evidence. TCP guarantees delivery.
+            \item \textbf{Voice comms $\rightarrow$ UDP}: Real-time essential. Brief glitches beat lag. UDP wins.
             \item If swapped: Corrupted files (UDP) or unacceptable voice delay (TCP).
         \end{enumerate}
     \end{casesolution}
@@ -837,6 +687,13 @@
 % =============================================================================
 % SLIDE 15: DHCP Overview
 % =============================================================================
+\section{DHCP Address Management}
+\subsection{DORA and Scope Configuration}
+
+\articleonly{
+DHCP automates IPv4 addressing and options distribution; this section covers leasing flow, scope design, and relay operation.
+}
+
 \begin{frame}{DHCP Overview}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1376,8 +1233,8 @@
             \vspace{0.2em}
             \begin{exampleblock}{Quick Check}
                 \small
-                Got 169.254.x.x? → DHCP failed \\
-                Got 0.0.0.0? → No address assigned
+                Got 169.254.x.x? $\rightarrow$ DHCP failed \\
+                Got 0.0.0.0? $\rightarrow$ No address assigned
             \end{exampleblock}
         \end{column}
     \end{columns}
@@ -1386,6 +1243,13 @@
 % =============================================================================
 % SLIDE 25: IPv6 SLAAC
 % =============================================================================
+\section{IPv6 Address Assignment}
+\subsection{SLAAC and DHCPv6}
+
+\articleonly{
+IPv6 hosts can self-configure through router advertisements or use DHCPv6 depending on deployment requirements and policy.
+}
+
 \begin{frame}{IPv6 SLAAC: Stateless Address Autoconfiguration}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1505,6 +1369,13 @@
 % =============================================================================
 % SLIDE 27: DNS - Why We Need It
 % =============================================================================
+\section{DNS Resolution Services}
+\subsection{Hierarchy, Records, and Operations}
+
+\articleonly{
+This section covers DNS hierarchy, record types, recursion, and operational troubleshooting for name resolution services.
+}
+
 \begin{frame}{DNS: The Internet's Phone Book}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1679,9 +1550,9 @@
                 \footnotesize
                 \begin{enumerate}\setlength{\itemsep}{0pt}
                     \item Client asks resolver
-                    \item Resolver asks root → ``Try .com''
-                    \item Resolver asks .com → ``Try google.com NS''
-                    \item Resolver asks google.com → IP!
+                    \item Resolver asks root $\rightarrow$ ``Try .com''
+                    \item Resolver asks .com $\rightarrow$ ``Try google.com NS''
+                    \item Resolver asks google.com $\rightarrow$ IP!
                     \item Resolver returns IP to client
                 \end{enumerate}
             \end{block}
@@ -1740,7 +1611,7 @@
                 \normalfont\small
                 Use cases:
                 \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item Multiple names → same server
+                    \item Multiple names $\rightarrow$ same server
                     \item CDN redirects
                     \item Service migrations
                 \end{itemize}
@@ -1768,7 +1639,7 @@
             \textbf{MX} & Mail server routing & \texttt{example.com. MX 10 mail.example.com.} \\
             \textbf{SRV} & Service location & \texttt{\_sip.\_tcp.example.com. SRV 10 5 5060 sip.example.com.} \\
             \textbf{TXT} & Text data (SPF, DKIM) & \texttt{example.com. TXT "v=spf1 include:\_spf.google.com"} \\
-            \textbf{PTR} & Reverse lookup (IP→name) & \texttt{34.216.184.93.in-addr.arpa. PTR www.example.com.} \\
+            \textbf{PTR} & Reverse lookup (IP$\rightarrow$name) & \texttt{34.216.184.93.in-addr.arpa. PTR www.example.com.} \\
             \bottomrule
         \end{tabular}
     \end{block}
@@ -1959,9 +1830,9 @@
     \vspace{0.3em}
     \begin{exampleblock}{Troubleshooting Steps}
         \small
-        1. Check local DNS settings (\texttt{ipconfig /all}) → 
-        2. Query local resolver → 
-        3. Query external DNS (8.8.8.8) → 
+        1. Check local DNS settings (\texttt{ipconfig /all}) $\rightarrow$ 
+        2. Query local resolver $\rightarrow$ 
+        3. Query external DNS (8.8.8.8) $\rightarrow$ 
         4. Compare results
     \end{exampleblock}
 \end{frame}
@@ -1969,52 +1840,33 @@
 % =============================================================================
 % SLIDE 36: Module 6 Summary
 % =============================================================================
-\begin{frame}{Module 6 Summary}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Transport Layer}
-                \small
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{TCP}: Reliable, connection-oriented
-                    \item \textbf{UDP}: Fast, connectionless
-                    \item \textbf{Ports}: 0--65535, identify services
-                    \item \textbf{netstat}: View connections
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.2em}
-            \begin{block}{DHCP}
-                \small
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{DORA}: Discover, Offer, Request, Ack
-                    \item \textbf{Scope}: IP address pool
-                    \item \textbf{Relay}: Forward across subnets
-                    \item \textbf{APIPA}: 169.254.x.x fallback
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{IPv6 Auto-Config}
-                \small
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item \textbf{SLAAC}: Stateless, uses RA + EUI-64
-                    \item \textbf{DHCPv6}: Stateful or stateless modes
-                \end{itemize}
-            \end{block}
-            
-            \vspace{0.2em}
-            \begin{block}{DNS}
-                \small
-                \begin{itemize}\setlength{\itemsep}{1pt}
-                    \item Hierarchical: Root → TLD → Domain
-                    \item Records: A, AAAA, CNAME, MX, PTR
-                    \item Tools: nslookup, dig
-                    \item Security: Cache poisoning risk
-                \end{itemize}
-            \end{block}
-            
-        \end{column}
-    \end{columns}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 6.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{TCP} (Transmission Control Protocol): Reliable, connection-oriented, with error checking and retransmission. Use for data integrity.
+        \item \keyterm{UDP} (User Datagram Protocol): Fast, connectionless, no delivery guarantees. Use for real-time applications (VoIP, streaming).
+        \item \keyterm{Ports} identify services (0--65535): Well-known (0--1023), Registered (1024--49151), Dynamic (49152--65535).
+        \item \keyterm{Socket} = IP address + port number. Use \keyterm{netstat} to view active connections.
+        \item \keyterm{DHCP} automates IP configuration via \keyterm{DORA}: Discover, Offer, Request, Acknowledge.
+        \item \keyterm{DHCP scope}: Range of assignable IPs. \keyterm{Reservation}: permanent assignment for specific MAC. \keyterm{Options}: gateway, DNS servers, lease time.
+        \item \keyterm{DHCP relay agent} forwards DHCP messages across subnets (uses broadcast-to-unicast conversion).
+        \item \keyterm{APIPA} (169.254.x.x/16): Automatic fallback when DHCP unavailable (link-local only, no routing).
+        \item IPv6 \keyterm{SLAAC} (Stateless): Auto-config using Router Advertisement (RA) + \keyterm{EUI-64} (MAC-derived host portion).
+        \item \keyterm{DHCPv6}: Stateful (assigns addresses) or stateless (provides options only).
+        \item \keyterm{DNS} resolves names to IPs. Hierarchy: Root, TLD (Top-Level Domain), Domain, Host.
+        \item DNS records: \keyterm{A} (IPv4), \keyterm{AAAA} (IPv6), \keyterm{CNAME} (alias), \keyterm{MX} (mail server), \keyterm{PTR} (reverse lookup).
+        \item Troubleshooting tools: \keyterm{nslookup} (basic queries), \keyterm{dig} (detailed analysis). Check cache poisoning, TTL issues, zone transfers.
+    \end{itemize}
 \end{frame}
 
+\articleonly{
+\subsection*{Conclusion}
+This module covered essential network services: TCP/UDP transport protocols, DHCP for IPv4/IPv6 address assignment, and DNS for name resolution. You learned how these services work together to automate host configuration and enable user-friendly domain names. In the next module, we'll explore application-layer services including HTTP, email, and VoIP.
+}
+
 \end{document}
+
+

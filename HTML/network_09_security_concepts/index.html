@@ -1,0 +1,1144 @@
+﻿<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title></title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='network_09_security_concepts_article_tmp.css' rel='stylesheet' type='text/css' /> 
+<meta content='network_09_security_concepts_article_tmp.tex' name='src' /> 
+<link href='../articles.css' rel='stylesheet' type='text/css' />
+</head><body>
+<p><a id='x1-2r1'></a>
+</p><div class='center'>
+<!-- l. 40 --><p class='noindent'>
+</p><!-- l. 56 --><p class='noindent'>                   <img alt='xx(xT(KhTibehAb HrglaeaeeCctnok Atrec Sprtno S Cooear)pctyurity) ' src='network_09_security_concepts_article_tmp0x.svg' />
+</p><!-- l. 56 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<h3 class='likesectionHead' id='review-from-module-'><a id='x1-1000'></a>Review from Module 8</h3>
+<p><a id='x1-1001r2'></a>
+<!-- l. 71 --></p><p class='noindent'><span class='likeparagraphHead' id='review-operations-and-monitoring-foundations'><a id='x1-2000'></a>Review: Operations and Monitoring Foundations</span>
+ 
+</p><!-- l. 71 --><p class='noindent'>
+</p><!-- l. 73 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Key Module 8 Ideas</span>
+</p><!-- l. 73 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>Documentation and change control reduce operational risk.
+     </li>
+     <li class='itemize'>Monitoring  data  (SNMP,  syslog,  flow,  packet  capture)  improves
+     visibility.
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'>Baselines  and  alerts  help  teams  detect  and  respond  to  anomalies
+     quickly.</li></ul>
+<!-- l. 82 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Why This Matters in Module 9</span>
+</p><!-- l. 82 --><p class='noindent'>Security operations depend on reliable telemetry and disciplined operational
+processes.
+</p><!-- l. 90 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='learning-outcomes'><a id='x1-3000'></a>Learning Outcomes</h3>
+<p><a id='x1-3001r3'></a>
+<!-- l. 93 --></p><p class='noindent'><span class='likeparagraphHead' id='learning-outcomes1'><a id='x1-4000'></a>Learning Outcomes</span>
+ 
+</p><!-- l. 93 --><p class='noindent'>
+</p><!-- l. 93 --><p class='noindent'>After completing this module, you will be able to: </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-10'>Explain the </span><span class='ec-lmbx-10'>CIA Triad</span><span class='ec-lmr-10'>: </span><span class='ec-lmbx-10'>Confidentiality </span><span class='ec-lmr-10'>(data secrecy), </span><span class='ec-lmbx-10'>Integrity </span><span class='ec-lmr-10'>(data
+     accuracy), and </span><span class='ec-lmbx-10'>Availability </span><span class='ec-lmr-10'>(reliable access).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Distinguish  between  </span><span class='ec-lmbx-10'>authentication  </span><span class='ec-lmr-10'>(proving  identity),  </span><span class='ec-lmbx-10'>authorization
+     </span><span class='ec-lmr-10'>(granting  permissions),  and  </span><span class='ec-lmbx-10'>accounting  </span><span class='ec-lmr-10'>(logging  actions)  in  the  AAA
+     framework.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Describe  common  threats:  </span><span class='ec-lmbx-10'>DoS/DDoS  </span><span class='ec-lmr-10'>(denial  of  service),  </span><span class='ec-lmbx-10'>malware
+     </span><span class='ec-lmr-10'>(viruses, worms, ransomware), and </span><span class='ec-lmbx-10'>insider threats </span><span class='ec-lmr-10'>(malicious or negligent
+     employees).</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Explain  </span><span class='ec-lmbx-10'>social  engineering  </span><span class='ec-lmr-10'>attacks  including  </span><span class='ec-lmbx-10'>phishing  </span><span class='ec-lmr-10'>(fake  emails),
+     </span><span class='ec-lmbx-10'>vishing  </span><span class='ec-lmr-10'>(voice  phishing),  </span><span class='ec-lmbx-10'>smishing  </span><span class='ec-lmr-10'>(SMS  phishing),  and  </span><span class='ec-lmbx-10'>tailgating
+     </span><span class='ec-lmr-10'>(physical access).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Describe </span><span class='ec-lmbx-10'>spoofing </span><span class='ec-lmr-10'>attacks: </span><span class='ec-lmbx-10'>MAC spoofing </span><span class='ec-lmr-10'>(impersonating devices), </span><span class='ec-lmbx-10'>IP
+     spoofing </span><span class='ec-lmr-10'>(forging source addresses), </span><span class='ec-lmbx-10'>ARP poisoning </span><span class='ec-lmr-10'>(cache manipulation),
+     and </span><span class='ec-lmbx-10'>DNS poisoning </span><span class='ec-lmr-10'>(name resolution hijacking).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Identify   rogue   devices:   </span><span class='ec-lmbx-10'>rogue   DHCP   servers   </span><span class='ec-lmr-10'>(unauthorized   IP
+     assignment), </span><span class='ec-lmbx-10'>rogue access points </span><span class='ec-lmr-10'>(evil twins), and explain mitigation using
+     DHCP snooping and 802.1X authentication.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Explain   password   attacks:   </span><span class='ec-lmbx-10'>brute   force  </span><span class='ec-lmr-10'>(trying   all   combinations),
+     </span><span class='ec-lmbx-10'>dictionary  attacks  </span><span class='ec-lmr-10'>(common  words),  </span><span class='ec-lmbx-10'>rainbow  tables  </span><span class='ec-lmr-10'>(precomputed
+     hashes), and defenses (complexity, length, salting, MFA).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Describe  </span><span class='ec-lmbx-10'>Defense  in  Depth  </span><span class='ec-lmr-10'>using  layered  controls:  physical  security,
+     firewalls,  IDS/IPS,  access  control  lists  (ACLs),  encryption,  and  security
+     awareness training.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Use </span><span class='ec-lmbx-10'>Wireshark </span><span class='ec-lmr-10'>to analyze packet captures and identify security indicators:
+     DoS patterns, ARP poisoning, plaintext credentials, and suspicious traffic.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Explain  the  role  of  </span><span class='ec-lmbx-10'>penetration  testing</span><span class='ec-lmr-10'>,  </span><span class='ec-lmbx-10'>vulnerability  scanning</span><span class='ec-lmr-10'>,
+     </span><span class='ec-lmbx-10'>honeypots  </span><span class='ec-lmr-10'>(decoy  systems),  and  </span><span class='ec-lmbx-10'>SIEM  </span><span class='ec-lmr-10'>tools  in  proactive  security
+     operations.</span></li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 111 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='security-foundations'><span class='titlemark'>1   </span> <a id='x1-50001'></a>Security Foundations</h3>
+<!-- l. 112 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='core-principles-and-controls'><span class='titlemark'>1.1   </span> <a id='x1-60001.1'></a>Core Principles and Controls</h4>
+<!-- l. 116 --><p class='noindent'>This section introduces core security principles, governance terms, and
+foundational controls used in enterprise environments.
+<a id='x1-6001r4'></a>
+</p>
+<!-- l. 119 --><p class='noindent'><span class='likeparagraphHead' id='security-terminology-the-cia-triad'><a id='x1-7000'></a>9.1 Security Terminology: The CIA Triad</span>
+ 
+</p><!-- l. 119 --><p class='noindent'>
+</p><!-- l. 121 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Holy Trinity of Security</span>
+</p><!-- l. 121 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'>
+     <!-- l. 124 --><p class='noindent'><span class='ec-lmbx-9'>Confidentiality </span><span class='ec-lmr-9'>(Secrecy)</span> </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-9'>Only authorized people can see data.</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-9'>Analogy: </span><span class='ec-lmr-9'>A diary with a lock.</span></li></ul>
+     </li>
+     <li class='itemize'>
+     <!-- l. 129 --><p class='noindent'><span class='ec-lmbx-9'>Integrity </span><span class='ec-lmr-9'>(Accuracy)</span> </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-9'>Data hasn’t been changed or tampered with.</span>
+                                                                     
+
+                                                                     
+          </li>
+          <li class='itemize'><span class='ec-lmri-9'>Analogy: </span><span class='ec-lmr-9'>A sealed food jar (safety seal).</span></li></ul>
+     </li>
+     <li class='itemize'>
+     <!-- l. 134 --><p class='noindent'><span class='ec-lmbx-9'>Availability </span><span class='ec-lmr-9'>(Uptime)</span> </p>
+          <ul class='itemize2'>
+          <li class='itemize'><span class='ec-lmr-9'>Data is accessible when needed.</span>
+          </li>
+          <li class='itemize'><span class='ec-lmri-9'>Analogy: </span><span class='ec-lmr-9'>A 24/7 convenience store.</span></li></ul>
+     </li></ul>
+<div class='center'>
+<!-- l. 143 --><p class='noindent'>
+</p><!-- l. 155 --><p class='noindent'>               <img alt='xCxIxAConvIntaAeifigldraeibntityliitaylity ' src='network_09_security_concepts_article_tmp1x.svg' />
+</p><!-- l. 155 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-7001r5'></a>
+<!-- l. 163 --></p><p class='noindent'><span class='likeparagraphHead' id='audits-compliance'><a id='x1-8000'></a>Audits &amp; Compliance</span>
+ 
+                                                                     
+
+                                                                     
+</p><!-- l. 163 --><p class='noindent'>
+</p><!-- l. 165 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Security Audits</span>
+</p><!-- l. 165 --><p class='noindent'><span class='ec-lmr-9'>Why audit? To find broken locks before thieves do.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Internal</span><span class='ec-lmr-9'>: Snoopy checking his own doors.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>External</span><span class='ec-lmr-9'>: Hiring a pro to break in (Pen Test).</span></li></ul>
+<!-- l. 173 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Regulatory Compliance (The Law)</span>
+</p><!-- l. 173 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>HIPAA </span><span class='ec-lmr-9'>(Health): Protects </span><span class='ec-lmri-9'>medical records </span><span class='ec-lmr-9'>(e.g., your doctor can’t tweet your
+     X-ray).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>GDPR  </span><span class='ec-lmr-9'>(Privacy):  EU  rules  giving  users  control  over  data  ("Right  to  be
+     Forgotten").</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>PCI-DSS </span><span class='ec-lmr-9'>(Finance): Rules for handling </span><span class='ec-lmri-9'>Credit Cards</span><span class='ec-lmr-9'>.</span></li></ul>
+<div class='center'>
+<!-- l. 183 --><p class='noindent'>
+</p><!-- l. 193 --><p class='noindent'>       <img alt='x□□□xAFUPgeirsaneertctwAhSalcLnolceoResvepyulslses ' src='network_09_security_concepts_article_tmp2x.svg' />
+                                                                     
+
+                                                                     
+</p><!-- l. 193 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-8001r6'></a>
+<!-- l. 201 --></p><p class='noindent'><span class='likeparagraphHead' id='encryption-locking-the-data'><a id='x1-9000'></a>Encryption: Locking the Data</span>
+ 
+</p><!-- l. 201 --><p class='noindent'>
+</p><!-- l. 203 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Symmetric (Private Key)</span>
+</p><!-- l. 203 --><p class='noindent'><span class='ec-lmbx-9'>"The House Key"</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Uses </span><span class='ec-lmbx-9'>one shared key </span><span class='ec-lmr-9'>for everything.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmri-9'>Pro: </span><span class='ec-lmr-9'>Very fast (good for streaming video).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmri-9'>Con: </span><span class='ec-lmr-9'>If you lose the key, you lose the house.</span></li></ul>
+<!-- l. 212 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Asymmetric (Public Key)</span>
+</p><!-- l. 212 --><p class='noindent'><span class='ec-lmbx-9'>"The Mailbox"</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Public Key</span><span class='ec-lmr-9'>: Anyone can put mail IN (Encrypt).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Private Key</span><span class='ec-lmr-9'>: Only YOU can take mail OUT (Decrypt).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Solves the key sharing problem!</span></li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 223 --><p class='noindent'>
+</p><!-- l. 239 --><p class='noindent'>           <img alt='SxxxSAxPPYyasurommybivumemliatseKmcehateeSlKrrytoeeirtythciecLock,keeptheKey. ' src='network_09_security_concepts_article_tmp3x.svg' />
+</p><!-- l. 239 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-9001r7'></a>
+<!-- l. 247 --></p><p class='noindent'><span class='likeparagraphHead' id='vulnerability-and-exploit-types'><a id='x1-10000'></a>Vulnerability and Exploit Types</span>
+ 
+</p><!-- l. 247 --><p class='noindent'>
+</p><!-- l. 249 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Definitions</span>
+</p><!-- l. 249 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Vulnerability</span><span class='ec-lmr-9'>: A flaw (e.g., leaving a window open).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Exploit</span><span class='ec-lmr-9'>: The tool to attack the flaw (e.g., a ladder).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Patch</span><span class='ec-lmr-9'>: The board you nail over the window to fix it.</span></li></ul>
+<!-- l. 257 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Zero-Day Attack</span>
+</p><!-- l. 257 --><p class='noindent'><span class='ec-lmr-9'>A vulnerability the vendor </span><span class='ec-lmbx-9'>doesn’t know about yet</span><span class='ec-lmr-9'>.</span> </p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Days since fix = 0</span><span class='ec-lmr-9'>.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Extremely dangerous because there is no patch!</span></li></ul>
+<div class='center'>
+<!-- l. 267 --><p class='noindent'>
+</p><!-- l. 278 --><p class='noindent'>        <img alt='FVxZeiulrreno-w(NDaoayllPEatxpchl)oit ' src='network_09_security_concepts_article_tmp4x.svg' />
+</p><!-- l. 278 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-10001r8'></a>
+<!-- l. 286 --></p><p class='noindent'><span class='likeparagraphHead' id='defense-tool-honeypots-and-deception'><a id='x1-11000'></a>Defense Tool: Honeypots and Deception</span>
+ 
+</p><!-- l. 286 --><p class='noindent'>
+</p><!-- l. 288 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is a Honeypot?</span>
+</p><!-- l. 288 --><p class='noindent'><span class='ec-lmr-9'>A "Trap Server" designed to look juicy to hackers.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Purpose</span><span class='ec-lmr-9'>: To waste the attacker’s time and study their methods.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>If anyone touches the Honeypot, </span><span class='ec-lmbx-9'>it’s an attack </span><span class='ec-lmr-9'>(because no real users should be
+     there).</span></li></ul>
+                                                                     
+
+                                                                     
+<!-- l. 296 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Common Tools</span>
+</p><!-- l. 296 --><p class='noindent'><span class='ec-lmbx-9'>Canary</span><span class='ec-lmr-9'>: A device that chirps (alerts) when accessed. </span><span class='ec-lmbx-9'>Cowrie</span><span class='ec-lmr-9'>: A fake SSH terminal that logs
+the hacker’s commands.</span>
+</p>
+<div class='center'>
+<!-- l. 303 --><p class='noindent'>
+</p><!-- l. 315 --><p class='noindent'>              <img alt='xRxH(xIAxAeoFagntlalnkotaerDeyereckt!BpDdsotaHtae)re ' src='network_09_security_concepts_article_tmp5x.svg' />
+</p><!-- l. 315 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 322 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='threats-and-risk-assessment'><span class='titlemark'>2   </span> <a id='x1-120002'></a>Threats and Risk Assessment</h3>
+<!-- l. 323 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='dos-botnets-and-malware'><span class='titlemark'>2.1   </span> <a id='x1-130002.1'></a>DoS, Botnets, and Malware</h4>
+<!-- l. 327 --><p class='noindent'>Threat analysis identifies disruptive and malicious behaviors so teams can
+prioritize controls and response readiness.
+<a id='x1-13001r9'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 330 --><p class='noindent'><span class='likeparagraphHead' id='threat-types-and-assessment'><a id='x1-14000'></a>9.2 Threat Types and Assessment</span>
+ 
+</p><!-- l. 330 --><p class='noindent'>
+</p><!-- l. 332 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Attacker Hierarchy</span>
+</p><!-- l. 332 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Script Kiddies</span><span class='ec-lmr-9'>: Unskilled amateurs using tools they downloaded (Low threat).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>APTs (Nation-States)</span><span class='ec-lmr-9'>: Highly skilled, government-funded spies (High threat).</span></li></ul>
+<!-- l. 339 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The Insider Threat</span>
+</p><!-- l. 339 --><p class='noindent'><span class='ec-lmr-9'>Current or former employees.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Malicious</span><span class='ec-lmr-9'>: Angry ex-admin.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Accidental</span><span class='ec-lmr-9'>: Employee clicking a phishing link. (Most common!)</span></li></ul>
+<div class='center'>
+<!-- l. 349 --><p class='noindent'>
+</p><!-- l. 360 --><p class='noindent'>          <img alt='IxIxxEFDnnxiitsitrereedeerwcrrnaltn(allAaTr(BccluBloes Nstlockseeckstd)ewd)ork ' src='network_09_security_concepts_article_tmp6x.svg' />
+</p><!-- l. 360 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+                                                                     
+
+                                                                     
+</p>
+</div>
+<p><a id='x1-14001r10'></a>
+<!-- l. 368 --></p><p class='noindent'><span class='likeparagraphHead' id='denial-of-service-dos-vs-distributed-dos-ddos'><a id='x1-15000'></a>Denial of Service (DoS) vs. Distributed DoS (DDoS)</span>
+ 
+</p><!-- l. 368 --><p class='noindent'>
+</p><!-- l. 370 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The "Traffic Jam" Analogy</span>
+</p><!-- l. 370 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>DoS</span><span class='ec-lmr-9'>:  One  car  parks  in  front  of  the  store  entrance.  (Annoying,  but  easy  to
+     tow/block).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>DDoS</span><span class='ec-lmr-9'>: Every car in the city drives to the store at once. (Catastrophic, impossible
+     to clear quickly).</span></li></ul>
+<!-- l. 377 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Goal</span>
+</p><!-- l. 377 --><p class='noindent'><span class='ec-lmr-9'>To attack </span><span class='ec-lmbx-9'>Availability</span><span class='ec-lmr-9'>. The server isn’t hacked, it’s just overwhelmed.</span>
+</p>
+<div class='center'>
+<!-- l. 383 --><p class='noindent'>
+</p><!-- l. 398 --><p class='noindent'>   <img alt='xVxxxBxicottinmet(TrafficJam) ' src='network_09_security_concepts_article_tmp7x.svg' />
+                                                                     
+
+                                                                     
+</p><!-- l. 398 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-15001r11'></a>
+<!-- l. 406 --></p><p class='noindent'><span class='likeparagraphHead' id='botnets-the-zombie-army'><a id='x1-16000'></a>Botnets: The Zombie Army</span>
+ 
+</p><!-- l. 406 --><p class='noindent'>
+</p><!-- l. 408 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Who are the Zombies?</span>
+</p><!-- l. 408 --><p class='noindent'><span class='ec-lmr-9'>Often insecure </span><span class='ec-lmbx-9'>IoT (Internet of Things) </span><span class='ec-lmr-9'>devices:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Smart Cameras, Smart Bulbs, Connected Fridges.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Weak passwords make them easy targets!</span></li></ul>
+<!-- l. 416 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Structure</span>
+</p><!-- l. 416 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 419 --><p class='noindent'><span class='ec-lmbx-9'>Herder</span><span class='ec-lmr-9'>: The criminal.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 420 --><p class='noindent'><span class='ec-lmbx-9'>C&amp;C</span><span class='ec-lmr-9'>: Server giving orders.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 421 --><p class='noindent'><span class='ec-lmbx-9'>Zombies</span><span class='ec-lmr-9'>: The infected devices.</span></p></dd></dl>
+<div class='center'>
+<!-- l. 426 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 440 --><p class='noindent'>        <img alt='xCxxxH&amp;aCckeSderCvaermeras ' src='network_09_security_concepts_article_tmp8x.svg' />
+</p><!-- l. 440 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-16004r12'></a>
+<!-- l. 452 --></p><p class='noindent'><span class='likeparagraphHead' id='malware-virus-vs-worm'><a id='x1-17000'></a>Malware: Virus vs. Worm</span>
+ 
+</p><!-- l. 452 --><p class='noindent'>
+</p><!-- l. 454 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Virus (Needs a Driver)</span>
+</p><!-- l. 454 --><p class='noindent'><span class='ec-lmr-9'>Like a car that needs a driver, a Virus needs **YOU** to start it.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>It hides inside a legitimate file (game, document, script).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>It only infects when you </span><span class='ec-lmbx-9'>open/run </span><span class='ec-lmr-9'>that file.</span></li></ul>
+<!-- l. 462 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Worm (Self-Driving)</span>
+</p><!-- l. 462 --><p class='noindent'><span class='ec-lmr-9'>A Worm is a **self-driving car**.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>It doesn’t need a host file or a user.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>It  scans  the  network,  finds  a  hole  in  a  neighbor’s  computer,  and  jumps  over
+     automatically.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Much faster </span><span class='ec-lmr-9'>spreading than viruses.</span></li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 473 --><p class='noindent'>
+</p><!-- l. 489 --><p class='noindent'>         <img alt='xInxNxxJuNfeeemetcdpwtessord&quot;CAkFiluCleictoa.ek&quot;mbxaleetically! ' src='network_09_security_concepts_article_tmp9x.svg' />
+</p><!-- l. 489 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-17001r13'></a>
+<!-- l. 497 --></p><p class='noindent'><span class='likeparagraphHead' id='malware-trojans-ransomware'><a id='x1-18000'></a>Malware: Trojans &amp; Ransomware</span>
+ 
+</p><!-- l. 497 --><p class='noindent'>
+</p><!-- l. 499 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Trojan Horse (The Trick)</span>
+</p><!-- l. 499 --><p class='noindent'><span class='ec-lmr-9'>Named after the Greek myth. It looks like a gift, but contains soldiers (malware).</span>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmri-9'>"Download this Screen Saver!"</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Screen saver runs, but it opens a </span><span class='ec-lmbx-9'>Backdoor </span><span class='ec-lmr-9'>for the hacker.</span></li></ul>
+<!-- l. 507 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Ransomware (The Kidnapper)</span>
+</p><!-- l. 507 --><p class='noindent'><span class='ec-lmr-9'>It doesn’t steal data; it </span><span class='ec-lmbx-9'>locks </span><span class='ec-lmr-9'>it.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Encrypts your homework/photos.</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Demands Crypto (Bitcoin) to buy the key.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmri-9'>Advice: </span><span class='ec-lmr-9'>Never pay! (Restore from Backup).</span></li></ul>
+<div class='center'>
+<!-- l. 518 --><p class='noindent'>
+</p><!-- l. 531 --><p class='noindent'>     <img alt='xFxHxFPriiaeeddleyGeE5annBmIcrTe.nsyCexidpteeed! ' src='network_09_security_concepts_article_tmp10x.svg' />
+</p><!-- l. 531 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-18001r14'></a>
+<!-- l. 539 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-the-zombie-accountants'><a id='x1-19000'></a>Case Study: The Zombie Accountants</span>
+ 
+</p><!-- l. 539 --><p class='noindent'>
+</p><!-- l. 539 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Scenario: 2:00 AM Alert</span>
+</p><!-- l. 539 --><p class='noindent'><span class='ec-lmr-9'>Agent Snoopy’s pager buzzes. The KibbleCorp webstore has crashed.</span>
+</p><!-- l. 543 --><p class='noindent'><span class='ec-lmr-9'>He checks the network dashboard:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>The computers in the Accounting Department are all turned ON (they should be
+     off).</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>They are sending thousands of requests per second to the webstore.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>The accountants are asleep at home.</span></li></ul>
+<!-- l. 553 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Detective Questions:</span>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 555 --><p class='noindent'>Why did the malware likely spread as a <span class='ec-lmbx-10x-x-109'>Worm </span>instead of a Virus?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 556 --><p class='noindent'>The computers are acting as a group. What is this "Army" called?
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 557 --><p class='noindent'>Is the attack trying to steal data or stop the business?</p></dd></dl>
+<div class='center'>
+<!-- l. 561 --><p class='noindent'>
+</p><!-- l. 565 --><p class='noindent'>   <img alt='xIt’san insidejob! ' src='network_09_security_concepts_article_tmp11x.svg' />
+</p><!-- l. 565 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-19004r15'></a>
+                                                                     
+
+                                                                     
+<!-- l. 573 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-the-zombie-accountants'><a id='x1-20000'></a>Case Study Solution: The Zombie Accountants</span>
+ 
+</p><!-- l. 573 --><p class='noindent'>
+</p><!-- l. 573 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Snoopy’s Analysis</span>
+</p><!-- l. 573 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 576 --><p class='noindent'><span class='ec-lmbx-9'>Propagation: </span><span class='ec-lmr-9'>It must be a </span><span class='ec-lmbx-9'>Worm </span><span class='ec-lmr-9'>because it spread automatically while no one
+     was using the computers.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 577 --><p class='noindent'><span class='ec-lmbx-9'>The Army: </span><span class='ec-lmr-9'>They are a </span><span class='ec-lmbx-9'>Botnet </span><span class='ec-lmr-9'>(Robot Network) of Zombies.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 578 --><p class='noindent'><span class='ec-lmbx-9'>Goal:  </span><span class='ec-lmr-9'>This  is  a  </span><span class='ec-lmbx-9'>DDoS  (Distributed  Denial  of  Service)</span><span class='ec-lmr-9'>.  The  goal  is  to
+     overwhelm the webstore (Availability), not steal data (Confidentiality).</span></p></dd></dl>
+<div class='center'>
+<!-- l. 581 --><p class='noindent'>
+</p><!-- l. 597 --><p class='noindent'>                    <img alt='xxxAxWxPceucobllusttnohtireengnet(Zwoormkbpielus)g! ' src='network_09_security_concepts_article_tmp12x.svg' />
+</p><!-- l. 597 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 602 --><p class='noindent'>
+</p>
+                                                                     
+
+                                                                     
+<h3 class='sectionHead' id='spoofing-and-onpath-attacks'><span class='titlemark'>3   </span> <a id='x1-210003'></a>Spoofing and On-Path Attacks</h3>
+<!-- l. 603 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='identity-and-traffic-manipulation'><span class='titlemark'>3.1   </span> <a id='x1-220003.1'></a>Identity and Traffic Manipulation</h4>
+<!-- l. 607 --><p class='noindent'>This section examines identity and traffic manipulation attacks such as spoofing,
+poisoning, and interception techniques.
+<a id='x1-22001r16'></a>
+</p>
+<!-- l. 610 --><p class='noindent'><span class='likeparagraphHead' id='spoofing-the-fake-return-address'><a id='x1-23000'></a>9.3 Spoofing: The Fake Return Address</span>
+ 
+</p><!-- l. 610 --><p class='noindent'>
+</p><!-- l. 612 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>What is Spoofing?</span>
+</p><!-- l. 612 --><p class='noindent'><span class='ec-lmr-9'>Falsifying data to gain an illegitimate advantage.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>IP Spoofing</span><span class='ec-lmr-9'>: Writing a fake "Return Address" on a packet.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Caller ID Spoofing</span><span class='ec-lmr-9'>: Scammers calling from "Your Bank" (when they are really
+     in a basement).</span></li></ul>
+<!-- l. 620 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Why does this work?</span>
+</p><!-- l. 620 --><p class='noindent'><span class='ec-lmr-9'>The Internet (IP) is like the Mail System. It delivers to the </span><span class='ec-lmbx-9'>Destination</span><span class='ec-lmr-9'>. It rarely checks if the
+</span><span class='ec-lmbx-9'>Sender </span><span class='ec-lmr-9'>is telling the truth!</span>
+</p>
+<div class='center'>
+<!-- l. 626 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 642 --><p class='noindent'>     <img alt='xRTFFAeorila:orelol VmwwIPic:aled:ti 1l!6m9 (.62.T.61ru.668st.e1d.1IP) ' src='network_09_security_concepts_article_tmp13x.svg' />
+</p><!-- l. 642 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-23001r17'></a>
+<!-- l. 650 --></p><p class='noindent'><span class='likeparagraphHead' id='onpath-attacks-the-middle-man'><a id='x1-24000'></a>On-Path Attacks (The "Middle Man")</span>
+ 
+</p><!-- l. 650 --><p class='noindent'>
+</p><!-- l. 652 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Concept: Passing Notes</span>
+</p><!-- l. 652 --><p class='noindent'><span class='ec-lmr-9'>Imagine Lucy passes a note to Linus in class.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>The Hacker Cat sits between them.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>He takes Lucy’s note, reads it, </span><span class='ec-lmbx-9'>changes the words</span><span class='ec-lmr-9'>, and passes it to Linus.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Linus thinks the note came from Lucy.</span></li></ul>
+<!-- l. 660 --><p class='noindent'><span class='ec-lmr-9'>This is an **On-Path** (formerly Man-in-the-Middle) attack.</span>
+</p><!-- l. 662 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Tools</span>
+</p><!-- l. 662 --><p class='noindent'><span class='ec-lmbx-9'>Wireshark </span><span class='ec-lmr-9'>(to listen) and </span><span class='ec-lmbx-9'>Ettercap </span><span class='ec-lmr-9'>(to intercept).</span>
+</p>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 668 --><p class='noindent'>
+</p><!-- l. 682 --><p class='noindent'>          <img alt='xxNxOHGoneor-lomPlodaatblPhyeaAtthtacker ' src='network_09_security_concepts_article_tmp14x.svg' />
+</p><!-- l. 682 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-24001r18'></a>
+<!-- l. 690 --></p><p class='noindent'><span class='likeparagraphHead' id='arp-poisoning-the-roll-call-lie'><a id='x1-25000'></a>ARP Poisoning: The Roll Call Lie</span>
+ 
+</p><!-- l. 690 --><p class='noindent'>
+</p><!-- l. 692 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Vulnerability</span>
+</p><!-- l. 692 --><p class='noindent'><span class='ec-lmr-9'>ARP is the protocol that finds MAC addresses ("Who has IP 10.1.1.1?").</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Problem</span><span class='ec-lmr-9'>: ARP has no ID check.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Analogy</span><span class='ec-lmr-9'>: The teacher calls "Linus?", and the Bully yells "Here!" The teacher marks
+     the Bully as Linus.</span></li></ul>
+<!-- l. 700 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The Result</span>
+</p><!-- l. 700 --><p class='noindent'><span class='ec-lmr-9'>The Hacker Cat tells your computer "I am the Router." Your computer believes him and sends
+all your internet traffic to the Cat.</span>
+</p>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 706 --><p class='noindent'>
+</p><!-- l. 721 --><p class='noindent'>              <img alt='ARP Table:
+xVxRxHR&quot;I&quot;IicoaoaatiutckutmmmeererrRVC=ouicatCttiaermt!&quot;!&quot; ' src='network_09_security_concepts_article_tmp15x.svg' />
+</p><!-- l. 721 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-25001r19'></a>
+<!-- l. 729 --></p><p class='noindent'><span class='likeparagraphHead' id='tool-spotlight-mac-spoofing'><a id='x1-26000'></a>Tool Spotlight: MAC Spoofing</span>
+ 
+</p><!-- l. 729 --><p class='noindent'>
+</p><!-- l. 731 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Changing Plates</span>
+</p><!-- l. 731 --><p class='noindent'><span class='ec-lmr-9'>Your MAC address is burned into the hardware, but software can override it.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Analogy</span><span class='ec-lmr-9'>: Putting fake license plates on a getaway car.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>The camera (Switch/Router) sees the fake plate and lets the car through.</span></li></ul>
+<!-- l. 739 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Why do it?</span>
+</p><!-- l. 739 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 742 --><p class='noindent'><span class='ec-lmr-9'>To bypass </span><span class='ec-lmbx-9'>MAC Filtering </span><span class='ec-lmr-9'>(Access Control Lists).</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 743 --><p class='noindent'><span class='ec-lmr-9'>To hide the device manufacturer (OUI) so hackers don’t know what you are using.</span></p></dd></dl>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 748 --><p class='noindent'>
+</p><!-- l. 761 --><p class='noindent'>      <img alt='Lookslike
+xMRSxayeaponLloewa:f:p A 1PtoA1Cp:B:2!B2:C:3C3 ' src='network_09_security_concepts_article_tmp16x.svg' />
+</p><!-- l. 761 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-26003r20'></a>
+<!-- l. 769 --></p><p class='noindent'><span class='likeparagraphHead' id='vlan-hopping-double-tagging'><a id='x1-27000'></a>VLAN Hopping (Double Tagging)</span>
+ 
+</p><!-- l. 769 --><p class='noindent'>
+</p><!-- l. 771 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Hidden Suitcase</span>
+</p><!-- l. 771 --><p class='noindent'><span class='ec-lmr-9'>How do you sneak a forbidden item past a checkpoint?</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Double Tagging</span><span class='ec-lmr-9'>: Put a packet inside a packet.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Outer Tag (VLAN 10)</span><span class='ec-lmr-9'>: "This is for the lobby." The first switch opens it.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Inner Tag (VLAN 20)</span><span class='ec-lmr-9'>: "This is for the Secure Vault." The switch sees this </span><span class='ec-lmri-9'>after
+     </span><span class='ec-lmr-9'>opening the first one and sends it to the vault!</span></li></ul>
+<div class='center'>
+                                                                     
+
+                                                                     
+<!-- l. 782 --><p class='noindent'>
+</p><!-- l. 799 --><p class='noindent'>        <img alt='DVVDSaLLowtAAuiaNNbtcleh21Ts00atrgipgesdoFutraemre ' src='network_09_security_concepts_article_tmp17x.svg' />
+</p><!-- l. 799 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-27001r21'></a>
+<!-- l. 807 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-the-coffee-shop-interception'><a id='x1-28000'></a>Case Study: The Coffee Shop Interception</span>
+ 
+</p><!-- l. 807 --><p class='noindent'>
+</p><!-- l. 807 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Scenario: Free Wi-Fi Danger</span>
+</p><!-- l. 807 --><p class='noindent'><span class='ec-lmr-9'>Agent Snoopy is at the "KibbleKafe." He connects to the open Wi-Fi to check his
+bank.</span>
+</p><!-- l. 811 --><p class='noindent'><span class='ec-lmr-9'>The Hacker Cat is sitting in the corner. Suddenly, Snoopy’s browser warns:</span>
+</p><!-- l. 813 --><p class='noindent'><span class='ec-lmbx-9'>"Certificate Error: The identity of bank.com cannot be verified."</span>
+</p><!-- l. 815 --><p class='noindent'><span class='ec-lmr-9'>Snoopy realizes his traffic is being detoured through the Cat’s laptop.</span>
+</p><!-- l. 820 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Detective Questions:</span>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 822 --><p class='noindent'>What Layer 2 protocol is the Hacker Cat abusing to redirect the traffic?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 823 --><p class='noindent'>What is the Hacker Cat’s position called (sitting between Snoopy and
+     the Router)?
+                                                                     
+
+                                                                     
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 824 --><p class='noindent'>Why did Snoopy see a Certificate Error (HTTPS)?</p></dd></dl>
+<div class='center'>
+<!-- l. 828 --><p class='noindent'>
+</p><!-- l. 833 --><p class='noindent'>    <img alt='xExvilGrin ' src='network_09_security_concepts_article_tmp18x.svg' />
+</p><!-- l. 833 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-28004r22'></a>
+<!-- l. 841 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-the-coffee-shop-interception'><a id='x1-29000'></a>Case Study Solution: The Coffee Shop Interception</span>
+ 
+</p><!-- l. 841 --><p class='noindent'>
+</p><!-- l. 841 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Analysis</span>
+</p><!-- l. 841 --><p class='noindent'>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 844 --><p class='noindent'><span class='ec-lmbx-9'>Protocol: ARP</span><span class='ec-lmr-9'>. The Cat used ARP Poisoning to tell Snoopy "I am the Router."</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 845 --><p class='noindent'><span class='ec-lmbx-9'>Position: On-Path (Man-in-the-Middle)</span><span class='ec-lmr-9'>.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 846 --><p class='noindent'><span class='ec-lmbx-9'>Error: </span><span class='ec-lmr-9'>The Cat tried to read encrypted (HTTPS) traffic. Since he doesn’t have
+     the Bank’s private key, he used a fake certificate. Snoopy’s browser detected the
+     fake.</span></p></dd></dl>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 849 --><p class='noindent'>
+</p><!-- l. 859 --><p class='noindent'>            <img alt='xxxTTTrarahffiffiecc&quot;MiddleMan&quot; ' src='network_09_security_concepts_article_tmp19x.svg' />
+</p><!-- l. 859 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 868 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='rogue-services-and-infrastructure-attacks'><span class='titlemark'>4   </span> <a id='x1-300004'></a>Rogue Services and Infrastructure Attacks</h3>
+<!-- l. 869 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='rogue-dhcp-dns-and-access-points'><span class='titlemark'>4.1   </span> <a id='x1-310004.1'></a>Rogue DHCP, DNS, and Access Points</h4>
+<!-- l. 873 --><p class='noindent'>Rogue infrastructure services can redirect or intercept traffic; this section covers
+common patterns and mitigations.
+<a id='x1-31001r23'></a>
+</p>
+<!-- l. 876 --><p class='noindent'><span class='likeparagraphHead' id='rogue-devices-and-evil-twins'><a id='x1-32000'></a>9.4 Rogue Devices and Evil Twins</span>
+ 
+</p><!-- l. 876 --><p class='noindent'>
+</p><!-- l. 878 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Rogue Devices</span>
+</p><!-- l. 878 --><p class='noindent'><span class='ec-lmr-9'>Unauthorized hardware plugged into the network.</span> </p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Employee brings a home router to get better Wi-Fi.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Hacker hides a "Raspberry Pi" behind a printer.</span></li></ul>
+<!-- l. 886 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The Evil Twin (Wi-Fi)</span>
+</p><!-- l. 886 --><p class='noindent'><span class='ec-lmbx-9'>The "Fake Starbucks" Attack.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Attacker sets up a Wi-Fi spot with the </span><span class='ec-lmbx-9'>exact same name </span><span class='ec-lmr-9'>(SSID) as the real one.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Your phone sees two "KibbleCorp-WiFi" networks.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>It connects to the </span><span class='ec-lmbx-9'>strongest signal </span><span class='ec-lmr-9'>(the attacker), giving them your data.</span></li></ul>
+<div class='center'>
+<!-- l. 897 --><p class='noindent'>
+</p><!-- l. 914 --><p class='noindent'>              <img alt='xCxCxxStWororroeappnk-W-WgeriierFFSiiig(R(Fneaaakel!l)) ' src='network_09_security_concepts_article_tmp20x.svg' />
+</p><!-- l. 914 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-32001r24'></a>
+                                                                     
+
+                                                                     
+<!-- l. 922 --></p><p class='noindent'><span class='likeparagraphHead' id='rogue-dhcp-servers'><a id='x1-33000'></a>Rogue DHCP Servers</span>
+ 
+</p><!-- l. 922 --><p class='noindent'>
+</p><!-- l. 924 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Danger</span>
+</p><!-- l. 924 --><p class='noindent'><span class='ec-lmr-9'>If an attacker plugs in a router, it might start handing out IP addresses.</span>
+</p><!-- l. 928 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>The "Race" Condition</span>
+</p><!-- l. 928 --><p class='noindent'><span class='ec-lmr-9'>Clients accept the </span><span class='ec-lmbx-9'>first </span><span class='ec-lmr-9'>DHCP OFFER they receive.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Real DHCP</span><span class='ec-lmr-9'>: "Here is IP 10.1.1.5, Gateway is Router."</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Rogue DHCP</span><span class='ec-lmr-9'>: "Here is IP 10.1.1.5, Gateway is </span><span class='ec-lmbx-9'>ME (The Cat)</span><span class='ec-lmr-9'>."</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Result: All internet traffic detours through the attacker.</span></li></ul>
+<div class='center'>
+<!-- l. 939 --><p class='noindent'>
+</p><!-- l. 954 --><p class='noindent'>                <img alt='xCxRxROOWleoFFiieagFFnnluEEntDeRRerBHDsroCH(S(FeaPCloatsdcPwstta)!)hestsGDatISeCwaOyV!ER ' src='network_09_security_concepts_article_tmp21x.svg' />
+</p><!-- l. 954 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-33001r25'></a>
+                                                                     
+
+                                                                     
+<!-- l. 962 --></p><p class='noindent'><span class='likeparagraphHead' id='defending-with-dhcp-snooping'><a id='x1-34000'></a>Defending with DHCP Snooping</span>
+ 
+</p><!-- l. 962 --><p class='noindent'>
+</p><!-- l. 964 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Solution: DHCP Snooping</span>
+</p><!-- l. 964 --><p class='noindent'><span class='ec-lmr-9'>A security feature on switches that acts like a </span><span class='ec-lmbx-9'>Club Bouncer</span><span class='ec-lmr-9'>.</span>
+</p><!-- l. 968 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Trust Boundaries</span>
+</p><!-- l. 968 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Trusted Ports</span><span class='ec-lmr-9'>: Uplinks to real servers. </span><span class='ec-lmri-9'>"VIPs allowed to speak."</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Untrusted Ports</span><span class='ec-lmr-9'>: Regular user ports. </span><span class='ec-lmri-9'>"You can listen, but you cannot hand out
+     IPs."</span></li></ul>
+<!-- l. 974 --><p class='noindent'><span class='ec-lmr-9'>If an OFFER packet comes from an Untrusted port, the switch </span><span class='ec-lmbx-9'>drops it</span><span class='ec-lmr-9'>.</span>
+</p>
+<div class='center'>
+<!-- l. 978 --><p class='noindent'>
+</p><!-- l. 1000 --><p class='noindent'>           <img alt='xxTxxXOruFstFeEdRPDorrtopped! ' src='network_09_security_concepts_article_tmp22x.svg' />
+</p><!-- l. 1000 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-34001r26'></a>
+                                                                     
+
+                                                                     
+<!-- l. 1008 --></p><p class='noindent'><span class='likeparagraphHead' id='dns-attacks-poisoning-the-phonebook'><a id='x1-35000'></a>DNS Attacks: Poisoning the Phonebook</span>
+ 
+</p><!-- l. 1008 --><p class='noindent'>
+</p><!-- l. 1010 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Concept: The Phonebook</span>
+</p><!-- l. 1010 --><p class='noindent'><span class='ec-lmr-9'>DNS turns Names (google.com) into Numbers (8.8.8.8).</span>
+</p><!-- l. 1014 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>DNS Poisoning</span>
+</p><!-- l. 1014 --><p class='noindent'><span class='ec-lmbx-9'>"Changing the entry in the book."</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Attacker hacks the DNS Server.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Changes "BankOfAmerica.com" to the Attacker’s IP.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>You type the correct URL, but your browser goes to the </span><span class='ec-lmbx-9'>fake site</span><span class='ec-lmr-9'>.</span></li></ul>
+<div class='center'>
+<!-- l. 1025 --><p class='noindent'>
+</p><!-- l. 1039 --><p class='noindent'>         <img alt='Dkb←xxDNibaniaSbkFlsle.cak.coeFaCommNka→uec→m#h6be1.6er0..!1.6.1.65 ' src='network_09_security_concepts_article_tmp23x.svg' />
+</p><!-- l. 1039 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+                                                                     
+
+                                                                     
+<!-- l. 1046 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='humancentered-threats'><span class='titlemark'>5   </span> <a id='x1-360005'></a>Human-Centered Threats</h3>
+<!-- l. 1047 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='social-engineering-and-credential-attacks'><span class='titlemark'>5.1   </span> <a id='x1-370005.1'></a>Social Engineering and Credential Attacks</h4>
+<!-- l. 1051 --><p class='noindent'>Human-targeted attacks remain a primary risk vector, requiring awareness,
+verification processes, and credential hardening.
+<a id='x1-37001r27'></a>
+</p>
+<!-- l. 1054 --><p class='noindent'><span class='likeparagraphHead' id='social-engineering-hacking-the-human'><a id='x1-38000'></a>9.5 Social Engineering: Hacking the Human</span>
+ 
+</p><!-- l. 1054 --><p class='noindent'>
+</p><!-- l. 1056 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Phishing (The Bait)</span>
+</p><!-- l. 1056 --><p class='noindent'><span class='ec-lmr-9'>Sending fraudulent messages to trick users.</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Phishing</span><span class='ec-lmr-9'>: Regular email scams ("You won a prize!").</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Spear Phishing</span><span class='ec-lmr-9'>: Targeted ("Hi Linus, this is your boss...").</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Whaling</span><span class='ec-lmr-9'>: Targeting the CEO/Big Fish.</span></li></ul>
+<!-- l. 1065 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Other Variants</span>
+</p><!-- l. 1065 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Vishing</span><span class='ec-lmr-9'>: Voice/Phone (Scam calls).</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Smishing</span><span class='ec-lmr-9'>: SMS/Text messages.</span></li></ul>
+<div class='center'>
+<!-- l. 1074 --><p class='noindent'>
+</p><!-- l. 1082 --><p class='noindent'>   <img alt='xLxSeognind?er: &quot;ITDept&quot; ' src='network_09_security_concepts_article_tmp24x.svg' />
+</p><!-- l. 1082 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-38001r28'></a>
+<!-- l. 1090 --></p><p class='noindent'><span class='likeparagraphHead' id='physical-social-engineering'><a id='x1-39000'></a>Physical Social Engineering</span>
+ 
+</p><!-- l. 1090 --><p class='noindent'>
+</p><!-- l. 1092 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Techniques</span>
+</p><!-- l. 1092 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Tailgating</span><span class='ec-lmr-9'>: Following an authorized person through a secure door ("Hold the door,
+     please!").</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Dumpster Diving</span><span class='ec-lmr-9'>: Searching trash for sticky notes with passwords.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Shoulder Surfing</span><span class='ec-lmr-9'>: Watching someone type their PIN or password.</span></li></ul>
+                                                                     
+
+                                                                     
+<div class='center'>
+<!-- l. 1102 --><p class='noindent'>
+</p><!-- l. 1115 --><p class='noindent'>         <img alt='SxExTemacpilulgaroyteeereDoor ' src='network_09_security_concepts_article_tmp25x.svg' />
+</p><!-- l. 1115 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-39001r29'></a>
+<!-- l. 1123 --></p><p class='noindent'><span class='likeparagraphHead' id='principles-of-influence'><a id='x1-40000'></a>Principles of Influence</span>
+ 
+</p><!-- l. 1123 --><p class='noindent'>
+</p><!-- l. 1123 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Why does it work?</span>
+</p><!-- l. 1123 --><p class='noindent'><span class='ec-lmr-9'>Attackers exploit human psychology ("Hacking the Human").</span>
+</p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Authority</span>: "I am the CEO/Police, do this now!"
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Intimidation</span>: "Do it or you’re fired."
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Consensus</span>: "Everyone else is doing it."</li></ul>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Scarcity</span>: "Only 2 iPhones left!"
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Urgency</span>: "Account expires in 10 minutes!"
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10x-x-109'>Trust</span>: "I know your friend Linus."</li></ul>
+<div class='center'>
+<!-- l. 1145 --><p class='noindent'>
+</p><!-- l. 1148 --><p class='noindent'>           <img alt='Stop. Look.  Think. ' src='network_09_security_concepts_article_tmp26x.svg' />
+</p><!-- l. 1148 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-40001r30'></a>
+<!-- l. 1154 --></p><p class='noindent'><span class='likeparagraphHead' id='password-attacks'><a id='x1-41000'></a>Password Attacks</span>
+ 
+</p><!-- l. 1154 --><p class='noindent'>
+</p><!-- l. 1156 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Brute Force</span>
+</p><!-- l. 1156 --><p class='noindent'><span class='ec-lmr-9'>Trying </span><span class='ec-lmbx-9'>every possible combination </span><span class='ec-lmr-9'>(aaaa, aaab...).</span> </p>
+                                                                     
+
+                                                                     
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmri-9'>Analogy: </span><span class='ec-lmr-9'>Trying every single key on a keychain until one fits.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Guaranteed to work, but takes forever.</span></li></ul>
+<!-- l. 1164 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Dictionary Attack</span>
+</p><!-- l. 1164 --><p class='noindent'><span class='ec-lmr-9'>Using a list of common words (dictionary).</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmri-9'>Analogy: </span><span class='ec-lmr-9'>Trying the most common house keys first.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Fails if the password is complex ("Xy9#m!").</span></li></ul>
+<div class='center'>
+<!-- l. 1174 --><p class='noindent'>
+</p><!-- l. 1184 --><p class='noindent'>          <img alt='ab......
+xcSxWF..loa.owrstdlist ' src='network_09_security_concepts_article_tmp27x.svg' />
+</p><!-- l. 1184 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-41001r31'></a>
+<!-- l. 1192 --></p><p class='noindent'><span class='likeparagraphHead' id='tool-spotlight-john-the-ripper-salting'><a id='x1-42000'></a>Tool Spotlight: John the Ripper &amp; Salting</span>
+ 
+</p><!-- l. 1192 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 1194 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>John the Ripper (JtR)</span>
+</p><!-- l. 1194 --><p class='noindent'><span class='ec-lmr-9'>A tool used to test password strength by trying to crack them.</span>
+</p><!-- l. 1198 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>Defense: Salting</span>
+</p><!-- l. 1198 --><p class='noindent'><span class='ec-lmbx-9'>"Adding Spice to the Recipe."</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmr-9'>Before saving a password, we add random characters ("Salt").</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>If  Linus  and  Lucy  both  use  "password123",  their  hashes  will  look  completely
+     different because they have different salts.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-9'>Prevents pre-calculated attacks (Rainbow Tables).</span></li></ul>
+<div class='center'>
+<!-- l. 1209 --><p class='noindent'>
+</p><!-- l. 1217 --><p class='noindent'>        <img alt='L1o23ad4e56d3(uhsaersh1)es...
+pSasessswioorndco(muspeler2t)ed. ' src='network_09_security_concepts_article_tmp28x.svg' />
+</p><!-- l. 1217 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-42001r32'></a>
+<!-- l. 1225 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-intern-ike-and-the-ceo'><a id='x1-43000'></a>Case Study: Intern Ike and the "CEO"</span>
+ 
+</p><!-- l. 1225 --><p class='noindent'>
+</p><!-- l. 1225 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Scenario: 4:55 PM on a Friday</span>
+</p><!-- l. 1225 --><p class='noindent'><span class='ec-lmr-9'>Intern Ike at KibbleCorp receives an email:</span>
+                                                                     
+
+                                                                     
+</p><!-- l. 1232 --><p class='noindent'><span class='ec-lmri-9'>"From: ceo@kibble-corp.net (Notice the .net!) Subject: URGENT WIRE TRANSFER I am stuck
+in a meeting. Wire $5,000 to this vendor immediately. If this isn’t done by 5:00 PM, it will be
+your fault. Do it now!"</span>
+</p><!-- l. 1237 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Questions:</span>
+     </p><dl class='enumerate'><dt class='enumerate'>
+   1. </dt><dd class='enumerate'>
+     <!-- l. 1239 --><p class='noindent'>What specific type of social engineering is this?
+     </p></dd><dt class='enumerate'>
+   2. </dt><dd class='enumerate'>
+     <!-- l. 1240 --><p class='noindent'>Which "Principles of Influence" are being used?
+     </p></dd><dt class='enumerate'>
+   3. </dt><dd class='enumerate'>
+     <!-- l. 1241 --><p class='noindent'>What should Ike do?</p></dd></dl>
+<div class='center'>
+<!-- l. 1245 --><p class='noindent'>
+</p><!-- l. 1249 --><p class='noindent'>  <img alt='x! ' src='network_09_security_concepts_article_tmp29x.svg' />
+</p><!-- l. 1249 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-43004r33'></a>
+<!-- l. 1257 --></p><p class='noindent'><span class='likeparagraphHead' id='case-study-solution-intern-ike'><a id='x1-44000'></a>Case Study Solution: Intern Ike</span>
+ 
+</p><!-- l. 1257 --><p class='noindent'>
+</p><!-- l. 1257 --><p class='noindent'><span class='ec-lmri-10x-x-109'>Snoopy’s Advice</span>
+</p><!-- l. 1257 --><p class='noindent'>
+                                                                     
+
+                                                                     
+     </p><dl class='enumerate'><dt class='enumerate'>
+   <span class='ec-lmr-9'>1.</span> </dt><dd class='enumerate'>
+     <!-- l. 1260 --><p class='noindent'><span class='ec-lmbx-9'>Type: Whaling </span><span class='ec-lmr-9'>(impersonating a big fish/exec) or Spear Phishing.</span>
+     </p></dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>2.</span> </dt><dd class='enumerate'>
+     <!-- l. 1261 --><p class='noindent'><span class='ec-lmbx-9'>Principles:</span> </p>
+          <ul class='itemize1'>
+          <li class='itemize'><span class='ec-lmbx-9'>Authority </span><span class='ec-lmr-9'>("I am the CEO").</span>
+          </li>
+          <li class='itemize'><span class='ec-lmbx-9'>Urgency </span><span class='ec-lmr-9'>("By 5:00 PM").</span>
+          </li>
+          <li class='itemize'><span class='ec-lmbx-9'>Intimidation </span><span class='ec-lmr-9'>("It will be your fault").</span></li></ul>
+     </dd><dt class='enumerate'>
+   <span class='ec-lmr-9'>3.</span> </dt><dd class='enumerate'>
+     <!-- l. 1267 --><p class='noindent'><span class='ec-lmbx-9'>Action: Verify Out-of-Band</span><span class='ec-lmr-9'>. Do not reply to the email. Call the CEO’s assistant or
+     walk to their office. Report to Snoopy immediately.</span></p></dd></dl>
+<!-- l. 1273 --><p class='noindent'>
+</p>
+<h3 class='sectionHead' id='mitigation-and-security-operations'><span class='titlemark'>6   </span> <a id='x1-450006'></a>Mitigation and Security Operations</h3>
+<!-- l. 1274 --><p class='noindent'>
+</p>
+<h4 class='subsectionHead' id='analysis-defense-in-depth-and-next-steps'><span class='titlemark'>6.1   </span> <a id='x1-460006.1'></a>Analysis, Defense in Depth, and Next Steps</h4>
+<!-- l. 1278 --><p class='noindent'>The final section synthesizes offensive/defensive perspectives and maps them to
+layered mitigations and operational response.
+<a id='x1-46001r34'></a>
+                                                                     
+
+                                                                     
+</p>
+<!-- l. 1281 --><p class='noindent'><span class='likeparagraphHead' id='recap-offensive-vs-defensive'><a id='x1-47000'></a>Recap: Offensive vs. Defensive</span>
+ 
+</p><!-- l. 1281 --><p class='noindent'>
+</p><!-- l. 1283 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Attacker (Red Team)</span>
+</p><!-- l. 1283 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Spoofing</span><span class='ec-lmr-9'>: Hiding identity (Masks).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Poisoning</span><span class='ec-lmr-9'>: Redirecting traffic (Fake Signs).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Cracking</span><span class='ec-lmr-9'>: Breaking passwords (Lockpicking).</span></li></ul>
+<!-- l. 1293 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>The Defender (Blue Team)</span>
+</p><!-- l. 1293 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Snooping</span><span class='ec-lmr-9'>: Stopping rogue DHCP (Bouncers).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Honeypots</span><span class='ec-lmr-9'>: Trapping intruders (Decoys).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Analysis</span><span class='ec-lmr-9'>: Seeing the truth (Surveillance).</span></li></ul>
+<div class='center'>
+<!-- l. 1304 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 1317 --><p class='noindent'>  <img alt='xxSecurity is a Balance ' src='network_09_security_concepts_article_tmp30x.svg' />
+</p><!-- l. 1317 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-47001r35'></a>
+<!-- l. 1323 --></p><p class='noindent'><span class='likeparagraphHead' id='analyzing-the-attack-with-wireshark'><a id='x1-48000'></a>Analyzing the Attack with Wireshark</span>
+ 
+</p><!-- l. 1323 --><p class='noindent'>
+</p><!-- l. 1325 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Red Flags</span>
+</p><!-- l. 1325 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>Flag 1</span><span class='ec-lmr-9'>: Thousands of packets from one IP (DoS).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Flag 2</span><span class='ec-lmr-9'>: Duplicate IP addresses (ARP Poisoning).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>Flag 3</span><span class='ec-lmr-9'>: Plaintext passwords (HTTP/Telnet).</span></li></ul>
+<div class='center'>
+<!-- l. 1335 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 1355 --><p class='noindent'>       <img alt='W16666xFi0..6.6.6.6oure1..6.6.6.6nsh1.6.6.6.6da.5→→→→trk→h1111e-80000SYC.8.1.1.1.1Nap.8.1.1.1.1t.8.5.5.5.5Fur:::::loin D T T T TogNCCCCd!oSPPPPnESSSSSttaYYYYhnNNNN0dardQuery ' src='network_09_security_concepts_article_tmp31x.svg' />
+</p><!-- l. 1355 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<p><a id='x1-48001r36'></a>
+<!-- l. 1363 --></p><p class='noindent'><span class='likeparagraphHead' id='defense-in-depth-mitigation-strategies'><a id='x1-49000'></a>Defense in Depth: Mitigation Strategies</span>
+ 
+</p><!-- l. 1363 --><p class='noindent'>
+</p>
+<div class='center'>
+<!-- l. 1363 --><p class='noindent'>
+</p><!-- l. 1383 --><p class='noindent'>             <img alt='LFPoirockeliswci,aes Clls,a, Tm Erenairacnsryin,pg Gt,uio Aanurd,ds Sitnsooping
+PTAPSRhedreofuycmvtwleshienasinntrfociperach&amp;hlaysHumlicaaardnlawsca.ceress.rules. ' src='network_09_security_concepts_article_tmp32x.svg' />
+</p><!-- l. 1383 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+                                                                     
+
+                                                                     
+</div>
+<!-- l. 1385 --><p class='noindent'><span class='ec-lmbxi-10x-x-109'>No Single Solution</span>
+</p><!-- l. 1385 --><p class='noindent'><span class='ec-lmr-9'>A firewall won’t stop a user from holding the door open for a hacker. You need </span><span class='ec-lmbx-9'>all three layers
+</span><span class='ec-lmr-9'>(Defense in Depth).</span>
+<a id='x1-49001r37'></a>
+</p>
+<!-- l. 1393 --><p class='noindent'><span class='likeparagraphHead' id='additional-resources'><a id='x1-50000'></a>9.6 Additional Resources</span>
+ 
+</p><!-- l. 1393 --><p class='noindent'>
+</p><!-- l. 1395 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Vulnerability Databases</span>
+</p><!-- l. 1395 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>CVE (MITRE)</span><span class='ec-lmr-9'>: The dictionary of vulnerabilities.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>NVD (NIST)</span><span class='ec-lmr-9'>: Adds severity scores to CVEs.</span></li></ul>
+<!-- l. 1402 --><p class='noindent'><span class='ec-lmbx-10x-x-109'>Learning Tools</span>
+</p><!-- l. 1402 --><p class='noindent'></p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-9'>OWASP Top 10</span><span class='ec-lmr-9'>: Web risks.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-9'>TryHackMe</span><span class='ec-lmr-9'>: Legal practice labs.</span></li></ul>
+<div class='center'>
+<!-- l. 1411 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p><!-- l. 1418 --><p class='noindent'>          <img alt='Rbeeafdortehtheedocs
+xKxhancokewrlsedod!ge is Power ' src='network_09_security_concepts_article_tmp33x.svg' />
+</p><!-- l. 1418 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+<!-- l. 1425 --><p class='noindent'>
+</p>
+<h3 class='likesectionHead' id='module-summary'><a id='x1-51000'></a>Module Summary</h3>
+<p><a id='x1-51001r38'></a>
+<!-- l. 1428 --></p><p class='noindent'><span class='likeparagraphHead' id='module-summary1'><a id='x1-52000'></a>Module 9.0 Summary</span>
+ 
+</p><!-- l. 1428 --><p class='noindent'>
+</p><!-- l. 1429 --><p class='noindent'><span class='ec-lmbx-10'>Key Concepts:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>CIA  Triad</span><span class='ec-lmr-10'>:  </span><span class='ec-lmbx-10'>Confidentiality  </span><span class='ec-lmr-10'>(encryption,  access  control),  </span><span class='ec-lmbx-10'>Integrity
+     </span><span class='ec-lmr-10'>(hashing, digital signatures), </span><span class='ec-lmbx-10'>Availability </span><span class='ec-lmr-10'>(redundancy, DDoS mitigation).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>AAA</span><span class='ec-lmr-10'>:  </span><span class='ec-lmbx-10'>Authentication </span><span class='ec-lmr-10'>(who  are  you?),  </span><span class='ec-lmbx-10'>Authorization </span><span class='ec-lmr-10'>(what  can  you
+     do?), </span><span class='ec-lmbx-10'>Accounting </span><span class='ec-lmr-10'>(what did you do?). Use TACACS+ or RADIUS.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>DoS/DDoS</span><span class='ec-lmr-10'>: Denial of Service attacks flood targets with traffic. Mitigate
+     with rate limiting, traffic filtering, and CDN protection.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Malware types</span><span class='ec-lmr-10'>: Viruses (attach to files), Worms (self-replicate), Trojans
+     (disguised), Ransomware (encrypt files for payment). Use antivirus, patching,
+     and backups.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Social  engineering</span><span class='ec-lmr-10'>:  Human-based  attacks.  </span><span class='ec-lmbx-10'>Phishing  </span><span class='ec-lmr-10'>(fake  emails),
+     </span><span class='ec-lmbx-10'>Vishing  </span><span class='ec-lmr-10'>(voice  calls),  </span><span class='ec-lmbx-10'>Smishing  </span><span class='ec-lmr-10'>(SMS),  </span><span class='ec-lmbx-10'>Tailgating  </span><span class='ec-lmr-10'>(physical  access).
+     Defense: training and awareness.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Spoofing</span><span class='ec-lmr-10'>:  </span><span class='ec-lmbx-10'>MAC  spoofing </span><span class='ec-lmr-10'>(change  NIC  address),  </span><span class='ec-lmbx-10'>IP  spoofing </span><span class='ec-lmr-10'>(forge
+     source  IP),  </span><span class='ec-lmbx-10'>ARP  poisoning  </span><span class='ec-lmr-10'>(man-in-the-middle),  </span><span class='ec-lmbx-10'>DNS  poisoning
+     </span><span class='ec-lmr-10'>(redirect to malicious sites).</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Rogue  devices:  </span><span class='ec-lmbx-10'>Rogue  DHCP  </span><span class='ec-lmr-10'>(unauthorized  IP  assignment,  VLAN
+     hopping). </span><span class='ec-lmbx-10'>Rogue AP </span><span class='ec-lmr-10'>(evil twin). Mitigate with DHCP snooping, 802.1X
+     (port-based NAC), and wireless IDS.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Password attacks: </span><span class='ec-lmbx-10'>Brute force </span><span class='ec-lmr-10'>(all combinations), </span><span class='ec-lmbx-10'>Dictionary </span><span class='ec-lmr-10'>(common
+     words), </span><span class='ec-lmbx-10'>Rainbow tables </span><span class='ec-lmr-10'>(precomputed hashes). Defense: complexity (8+
+     chars, mixed case, symbols), </span><span class='ec-lmbx-10'>salting</span><span class='ec-lmr-10'>, </span><span class='ec-lmbx-10'>MFA</span><span class='ec-lmr-10'>.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Defense   in   Depth</span><span class='ec-lmr-10'>:   Layered   security.   Physical   security,   network
+     segmentation,  firewalls,  </span><span class='ec-lmbx-10'>IDS  </span><span class='ec-lmr-10'>(detect),  </span><span class='ec-lmbx-10'>IPS  </span><span class='ec-lmr-10'>(prevent),  ACLs,  encryption
+     (TLS, VPN), security training.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Wireshark</span><span class='ec-lmr-10'>: Packet capture for forensics. Identify DoS floods, ARP poisoning
+     (duplicate MACs), plaintext passwords (HTTP, Telnet). Filter by protocol,
+     IP, port.</span></li></ul>
+<!-- l. 1444 --><p class='noindent'><span class='ec-lmbx-10'>Security Operations:</span> </p>
+     <ul class='itemize1'>
+     <li class='itemize'><span class='ec-lmbx-10'>Penetration  testing</span><span class='ec-lmr-10'>:  Authorized  simulated  attacks  (red  team)  to  find
+     vulnerabilities before attackers do.</span>
+                                                                     
+
+                                                                     
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Vulnerability scanning</span><span class='ec-lmr-10'>: Automated tool (Nessus, OpenVAS) identifying
+     known CVEs and misconfigurations.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>Honeypots</span><span class='ec-lmr-10'>:  Decoy  systems  to  lure  attackers,  gather  intelligence,  and
+     distract from production assets.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmbx-10'>SIEM</span><span class='ec-lmr-10'>:  Security  Information  and  Event  Management.  Aggregate  logs,
+     correlate events, generate alerts. Examples: Splunk, QRadar.</span>
+     </li>
+     <li class='itemize'><span class='ec-lmr-10'>Security  policies:  Acceptable  Use  Policy  (AUP),  Incident  Response  Plan,
+     Password Policy, Data Classification, Physical Access Controls.</span></li></ul>
+<!-- l. 1457 --><p class='noindent'>
+</p>
+<h4 class='likesubsectionHead' id='conclusion'><a id='x1-53000'></a>Conclusion</h4>
+<!-- l. 1457 --><p class='noindent'>This module covered network security concepts: the CIA Triad and AAA
+framework, common threats (DoS, malware, social engineering), spoofing attacks
+(MAC, IP, ARP, DNS), rogue devices and password cracking, and Defense in
+Depth strategies. You learned how to analyze attacks using Wireshark and
+implement layered security controls. This concludes the network fundamentals
+series—you are now equipped with foundational knowledge to secure, monitor,
+and operate enterprise networks.
+<a id='x1-53001r39'></a>
+</p>
+<!-- l. 1460 --><p class='noindent'><span class='likeparagraphHead' id='questions'><a id='x1-54000'></a>Questions?</span>
+ 
+</p><!-- l. 1460 --><p class='noindent'>
+                                                                     
+
+                                                                     
+</p>
+<div class='center'>
+<!-- l. 1460 --><p class='noindent'>
+</p><!-- l. 1465 --><p class='noindent'>                <img alt='xMAinsysiqounestionAsc?complished! ' src='network_09_security_concepts_article_tmp34x.svg' />
+</p><!-- l. 1465 --><p class='noindent'><span class='ec-lmri-10'>Figure: Diagram supporting the preceding content.</span>
+</p>
+</div>
+ 
+</body> 
+</html>

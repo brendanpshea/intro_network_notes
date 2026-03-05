@@ -1,133 +1,32 @@
+﻿% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
+
 % =============================================================================
-% Module 7.0: Network Services (The Gang Configures the Network)
-% Theme: It's Always Sunny in Philadelphia
+% COMMON PREAMBLE
 % =============================================================================
+\input{network_preamble.tex}
 
-\documentclass[aspectratio=169, 11pt]{beamer}
-
-% Theme and colors
-\usetheme{Madrid}
-\usecolortheme{default}
-
-% --- FONT FIXES ---
-% These two packages fix the "missing font shape" errors
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-
-% Custom colors - Paddy's Pub Theme
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{paddysgreen}{RGB}{19, 77, 33}     % Dark Green
-\definecolor{beerlight}{RGB}{255, 199, 44}     % Light Beer
-\definecolor{sunnyorange}{RGB}{255, 140, 0}    % Title Card Orange
-\definecolor{tcpblue}{RGB}{30, 100, 180}       % TCP Blue
-\definecolor{alertred}{RGB}{200, 50, 50}       % Alert Red
-\definecolor{aborange}{RGB}{230, 120, 0}       % Network+ Orange
-\definecolor{networkgreen}{RGB}{0, 150, 100}   % Network+ Green
-\definecolor{udpgreen}{RGB}{50, 160, 80}       % UDP Green
-
-% Set theme colors
-\setbeamercolor{palette primary}{bg=paddysgreen, fg=white}
-\setbeamercolor{palette secondary}{bg=paddysgreen!80, fg=white}
-\setbeamercolor{palette tertiary}{bg=sunnyorange, fg=white}
-\setbeamercolor{structure}{fg=paddysgreen}
-\setbeamercolor{title}{fg=white, bg=paddysgreen}
-\setbeamercolor{frametitle}{fg=paddysgreen, bg=paddysgreen!10}
-\setbeamercolor{block title}{bg=paddysgreen, fg=white}
-\setbeamercolor{block body}{bg=paddysgreen!5}
-\setbeamercolor{block title alerted}{bg=alertred, fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=sunnyorange, fg=white}
-\setbeamercolor{block body example}{bg=sunnyorange!10}
-
-% Packages
-\usepackage{tikz}
-\usepackage{booktabs}
-\usepackage{fontawesome5}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{array}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% TikZ libraries (Essential for shapes)
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
-                backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
-
-% --- CUSTOM DRAWN NETWORK ICONS ---
-
-% Router: Circle with crossing arrows
-\newcommand{\iconrouter}[1][0.6cm]{%
-    \resizebox{!}{#1}{%
-        \begin{tikzpicture}
-            \node[circle, draw, line width=1pt, fill=blue!10, minimum size=1cm] (c) {};
-            \draw[thick, ->, >=stealth] (c.south west) -- (c.center);
-            \draw[thick, ->, >=stealth] (c.north west) -- (c.center);
-            \draw[thick, ->, >=stealth] (c.south east) -- (c.center);
-            \draw[thick, ->, >=stealth] (c.north east) -- (c.center);
-        \end{tikzpicture}%
-    }%
-}
-
-% Switch: Square with crossing arrows
-\newcommand{\iconswitch}[1][0.6cm]{%
-    \resizebox{!}{#1}{%
-        \begin{tikzpicture}
-            \node[rectangle, draw, line width=1pt, fill=white, minimum size=1cm] (s) {};
-            \draw[thick, <->, >=stealth] ([xshift=-2pt]s.west) -- ([xshift=2pt]s.east);
-            \draw[thick, <->, >=stealth] ([yshift=-2pt]s.south) -- ([yshift=2pt]s.north);
-        \end{tikzpicture}%
-    }%
-}
-
-% --- FONTAWESOME ICONS ---
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{desktop}}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{server}}}
-\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{lock}}}
-\newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{cloud}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{database}}}
-\newcommand{\iconmoney}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{money-bill-wave}}}
-\newcommand{\icontrash}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{trash}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{shield-alt}}}
-\newcommand{\iconvoip}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone-volume}}}
-\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{phone}}}
-\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{laptop}}}
-\newcommand{\iconmail}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{envelope}}}
-\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
-\newcommand{\iconbuilding}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{building}}}
-
-% --- CUSTOM STYLES ---
-\newcommand{\keyterm}[1]{\textbf{\textcolor{paddysgreen}{#1}}}
-
-% Case Study Environments
-\newenvironment{casestudy}[1]{%
-    \begin{alertblock}{#1}
-}{\end{alertblock}}
-
-\newenvironment{casesolution}[1]{%
-    \begin{exampleblock}{Solution: #1}
-}{\end{exampleblock}}
-
-% TikZ Styles
-\tikzstyle{pc} = [inner sep=0pt]
-\tikzstyle{laptop} = [inner sep=0pt]
-\tikzstyle{server} = [inner sep=0pt]
-\tikzstyle{router} = [inner sep=0pt]
-\tikzstyle{switch} = [inner sep=0pt]
-\tikzstyle{firewall} = [inner sep=0pt]
-\tikzstyle{cloud} = [inner sep=0pt]
-\tikzstyle{ethernet} = [draw, line width=1.5pt, color=rctcblue, -{Stealth}]
-\tikzstyle{ethernet noarrow} = [draw, line width=1.5pt, color=rctcblue]
-\tikzstyle{secure} = [draw, line width=1.5pt, color=paddysgreen, -{Stealth}]
-
-% Document info
+% =============================================================================
+% DOCUMENT INFO
+% =============================================================================
 \title[Module 7.0]{Module 7.0: Network Services \& High Availability}
 \subtitle{"The Gang Configures the Network"}
 \author{Brendan Shea, PhD}
 \institute{Rochester Community and Technical College}
 \date{}
+
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
+}
 
 \begin{document}
 
@@ -161,7 +60,18 @@
     \end{center}
 \end{frame}
 
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+
 % SLIDE 2: Review
+\section*{Review from Module 6}
+
 \begin{frame}{Review: The Gang Recaps Module 6}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -189,45 +99,34 @@
 \end{frame}
 
 % SLIDE 3: Objectives
-\begin{frame}{Module 7 Objectives: The Scheme}
-    % Fixed: Used footnotesize to prevent overflow
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{1. Security \& Time (Mac)}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{TLS}: Encryption/Authentication.
-                    \item \textbf{NTP}: Time Synchronization.
-                \end{itemize}
-            \end{block}
-            \begin{block}{2. Web \& Files (Dennis)}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{HTTP/HTTPS}: Web Services.
-                    \item \textbf{FTP/SMB}: File Transfer.
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{3. Email \& Voice (Dee)}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{SMTP/IMAP}: Email Protocols.
-                    \item \textbf{VoIP}: Voice Services.
-                \end{itemize}
-            \end{block}
-            \begin{block}{4. High Availability (Frank)}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{RAID/Clustering}: Redundancy.
-                    \item \textbf{DR}: Disaster Recovery.
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
+\section*{Learning Outcomes}
+
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \small
+    \begin{itemize}
+        \item Explain how \keyterm{TLS} (Transport Layer Security) provides encryption, authentication, and integrity for secure communication.
+        \item Describe the role of \keyterm{NTP} (Network Time Protocol) in synchronizing system clocks across distributed networks and explain its importance for security and logging.
+        \item Compare \keyterm{HTTP} and \keyterm{HTTPS} for web services, and explain how \keyterm{FTP}, \keyterm{FTPS}, and \keyterm{SFTP} are used for file transfer.
+        \item Explain the \keyterm{SMB/CIFS} protocol for Windows file sharing and how \keyterm{SAN} (Storage Area Network) and \keyterm{NAS} (Network Attached Storage) differ.
+        \item Describe email protocols: \keyterm{SMTP} (sending), \keyterm{POP3} (mailbox download), and \keyterm{IMAP} (synchronized access).
+        \item Explain \keyterm{VoIP} (Voice over IP) components including \keyterm{H.323}, \keyterm{SIP}, and \keyterm{RTP}, and identify QoS requirements for voice traffic.
+        \item Describe \keyterm{RAID} levels (0, 1, 5, 6, 10) for disk redundancy and explain trade-offs between performance, capacity, and fault tolerance.
+        \item Explain \keyterm{clustering} for server redundancy and identify \keyterm{FHRP} protocols (HSRP, VRRP, GLBP) for router/gateway high availability.
+        \item Define \keyterm{RTO} (Recovery Time Objective) and \keyterm{RPO} (Recovery Point Objective) for disaster recovery planning.
+        \item Compare backup strategies (full, incremental, differential) and explain offsite replication and \keyterm{hot/warm/cold sites} for business continuity.
+    \end{itemize}
 \end{frame}
 
 % SLIDE 4: Section 7.1
+\section{Security and Time Services}
+\subsection{TLS and Time Synchronization}
+
+\articleonly{
+This section introduces foundational security and timing services that support trusted communication and coordinated distributed systems.
+}
+
 \begin{frame}{Section 7.1: Security and Time (Charlie Work)}
     \begin{center}
         \begin{tikzpicture}
@@ -552,6 +451,13 @@
 % =============================================================================
 % SLIDE 13: Section 7.2 - Web and Files
 % =============================================================================
+\section{Web and File Services}
+\subsection{HTTP, HTTPS, and File Access}
+
+\articleonly{
+This section surveys web and file-service protocols, secure transfer options, and storage access patterns used in modern networks.
+}
+
 \begin{frame}{Section 7.2: Web and File Services (Dennis's Domain)}
     \begin{center}
         \begin{tikzpicture}
@@ -1296,6 +1202,13 @@
 % =============================================================================
 % SLIDE 33: High Availability (HA)
 % =============================================================================
+\section{High Availability and Recovery}
+\subsection{Resilience Planning and Redundancy}
+
+\articleonly{
+The final section focuses on resilience planning and redundancy mechanisms that reduce downtime and improve service continuity.
+}
+
 \begin{frame}{High Availability: "The Show Must Go On"}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1593,34 +1506,35 @@
 % =============================================================================
 % SLIDE 40: Summary
 % =============================================================================
-\begin{frame}{Module 7 Summary: The Gang Knows Networking}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Services}
-                \small
-                \begin{itemize}
-                    \item \textbf{TLS}: Secure the connection.
-                    \item \textbf{NTP}: Sync the time.
-                    \item \textbf{HTTPS}: Secure web.
-                    \item \textbf{SFTP}: Secure files.
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{High Availability}
-                \small
-                \begin{itemize}
-                    \item \textbf{RAID}: Disk redundancy.
-                    \item \textbf{FHRP}: Router redundancy.
-                    \item \textbf{RTO/RPO}: Disaster planning.
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-    \vspace{1cm}
-    \begin{center}
-        \textit{"So anyway, I started pinging..." - Frank}
-    \end{center}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 7.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{TLS} (Transport Layer Security): Provides encryption, authentication, and message integrity for secure communication (HTTPS, FTPS).
+        \item \keyterm{NTP} (Network Time Protocol): Synchronizes system clocks across networks using Stratum hierarchy (0 = reference clock, 15 max). Critical for logging, Kerberos, certificates.
+        \item \keyterm{HTTP} (Port 80): Unencrypted web traffic. \keyterm{HTTPS} (Port 443): HTTP over TLS for secure web browsing.
+        \item \keyterm{FTP} (Ports 20/21): File Transfer Protocol. \keyterm{FTPS}: FTP over TLS. \keyterm{SFTP}: SSH File Transfer (Port 22, more secure).
+        \item \keyterm{SMB/CIFS}: Windows file sharing protocol. Use with \keyterm{SAN} (Storage Area Network, block-level) or \keyterm{NAS} (Network Attached Storage, file-level).
+        \item Email: \keyterm{SMTP} (Port 25/587) sends mail. \keyterm{POP3} (Port 110) downloads and deletes. \keyterm{IMAP} (Port 143) keeps synchronized folders.
+        \item \keyterm{VoIP}: Voice over IP using \keyterm{H.323} or \keyterm{SIP} for signaling, \keyterm{RTP} for media. Requires low latency/jitter (QoS, traffic shaping).
+    \end{itemize}
+    \framebreak
+    \vspace{0.3em}
+    \textbf{High Availability \& Disaster Recovery:}
+    \begin{itemize}
+        \item \keyterm{RAID}: Disk redundancy. RAID 0 (striping, no redundancy), RAID 1 (mirroring), RAID 5 (striping + parity), RAID 6 (dual parity), RAID 10 (mirroring + striping).
+        \item \keyterm{Clustering}: Server redundancy (active-active or active-passive). \keyterm{FHRP}: First Hop Redundancy Protocol (HSRP, VRRP, GLBP) for router/gateway failover.
+        \item \keyterm{RTO} (Recovery Time Objective): Maximum downtime acceptable. \keyterm{RPO} (Recovery Point Objective): Maximum data loss acceptable.
+        \item Backups: Full (complete copy), Incremental (changes since last backup), Differential (changes since last full). Use offsite replication for disaster recovery.
+        \item Sites: \keyterm{Hot site} (fully operational standby), \keyterm{Warm site} (partial setup), \keyterm{Cold site} (empty facility, slowest recovery).
+    \end{itemize}
 \end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module covered essential application and infrastructure services: TLS and NTP for security and timing, HTTP/FTP/SMB for web and file services, email protocols and VoIP for communication, and RAID/clustering/disaster recovery strategies for high availability and business continuity. In the next module, we'll explore network operations, monitoring, and management practices.
+}
 
 \end{document}

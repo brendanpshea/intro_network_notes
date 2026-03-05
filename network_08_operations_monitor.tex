@@ -1,83 +1,32 @@
+﻿% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
+
 % =============================================================================
-% Module 8.0: Network Operations (Master Preamble)
+% COMMON PREAMBLE
 % =============================================================================
+\input{network_preamble.tex}
 
-\documentclass[aspectratio=169, 11pt]{beamer}
-
-% Theme and colors
-\usetheme{Madrid}
-\usecolortheme{default}
-
-% Custom colors
-\definecolor{rctcblue}{RGB}{0, 74, 136}
-\definecolor{rctcgold}{RGB}{255, 199, 44}
-\definecolor{networkgreen}{RGB}{0, 150, 100}
-\definecolor{alertred}{RGB}{200, 50, 50}
-\definecolor{aborange}{RGB}{230, 120, 0}
-\definecolor{tcpblue}{RGB}{30, 100, 180}
-\definecolor{udpgreen}{RGB}{50, 160, 80}
-\definecolor{ogregreen}{RGB}{34, 139, 34}   % Shrek Green
-\definecolor{swampbrown}{RGB}{101, 67, 33}  % Mud Brown
-
-% Set theme colors
-\setbeamercolor{palette primary}{bg=rctcblue, fg=white}
-\setbeamercolor{palette secondary}{bg=rctcblue!80, fg=white}
-\setbeamercolor{palette tertiary}{bg=rctcblue!60, fg=white}
-\setbeamercolor{structure}{fg=rctcblue}
-\setbeamercolor{title}{fg=white, bg=rctcblue}
-\setbeamercolor{frametitle}{fg=rctcblue, bg=rctcblue!10}
-\setbeamercolor{block title}{bg=rctcblue, fg=white}
-\setbeamercolor{block body}{bg=rctcblue!5}
-\setbeamercolor{block title alerted}{bg=alertred, fg=white}
-\setbeamercolor{block body alerted}{bg=alertred!5}
-\setbeamercolor{block title example}{bg=ogregreen, fg=white}
-\setbeamercolor{block body example}{bg=ogregreen!10}
-
-% Packages
-\usepackage{tikz}
-\usepackage{fontawesome5}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{array}
-\usepackage{listings}
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-% TikZ libraries (Includes 'shapes.symbols' for the cloud shape)
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, 
-                backgrounds, fit, calc, shadows, shapes.symbols, shapes.misc}
-
-% --- ICON DEFINITIONS (Using custom PNG icons from images/icons/ where available) ---
-\newcommand{\iconpc}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_pc.png}}}
-\newcommand{\iconlaptop}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_laptop.png}}}
-\newcommand{\iconserver}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_server.png}}}
-\newcommand{\iconrouter}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_router.png}}}
-\newcommand{\iconswitch}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_switch.png}}}
-\newcommand{\iconfirewall}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_firewall.png}}}
-\newcommand{\iconcloud}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_cloud.png}}}
-\newcommand{\iconphone}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_phone.png}}}
-\newcommand{\icondatabase}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_db.png}}}
-\newcommand{\iconglobe}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{globe}}}
-\newcommand{\iconuser}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{user}}}
-\newcommand{\iconlock}[1][0.6cm]{\resizebox{#1}{!}{\includegraphics{images/icons/icon_lock.png}}}
-\newcommand{\iconclock}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clock}}}% Icon: clock
-\newcommand{\iconmail}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{envelope}}}
-\newcommand{\icondoc}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{file-alt}}}
-\newcommand{\iconsearch}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{search}}}
-\newcommand{\icontools}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{tools}}}
-\newcommand{\iconchart}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{chart-line}}}
-\newcommand{\iconalert}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{bell}}}
-\newcommand{\iconlog}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{clipboard-list}}}
-\newcommand{\iconeye}[1][0.6cm]{\resizebox{#1}{!}{\faIcon{eye}}}
-
-% Document info
+% =============================================================================
+% DOCUMENT INFO
+% =============================================================================
 \title[Network Operations]{Module 8: Network Operations}
 \subtitle{Maintaining the Swamp (Network+)}
 \author{Brendan Shea, PhD}
 \institute{Rochester Community and Technical College}
 \date{}
+
+\mode<article>{
+\let\originaltikzpicture\tikzpicture
+\let\endoriginaltikzpicture\endtikzpicture
+\renewenvironment{tikzpicture}[1][]{%
+    \originaltikzpicture[#1]%
+}{%
+    \endoriginaltikzpicture%
+    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
+}
+}
 
 \begin{document}
 % =============================================================================
@@ -108,37 +57,64 @@
     \end{center}
 \end{frame}
 
-% SLIDE 2: Objectives (Detailed)
-\begin{frame}{Our Mission: Taming the Swamp}
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+\section*{Review from Module 7}
+
+\begin{frame}{Review: Application Services and Resilience}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{1. Operations (The Chores)}
-                \footnotesize
+            \begin{block}{Key Module 7 Ideas}
                 \begin{itemize}
-                    \item \textbf{Documentation}: Creating Physical and Logical maps so we don't get lost.
-                    \item \textbf{Configuration Mgmt}: Ensuring every switch speaks the same language (Standardization).
-                    \item \textbf{Backups}: "Dragon Insurance" (Disaster Recovery).
+                    \item Application protocols provide web, file, email, and voice services.
+                    \item Secure protocols (such as HTTPS and secure file transfer) protect data in transit.
+                    \item High availability relies on redundancy and failover planning.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{2. Monitoring (The Watch)}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{SNMP}: The protocol for checking device health (CPU, Temp).
-                    \item \textbf{Syslog}: Centralized diary of network events.
-                    \item \textbf{NetFlow}: Analyzing who is talking to whom (Traffic patterns).
-                \end{itemize}
-            \end{block}
+            \begin{alertblock}{Why This Matters in Module 8}
+                Operations and monitoring keep those services healthy, measurable, and recoverable in production.
+            \end{alertblock}
         \end{column}
     \end{columns}
-    \vspace{0.5cm}
-    \begin{center}
-        \textit{"Networks are like onions. They have layers (OSI Layers!)."}
-    \end{center}
+\end{frame}
+
+% SLIDE 2: Objectives (Detailed)
+\section*{Learning Outcomes}
+
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \small
+    \begin{itemize}
+        \item Distinguish between \keyterm{physical diagrams} (racks, cables, ports) and \keyterm{logical diagrams} (IPs, VLANs, subnets) for network documentation.
+        \item Explain \keyterm{configuration management} practices including standardized naming conventions, configuration backups, and change control procedures.
+        \item Describe the \keyterm{network device lifecycle}: procurement, deployment, maintenance, end-of-life (EoL) planning, and disposal.
+        \item Define \keyterm{baselines} for network performance (bandwidth utilization, latency, packet loss) and explain how they enable anomaly detection.
+        \item Configure \keyterm{IPAM} (IP Address Management) to track IP assignments, detect conflicts, and manage DHCP/DNS integration.
+        \item Compare device discovery protocols: \keyterm{CDP} (Cisco proprietary) and \keyterm{LLDP} (vendor-neutral standard) for topology mapping.
+        \item Explain \keyterm{SNMP} (Simple Network Management Protocol) components: Manager, Agent, MIB, and compare SNMPv1/v2c (insecure) vs. SNMPv3 (authentication + encryption).
+        \item Configure \keyterm{Syslog} for centralized logging, identify severity levels (0--7), and explain the benefits of log aggregation and correlation using \keyterm{SIEM} tools.
+        \item Describe \keyterm{NetFlow} for traffic analysis (who, what, when, where, how much) and distinguish it from \keyterm{packet capture} (Wireshark) which captures full payloads.
+        \item Explain \keyterm{QoS} (Quality of Service) mechanisms including traffic classification (DSCP/CoS), queuing strategies (FIFO, priority, WFQ), and traffic shaping for voice/video prioritization.
+    \end{itemize}
 \end{frame}
 
 % SLIDE 3: Documentation
+\section{Documentation and Operational Control}
+\subsection{Documentation, Inventory, and Change}
+
+\articleonly{
+Operations begin with accurate documentation, controlled changes, and lifecycle-aware asset management for stable environments.
+}
+
 \begin{frame}{8.1 Documentation: Maps for the Kingdom}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -646,6 +622,13 @@
 \end{frame}
 
 % SLIDE 15: Discovery
+\section{Discovery and Baseline Monitoring}
+\subsection{Discovery Techniques and Visibility}
+
+\articleonly{
+Discovery workflows identify active hosts and services, building the visibility needed for baseline and anomaly detection.
+}
+
 \begin{frame}{8.2 Host Discovery: "Who Goes There?"}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1097,6 +1080,13 @@
 \end{frame}
 
 % SLIDE 25: SNMP Overview
+\section{Telemetry and Event Monitoring}
+\subsection{SNMP and Syslog Workflows}
+
+\articleonly{
+This section covers telemetry and event pipelines using SNMP, syslog, and SIEM correlation for operational awareness.
+}
+
 \begin{frame}{8.3 SNMP: The Royal Messengers}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1467,6 +1457,13 @@
 \end{frame}
 
 % SLIDE 35: Traffic Analysis Intro
+\section{Traffic Analysis and QoS}
+\subsection{Flow Data, Packet Capture, and Prioritization}
+
+\articleonly{
+Traffic analysis and QoS policies are used to diagnose performance and prioritize critical applications under load.
+}
+
 \begin{frame}{8.5 Traffic Analysis: NetFlow vs. Packet Capture}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1592,7 +1589,7 @@
 % =============================================================================
 % SLIDE 37c: tcpdump (The CLI Sniffer)
 % =============================================================================
-\begin{frame}[fragile]{tcpdump: The Command Line Sniffer}
+\begin{frame}[fragile,t,shrink=14]{tcpdump: The Command Line Sniffer}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
             % Simulated Terminal Window
@@ -1653,11 +1650,11 @@
 % =============================================================================
 % SLIDE 37b: Wireshark Interface (Fixed)
 % =============================================================================
-\begin{frame}{Wireshark: Anatomy of a Packet Capture}
+\begin{frame}[t,shrink=24]{Wireshark: Anatomy of a Packet Capture}
     \begin{columns}[T]
         \begin{column}{0.65\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.6, font=\sffamily\tiny]
+                \begin{tikzpicture}[scale=0.4, font=\sffamily\tiny]
                     % Window Frame
                     \draw[fill=white, drop shadow] (0,0) rectangle (10, 8);
                     \fill[rctcblue] (0, 7.5) rectangle (10, 8);
@@ -1703,12 +1700,6 @@
                     \draw[->, ultra thick, alertred] (10.2, 0.9) -- (7, 0.9) node[right=3.3cm, align=left, text=black] {Raw Payload\\(Cleartext!)};
 
                 \end{tikzpicture}
-                 \begin{block}{1. Packet List}
-                \footnotesize
-                "The Conversation."
-                Shows \textbf{Who} (Src/Dst), \textbf{When} (Time), and \textbf{What} (Protocol).
-            \end{block}
-
             \end{center}
         \end{column}
         \begin{column}{0.32\textwidth}
@@ -1925,45 +1916,37 @@
 % =============================================================================
 % SLIDE 43: Final Module Review
 % =============================================================================
-\begin{frame}{Module 8 Review: Key Takeaways}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Operations}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{Docs}: Logical (IPs) vs Physical (Cables).
-                    \item \textbf{Baselines}: Know "Normal" to find "Evil".
-                    \item \textbf{Lifecycle}: Replace EoL gear!
-                \end{itemize}
-            \end{block}
-            \begin{block}{Monitoring}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{SNMPv3}: Secure monitoring (Auth+Priv).
-                    \item \textbf{Syslog}: Log collection (Level 0-7).
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            % FIXED: Escaped the Ampersand here (Traffic \& QoS)
-            \begin{block}{Traffic \& QoS}
-                \footnotesize
-                \begin{itemize}
-                    \item \textbf{NetFlow}: Who is talking? (Metadata).
-                    \item \textbf{Wireshark}: What are they saying? (Content).
-                    \item \textbf{QoS}: Prioritizing Voice (EF/DSCP 46) over Movies.
-                \end{itemize}
-            \end{block}
-            \begin{alertblock}{Final Exam Tip}
-                \footnotesize
-                If the question says "proprietary discovery," choose \textbf{CDP}. If it says "standard," choose \textbf{LLDP}.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-    \vspace{0.5cm}
-    \begin{center}
-        \textit{"And they networked happily ever after."}
-    \end{center}
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 8.0 Summary}
+    \small
+    \textbf{Key Concepts:}
+    \begin{itemize}
+        \item \keyterm{Physical diagrams}: Show racks, cables, port connections. \keyterm{Logical diagrams}: Show IP addresses, VLANs, subnets, routing.
+        \item \keyterm{Configuration management}: Use standardized naming, regular backups, version control, and change control boards (CCB) for controlled modifications.
+        \item \keyterm{Network lifecycle}: Procurement $\rightarrow$ Deployment $\rightarrow$ Maintenance $\rightarrow$ End-of-Life (EoL) planning $\rightarrow$ Secure disposal.
+        \item \keyterm{Baselines}: Establish normal performance metrics (bandwidth, latency, CPU) to identify anomalies and security incidents.
+        \item \keyterm{IPAM}: Centralized IP address management. Track assignments, detect conflicts, integrate with DHCP/DNS. Prevent IP exhaustion.
+        \item \keyterm{CDP} (Cisco proprietary): Neighbor discovery every 60 sec. \keyterm{LLDP} (IEEE 802.1AB): Vendor-neutral standard. Both map Layer 2 topology.
+        \item \keyterm{SNMP}: Manager polls Agents using \keyterm{MIB} (Management Information Base). SNMPv3 adds authentication (authNoPriv) and encryption (authPriv). Traps = unsolicited alerts.
+        \item \keyterm{Syslog}: Centralized logging. Severity 0 (Emergency) to 7 (Debug). Use \keyterm{SIEM} (Security Information and Event Management) for correlation and alerting.
+        \item \keyterm{NetFlow}: Collects traffic metadata (source/dest IP, ports, protocol, bytes, packets). Flows exported to Collector for analysis (NetFlow Analyzer).
+        \item \keyterm{Packet capture}: Wireshark captures full frame contents for deep inspection. Privacy/legal concerns. Use for troubleshooting, not routine monitoring.
+    \end{itemize}
+    \framebreak
+    \vspace{0.3em}
+    \textbf{Quality of Service (QoS):}
+    \begin{itemize}
+        \item \keyterm{Classification}: Mark traffic using \keyterm{DSCP} (Layer 3, 0--63) or \keyterm{CoS} (Layer 2, 0--7). Voice = DSCP 46 (EF), Video = DSCP 34 (AF41).
+        \item \keyterm{Queuing}: FIFO (first-in-first-out), Priority Queue (low-latency for voice), WFQ (weighted fair queuing for balanced sharing).
+        \item \keyterm{Traffic shaping}: Smooth bursty traffic to match bandwidth limits. \keyterm{Policing}: Drop excess traffic exceeding rate.
+        \item Use QoS to prioritize latency-sensitive traffic (VoIP, video conferencing) over bulk data (file transfers, backups).
+    \end{itemize}
 \end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module covered network operations and monitoring: documentation practices, configuration management, device lifecycle, and baselines for performance tracking. You learned monitoring protocols (SNMP, Syslog, NetFlow), traffic analysis tools (Wireshark), and QoS mechanisms for prioritizing critical traffic. In the final module, we'll explore security concepts including threats, defense strategies, and access control.
+}
 
 \end{document}
