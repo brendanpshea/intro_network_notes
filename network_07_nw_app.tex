@@ -17,16 +17,7 @@
 \institute{Rochester Community and Technical College}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -136,6 +127,10 @@ This section introduces foundational security and timing services that support t
             \node[font=\tiny] at (0, -1) {cue music...};
         \end{tikzpicture}
     \end{center}
+    
+\articleonly{
+\par\small\emph{Title slide introducing security and time synchronization services that enable trusted communication and coordinated operations across distributed systems.}\par
+}
     \vspace{0.5cm}
     \begin{block}{Core Concepts}
         \small
@@ -466,6 +461,10 @@ This section surveys web and file-service protocols, secure transfer options, an
             };
         \end{tikzpicture}
     \end{center}
+    
+\articleonly{
+\par\small\emph{Title slide transitioning to web and file service protocols, covering how modern networks transport web content, files, and storage access securely and efficiently.}\par
+}
     \vspace{0.5cm}
     \begin{block}{What we will cover}
         \small
@@ -899,6 +898,10 @@ This section surveys web and file-service protocols, secure transfer options, an
             \draw[->, thick, green] (1.5, 0) -- (4, 0) node[midway, above] {Outgoing};
         \end{tikzpicture}
     \end{center}
+    
+\articleonly{
+\par\small\emph{This email architecture diagram illustrates the mailroom metaphor for email services: incoming messages arrive from the blue arrow on the left and outgoing messages depart via the green arrow on the right. The mailroom (represented by a building icon) represents the mail server components. This simple model shows that email systems have asymmetric infrastructure for receiving and sending, with separate roles for inbox access versus message transmission.}\par
+}
     \vspace{0.2cm}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}

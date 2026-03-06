@@ -17,16 +17,7 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -77,6 +68,11 @@
             \node[font=\tiny, rctcgold] at (6.5,1.2) {Packet Journey};
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates a packet's journey through network infrastructure: source PC through Switch 1 to Router 1, across internet cloud to Router 2, through Switch 2 to destination server. The dashed golden arrow traces this path, showing how routing decisions forward traffic across network boundaries while Ethernet addresses change at each hop and IP addresses remain constant end-to-end.}\par
+}
+
 \end{frame}
 
 % Table of contents in presentation mode only
@@ -234,6 +230,11 @@ This section introduces router roles, routing tables, and packet forwarding beha
                     \draw[wan noarrow, aborange] (3,0.75) -- (cloud);
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows a router managing three connected interfaces: left interface connects to local LAN with PCs, right interface connects to server network, and WAN connection links to internet. Each interface has its own IP address and network identifier, allowing the router to switch traffic between networks and enabling inter-network communication.}\par
+}
+
         \end{column}
     \end{columns}
 \end{frame}
@@ -439,6 +440,10 @@ This section introduces router roles, routing tables, and packet forwarding beha
             \draw[wan noarrow, aborange] (8.5,2.5) -- (cloud);
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows a router's three route types: directly connected networks (local LANs with PCs and servers), remote networks accessed via next-hop routers, and the default route to internet. Three colored network regions demonstrate that routers use routing tables to decide: for local networks send directly; for remote networks forward to next hop; for unknown destinations use default route.}\par
+}
     
     \vspace{-0.3em}
     \begin{block}{Reading the Table}
@@ -552,6 +557,10 @@ This section introduces router roles, routing tables, and packet forwarding beha
                     \node[font=\tiny, right, align=left] at (1.4,0.3) {Each $\leq$\\MTU};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This MTU fragmentation diagram shows the process when a packet (4000 bytes) exceeds the maximum transmission unit: the router splits it into three fragments, each fitting within the 1500-byte MTU limit (Fragment 1: 1500 bytes, Fragment 2: 1500 bytes, Fragment 3: 1000 bytes). A brace on the right indicates that each fragment must be at most MTU size. This splitting adds processing overhead; modern systems use Path MTU Discovery to find the smallest MTU along the entire path, avoiding fragmentation altogether.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Path MTU Discovery}
@@ -816,6 +825,10 @@ This section focuses on practical router setup, route verification, and path dia
                 \end{tikzpicture}
             \end{center}
             
+\articleonly{
+\par\small\emph{This traceroute diagram shows TTL-based path discovery: a source PC sends probes with incrementing TTL values (colored arrows labeled TTL=1, 2, 3) toward destination server through three intermediate routers. Each router decrements TTL; when TTL reaches zero, the router responds with its address and timing. Dashed return arrows show ICMP responses from each hop revealing the complete path with latency measurements, helping diagnose routing problems.}\par
+}
+            
             \vspace{0.3em}
             \begin{block}{Sample Output}
                 \ttfamily\small
@@ -894,6 +907,10 @@ Dynamic routing protocols exchange topology information automatically and select
                     \node[font=\tiny, aborange] at (3.5,0.4) {Between ASes};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This diagram shows two autonomous systems (ASes) separated by administrative boundaries: AS 100 (Your Company, blue) runs OSPF internally with two routers exchanging routes efficiently. AS 200 (ISP, green) also runs OSPF internally. The critical orange WAN link between them carries BGP (Border Gateway Protocol), the inter-AS protocol that allows organizations to exchange routing information at the internet's administrative borders. OSPF handles fast convergence and optimal paths within an organization, while BGP provides intentional, policy-based routing between organizations.}\par
+}
             
             \vspace{0.3em}
             \begin{exampleblock}{Autonomous System (AS)}
@@ -1012,6 +1029,10 @@ Dynamic routing protocols exchange topology information automatically and select
                     \node[font=\tiny] at (4.5,-0.3) {ABR};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates the relationship between routing protocols and administrative autonomy: Company network (AS 100, blue) runs OSPF internally with two connected routers communicating via OSPF, while ISP network (AS 200, green) also uses OSPF internally with its routers. The critical orange WAN link between them runs BGP (Border Gateway Protocol), which is the inter-AS protocol that exchanges routes between autonomous systems at the administrative boundary. This architecture shows how OSPF handles intra-AS routing efficiency while BGP manages inter-AS reachability across the internet.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{ABR}
@@ -1089,6 +1110,10 @@ Dynamic routing protocols exchange topology information automatically and select
                     \draw[wan noarrow] (r3) -- (cloud);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This multihoming diagram demonstrates redundancy through dual ISP connections: a company router connects to both ISP Alpha (AS 100, green) and ISP Beta (AS 200, orange) via separate eBGP connections, allowing traffic to the internet cloud to split between them. Both ISPs connect to the internet, providing path redundancy and load distribution. If one ISP link fails, traffic automatically reroutes through the other, ensuring business continuity. This architecture is typical of enterprises requiring high availability.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Multihoming}
@@ -1363,6 +1388,10 @@ At the network edge, address translation and filtering enforce policy while enab
                 \end{tikzpicture}
             \end{center}
             
+\articleonly{
+\par\small\emph{This NAT translation diagram illustrates the core concept: a PC on private network (192.168.1.10 on left, blue) connects through a NAT router to the internet. The green arrow labeled "Translates to" shows that the router dynamically rewrites the source address in outgoing packets, changing the private address to a public address (203.0.113.50, green) that the ISP assigned. Return traffic is automatically reverse-translated back to the private address. This allows multiple private devices to share a single public IP address, saving address space and providing network privacy.}\par
+}
+            
             \vspace{0.3em}
             \begin{exampleblock}{Why NAT Matters}
                 \small
@@ -1430,6 +1459,10 @@ At the network edge, address translation and filtering enforce policy while enab
                     \node[font=\tiny, networkgreen] at (1.8,0.7) {Public};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This NAT types diagram compares two translation approaches: Static NAT (top, 1:1 mapping) translates one private IP (.10) to exactly one public IP (.50) with a fixed, permanent relationship—good for servers requiring consistent addresses. Dynamic NAT (bottom, pool) maps multiple private IPs (.10, .11, .12) to a pool of public IPs (.50, .51, .52) using temporary associations—when a device connects, it gets assigned the next available public IP, and when disconnected, that public IP returns to the pool. Both require sufficient public IPs; neither scales to thousands of devices on a single public address.}\par
+}
             
             \vspace{0.2em}
             \begin{alertblock}{Limitation}
@@ -1506,6 +1539,10 @@ At the network edge, address translation and filtering enforce policy while enab
                     \node[font=\tiny, alertred, align=center] at (8,1.1) {Same\\public IP!};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This Port Address Translation (PAT) diagram illustrates how multiple private devices share a single public IP: three PCs (192.168.1.10:50001, 192.168.1.11:40002, 192.168.1.12:54321) all pass through a PAT router and emerge as port multiplexed connections under the same public IP (203.0.113.1) but with different port numbers (:40001, :40002, :40003). The red brace on the right emphasizes that all three distinct internal connections appear to the internet as one IP address with different ports. This is why home networks with ~65,000 available ports can support thousands of simultaneous connections with just one public IP address.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Capacity}
@@ -1705,6 +1742,10 @@ This section introduces VLAN segmentation, trunking, and security practices for 
                 \end{tikzpicture}
             \end{center}
             
+\articleonly{
+\par\small\emph{This VLAN isolation diagram shows a single physical switch (center) containing two logically separate networks: VLAN 10 Sales (blue, left with two PCs) and VLAN 20 Engineering (green, right with two PCs). Despite being on the same physical switch hardware, a red dashed line represents the logical separation—devices in VLAN 10 cannot communicate directly with VLAN 20 devices. This Layer 2 isolation provides network segmentation for security and traffic management, though cross-VLAN communication requires a Layer 3 router.}\par
+}
+            
             \vspace{0.2em}
             \begin{alertblock}{Key Point}
                 \small
@@ -1775,6 +1816,10 @@ This section introduces VLAN segmentation, trunking, and security practices for 
                     \node[font=\tiny, networkgreen] at (6.5,0) {VLAN 20};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This VLAN trunking diagram shows two physical switches (Switch 1 on left, Switch 2 on right) connected by a thick orange trunk link carrying both VLAN 10 (blue) and VLAN 20 (green) traffic simultaneously. Despite being on different physical switches, VLAN 10 devices on the left connect logically to VLAN 10 devices on the right, and VLAN 20 devices span both switches—maintaining logical separation across physical infrastructure. The 802.1Q protocol tags each frame with a 12-bit VLAN ID, allowing the trunk to multiplex multiple VLANs. This enables geographically distributed network segmentation where logically grouped devices remain isolated from other VLANs regardless of physical switch location.}\par
+}
             
             \vspace{0.3em}
             \begin{block}{802.1Q Tag}
@@ -1849,6 +1894,10 @@ This section introduces VLAN segmentation, trunking, and security practices for 
                 \end{tikzpicture}
             \end{center}
             
+\articleonly{
+\par\small\emph{This Voice VLAN diagram shows how a single cable can carry both voice and data traffic: an IP phone sits at the center with a switch connection above and a PC plugged into the phone below, using just one physical cable from switch to phone. The phone tags traffic as Voice VLAN 50 (orange) destined to the switch, while the PC's data uses Data VLAN 10 (blue). The switch separates these two VLANs logically, giving voice traffic higher QoS priority. This converged network approach saves cabling costs and enables quality voice calls even when data traffic becomes heavy, as voice is sensitive to delay and jitter.}\par
+}
+            
             \vspace{0.3em}
             \begin{exampleblock}{Why Separate?}
                 \small
@@ -1913,6 +1962,10 @@ This section introduces VLAN segmentation, trunking, and security practices for 
                     \node[font=\tiny, aborange, align=left] at (4.5,-0.2) {802.1Q\\VLAN ID};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This diagram contrasts untagged and tagged Ethernet frames: an untagged frame (top) carries only traditional Ethernet headers (Dst MAC, Src MAC, Type, Data) and is automatically assigned to the native VLAN when sent across a trunk. A tagged frame (bottom) inserts a 4-byte 802.1Q tag after the Src MAC field, containing the VLAN ID (12 bits) and Priority field (3 bits for QoS). Untagged frames bypass VLAN classification, while tagged frames are delivered to their specific VLAN. This mechanism allows switches to multiplex hundreds of VLANs across single trunk links by explicitly marking each frame with its VLAN membership.}\par
+}
             
             \vspace{0.3em}
             \begin{exampleblock}{Configuration}

@@ -16,16 +16,7 @@
 \author{Brendan Shea, PhD}
 \date{Introduction to Networking}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -322,6 +313,10 @@ This section reviews transport-layer behavior, port roles, and protocol tradeoff
             \node[font=\small\bfseries, networkgreen] at (4,-0.7) {CONNECTION ESTABLISHED};
         \end{tikzpicture}
     \end{center}
+    
+\articleonly{
+\par\small\emph{This TCP 3-way handshake diagram shows the connection establishment process: Client (left) sends a SYN packet (SEQ=100) to Server (right) saying "I want to connect." Server responds with SYN-ACK (SEQ=300, ACK=101) saying "OK, I acknowledge." Client sends final ACK (ACK=301) confirming "Connection established." A green bar at the bottom marks the moment both sides have synchronized their sequence numbers and can exchange data. This handshake ensures both parties are ready to communicate reliably.}\par
+}
     
     \vspace{0.3em}
     \begin{columns}[T]
@@ -795,6 +790,10 @@ DHCP automates IPv4 addressing and options distribution; this section covers lea
         \end{tikzpicture}
     \end{center}
     
+\articleonly{
+\par\small\emph{This DHCP DORA (Discover-Offer-Request-Acknowledge) process diagram shows IP address assignment: Client (left, no IP yet) broadcasts Discover asking "Anyone have an IP?" Server (right) responds with Offer "Here's 192.168.1.100" Client sends Request "I'll take that one!" Server acknowledges "It's yours for 8 hours." Vertical dashed timelines show client and server communication over time. This four-step sequence automates IP assignment so administrators don't manually configure each device.}\par
+}
+    
     \vspace{0.2em}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -1036,6 +1035,10 @@ DHCP automates IPv4 addressing and options distribution; this section covers lea
                     \node[font=\tiny, aborange, align=center] at (4,-1.5) {Relay\\converts};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This DHCP Relay Agent diagram shows multi-subnet IP assignment: Subnet A (left) has two clients broadcasting DHCP Discover (red dashed arrow), but the DHCP server is in Subnet B (right, different network). The router acts as a relay agent, receiving the broadcast Discover from Subnet A and converting it to a unicast (green solid arrow) unicast Request to the remote DHCP server in Subnet B. The server replies with the IP offer back through the relay to the client. This relay mechanism enables one DHCP server to serve multiple subnets, reducing administrative burden and server costs.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Result}
@@ -1304,6 +1307,10 @@ IPv6 hosts can self-configure through router advertisements or use DHCPv6 depend
                 \end{tikzpicture}
             \end{center}
             
+\articleonly{
+\par\small\emph{This IPv6 SLAAC (Stateless Address Auto-configuration) diagram shows address generation without a DHCP server: Router (left) sends a Router Advertisement containing the prefix 2001:db8::/64. Host (right) receives this prefix and generates the interface ID using EUI-64—taking its MAC address, inserting FF:FE in the middle, and flipping the 7th bit—producing a full 128-bit address like 2001:db8::a1b2:c3ff:fe45:6789. The host assembles its own address purely from the globally routed prefix and its locally unique MAC-derived interface ID. No server configuration is needed; SLAAC is truly stateless and automatic.}\par
+}
+            
             \vspace{0.3em}
             \begin{exampleblock}{No Server Needed}
                 \small
@@ -1430,6 +1437,10 @@ This section covers DNS hierarchy, record types, recursion, and operational trou
                     \draw[-{Stealth}, networkgreen, line width=1.5pt] (3,0) -- (1,0) -- (0,0.3);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This DNS Query/Response diagram shows domain name resolution: User (left) queries "google.com?" (yellow box) to a DNS Server (right). The green arrow at the bottom shows the server responding with the corresponding IP address: 142.250.80.100 (green box). A dashed yellow arrow shows the query traveling from user through the network to the DNS server, while a solid green arrow returns the IP address response. This fundamental lookup mechanism translates human-readable domain names into routable IP addresses, enabling web browsers and applications to find servers worldwide without users memorizing numerical addresses.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Critical Service}

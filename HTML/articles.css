@@ -1,13 +1,18 @@
 /* Shared article theme for TeX4ht-generated module pages */
 :root {
-  --bg: #f4f7fb;
+  --bg: #eef3f8;
   --panel: #ffffff;
   --text: #1f2a37;
   --muted: #4b5563;
   --accent: #0b5cab;
+  --accent-dark: #0b2f57;
   --accent-soft: #e8f1fb;
   --border: #dbe4f0;
   --code-bg: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
@@ -15,45 +20,44 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Override TeX4ht default body box */
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  max-width: none !important;
+  padding: 1.75rem 1rem 2.5rem !important;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(180deg, #f7f9fc 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #f6f9fc 0%, var(--bg) 100%);
   color: var(--text);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
+/* Wrap all generated content in a readable panel without changing HTML */
 body > * {
-  box-sizing: border-box;
-}
-
-body {
   max-width: 980px;
-  margin: 1.75rem auto 3rem;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 14px 40px rgba(15, 41, 77, 0.08);
-  padding: 1.5rem 2rem 2.25rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/* Typography */
 h1,
 h2,
 h3,
-h4 {
-  color: #103f76;
-  line-height: 1.3;
-}
-
-h1,
+h4,
+h5,
+h6,
+.sectionHead,
+.subsectionHead,
+.subsubsectionHead,
 .likesectionHead,
 .likesubsectionHead,
 .likeparagraphHead {
+  color: var(--accent-dark);
+  line-height: 1.3;
   scroll-margin-top: 1rem;
 }
 
 h1,
+.sectionHead,
 .likesectionHead {
   margin-top: 1.8rem;
   margin-bottom: 0.8rem;
@@ -61,18 +65,28 @@ h1,
   border-bottom: 2px solid var(--accent-soft);
 }
 
-.likesubsectionHead,
+h2,
+.subsectionHead,
+.likesubsectionHead {
+  margin-top: 1.4rem;
+  margin-bottom: 0.6rem;
+}
+
+h3,
+.subsubsectionHead,
 .likeparagraphHead {
-  margin-top: 1.3rem;
+  margin-top: 1.2rem;
   margin-bottom: 0.4rem;
 }
 
-p {
-  margin: 0.45rem 0 0.8rem;
+p,
+p.noindent {
+  margin: 0.5rem 0 0.85rem;
 }
 
 ul,
-ol {
+ol,
+dl {
   margin: 0.5rem 0 1rem 1.2rem;
 }
 
@@ -80,12 +94,21 @@ li {
   margin: 0.2rem 0;
 }
 
-.center {
-  margin: 1rem 0;
-  padding: 0.85rem;
-  background: #fbfdff;
+/* Content panel effect */
+div.center,
+pre,
+table,
+blockquote {
+  background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(15, 41, 77, 0.06);
+}
+
+div.center {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem;
 }
 
 img {
@@ -97,9 +120,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem 0 1.25rem;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  border-radius: 8px;
 }
 
 th,
@@ -111,7 +131,7 @@ td {
 
 th {
   background: var(--accent-soft);
-  color: #0c3f77;
+  color: var(--accent-dark);
   font-weight: 600;
 }
 
@@ -123,8 +143,6 @@ tt {
 
 pre {
   background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
   padding: 0.75rem;
   overflow: auto;
 }
@@ -140,7 +158,10 @@ a:hover {
 
 @media (max-width: 900px) {
   body {
-    margin: 0.75rem;
-    padding: 1rem 1rem 1.5rem;
+    padding: 0.9rem 0.7rem 1.3rem !important;
+  }
+
+  body > * {
+    max-width: 100%;
   }
 }

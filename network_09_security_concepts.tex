@@ -17,16 +17,7 @@
 \institute{Rochester Community and Technical College}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -192,6 +183,11 @@ This section introduces core security principles, governance terms, and foundati
                     \draw[->, thick, networkgreen] (2, -0.8) -- (1, -0.5);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This audit compliance diagram visualizes the security checklist approach: a clipboard with three checkboxes covers Firewall Rules, User Access, and Patch Levels. Agent Snoopy (the auditor) examines the document and draws a green arrow pointing to each checkbox. This represents the systematic verification process that audits conduct: walking through documented infrastructure, verifying each setting matches policy, and checking patches are current. The presence of a checklist and auditor (not just hoping security is good) emphasizes the "verify, don't trust" principle central to external audits and compliance verification.}\par
+}
+            
         \end{column}
     \end{columns}
 \end{frame}
@@ -277,6 +273,11 @@ This section introduces core security principles, governance terms, and foundati
                     \node[font=\tiny, below] at (-0.5, 1.5) {Zero-Day Exploit};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This zero-day vulnerability diagram shows the critical danger: a Firewall (gray box) has an unpatched vulnerability (red box marked "No Patch") in its application layer. A cat-shaped attacker (symbolizing a sophisticated exploiter) arrows toward this vulnerability with an "ultra thick alertred" line labeled "Zero-Day Exploit." Because the vulnerability has no patch, the firewall cannot defend itself. This illustrates why unpatched vulnerabilities—especially day-zero flaws unknown to vendors—require immediate compensating controls or isolation, as technically sound defenses (the firewall) offer no protection against unknown exploits.}\par
+}
+            
         \end{column}
     \end{columns}
 \end{frame}
@@ -359,6 +360,11 @@ Threat analysis identifies disruptive and malicious behaviors so teams can prior
                     \draw[->, thick, orange] (user) -- (srv) node[midway, below, font=\tiny] {Direct Access};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This insider threat diagram illustrates the asymmetry of internal versus external threats: a dashed box marks the Internal Network boundary with an insider user and server inside. A firewall blocks the external attacker (cat) from reaching the server (red arrow labeled "Firewall Blocks"). However, the insider (trusted employee icon) can reach the server directly via an orange arrow labeled "Direct Access," bypassing the firewall entirely. This visualization explains why insider threats are particularly dangerous: traditional perimeter security cannot defend against trusted users with legitimate access who have gone rogue or clicked a phishing link.}\par
+}
+            
         \end{column}
     \end{columns}
 \end{frame}
@@ -397,6 +403,11 @@ Threat analysis identifies disruptive and malicious behaviors so teams can prior
                     \draw[->, thick, red] (bot3) -- (target);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This DDoS botnet attack diagram shows the command-and-control structure: a Master (hacker) sends dashed commands to multiple Bot agents (compromised devices), which simultaneously execute the attack. Three thick red arrows labeled "Attack" flow from the bots to the target server. Unlike a simple DoS (one attacker), a DDoS distributes traffic across hundreds of compromised devices, making it harder to block the attacker's IP address. The dashed versus solid arrows show the distinction between the hidden command channel (dashed) and the visible attack traffic (solid red), representing how botnets hide attacker identity while multiplying attack volume.}\par
+}
+            
         \end{column}
     \end{columns}
 \end{frame}
@@ -439,6 +450,11 @@ Threat analysis identifies disruptive and malicious behaviors so teams can prior
                     \draw[->, dashed, red] (cc) -- (z3);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This botnet zombie army diagram shows the scale of IoT compromise: a Command-and-Control server (cloud icon, top) issues dashed red commands to multiple zombie devices (hacked camera icons with semi-transparent appearance, showing they're under attacker control). Three green status dots below each camera indicate they're infected and listening to the C\&C. The three camera icons are typical targets: smart cameras, smart bulbs, or connected devices with weak passwords. Unlike traditional servers, IoT devices rarely receive timely security updates, making them attractive for long-term botnet recruitment.}\par
+}
+            
         \end{column}
     \end{columns}
 \end{frame}

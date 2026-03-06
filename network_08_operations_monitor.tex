@@ -17,16 +17,7 @@
 \institute{Rochester Community and Technical College}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 % =============================================================================
@@ -204,6 +195,11 @@ Operations begin with accurate documentation, controlled changes, and lifecycle-
                     \node[right, font=\tiny, text=red] at (2.8, 1) {Manual Hack!};
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This configuration drift diagram shows the problem: on Day 1 (Baseline), both Switch A and Switch B are at version 1.0 (green boxes). On Day 100, Switch A remains at 1.0, but Switch B has been manually updated to 1.2 (red box) without approval. This divergence from the documented baseline (drift) introduces inconsistency, increases risk, and makes troubleshooting harder. The gray arrow shows time passing, and the "Manual Hack!" callout labels the problematic change. This visualization demonstrates why automation tools must force devices back to a consistent baseline.}\par
+}
+            
             \begin{block}{The Solution}
                 \footnotesize
                 Use automation tools (Ansible/Python) to force devices back to the Baseline!
@@ -285,6 +281,11 @@ Operations begin with accurate documentation, controlled changes, and lifecycle-
                     \draw[->] (do) -- (back);
                 \end{tikzpicture}
             \end{center}
+            
+\articleonly{
+\par\small\emph{This change management flowchart shows the five-step approval workflow: Request (1) → Impact Analysis (2) → CAB Approval (3, green box) → Implement (4) → Rollback? (5). The dashed arrow from Approval to Implement emphasizes that implementation only proceeds after human approval by the Change Advisory Board (CAB). This formal process minimizes the risk of network outages by requiring advance planning, impact assessment, and rollback strategies before any change touches production infrastructure.}\par
+}
+            
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{block}{Critical Component: Rollback}

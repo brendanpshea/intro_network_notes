@@ -17,16 +17,7 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -62,6 +53,11 @@
             \node[font=\tiny] at (7,-0.8) {Internet};
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates the end-to-end journey of IP communication: a source PC (192.168.1.10) on a local network connects through a gateway router to the internet cloud, ultimately reaching a destination server (203.0.113.50) on a remote network. The local network uses Ethernet connections while internet traffic travels over WAN links, demonstrating how Layer 3 IP addressing enables communication across different network types and geographic locations.}\par
+}
+
 \end{frame}
 
 % Table of contents in presentation mode only
@@ -206,6 +202,11 @@ This section introduces IPv4 packet structure and the relationship between Layer
                     \node[font=\tiny, right] at (8.1, -1.05) {>20 bytes};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows the structure of an IPv4 packet header with key fields arranged in five rows: Row 1 contains Version and IHL (Internet Header Length) defining header format and size; Row 2 has DSCP for quality of service and Total Length for packet size; Row 3 includes Identification, Flags, and Fragment Offset for packet reassembly; Row 4 shows Time To Live (preventing infinite routing loops), Protocol (identifying upper layer like TCP/UDP), and Header Checksum for error detection; Rows 4-5 contain the critical Source IP Address and Destination IP Address fields that enable end-to-end routing. The entire header is at least 20 bytes before the data payload begins.}\par
+}
+
         \end{column}
     \end{columns}
 \end{frame}
@@ -331,6 +332,10 @@ This section introduces IPv4 packet structure and the relationship between Layer
             };
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This complex diagram demonstrates how routers handle frame forwarding across network boundaries. A source PC (10.0.0.5) on Network A sends traffic through a switch to a router, which then forwards to Network B where the destination server (192.168.1.50) resides. Three boxed sections show the critical concept: on Network A, the frame's source MAC is the PC and destination MAC is the router; the middle IP header box (highlighted in blue) shows that source and destination IP addresses remain unchanged throughout the journey; on Network B, the router creates a new frame with its own MAC as source and the server's MAC as destination. This illustrates that Layer 2 MAC addresses change at each hop while Layer 3 IP addresses provide end-to-end addressing.}\par
+}
     
     \vspace{0.2em}
     \begin{block}{Key Insight}
@@ -627,6 +632,11 @@ This section covers IPv4 addressing structure, subnet masks, and host range calc
                     \node[font=\small] at (0,-0.1) {32 bits total};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram breaks down the IPv4 address 192.168.1.100 into its binary representation, showing four octets (8-bit segments): 11000000 (192), 10101000 (168), 00000001 (1), and 01100100 (100). Each octet is labeled "8 bits" above, and a brace below indicates the total address is 32 bits. This binary-to-decimal conversion is fundamental to understanding IP addressing, subnetting, and how network masks work at the bit level to separate network and host portions.}\par
+}
+
         \end{column}
     \end{columns}
 \end{frame}
@@ -809,6 +819,11 @@ This section covers IPv4 addressing structure, subnet masks, and host range calc
                     \node[font=\tiny, alertred, anchor=east] at (-0.4,-0.1) {reserved};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This vertical diagram illustrates the address allocation within subnet 192.168.1.0/24, showing five critical addresses from top to bottom: the network address (192.168.1.0, marked in red as reserved), the first usable host address (192.168.1.1, in green), a large green brace spanning to indicate 254 usable host addresses in the middle range, the last usable host address (192.168.1.254, in green), and the broadcast address (192.168.1.255, marked in red as reserved). This visualization demonstrates that in a /24 subnet, the first and last addresses are reserved for network identification and broadcasting, leaving 254 addresses available for host assignment.}\par
+}
+
         \end{column}
     \end{columns}
 \end{frame}
@@ -865,6 +880,10 @@ This section covers IPv4 addressing structure, subnet masks, and host range calc
                     \node[font=\tiny, above=0.3cm of {(4,1.2)}, alertred] {External traffic};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates the default gateway concept within a local network (192.168.1.0/24) enclosed in a blue dashed box. A PC (.100) connects via Ethernet to a gateway router (.1), which in turn connects to the internet cloud via a WAN link. The arrows show local traffic staying within the network and external traffic passing through the gateway. The configuration block shows the PC's complete network settings: IP address 192.168.1.100, subnet mask 255.255.255.0, and critically, the gateway address 192.168.1.1 which must be on the same subnet as the host to be reachable.}\par
+}
             
             \vspace{0.3em}
             \begin{block}{PC Configuration}
@@ -951,6 +970,10 @@ This section covers IPv4 addressing structure, subnet masks, and host range calc
             \node[font=\tiny] at (9.2,0.3) {Gateway};
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This comparison diagram shows a common misconfiguration scenario on the left (marked "Wrong" in red) where a POS system at 192.168.10.50 tries to use gateway 192.168.20.1 on a different subnet, indicated by a dashed arrow and X symbol showing the unreachable gateway. The right side (marked "Correct" in green) shows the proper configuration where the same POS system uses gateway 192.168.10.1 on the same subnet, marked with a checkmark. This illustrates the critical requirement that default gateways must reside on the same subnet as the hosts they serve.}\par
+}
     
     \vspace{0.2em}
     \begin{alertblock}{Key Lesson}
@@ -1221,6 +1244,10 @@ Address planning evolved from classful limits to CIDR and VLSM for efficient all
                     \node[font=\footnotesize] at (7.5,0.2) {(2)};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This hierarchical VLSM diagram shows efficient subnet allocation from the 172.16.0.0/24 network using Variable Length Subnet Masking. Four subnets of different sizes are represented as colored boxes scaled proportionally to their capacity: Sales (blue, /25 with 126 hosts), Engineering (green, /26 with 62 hosts), Management (orange, /27 with 30 hosts), and a point-to-point link (purple, /30 with just 2 usable addresses). This demonstrates how VLSM allows precise address allocation matching actual requirements—using 220 total addresses for 177 hosts instead of wasting a full /23 (512 addresses) that fixed-length subnetting would require.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Result}
@@ -1305,7 +1332,11 @@ Address planning evolved from classful limits to CIDR and VLSM for efficient all
             \node[font=\tiny, gray] at (11.25,0.6) {Unused (200 addr)};
         \end{tikzpicture}
     \end{center}
-    
+
+\articleonly{
+\par\small\emph{This practical VLSM example shows address allocation for Springfield Elementary School's network using base 172.16.50.0. Three subnets are allocated with right-sized masks: Computer Lab (blue, /27 providing 30 usable addresses for 28 student PCs), Admin Office (green, /28 yielding 14 usable addresses for 12 staff devices), and Teachers' Lounge (orange, /29 giving 6 usable addresses for 6 faculty devices). A gray dashed box represents approximately 200 unused addresses remaining for future growth. The address accounting block shows that only 56 addresses were allocated to serve 46 devices with just 6 reserved for network/broadcast addresses and 4 "wasted" as appropriate headroom, demonstrating efficient address utilization through VLSM.}\par
+}
+
     \vspace{0.2em}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}

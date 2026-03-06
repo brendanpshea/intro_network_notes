@@ -17,16 +17,7 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -56,6 +47,11 @@
             \node[font=\tiny, above] at (6,0.4) {\texttt{AA:BB:CC:44:55:66}};
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This title slide diagram shows two desktop computers connected through a switch using Ethernet cables, with their hardware MAC addresses displayed above each device. This illustrates the fundamental role of switches in connecting devices at Layer 2 of the OSI model using MAC addressing.}\par
+}
+
 \end{frame}
 
 % Table of contents in presentation mode only
@@ -114,6 +110,11 @@
                     \node[left, font=\tiny] at (-2.6, -0.7) {Mod 2};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This horizontal timeline shows the seven layers of the OSI model, with physical infrastructure layers (Physical, Data Link, Network, Transport) at the left and application-oriented layers at the right. An arrow labeled "Today!" points to the Data Link layer, indicating that this module focuses on Layer 2 switching and MAC addressing. The bracket on the left shows that Module 2 covered the Physical layer.}\par
+}
+
         \end{column}
     \end{columns}
 \end{frame}
@@ -191,6 +192,10 @@ This section introduces network interfaces and transceivers, the hardware endpoi
                     \node[font=\tiny, align=center] at (1.25, 0.4) {MAC Address\\[-0.5em]\texttt{00:1A:2B:3C:4D:5E}};
                 \end{tikzpicture}
             \end{center}
+            
+            \articleonly{
+            \par\small\emph{The NIC diagram shows a computer with an integrated network interface card that contains the unique MAC address burned into its hardware. The NIC translates between the computer's internal data and network signals transmitted through the RJ-45 port to the switch.}\par
+            }
             
             \vspace{0.3em}
             \begin{alertblock}{Key Point}
@@ -368,6 +373,10 @@ This section introduces network interfaces and transceivers, the hardware endpoi
         \end{tikzpicture}
     \end{center}
 
+    \articleonly{
+    \par\small\emph{The Green Dragon network infrastructure diagram illustrates a small business physical topology with a cellar server connected via multimode fiber to a core switch, three client devices connected via copper Cat6/Cat5e cables, and a single-mode fiber uplink to the ISP. This demonstrates the cable diversity typical in modern networks.}\par
+    }
+
     \vspace{0.2em}
     {\centering \scriptsize Layer 1 maps physical links between endpoints, switching infrastructure, and uplinks.\par}
 \end{frame}
@@ -455,6 +464,10 @@ Here we examine Ethernet frame structure and MAC addressing, which form the basi
         \end{tikzpicture}
     \end{center}
     
+    \articleonly{
+    \par\small\emph{The Ethernet frame structure shows how data is packaged for transmission at Layer 2. The preamble synchronizes receivers, source and destination MAC addresses identify communicating devices, the type field indicates the protocol (like IPv4), the payload carries actual data (46-1500 bytes), and the Frame Check Sequence detects transmission errors. Total maximum size is 1518 bytes for standard frames.}\par
+    }
+    
     \vspace{0.3em}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -510,6 +523,10 @@ Here we examine Ethernet frame structure and MAC addressing, which form the basi
                     \node[font=\tiny, below] at (1.05,-0.6) {Last 3 bytes};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram breaks down a MAC address (00:1A:2B:3C:4D:5E) into its two components: the first three bytes identify the manufacturer (Organizationally Unique Identifier or OUI), and the last three bytes are the unique device identifier assigned by that manufacturer. This 48-bit hexadecimal address is burned into the NIC hardware at the factory.}\par
+}
             
             \vspace{0.5em}
             \begin{block}{Common Formats}
@@ -544,6 +561,10 @@ Here we examine Ethernet frame structure and MAC addressing, which form the basi
                     \node[font=\tiny\bfseries, below=3pt of dev] {Device ID (Unique)};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows a specific MAC address (00:50:56:3C:4D:5E) split into two segments: the Organizationally Unique Identifier (00:50:56) assigned by IEEE to identify the manufacturer (in this case VMware), and the Device ID (3C:4D:5E) which is unique to each NIC from that vendor. This hierarchical structure ensures globally unique hardware addresses.}\par
+}
    
             \begin{exampleblock}{Example OUIs}
                 \scriptsize
@@ -722,6 +743,10 @@ This section compares hub-, bridge-, and switch-based forwarding and explains ho
                     \draw[-{Stealth}, alertred!60, line width=0.5pt] (0,0.3) -- (1.5,1);
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows a hub at the center connected to five PCs, with all devices enclosed in a single red dashed circle representing one collision domain. In a hub-based network, all connected devices share the same bandwidth and must take turns transmitting to avoid collisions, making hubs inefficient for modern networks.}\par
+}
             
             \vspace{0.2em}
             \begin{block}{Hub = Layer 1}
@@ -782,6 +807,10 @@ This section compares hub-, bridge-, and switch-based forwarding and explains ho
                     \node[font=\tiny, networkgreen] at (2,-1.6) {CD 2};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram depicts a bridge connecting two network segments, with two PCs on the left and two PCs on the right. Each segment is enclosed in its own collision domain (green dashed circles labeled CD 1 and CD 2), meaning collisions on one side do not affect the other. Bridges use MAC learning to forward frames only when necessary, reducing network congestion compared to hubs.}\par
+}
             
             \vspace{0.2em}
             \begin{exampleblock}{Selective Forwarding}
@@ -843,6 +872,10 @@ This section compares hub-, bridge-, and switch-based forwarding and explains ho
                     \node[font=\tiny, rctcblue] at (0,-2.3) {5 Collision Domains};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows a switch with five connected PCs, where each device has its own individual collision domain (small blue dashed circles around each PC). Unlike hubs, switches eliminate collisions by providing dedicated bandwidth per port, allowing simultaneous full-duplex communication. This architecture maximizes network efficiency and throughput in modern LANs.}\par
+}
             
             \vspace{0.2em}
             \begin{block}{Switch = Layer 2}
@@ -902,6 +935,10 @@ This section compares hub-, bridge-, and switch-based forwarding and explains ho
                     };
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram depicts a switch with three connected PCs, showing the learned MAC address table that maps each device's hardware address (AA:AA, BB:BB, CC:CC) to its corresponding port (P1, P2, P3). Switches build this table dynamically by examining source MAC addresses on incoming frames, enabling intelligent forwarding decisions rather than broadcasting all traffic like hubs.}\par
+}
 
             \vspace{0.3em}
             \begin{alertblock}{MAC Address Table}
@@ -984,6 +1021,10 @@ This section compares hub-, bridge-, and switch-based forwarding and explains ho
             \node[font=\scriptsize, alertred, right] at (9.5,1.8) {Not forwarded};
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates a practical switching scenario where the Front Desk (MAC AA:AA:AA on Port 1) sends a frame to the Manager (MAC CC:CC:CC on Port 3). The switch examines the destination MAC address in the frame and forwards it only to Port 3, blocking it from Ports 2 and 4 (marked with X). This selective forwarding demonstrates how switches use MAC tables to direct traffic efficiently, conserving bandwidth compared to hubs that broadcast to all ports.}\par
+}
     
     \vspace{0.2em}
     {\centering Layer 2 uses \textbf{MAC addresses} to forward frames. The switch sends traffic \textbf{only to the destination port}---not everywhere.\par}
@@ -1061,6 +1102,11 @@ This section focuses on operational switch features and management choices used 
                     \node[font=\small] at (2,0) {\iconrouter[0.5cm]};
                     \node[font=\tiny, below] at (2,-0.4) {Router};
                 \end{tikzpicture}
+
+\articleonly{
+\par\small\emph{This simple diagram shows a Layer 2 switch connected to a separate router, illustrating that traditional Layer 2 switches must forward traffic to an external router for inter-network routing decisions.}\par
+}
+
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -1078,6 +1124,11 @@ This section focuses on operational switch features and management choices used 
                     \node[font=\tiny, below] at (0,-0.4) {L3 Switch};
                     \node[font=\tiny, above, networkgreen] at (0,0.4) {Routes internally!};
                 \end{tikzpicture}
+
+\articleonly{
+\par\small\emph{This diagram shows a Layer 3 multilayer switch with the annotation "Routes internally!" above it, indicating that L3 switches can perform IP routing without needing an external router. This capability makes inter-VLAN routing much faster in enterprise networks.}\par
+}
+
             \end{block}
         \end{column}
     \end{columns}
@@ -1226,9 +1277,13 @@ Advanced switching capabilities improve resiliency, bandwidth utilization, and l
                     % LAG bracket
                     \draw[decorate, decoration={brace, amplitude=5pt}, line width=1pt, aborange]
                         (0.8,0.5) -- (0.8,1.5);
-                    \node[font=\tiny, right, aborange] at (0.9,1) {LAG};
+                    \node[font=\tiny, right,aborange] at (0.9,1) {LAG};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows link aggregation (LAG) where a server with multiple network interfaces connects to a switch using four bundled Ethernet cables, all labeled with the bracket "LAG". This configuration combines multiple physical links into one logical connection, providing higher bandwidth and redundancy. If one cable fails, traffic continues flowing through the remaining links. The LACP protocol (802.3ad) coordinates the aggregation between both endpoints.}\par
+}
             
             \vspace{0.3em}
             \begin{alertblock}{Both Ends Must Match}
@@ -1334,6 +1389,10 @@ Advanced switching capabilities improve resiliency, bandwidth utilization, and l
                     \node[font=\large, alertred] at (0,0.7) {$\times$};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram illustrates a broadcast storm caused by a network loop. Three switches are connected in a triangle topology with red arrows showing frames circulating endlessly around the loop, marked with an explosion symbol (X) in the center. Without Spanning Tree Protocol, broadcast frames entering this loop will replicate infinitely, overwhelming switch CPUs and making the network unresponsive.}\par
+}
             
             \vspace{0.3em}
             \begin{block}{Symptoms}
@@ -1390,6 +1449,10 @@ Advanced switching capabilities improve resiliency, bandwidth utilization, and l
                     \node[font=\tiny, alertred, fill=white] at (0,-0.1) {BLOCKED};
                 \end{tikzpicture}
             \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows Spanning Tree Protocol (STP) preventing loops in a redundant topology. Three switches are connected in a triangle, with two links shown in green (active) and one link displayed with a red prohibition symbol labeled "BLOCKED". STP automatically identifies the redundant link and blocks it to prevent broadcast storms, while keeping it available as a backup if an active link fails.}\par
+}
             
             \vspace{0.3em}
             \begin{exampleblock}{Key Insight}
@@ -1448,6 +1511,11 @@ Advanced switching capabilities improve resiliency, bandwidth utilization, and l
                     \node[font=\tiny, above] at (1.25,0.1) {Data + Power};
                     \node[font=\tiny, below] at (1.25,-0.1) {(one cable!)};
                 \end{tikzpicture}
+
+\articleonly{
+\par\small\emph{This simple diagram shows a PoE switch connected to a wireless access point with a single Ethernet cable labeled "Data + Power (one cable!)". This illustrates the key benefit of Power over Ethernet: eliminating the need for separate power adapters and electrical outlets at device locations.}\par
+}
+
             \end{block}
         \end{column}
     \end{columns}
@@ -1519,6 +1587,10 @@ Advanced switching capabilities improve resiliency, bandwidth utilization, and l
            
         \end{tikzpicture}
     \end{center}
+
+\articleonly{
+\par\small\emph{This diagram shows the Green Dragon pub's PoE+ switch with a 120W power budget supporting four devices across ports P1--P4: a VoIP phone (7W), Main Hall wireless AP (25W), entry security camera (15W), and Garden AP (28W). The power budget bar displays 75W used (green) and 45W still available (gray), demonstrating the importance of tracking cumulative PoE consumption. Each device receives both data and power over a single cable, eliminating the need for separate power adapters.}\par
+}
     
     \vspace{0.1em}
     {\centering PoE delivers \textbf{data and power} over one cable. Always track your \textbf{power budget}---the switch has limits!\par}

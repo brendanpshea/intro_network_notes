@@ -49,16 +49,7 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 % =============================================================================
 % DOCUMENT BEGINS
@@ -207,6 +198,9 @@ A computer network is fundamentally about connectivity and resource sharing. In 
                     \node[below=1cm of sw, font=\footnotesize] {Simple Network};
                 \end{tikzpicture}
             \end{center}
+            \articleonly{
+            \par\small\emph{The diagram above shows a simple network topology with two desktop PCs, a laptop, and a switch connecting them. This illustrates the basic star topology where all devices connect to a central switch, enabling communication and resource sharing among all connected devices.}\par
+            }
         \end{column}
     \end{columns}
     
@@ -216,6 +210,10 @@ A computer network is fundamentally about connectivity and resource sharing. In 
 \end{frame}
 
 \subsection{Basic Networking Concepts}
+
+\articleonly{
+With the fundamental purpose of networks established, we now examine the terminology used to describe network components and their roles.
+}
 
 \begin{frame}{Networking Concepts}
     \begin{itemize}
@@ -230,6 +228,10 @@ A computer network is fundamentally about connectivity and resource sharing. In 
         When you visit a website, your computer (client) sends a request to a web server, which responds by sending the web page back to your browser.
     \end{exampleblock}
 \end{frame}
+
+\articleonly{
+The distinction between clients and servers is foundational to understanding network architecture. While this client-server model dominates modern networking, peer-to-peer architectures offer an alternative approach for certain applications.
+}
 
 \subsection{Network Types}
 
@@ -287,6 +289,11 @@ Networks are classified by their geographic scope and purpose. Understanding the
 % SECTION 3: NETWORK TOPOLOGIES
 % =============================================================================
 \section{Network Topologies}
+
+\articleonly{
+Network topology—the arrangement of devices and connections—fundamentally impacts network performance, cost, scalability, and reliability. This section explores the most important topologies used in computer networks.
+}
+
 \subsection{Understanding Network Topology}
 
 \articleonly{
@@ -346,6 +353,9 @@ Network topology describes how devices are arranged and connected in a network. 
                     \draw[ethernet noarrow] (sw) -- (n5);
                 \end{tikzpicture}
             \end{center}
+            \articleonly{
+            \par\small\emph{The star topology diagram above illustrates five devices (three PCs and two laptops) all connected to a central switch. Each device has a dedicated connection to the switch, making this the most common topology in modern LANs. If one cable fails, only that device loses connectivity while others continue operating normally.}\par
+            }
         \end{column}
     \end{columns}
 \end{frame}
@@ -394,9 +404,16 @@ Network topology describes how devices are arranged and connected in a network. 
                     \node[below=0.3cm of n3, font=\scriptsize] {Full Mesh (10 links)};
                 \end{tikzpicture}
             \end{center}
+            \articleonly{
+            \par\small\emph{The mesh topology diagram shows five nodes in a full mesh configuration, where each node connects directly to every other node. This creates 10 total links (calculated using n(n-1)/2 where n=5). While expensive to implement, mesh topologies provide maximum redundancy and fault tolerance.}\par
+            }
         \end{column}
     \end{columns}
 \end{frame}
+
+\articleonly{
+While star and mesh topologies dominate modern networks, understanding legacy topologies helps explain the evolution of networking technology and why certain design decisions were made.
+}
 
 \subsection{Legacy Topologies}
 
@@ -446,6 +463,10 @@ Network topology describes how devices are arranged and connected in a network. 
             \end{center}
         \end{column}
     \end{columns}
+    
+    \articleonly{
+    \par\small\emph{The legacy topology diagrams illustrate bus and ring configurations. In the bus topology (left), all devices tap into a single central cable, like houses on a street. A break anywhere disables the entire network. In the ring topology (right), data flows in one direction around the circle with arrows showing the path. Both topologies are rarely used in modern LANs but may still appear in certain industrial or legacy systems.}\par
+    }
     
     \vspace{0.3em}
     \begin{alertblock}{Why Legacy?}
@@ -502,11 +523,12 @@ Network topology describes how devices are arranged and connected in a network. 
 % SECTION 4: THE OSI MODEL
 % =============================================================================
 \section{The OSI Model}
-\subsection{Introduction to the OSI Model}
 
 \articleonly{
 The Open Systems Interconnection (OSI) model is one of the most important concepts in networking. This seven-layer framework provides a systematic way to understand network communication and serves as an essential troubleshooting tool for network professionals.
 }
+
+\subsection{Introduction to the OSI Model}
 
 \begin{frame}{The OSI Model}
     \begin{itemize}
@@ -588,6 +610,9 @@ As data moves through the OSI layers, each layer adds its own header information
             \node[rotate=90, font=\footnotesize] at (-4.5, -1.8) {Encapsulation};
         \end{tikzpicture}
     \end{center}
+    \articleonly{
+    \par\small\emph{The encapsulation diagram illustrates how data is wrapped with headers as it moves down the OSI layers. Starting with application data, each layer adds its own control information: Layer 4 adds a TCP/UDP header creating a segment, Layer 3 adds an IP header creating a packet, Layer 2 adds MAC addresses and a Frame Check Sequence creating a frame, and finally Layer 1 transmits everything as bits on the wire.}\par
+    }
 \end{frame}
 
 \subsection{The Seven Layers}
@@ -658,6 +683,10 @@ Each of the seven OSI layers has specific responsibilities. We'll examine each l
         \end{column}
     \end{columns}
 \end{frame}
+
+\articleonly{
+Layers 1 and 2 work together to enable communication between devices on the same local network. Layer 1 moves the bits, while Layer 2 organizes them into frames and provides addressing and error checking.
+}
 
 \begin{frame}{Layer 3: Network}
     \begin{columns}[T]
@@ -983,6 +1012,9 @@ The SOHO router is a remarkable device that performs functions across multiple O
             \draw[wan, -{Stealth}] (router) -- (internet);
         \end{tikzpicture}
     \end{center}
+    \articleonly{
+    \par\small\emph{The SOHO network diagram shows a central router connecting four devices: two wired connections (PC and laptop on the left) and two wireless connections (phone and tablet on the right). The router serves as the gateway to the internet, demonstrating the star topology commonly used in small office and home networks.}\par
+    }
 \end{frame}
 
 \begin{frame}{SOHO Router: Physical Layer Functions}
@@ -1172,6 +1204,9 @@ The SOHO router is a remarkable device that performs functions across multiple O
                     \node[font=\tiny, right=0.3cm of router] {Public: 74.125.x.x};
                 \end{tikzpicture}
             \end{center}
+            \articleonly{
+            \par\small\emph{This diagram illustrates how a home network connects to the internet. The SOHO router assigns private IP addresses (192.168.1.x) to local devices and uses NAT to translate them to a single public IP address when communicating with the ISP. Data flows through the ISP's network to reach the broader internet and ultimately destination servers.}\par
+            }
         \end{column}
     \end{columns}
 \end{frame}

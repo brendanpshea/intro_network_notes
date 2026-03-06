@@ -17,16 +17,7 @@
 \institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
 \date{}
 
-\mode<article>{
-\let\originaltikzpicture\tikzpicture
-\let\endoriginaltikzpicture\endtikzpicture
-\renewenvironment{tikzpicture}[1][]{%
-    \originaltikzpicture[#1]%
-}{%
-    \endoriginaltikzpicture%
-    \par\small\emph{Figure: Diagram supporting the preceding content.}\par
-}
-}
+% Article mode: figures will have specific contextual descriptions added inline
 
 \begin{document}
 
@@ -180,10 +171,15 @@
 % SLIDE 6: How Does Data Travel on a Wire?
 % =============================================================================
 \section{Physical Layer Fundamentals}
+
+\articleonly{
+The physical layer (OSI Layer 1) is where all network communication begins. Understanding how data travels through cables, the difference between half-duplex and full-duplex transmission, and how Ethernet has evolved prepares us for selecting and installing the right cabling infrastructure. This section lays the technical foundation for everything that follows.
+}
+
 \subsection{Signal Transmission}
 
 \articleonly{
-Understanding how data travels at the physical layer is fundamental to network troubleshooting and design. In this section, we explore how electrical signals represent data and the key concepts of duplex communication.
+Data at the physical layer travels as electrical signals on copper cables or light pulses through fiber. These physical signals are derived from the binary (1s and 0s) representation used by all computers and networking devices.
 }
 
 \begin{frame}{How Does Data Travel on a Wire?}
@@ -246,6 +242,10 @@ Understanding how data travels at the physical layer is fundamental to network t
 % =============================================================================
 \subsection{Duplex Communication}
 
+\articleonly{
+Duplex communication describes how devices send and receive data simultaneously. The difference between half-duplex and full-duplex modes affects network efficiency dramatically, which is why modern switches enforce full-duplex.
+}
+
 \begin{frame}{Half-Duplex vs Full-Duplex}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -268,6 +268,9 @@ Understanding how data travels at the physical layer is fundamental to network t
                     \node[font=\tiny, above] at (1.5,0.1) {OR};
                     \draw[{Stealth}-, line width=2pt, rctcblue!50] (0.4,-0.1) -- (2.6,-0.1);
                 \end{tikzpicture}
+                \articleonly{
+                \par\small\emph{The half-duplex diagram (left) shows two PCs connected with an OR operation, representing that only one can transmit at a time. Signals cannot travel in both directions simultaneously without collision.}\par
+                }
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -289,6 +292,9 @@ Understanding how data travels at the physical layer is fundamental to network t
                     \node[font=\tiny, above] at (1.5,0.15) {AND};
                     \draw[{Stealth}-, line width=2pt, networkgreen] (0.4,-0.15) -- (2.6,-0.15);
                 \end{tikzpicture}
+                \articleonly{
+                \par\small\emph{The full-duplex diagram (right) shows the same two PCs with an AND operation, representing that both can transmit simultaneously in different directions without interference, effectively doubling network bandwidth.}\par
+                }
             \end{block}
         \end{column}
     \end{columns}
@@ -305,7 +311,7 @@ Understanding how data travels at the physical layer is fundamental to network t
 \subsection{Ethernet Standards}
 
 \articleonly{
-Ethernet standards define how networks operate at the physical layer. Understanding these standards and their naming conventions is essential for selecting appropriate cabling and equipment.
+Ethernet standards define how networks operate at the physical layer. Understanding how to read standard names and their implications for cable selection is essential for proper network design.
 }
 
 \begin{frame}{Ethernet Standards: Reading the Code}
@@ -358,6 +364,10 @@ Ethernet standards define how networks operate at the physical layer. Understand
 % SLIDE 9: Collisions - A Problem We Solved
 % =============================================================================
 \subsection{Collision Domains}
+
+\articleonly{
+Collisions were a fundamental problem in early Ethernet that limited network efficiency. Understanding how hubs and switches differ in managing collision domains explains why modern networks use switches exclusively.
+}
 
 \begin{frame}{Collisions: A Problem We Solved}
     \begin{columns}[T]
@@ -419,6 +429,10 @@ Ethernet standards define how networks operate at the physical layer. Understand
                     \node[font=\tiny, networkgreen] at (0,-2.1) {4 Collision Domains};
                 \end{tikzpicture}
             \end{center}
+            
+            \articleonly{
+            \par\small\emph{The comparison shows the fundamental difference between hubs and switches. A hub (left) creates one shared collision domain where all devices compete for transmission time, limiting network efficiency. A switch (right) creates separate collision domains for each port, enabling simultaneous communication and eliminating collisions. This is why switches completely replaced hubs in modern networks.}\par
+            }
         \end{column}
     \end{columns}
 \end{frame}
@@ -427,6 +441,10 @@ Ethernet standards define how networks operate at the physical layer. Understand
 % SLIDE 10: Ethernet Speeds - Then and Now
 % =============================================================================
 \subsection{Ethernet Evolution}
+
+\articleonly{
+Ethernet technology has evolved dramatically over four decades, with each speed increase requiring better cables and equipment. This evolution continues today as networks push toward 100 Gbps and beyond.
+}
 
 \begin{frame}{Ethernet Speeds: Then and Now}
     \begin{itemize}
@@ -465,6 +483,9 @@ Ethernet standards define how networks operate at the physical layer. Understand
             \node[below, font=\tiny, align=center] at (11,-0.2) {2010+\\Data Centers\\Cat8/Fiber};
         \end{tikzpicture}
     \end{center}
+    \articleonly{
+    \par\small\emph{The Ethernet timeline shows the 35-year progression from 10BASE-T (1990) through Gigabit Ethernet (now standard) to emerging 100 Gbps technologies. Each generation requires better cables: Cat3 to Cat5 to Cat5e to Cat6a. This pattern shows why choosing quality cabling today prepares networks for tomorrow's upgrades.}\par
+    }
     
     \vspace{0.3em}
     \begin{columns}[T]
@@ -533,6 +554,10 @@ Ethernet standards define how networks operate at the physical layer. Understand
                     \node[font=\tiny, alertred, right] at (2.2,0.3) {Corrupted!};
                 \end{tikzpicture}
             \end{center}
+            
+            \articleonly{
+            \par\small\emph{The signal quality comparison shows how good cables maintain clean, distinguishable voltage transitions (top graph), while poor cables introduce noise and signal degradation (bottom), making it difficult for receivers to correctly interpret bits. This is why higher speeds require better cables.}\par
+            }
             
             \vspace{0.5em}
             \begin{block}{Cable Categories}
@@ -640,10 +665,15 @@ Ethernet standards define how networks operate at the physical layer. Understand
 % SLIDE 15: Why Twisted Pair? The Science of Interference
 % =============================================================================
 \section{Copper Cabling}
+
+\articleonly{
+Copper cabling is the most common medium for local area networks because it is inexpensive, easy to install, and flexible. This section covers the different types of copper cables, their specifications, and how to select and install them according to industry standards.
+}
+
 \subsection{Twisted Pair Technology}
 
 \articleonly{
-Twisted pair cabling is the most common medium for LAN connectivity. The twisting of wire pairs provides protection against electromagnetic interference, making reliable high-speed data transmission possible.
+Twisted pair cabling has been the foundation of telecommunications for over 140 years. The elegant simplicity of twisting wires together makes it remarkably effective at rejecting electromagnetic interference while remaining affordable and easy to work with.
 }
 
 \begin{frame}{Why Twisted Pair? The Science of Interference}
@@ -685,6 +715,10 @@ Twisted pair cabling is the most common medium for LAN connectivity. The twistin
 % SLIDE 16: Unshielded Twisted Pair (UTP)
 % =============================================================================
 \subsection{Unshielded Twisted Pair (UTP)}
+
+\articleonly{
+UTP is the default choice for virtually all modern LAN installations. Its balance of cost, flexibility, and performance makes it ideal for offices and homes, though it requires environmental consideration.
+}
 
 \begin{frame}[t,shrink=12]{Unshielded Twisted Pair (UTP)}
     \begin{columns}[T]
@@ -740,6 +774,10 @@ Twisted pair cabling is the most common medium for LAN connectivity. The twistin
 % =============================================================================
 \subsection{Shielded Twisted Pair (STP)}
 
+\articleonly{
+STP adds shielding to protect against electromagnetic interference, making it necessary in harsh industrial environments. However, the additional cost and installation complexity limit its use to situations where EMI is a genuine concern.
+}
+
 \begin{frame}[t,shrink=14]{Shielded Twisted Pair (STP)}
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
@@ -787,6 +825,10 @@ Twisted pair cabling is the most common medium for LAN connectivity. The twistin
 % =============================================================================
 % SLIDE 18: Cat Ratings - What the Numbers Mean
 % =============================================================================
+
+\articleonly{
+Category ratings standardize cable specifications, allowing network designers to quickly assess whether a cable meets their speed and distance requirements. Understanding these ratings prevents costly mistakes in cabling installations.
+}
 \subsection{Category Ratings}
 
 \begin{frame}[t,shrink=10]{Cat Ratings: What Do the Numbers Mean?}
@@ -1309,6 +1351,10 @@ Structured cabling provides the physical organization that keeps network infrast
 % =============================================================================
 \subsection{Patch Panels and Termination}
 
+\articleonly{
+Patch panels represent the interface between permanent cabling and temporary connections. This separation makes modern networks flexible---you can moves, adds, and changes without disturbing the underlying infrastructure.
+}
+
 \begin{frame}{Patch Panels}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
@@ -1382,6 +1428,10 @@ Structured cabling provides the physical organization that keeps network infrast
 % SLIDE 31: Cable Installation Best Practices
 % =============================================================================
 \subsection{Installation Best Practices}
+
+\articleonly{
+Proper cable installation requires attention to bend radius, environmental considerations, and safety codes. These practices prevent signal degradation, physical damage, and safety hazards that could compromise your network for years to come.
+}
 
 \begin{frame}{Cable Installation Best Practices}
     \begin{columns}[T]
