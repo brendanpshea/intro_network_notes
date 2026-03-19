@@ -1,0 +1,10 @@
+\beamer@sectionintoc {3}{Authentication}{6}{0}{1}
+\beamer@subsectionintoc {3}{1}{Identity Verification and Trust}{6}{0}{1}
+\beamer@sectionintoc {4}{Authorization and Account Management}{16}{0}{2}
+\beamer@subsectionintoc {4}{1}{Policy Enforcement and Directory Services}{16}{0}{2}
+\beamer@sectionintoc {5}{Network Hardening}{23}{0}{3}
+\beamer@subsectionintoc {5}{1}{Defense in Depth and Service Reduction}{23}{0}{3}
+\beamer@sectionintoc {6}{Switch Security}{25}{0}{4}
+\beamer@subsectionintoc {6}{1}{NAC, Port Controls, and Visibility}{25}{0}{4}
+\beamer@sectionintoc {7}{Network Security Rules}{32}{0}{5}
+\beamer@subsectionintoc {7}{1}{ACLs, Proxies, and Filtering Controls}{32}{0}{5}

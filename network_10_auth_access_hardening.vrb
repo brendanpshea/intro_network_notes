@@ -1,0 +1,17 @@
+\frametitle{Example: Reading a Cisco ACL}
+\footnotesize
+    An extended IP access list dictates precisely what is permitted or denied, matched top-to-bottom.
+
+    \begin{exampleblock}{Cisco IOS Extended ACL Example}
+        \scriptsize
+\begin{verbatim}
+R1(config)# ip access-list extended GUEST_RESTRICTION
+R1(config-ext-nacl)# 10 permit udp any any eq 53       ! Allow DNS
+R1(config-ext-nacl)# 20 permit tcp any any eq 80       ! Allow HTTP
+R1(config-ext-nacl)# 30 permit tcp any any eq 443      ! Allow HTTPS
+R1(config-ext-nacl)# 40 deny ip any 10.0.0.0 0.255.255.255 ! Block Internal
+R1(config-ext-nacl)# 50 permit ip any any              ! Allow Internet
+\end{verbatim}
+    \end{exampleblock}
+
+    If line \texttt{40} and \texttt{50} were swapped, no internal traffic would ever be matched by line \texttt{40} because \texttt{permit ip any any} stops the checking process.
