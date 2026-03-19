@@ -620,9 +620,13 @@ Threat analysis identifies disruptive and malicious behaviors so teams can prior
         \end{column}
         \begin{column}{0.25\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \node (snoopy) {\icondog[1cm]};
-                    \node[above right=0.1cm of snoopy, cloud, draw, aspect=2, font=\tiny] {It's an inside job!};
+                \begin{tikzpicture}[scale=0.65]
+                    \node[draw, rounded corners, fill=yellow!20, align=center, minimum width=2.2cm] (alert) at (0, 1.4) {Dashboard\\Alert};
+                    \node[draw, rounded corners, fill=red!10, align=center, minimum width=2cm] (infected) at (-1.0, -0.1) {Accounting\\PCs};
+                    \node[draw, rounded corners, fill=green!10, align=center, minimum width=2cm] (action) at (1.0, -0.1) {Contain\\Port};
+                    \draw[->, thick, alertred] (alert) -- (infected) node[midway, left, font=\tiny] {Spike};
+                    \draw[->, thick, networkgreen] (alert) -- (action) node[midway, right, font=\tiny] {Isolate};
+                    \node[font=\tiny, align=center] at (0, -1.6) {Thousands of requests is the clue.};
                 \end{tikzpicture}
             \end{center}
         \end{column}
@@ -885,10 +889,16 @@ This section examines identity and traffic manipulation attacks such as spoofing
         \end{column}
         \begin{column}{0.25\textwidth}
             \begin{center}
-                \begin{tikzpicture}
-                    \node (cat) {\iconcat[1cm]};
-                    \node[above, font=\tiny] at (0, 0.6) {Evil Grin};
-                    \node (wifi) at (1, 1) {\faIcon{wifi}};
+                \begin{tikzpicture}[scale=0.7]
+                    \node (user) at (-1.8, 0) {\icondog[0.6cm]};
+                    \node[above, font=\tiny] at (-1.8, 0.45) {Snoopy};
+                    \node (cat) at (0, 0) {\iconcat[0.7cm]};
+                    \node[above, font=\tiny, text=alertred] at (0, 0.45) {ARP Poisoning};
+                    \node (router) at (1.8, 0) {\iconrouter[0.6cm]};
+                    \node[above, font=\tiny] at (1.8, 0.45) {Router};
+                    \draw[->, thick, alertred] (user) -- (cat) node[midway, above, font=\tiny] {Traffic};
+                    \draw[->, thick, alertred] (cat) -- (router) node[midway, above, font=\tiny] {Traffic};
+                    \node[font=\tiny, fill=white, draw, align=center, text width=1.9cm] at (0, -1.0) {Certificate warning\\on-path interception};
                 \end{tikzpicture}
             \end{center}
             \vspace{-0.2em}
