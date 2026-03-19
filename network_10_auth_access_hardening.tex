@@ -1,0 +1,1124 @@
+﻿% Select document class: uncomment one of the following
+\documentclass[aspectratio=169]{beamer}  % For presentation mode
+%\documentclass[11pt]{article}            % For article mode
+%\usepackage{beamerarticle}               % Uncomment with article class
+
+% =============================================================================
+% COMMON PREAMBLE
+% =============================================================================
+\input{network_preamble.tex}
+
+% =============================================================================
+% DOCUMENT INFO
+% =============================================================================
+\title[Identity and Hardening]{Module 10: Identity, Access, and Network Hardening}
+\subtitle{Intro to Networks}
+\author{Brendan Shea, PhD}
+\institute{Rochester Community and Technical College}
+\date{}
+
+% Article mode: figures will have specific contextual descriptions added inline
+
+\begin{document}
+
+% =============================================================================
+% Module 10.0: Identity, Access, and Network Hardening
+% =============================================================================
+
+% SLIDE 1: Title
+\begin{frame}
+    \titlepage
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            \node (id) at (-2.8, 0) {\faIcon{id-badge}};
+            \node[below=0.1cm of id, font=\tiny] {Identity};
+
+            \node (shield) at (0, 0) {\faIcon{shield-alt}};
+            \node[below=0.1cm of shield, font=\tiny] {Hardening};
+
+            \node (switch) at (2.8, 0) {\iconswitch[0.9cm]};
+            \node[below=0.1cm of switch, font=\tiny] {Policy Enforcement};
+
+            \draw[->, thick, rctcblue] (id) -- (shield);
+            \draw[->, thick, networkgreen] (shield) -- (switch);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% Table of contents in presentation mode only
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
+\section*{Review from Module 9}
+
+\begin{frame}{Review: Security Concepts Foundations}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Key Module 9 Ideas}
+                \begin{itemize}
+                    \item The CIA triad guides security tradeoffs: confidentiality, integrity, availability.
+                    \item Threats include malware, spoofing, social engineering, and denial-of-service attacks.
+                    \item Defense in depth combines layered technical and administrative controls.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Why This Matters in Module 10}
+                This module operationalizes those ideas by implementing identity controls, hardening systems, and enforcing network security rules.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section*{Learning Outcomes}
+
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.5em}
+    \small
+    \begin{itemize}
+        \item Explain \keyterm{access control} and distinguish authentication from authorization.
+        \item Compare authentication methods: passwords, MFA, tokens, certificates, and biometrics.
+        \item Describe local authentication, centralized identity, SSO, Kerberos, and federated identity with SAML.
+        \item Explain digital certificates, PKI trust chains, and key lifecycle management.
+        \item Configure remote authentication concepts using RADIUS and TACACS+ design patterns.
+        \item Apply authorization models including \keyterm{RBAC} and privileged access management (PAM).
+        \item Describe directory services with \keyterm{LDAP} and secure bindings with \keyterm{LDAPS}.
+        \item Implement defense-in-depth hardening practices for devices and network services.
+        \item Apply switch security controls including port security, 802.1X, port guards, and port mirroring.
+        \item Design and troubleshoot ACL-based security rules, proxy policies, and content filtering controls.
+    \end{itemize}
+\end{frame}
+
+% =============================================================================
+% SECTION 10.1
+% =============================================================================
+
+\section{Authentication}
+\subsection{Identity Verification and Trust}
+
+\articleonly{
+This section introduces identity verification workflows: access control models, authentication methods, centralized identity protocols, and remote authentication architectures.
+}
+
+\begin{frame}{Access Control}
+    \begin{columns}[T]
+        \begin{column}{0.53\textwidth}
+            \footnotesize
+            Think of access control as a bouncer plus a clipboard:
+            \begin{itemize}
+                \item \textbf{Authentication}: Prove who you are.
+                \item \textbf{Authorization}: Determine what you can do.
+                \item \textbf{Accounting}: Log what you did.
+            \end{itemize}
+            \vspace{0.4em}
+            \textbf{Beginner tip:} Security teams often call this \textbf{AAA}. If one part is weak, the whole process is weak.
+            \vspace{0.4em}
+
+            \textbf{Zero-trust mindset:} do not trust users or devices just because they are "inside" the network.
+
+            \begin{exampleblock}{Typical Login Flow}
+                \footnotesize
+                1) Identify user/device \textrightarrow\ 2) Authenticate \textrightarrow\ 3) Apply authorization policy \textrightarrow\ 4) Log actions.
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.43\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.75]
+                    \node (u) at (0, 2.5) {\iconuser[0.6cm]};
+                    \node[font=\tiny, right] at (0.2, 2.5) {User};
+                    \node (fw) at (0, 1.2) {\iconlock[0.6cm]};
+                    \node[font=\tiny, right] at (0.2, 1.2) {AuthN};
+                    \node (policy) at (0, -0.1) {\faIcon{clipboard-check}};
+                    \node[font=\tiny, right] at (0.2, -0.1) {AuthZ};
+                    \node (svc) at (0, -1.4) {\iconserver[0.6cm]};
+                    \node[font=\tiny, right] at (0.2, -1.4) {Resource};
+                    \draw[->, thick] (u) -- (fw);
+                    \draw[->, thick] (fw) -- (policy);
+                    \draw[->, thick] (policy) -- (svc);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Authentication Methods}
+    \footnotesize
+    Authentication methods answer one question: \textbf{how do we prove identity in a way that is both usable and hard to fake?}
+    \vspace{0.5em}
+
+    Most systems combine factors from these categories:
+    \begin{itemize}
+        \item \textbf{Something you know}: password or PIN.
+        \item \textbf{Something you have}: phone app, smart card, or hardware token.
+        \item \textbf{Something you are}: fingerprint, face, or voice.
+    \end{itemize}
+
+    \textbf{Beginner takeaway}
+    \begin{itemize}
+        \item Password-only login is easy to deploy but easy to phish.
+        \item MFA makes account takeover much harder.
+        \item For admins and sensitive systems, use phishing-resistant MFA whenever possible.
+    \end{itemize}
+
+    \begin{exampleblock}{Quick Mental Model}
+        \footnotesize
+        Single-factor login asks for one proof. MFA asks for independent proofs from different categories.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Example: Why Phishing-Resistant MFA Matters}
+    \footnotesize
+    Phishing-resistant MFA is designed to survive a fake login page. The attacker can steal a password, but the second factor still fails unless the real site is present.
+
+    \vspace{0.4em}
+    \begin{exampleblock}{Simple comparison}
+        \begin{itemize}
+            \item \textbf{SMS code}: better than password-only, but codes can be stolen or redirected.
+            \item \textbf{Authenticator app}: good for many users, but not always phishing-resistant.
+            \item \textbf{Hardware key or passkey}: best choice for admins and high-risk accounts.
+        \end{itemize}
+    \end{exampleblock}
+
+    \begin{alertblock}{Beginner rule}
+        \footnotesize
+        If the account is important enough to protect, use the strongest factor you can deploy consistently.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Local Authentication}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            Local authentication means each device stores its own accounts.
+            \vspace{0.4em}
+
+            \textbf{Where it helps}
+            \begin{itemize}
+                \item Break-glass access during identity-server outages.
+                \item Small isolated labs.
+                \item Edge systems with limited features.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
+            \textbf{Why it is risky at scale}
+            \begin{itemize}
+                \item Password policy drifts across devices.
+                \item Departed users may remain active on forgotten systems.
+                \item Auditing is harder because logs are fragmented.
+            \end{itemize}
+
+            \textbf{Practical rule:} keep local admin only for emergency fallback, and use centralized identity for daily operations.
+
+            \begin{alertblock}{Design Guardrail}
+                \footnotesize
+                Keep one documented break-glass account per critical system, and test it quarterly.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Single Sign-On and Kerberos}
+    \begin{columns}[T]
+        \begin{column}{0.53\textwidth}
+            \footnotesize
+            Beginners often confuse SSO and Kerberos. They are related, but not identical.
+            \vspace{0.4em}
+
+            \textbf{SSO} is the user experience: sign in once, then access multiple services.
+
+            \textbf{Kerberos} is one protocol that can power SSO by issuing temporary tickets instead of repeatedly sending passwords.
+            \vspace{0.4em}
+
+            \textbf{Why this matters:} less password exposure, fewer repeated prompts, and easier centralized policy enforcement.
+        \end{column}
+        \begin{column}{0.43\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.67]
+                    \node[draw, rounded corners, fill=blue!10] (user) at (0, 2.5) {User};
+                    \node[draw, rounded corners, fill=yellow!20] (kdc) at (0, 1) {KDC};
+                    \node[draw, rounded corners, fill=green!20] (app) at (0, -0.8) {Service};
+                    \draw[->, thick] (user) -- (kdc) node[midway, right, font=\tiny] {1) Login};
+                    \draw[->, thick] (kdc) -- (user) node[midway, left, font=\tiny] {2) TGT};
+                    \draw[->, thick] (user) -- (app) node[midway, right, font=\tiny] {3) Service Ticket};
+                \end{tikzpicture}
+            \end{center}
+            \vspace{0.2em}
+            \footnotesize
+            Kerberos flow: get a Ticket Granting Ticket (TGT), then exchange it for service-specific tickets.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Digital Certificates and PKI}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            A certificate is like a digital ID card that binds an identity to a public key.
+            \vspace{0.4em}
+
+            Systems trust that ID card because a Certificate Authority signs it.
+            \begin{itemize}
+                \item Common in HTTPS, VPNs, secure Wi-Fi auth, and device management.
+                \item Validated through a chain of trust back to a root CA.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            \textbf{PKI building blocks}
+            \begin{itemize}
+                \item Root and subordinate CAs.
+                \item Registration/identity validation workflows.
+                \item Revocation checks (CRL/OCSP).
+            \end{itemize}
+
+            \textbf{Operational reality:} most PKI outages come from expired certs or broken revocation/renewal processes.
+
+            \begin{exampleblock}{Beginner Checkpoint}
+                \footnotesize
+                If trust breaks, check certificate validity dates, trust chain, and revocation status first.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Key Management}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            Key management is the difference between "we use encryption" and "encryption actually protects us."
+            \vspace{0.4em}
+            \begin{block}{Key Lifecycle}
+                \footnotesize
+                \begin{enumerate}
+                    \item Generate keys with strong entropy.
+                    \item Store keys in secure hardware/software vaults.
+                    \item Rotate keys on schedule or incident trigger.
+                    \item Revoke and destroy old keys.
+                \end{enumerate}
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{alertblock}{Common Failure Modes}
+                \footnotesize
+                \begin{itemize}
+                    \item Hardcoded secrets in scripts.
+                    \item Shared private keys across systems.
+                    \item Long-lived keys without rotation.
+                \end{itemize}
+            \end{alertblock}
+            \begin{exampleblock}{Best Practice}
+                \footnotesize
+                Automate key rotation and audit key access events. If a key is copied manually, treat it as a risk event.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Federated Identity and SAML}
+    \begin{columns}[T]
+        \begin{column}{0.54\textwidth}
+            \footnotesize
+            Federated identity lets one organization trust another for login, which is common in cloud and partner integrations.
+            \vspace{0.4em}
+            \begin{block}{SAML in Plain Language}
+                \footnotesize
+                The Identity Provider sends a signed statement (assertion) that says who the user is and what attributes they have.
+                \begin{itemize}
+                    \item Supports SSO across organizational boundaries.
+                    \item Reduces duplicate user accounts across services.
+                    \item Makes partner onboarding faster when trust is configured correctly.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.66]
+                    \node[draw, fill=blue!10] (idp) at (0, 2) {Identity Provider};
+                    \node[draw, fill=green!10] (sp) at (0, -0.2) {Service Provider};
+                    \node (u) at (-2.2, 0.9) {\iconuser[0.5cm]};
+                    \draw[->, thick] (u) -- (idp) node[midway, above, font=\tiny] {Log in};
+                    \draw[->, thick] (idp) -- (sp) node[midway, right, font=\tiny] {SAML Assertion};
+                    \draw[->, thick] (u) -- (sp) node[midway, below, font=\tiny] {Access Granted};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Remote Authentication}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            \textbf{RADIUS}
+            \begin{itemize}
+                \item Common for endpoint access and 802.1X.
+                \item Combines authentication and authorization.
+                \item Uses UDP and shared secrets.
+            \end{itemize}
+
+            \textbf{TACACS+}
+            \begin{itemize}
+                \item Common for network device administration.
+                \item Separates authentication, authorization, and accounting.
+                \item Uses TCP and supports command-level control.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            \textbf{How to choose}
+            \begin{itemize}
+                \item Use RADIUS for endpoint access workflows (wired/wireless 802.1X).
+                \item Use TACACS+ when you need command-by-command control on network devices.
+            \end{itemize}
+
+            \begin{alertblock}{Design Guidance}
+                \footnotesize
+                \begin{itemize}
+                    \item Keep local break-glass accounts with strong controls.
+                    \item Use redundant AAA servers.
+                    \item Encrypt management traffic (SSH, TLS, IPsec).
+                \end{itemize}
+            \end{alertblock}
+            \footnotesize
+            Log all admin authentication attempts for auditing and incident response.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Case Study: Cinderella's Co-Working Login Chaos}
+    \begin{block}{Scenario}
+        \scriptsize
+        Cinderella manages a startup from a co-working space. The team relies on CRM, source control, and invoicing SaaS tools.
+
+        A contractor offboarded Friday at 5:00 PM. Monday morning, finance finds unauthorized invoice edits and a new vendor payout rule.
+
+        Initial findings:
+        \begin{itemize}\setlength{\itemsep}{1pt}
+            \item Contractor account was removed in CRM, but still active in invoicing.
+            \item Login came from a residential IP at 11:42 PM Sunday.
+        \end{itemize}
+    \end{block}
+    \scriptsize
+    \textbf{Investigation Questions}
+    \begin{enumerate}\setlength{\itemsep}{1pt}
+        \item Which identity design flaw is most likely: local accounts, missing federation, or weak deprovisioning?
+        \item What controls should be prioritized first to prevent recurrence?
+        \item Which audit data would confirm impact and recovery?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Case Study Solution: Cinderella's Co-Working Login Chaos}
+    \begin{exampleblock}{Recommended Response}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Root issue}: Split identity stores and manual offboarding created a deprovisioning gap.
+            \item \textbf{Immediate containment}: Disable all contractor sessions/tokens, lock invoice workflow changes, and revert unauthorized records.
+            \item \textbf{Structural fix}: Move all apps to centralized identity with SSO + MFA and automated joiner/mover/leaver workflows.
+            \item \textbf{Validation}: Correlate AAA and app audit logs to confirm timeline, source IP, impacted objects, and restoration completeness.
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{alertblock}{Security Principle}
+        \footnotesize
+        Identity controls are strongest when onboarding, authorization, and offboarding are all centralized and auditable.
+    \end{alertblock}
+\end{frame}
+
+% =============================================================================
+% SECTION 10.2
+% =============================================================================
+
+\section{Authorization and Account Management}
+\subsection{Policy Enforcement and Directory Services}
+
+\articleonly{
+This section covers authorization models, privileged access, account governance, and centralized directory integration with LDAP and LDAPS.
+}
+
+\begin{frame}{Authorization and Role-Based Access Control}
+    \footnotesize
+    Authorization is where policy meets day-to-day operations.
+    \vspace{0.5em}
+
+    \textbf{Core ideas}
+    \begin{itemize}
+        \item \textbf{RBAC}: Assign permissions to roles, then assign users to roles.
+        \item \textbf{Least privilege}: Give only the access needed to do the job.
+        \item \textbf{Separation of duties}: Split risky tasks across multiple people.
+    \end{itemize}
+
+    \textbf{Simple role example}
+    \begin{itemize}
+        \item Helpdesk: reset passwords.
+        \item Network admin: configure switches.
+        \item Security analyst: read logs, no config rights.
+    \end{itemize}
+
+    \textbf{Why beginners should care:} most access incidents are not "hacks"; they are permission mistakes.
+
+    \begin{exampleblock}{One-Minute Workflow}
+        \footnotesize
+        Define job role, map minimum permissions, test with a non-admin account, then approve role for production use.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Privileged Access Management}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \footnotesize
+            PAM exists because admin credentials are high-value attacker targets.
+            \vspace{0.4em}
+
+            \textbf{Core controls}
+            \begin{itemize}
+                \item Vault and rotate privileged credentials.
+                \item Use just-in-time elevation instead of always-on admin rights.
+                \item Require approval workflows for sensitive actions.
+                \item Record privileged sessions for investigation and training.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \footnotesize
+            \textbf{Quick beginner win}
+            \begin{itemize}
+                \item Remove shared admin logins.
+                \item Use unique named accounts.
+                \item Log privileged actions centrally.
+            \end{itemize}
+
+            \begin{exampleblock}{What Good Looks Like}
+                \footnotesize
+                Admin rights are temporary, approved, and fully recorded.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Lightweight Directory Access Protocol (LDAP)}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            LDAP is the directory "phone book" for users, groups, and attributes.
+            \vspace{0.4em}
+
+            \begin{itemize}
+                \item Central source for identity lookups.
+                \item Group membership used by apps for authorization decisions.
+                \item Standard protocol supported across many platforms.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{exampleblock}{Directory Structure}
+                \footnotesize
+                Example DN: \texttt{cn=alice,ou=engineering,dc=example,dc=edu}
+            \end{exampleblock}
+            \begin{alertblock}{Operational Note}
+                \footnotesize
+                Group structure quality directly affects authorization accuracy.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LDAP Secure (LDAPS)}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            Plain LDAP can expose credentials and directory queries in transit.
+            \vspace{0.4em}
+            \textbf{LDAPS/StartTLS} encrypts that traffic and validates server identity with certificates.
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Hardening Checklist}
+                \footnotesize
+                \begin{itemize}
+                    \item Disable anonymous binds.
+                    \item Enforce TLS 1.2+ and strong cipher suites.
+                    \item Restrict bind account privileges.
+                    \item Log bind failures and unusual queries.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Verifying LDAPS on Linux}
+    \footnotesize
+    Consider verifying a secure LDAP connection (Port 636) using \texttt{ldapsearch} on Linux.
+    \vspace{0.5em}
+    \begin{exampleblock}{Encrypted Lookup (LDAPS)}
+        \scriptsize
+\begin{verbatim}
+$ ldapsearch -H ldaps://ad.example.com:636 -D "cn=admin,dc=example,dc=com" -W
+Enter LDAP Password:
+# extended LDIF
+#
+# LDAPv3
+# request bind using simple authentication
+# LDAP successful bind ...
+\end{verbatim}
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Case Study: Little Red's Hospital Access Mix-Up}
+    \begin{block}{Scenario}
+        \footnotesize
+        Little Red works at a hospital help desk. During onboarding week, she notices interns can open payroll and HR records.
+
+        After checking directory groups, she finds one broad group (\texttt{staff\_all}) grants access to both help desk tools and HR compensation modules.
+
+        Additional context:
+        \begin{itemize}
+            \item Two temporary interns were added with full-time employee role template.
+            \item A shared "HRAdmin" account was used during weekend support.
+            \item No approval trail exists for payroll-export actions.
+        \end{itemize}
+    \end{block}
+    \textbf{Questions}
+    \begin{enumerate}
+        \item Which principle failed: least privilege, separation of duties, or both?
+        \item How should RBAC and LDAP groups be redesigned?
+        \item Which PAM controls should be added for HR-admin functions?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Case Study Solution: Little Red's Hospital Access Mix-Up}
+    \begin{exampleblock}{Recommended Response}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Failure}: Least privilege and separation of duties were both violated by broad group mapping and shared admin usage.
+            \item \textbf{Directory redesign}: Split \texttt{staff\_all} into role-specific groups (intern, helpdesk, HR analyst, payroll admin) with minimum permissions.
+            \item \textbf{PAM controls}: Remove shared admin account, require just-in-time elevation, and record payroll-export sessions.
+            \item \textbf{Governance}: Add access recertification and manager approval for high-risk HR permissions.
+        \end{enumerate}
+    \end{exampleblock}
+\end{frame}
+
+% =============================================================================
+% SECTION 10.3
+% =============================================================================
+
+\section{Network Hardening}
+\subsection{Defense in Depth and Service Reduction}
+
+\articleonly{
+This section focuses on reducing attack surface through layered controls, secure baseline configurations, and service minimization.
+}
+
+\begin{frame}{Defense in Depth}
+    \footnotesize
+    Defense in depth means building multiple layers so one failure does not become a full compromise.
+    \vspace{0.4em}
+
+    \begin{center}
+        \begin{tikzpicture}[scale=0.8]
+            \draw[fill=red!20] (0,0) circle (2.7cm);
+            \node at (0, 2.1) {Perimeter};
+            \draw[fill=yellow!20] (0,0) circle (1.9cm);
+            \node at (0, 1.3) {Network};
+            \draw[fill=green!20] (0,0) circle (1.1cm);
+            \node at (0, 0.5) {Host};
+            \draw[fill=blue!20] (0,0) circle (0.4cm);
+            \node[font=\tiny] at (0, 0) {Data};
+        \end{tikzpicture}
+    \end{center}
+    \footnotesize
+    No single control is sufficient. Layer preventive, detective, and corrective controls.
+    \vspace{0.3em}
+    \textbf{Beginner pitfall:} many teams overinvest in one control (for example, firewall rules) and underinvest in identity, patching, and monitoring.
+\end{frame}
+
+\begin{frame}{Example: Layered Hardening for a Small Office}
+    \footnotesize
+    A small office does not need exotic tools, but it does need several simple controls working together.
+
+    \vspace{0.4em}
+    \begin{table}[]
+        \renewcommand{\arraystretch}{1.2}
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF} \textbf{Layer} & \textbf{Example control} & \textbf{What it prevents} \\ \hline
+        Identity & MFA for remote logins & Stolen password alone is not enough \\ \hline
+        Network & VLANs and port security & Rogue devices on wall ports \\ \hline
+        Host & Patch management and local firewall & Known exploits and exposed services \\ \hline
+        Monitoring & Syslog and alerts & Attacks that still slip through \\ \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{exampleblock}{Beginner takeaway}
+        \footnotesize
+        If any one layer fails, the others still slow the attacker down and create an audit trail.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Device and Service Hardening}
+    \begin{columns}[T]
+        \begin{column}{0.49\textwidth}
+            \footnotesize
+            \textbf{Device hardening}
+            \begin{itemize}
+                \item Change default credentials.
+                \item Disable unused interfaces and management services.
+                \item Restrict management plane via ACLs and trusted hosts.
+                \item Apply patch and firmware updates on schedule.
+            \end{itemize}
+            \textbf{Execution sequence:} baseline config, remove defaults, lock management access, then patch.
+        \end{column}
+        \begin{column}{0.49\textwidth}
+            \footnotesize
+            \textbf{Service hardening}
+            \begin{itemize}
+                \item Remove unneeded daemons.
+                \item Replace insecure protocols (Telnet, FTP, HTTP).
+                \item Enforce secure protocols (SSH, SFTP, HTTPS, SNMPv3).
+                \item Use host firewalls and logging.
+            \end{itemize}
+            \textbf{Goal:} reduce attack surface before attackers scan it.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SECTION 10.4
+% =============================================================================
+
+\section{Switch Security}
+\subsection{NAC, Port Controls, and Visibility}
+
+\articleonly{
+This section covers switch-level enforcement controls: access authentication, port security, guard features, and traffic visibility.
+}
+
+\begin{frame}{Network Access Control and Port Security}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            \textbf{NAC fundamentals}
+            \begin{itemize}
+                \item Validate user/device identity before granting network access.
+                \item Optionally check posture (compliance state) before allowing full access.
+            \end{itemize}
+
+            \textbf{Port security basics}
+            \begin{itemize}
+                \item Limit MAC addresses per access port.
+                \item Bind known MAC addresses (static or sticky).
+                \item Choose a violation action: protect, restrict, or shutdown.
+            \end{itemize}
+            \textbf{Operational pattern:} authenticate first, assign policy/VLAN second, monitor continuously.
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
+            \textbf{Outcome}
+            \begin{itemize}
+                \item Reduced rogue-device risk.
+                \item Fewer unauthorized switchport activations.
+                \item Better visibility into who connects where.
+            \end{itemize}
+            \vspace{0.4em}
+            \textbf{Design tip:} secure edge templates make new ports safer by default.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Port Security on a Lobby Switch}
+    \footnotesize
+    Port security is easiest to understand when you see the policy and the failure message together.
+
+    \vspace{0.4em}
+    \begin{exampleblock}{Simple access-port policy}
+        \scriptsize
+\begin{verbatim}
+interface gi1/0/2
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ switchport port-security violation shutdown
+\end{verbatim}
+    \end{exampleblock}
+
+    \begin{alertblock}{What happens if a second device appears?}
+        \scriptsize
+\begin{verbatim}
+%PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred,
+port Gi1/0/2 is shutting down.
+\end{verbatim}
+    \end{alertblock}
+
+    The beginner rule is simple: one wall jack, one expected device, one known MAC address.
+\end{frame}
+
+\begin{frame}{Extensible Authentication Protocol and IEEE 802.1X}
+    \begin{columns}[T]
+        \begin{column}{0.53\textwidth}
+            \footnotesize
+            802.1X controls \textbf{who can use a switch port or Wi-Fi connection} before full network access is granted.
+            \vspace{0.4em}
+
+            \textbf{Three roles to remember}
+            \begin{itemize}
+                \item \textbf{Supplicant}: endpoint asking for access.
+                \item \textbf{Authenticator}: switch or AP enforcing access.
+                \item \textbf{Authentication server}: usually RADIUS validating credentials.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.43\textwidth}
+            \begin{exampleblock}{EAP Methods}
+                \footnotesize
+                \begin{itemize}
+                    \item EAP-TLS (certificate-based, strong)
+                    \item PEAP (tunnel + inner auth)
+                    \item EAP-TTLS and other variants
+                \end{itemize}
+            \end{exampleblock}
+            \begin{alertblock}{Security Note}
+                \footnotesize
+                Certificate-based methods generally provide stronger phishing resistance.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Port Guards}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Guard Features}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{BPDU Guard}: Shuts port on unexpected BPDUs.
+                    \item \textbf{Root Guard}: Prevents unauthorized root bridge election.
+                    \item \textbf{DHCP Snooping}: Blocks rogue DHCP offers.
+                    \item \textbf{Dynamic ARP Inspection}: Validates ARP packets.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{alertblock}{Why It Matters}
+                \footnotesize
+                Guard features stop common L2 attacks before they spread.
+            \end{alertblock}
+            \footnotesize
+            Apply these controls at access ports first, then validate uplink/trunk exceptions carefully.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Dealing with Port Violations}
+    \footnotesize
+    When a guard feature triggers on a Cisco switch, the port transitions to an \texttt{err-disabled} state.
+
+    \vspace{0.5em}
+    \begin{exampleblock}{Console Output: Port Security Violation}
+        \scriptsize
+\begin{verbatim}
+Switch# 
+%PM-4-ERR_DISABLE: psecure-mac-violation error detected on Gi1/0/2, 
+putting Gi1/0/2 in err-disable state
+
+Switch# show interfaces status err-disabled
+Port      Name               Status       Reason               Err-disabled Vlans
+Gi1/0/2   Lobby_Printer      err-disabled psecure-mac-violation
+\end{verbatim}
+    \end{exampleblock}
+    
+    To recover, first remove the unauthorized device, then \texttt{shutdown} and \texttt{no shutdown} the port.
+\end{frame}
+
+\begin{frame}{Port Mirroring}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \begin{block}{SPAN / Port Mirroring}
+                \footnotesize
+                Copies traffic from source ports/VLANs to a monitor port for analysis tools.
+            \end{block}
+            \begin{exampleblock}{Use Cases}
+                \footnotesize
+                \begin{itemize}
+                    \item Security investigations and packet capture.
+                    \item IDS/IPS visibility without inline risk.
+                    \item Performance troubleshooting.
+                \end{itemize}
+            \end{exampleblock}
+            \footnotesize
+            Mirror only what you need. Excess mirrored traffic can overwhelm analysis tools and hide important events.
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \begin{alertblock}{Caution}
+                \footnotesize
+                Mirroring can expose sensitive data; restrict access and protect capture storage.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Case Study: Jack and the Beanstalk Data Center}
+    \begin{block}{Scenario}
+        \footnotesize
+        Jack's cloud startup moved into a high-rise data center floor with shared contractor access. During a maintenance window, a visitor plugs a mini-switch into an open wall port to "get more jacks".
+
+        Over the next hour:
+        \begin{itemize}
+            \item Endpoints receive incorrect default gateway settings.
+            \item VoIP phones flap between VLANs.
+            \item Monitoring shows unusual BPDU and DHCP offer activity from an access port.
+        \end{itemize}
+    \end{block}
+    \textbf{Questions}
+    \begin{enumerate}
+        \item Which switch security controls would have prevented this incident?
+        \item Which port guard features should be enabled first?
+        \item How can port mirroring help validate root cause?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Case Study Solution: Jack and the Beanstalk Data Center}
+    \begin{exampleblock}{Recommended Response}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Containment}: Shut offending access port and quarantine affected endpoints.
+            \item \textbf{Preventive controls}: Enforce 802.1X, port security MAC limits, and disable/label unused ports.
+            \item \textbf{L2 protection}: Enable DHCP snooping, BPDU guard, and DAI on access segments.
+            \item \textbf{Validation}: Mirror suspect ports to confirm rogue DHCP/BPDU traffic and document incident timeline.
+        \end{enumerate}
+    \end{exampleblock}
+\end{frame}
+
+% =============================================================================
+% SECTION 10.5
+% =============================================================================
+
+\section{Network Security Rules}
+\subsection{ACLs, Proxies, and Filtering Controls}
+
+\articleonly{
+This section addresses policy-driven traffic enforcement with ACLs, proxy architectures, web/content filtering, and troubleshooting of misconfigured rule sets.
+}
+
+\begin{frame}{Security Rules and ACL Configuration}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            \textbf{ACL fundamentals}
+            \begin{itemize}
+                \item Rules are checked top-down; first match wins.
+                \item There is an implicit deny at the end.
+                \item Standard ACLs focus on source addresses.
+                \item Extended ACLs include source, destination, protocol, and ports.
+            \end{itemize}
+            \textbf{Think like a checklist:} who, to where, using what protocol/port, and should it be allowed?
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
+            \textbf{Beginner-safe design rules}
+            \begin{itemize}
+                \item Keep rules explicit and documented.
+                \item Place ACLs near the source of unwanted traffic.
+                \item Test in stages to avoid outages.
+            \end{itemize}
+            Start with required business traffic, then add denies.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Reading a Cisco ACL}
+    \footnotesize
+    An extended IP access list dictates precisely what is permitted or denied, matched top-to-bottom.
+    
+    \begin{exampleblock}{Cisco IOS Extended ACL Example}
+        \scriptsize
+\begin{verbatim}
+R1(config)# ip access-list extended GUEST_RESTRICTION
+R1(config-ext-nacl)# 10 permit udp any any eq 53       ! Allow DNS
+R1(config-ext-nacl)# 20 permit tcp any any eq 80       ! Allow HTTP
+R1(config-ext-nacl)# 30 permit tcp any any eq 443      ! Allow HTTPS
+R1(config-ext-nacl)# 40 deny ip any 10.0.0.0 0.255.255.255 ! Block Internal
+R1(config-ext-nacl)# 50 permit ip any any              ! Allow Internet
+\end{verbatim}
+    \end{exampleblock}
+    
+    If line \texttt{40} and \texttt{50} were swapped, no internal traffic would ever be matched by line \texttt{40} because \texttt{permit ip any any} stops the checking process.
+\end{frame}
+
+\begin{frame}{Proxy Servers}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \footnotesize
+            A proxy sits between users and destinations so the network can inspect, control, and log requests.
+            \vspace{0.4em}
+            \begin{itemize}
+                \item Enforce authentication and policy checks.
+                \item Provide caching and centralized logging.
+                \item Apply filtering before traffic reaches risky destinations.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Types}
+                \footnotesize
+                \begin{itemize}
+                    \item Forward proxy (outbound user traffic).
+                    \item Reverse proxy (protect backend services).
+                    \item Transparent proxy (minimal client config changes).
+                \end{itemize}
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Example: Forward vs Reverse Proxy}
+    \footnotesize
+    \begin{table}[]
+        \renewcommand{\arraystretch}{1.3}
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF} 
+        \textbf{Concept} & \textbf{Forward Proxy}                                   & \textbf{Reverse Proxy}                                  \\ \hline
+        Use Case         & Users browsing the internet                              & Public accessing a company web app                     \\ \hline
+        Protects...      & Internal clients                                         & Internal servers                                        \\ \hline
+        Typical Job      & Filtering bad URLs, malware, caching                     & Load balancing, WAF, SSL offloading                     \\ \hline
+        Who Knows?       & Client often configured to use it                        & Client has no idea it exists                            \\ \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Content Filtering}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \footnotesize
+            Content filtering is policy enforcement at web and DNS layers, not just "blocking websites."
+            \begin{block}{Filtering Controls}
+                \footnotesize
+                \begin{itemize}
+                    \item URL category blocking.
+                    \item DNS filtering for known malicious domains.
+                    \item File type controls and malware scanning.
+                    \item Safe search and acceptable-use enforcement.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{alertblock}{Balance Security and Usability}
+                \footnotesize
+                Overly broad filters can block legitimate business workflows.
+            \end{alertblock}
+            \begin{exampleblock}{Best Practice}
+                \footnotesize
+                Tune allow/deny rules from real usage logs and exception workflows.
+            \end{exampleblock}
+            \footnotesize
+            Start in monitor mode when possible, then enforce once false positives are understood.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Misconfigured Firewall and ACL Issues}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Common Misconfigurations}
+                \footnotesize
+                \begin{itemize}
+                    \item Shadowed rules that never match.
+                    \item Any-any permits left in production.
+                    \item Incorrect rule order causing unexpected blocks.
+                    \item Missing egress filtering.
+                \end{itemize}
+            \end{block}
+            \footnotesize
+            Most outages come from rule order mistakes, not missing rules.
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{Troubleshooting Approach}
+                \footnotesize
+                \begin{enumerate}
+                    \item Confirm intended traffic matrix.
+                    \item Trace packet path and policy points.
+                    \item Review logs and hit counters.
+                    \item Adjust minimal rules and retest.
+                \end{enumerate}
+            \end{alertblock}
+            \footnotesize
+            Roll out changes in small increments with a rollback plan and validation checklist.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Case Study: Snow White's Streaming Studio Firewall Meltdown}
+    \begin{block}{Scenario}
+        \footnotesize
+        Snow White runs a media startup with seven remote editors and a small on-prem render cluster. After a weekend firewall change, editors cannot sync project files or push final exports, but social media and general web browsing still work.
+
+        Firewall review shows:
+        \begin{itemize}
+            \item Broad `permit any any` rule above app-specific controls.
+            \item New deny for file-sync service placed below a general allow.
+            \item No change ticket notes describing intended business flows.
+        \end{itemize}
+    \end{block}
+    \textbf{Questions}
+    \begin{enumerate}
+        \item What ACL ordering problem is most likely?
+        \item Which traffic should be explicitly permitted first?
+        \item Where should proxy/content filtering be introduced to reduce risk?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Case Study Solution: Snow White's Streaming Studio Firewall Meltdown}
+    \begin{exampleblock}{Recommended Response}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Policy reset}: Build a traffic matrix first (editing, sync, render, publishing), then author explicit ordered permits.
+            \item \textbf{Rule hygiene}: Remove broad any-any entries, place specific denies above broad permits, and document rule intent.
+            \item \textbf{Web control}: Route outbound browsing through authenticated proxy + category filtering for non-production traffic.
+            \item \textbf{Verification}: Test critical editor workflows and track hit counters/logs before finalizing cutover.
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{alertblock}{Validation}
+        \footnotesize
+        Use logs, counters, and user acceptance tests to confirm secure functionality.
+    \end{alertblock}
+\end{frame}
+
+
+\section*{Module Summary}
+
+\begin{frame}[t,allowframebreaks]{Module 10 Summary}
+    \small
+    \begin{itemize}
+        \item \keyterm{Authentication} verifies identity using passwords, tokens, biometrics, and MFA.
+        \item \keyterm{SSO}, \keyterm{Kerberos}, and \keyterm{SAML} reduce credential sprawl and improve centralized trust.
+        \item \keyterm{PKI} and certificate lifecycle management are essential for secure encrypted identity exchanges.
+        \item \keyterm{Authorization} should follow least privilege with RBAC and separation of duties.
+        \item \keyterm{PAM} reduces admin-account risk via vaulting, approval, and session auditing.
+        \item \keyterm{LDAP/LDAPS} centralizes identity data while protecting directory traffic in transit.
+        \item \keyterm{Hardening} reduces attack surface by removing unused services and securing management paths.
+        \item Switch controls (802.1X, port security, guards, mirroring) defend access layer trust boundaries.
+        \item ACLs, proxies, and content filtering enforce business-aligned network security rules.
+    \end{itemize}
+\end{frame}
+
+\articleonly{
+\subsection*{Conclusion}
+This module connected identity systems to practical enforcement: authentication architecture, authorization governance, host and switch hardening, and policy-driven traffic controls. You practiced translating security principles into operational configurations and troubleshooting misconfigurations that affect both risk and availability.
+}
+
+\begin{frame}{Questions?}
+    \begin{center}
+        \begin{tikzpicture}[scale=1.4]
+            \node (owl) at (0,0) {\faIcon{user-shield}};
+            \node[above=0.5cm of owl, font=\Large\bfseries, text=rctcblue] {Identity + Hardening Complete};
+            \node[below=0.5cm of owl, font=\small] {Any questions?};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\end{document}
+
+
+
