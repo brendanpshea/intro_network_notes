@@ -319,6 +319,30 @@ This section introduces core security principles, governance terms, and foundati
     \end{columns}
 \end{frame}
 
+\begin{frame}{Example: Threat Modeling a Small Network}
+    \footnotesize
+    Threat modeling is just structured guessing: what do we care about, who might attack it, and how could they do it?
+
+    \vspace{0.4em}
+    \begin{table}[]
+        \renewcommand{\arraystretch}{1.2}
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF} \textbf{Asset} & \textbf{Likely Threat} & \textbf{Starter Control} \\ \hline
+        Student accounts & Password reuse / phishing & MFA and password policy \\ \hline
+        Switch ports & Rogue device or evil twin & Port security and 802.1X \\ \hline
+        File server data & Ransomware or accidental deletion & Backups and least privilege \\ \hline
+        Internet access & DNS or DHCP spoofing & DHCP snooping and DNS hygiene \\ \hline
+        \end{tabular}
+    \end{table}
+
+    \begin{exampleblock}{Beginner takeaway}
+        \footnotesize
+        Start with your most valuable assets, then ask what could break confidentiality, integrity, or availability.
+    \end{exampleblock}
+\end{frame}
+
 % SLIDE 8: Threat Assessment (Detail Enhanced)
 \section{Threats and Risk Assessment}
 \subsection{DoS, Botnets, and Malware}
@@ -410,6 +434,26 @@ Threat analysis identifies disruptive and malicious behaviors so teams can prior
             
         \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}{Example: Security Controls Map}
+    \footnotesize
+    Beginners learn faster when a threat is paired with a control that actually reduces it.
+
+    \vspace{0.4em}
+    \begin{table}[]
+        \renewcommand{\arraystretch}{1.2}
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF} \textbf{Threat} & \textbf{Defensive Control} & \textbf{Why it helps} \\ \hline
+        Spoofed packets & ACLs and filtering & Limits what forged traffic can reach \\ \hline
+        Password attacks & MFA and salting & Makes stolen or guessed passwords less useful \\ \hline
+        Rogue DHCP server & DHCP snooping & Blocks unauthorized address assignment \\ \hline
+        Ransomware & Backups and patching & Restores data and reduces infection paths \\ \hline
+        Social engineering & Training and verification & Slows down human manipulation \\ \hline
+        \end{tabular}
+    \end{table}
 \end{frame}
 
 % SLIDE 10: Botnets (Detail Enhanced)
@@ -1101,6 +1145,29 @@ Human-targeted attacks remain a primary risk vector, requiring awareness, verifi
     \end{columns}
 \end{frame}
 
+\begin{frame}{Example: Phishing Email Breakdown}
+    \footnotesize
+    A phishing message usually works because it looks urgent and slightly familiar. Teach students to slow down and inspect it.
+
+    \vspace{0.4em}
+    \begin{exampleblock}{Fake message}
+        \scriptsize
+        From: it-support@kibblecorp-security.com
+
+        Subject: Password Expiring Today
+
+        Click here to keep your account active: \texttt{http://kibblecorp-login.example/renew}
+    \end{exampleblock}
+
+    \begin{alertblock}{Red flags to spot}
+        \begin{itemize}
+            \item Sender address is close, but not exact.
+            \item The message creates urgency.
+            \item The link uses plain HTTP and a suspicious domain.
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
 % SLIDE 27: Physical Social Eng
 \begin{frame}{Physical Social Engineering}
     \begin{columns}[T]
@@ -1374,6 +1441,25 @@ The final section synthesizes offensive/defensive perspectives and maps them to 
     \end{columns}
 \end{frame}
 
+\begin{frame}{Example: Incident Response Mini-Workflow}
+    \footnotesize
+    Security is not only about stopping attacks. It is also about what you do when something suspicious appears.
+
+    \vspace{0.4em}
+    \begin{enumerate}
+        \item \textbf{Detect}: Notice the alert, log entry, or user report.
+        \item \textbf{Contain}: Disconnect the rogue device or isolate the host.
+        \item \textbf{Investigate}: Check logs, packet captures, and affected accounts.
+        \item \textbf{Recover}: Restore services from clean backups and re-enable access carefully.
+        \item \textbf{Improve}: Document the cause and update controls so it is less likely to happen again.
+    \end{enumerate}
+
+    \begin{exampleblock}{Simple classroom example}
+        \footnotesize
+        If a rogue DHCP server is discovered, the first move is containment: unplug the device or shut down the port, then verify clients received correct addresses.
+    \end{exampleblock}
+\end{frame}
+
 % SLIDE 35: Mitigation Strategies
 \begin{frame}{Defense in Depth: Mitigation Strategies}
     \begin{center}
@@ -1480,6 +1566,33 @@ This module covered network security concepts: the CIA Triad and AAA framework, 
             \node[below=0.5cm of snoopy, font=\small] {Any questions?};
         \end{tikzpicture}
     \end{center}
+\end{frame}
+
+\begin{frame}{Beginner Checklist: What to Turn On First}
+    \footnotesize
+    If you are securing a small lab or home office, start with controls that give the biggest benefit for the least complexity.
+
+    \vspace{0.4em}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Highest Priority}
+                \begin{itemize}
+                    \item MFA for accounts that can reach sensitive systems.
+                    \item Automatic patching for endpoints and servers.
+                    \item Backups you have actually tested.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Next Layer}
+                \begin{itemize}
+                    \item Least privilege for users and admins.
+                    \item Logging and alerting on important systems.
+                    \item DHCP snooping, port security, and basic ACLs on the network edge.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
