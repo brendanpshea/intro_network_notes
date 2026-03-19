@@ -175,9 +175,9 @@ This section introduces core security principles, governance terms, and foundati
                 \begin{tikzpicture}[scale=0.8]
                     \node[draw, fill=white, minimum width=2.5cm, minimum height=3.5cm, drop shadow] (paper) at (0,0) {};
                     \node[above=1.4cm of paper.center] {\faIcon{clipboard-list}};
-                    \node[right, font=\tiny] at (-0.8, 0.5) {$\square$ Firewall Rules};
-                    \node[right, font=\tiny] at (-0.8, 0) {$\square$ User Access};
-                    \node[right, font=\tiny] at (-0.8, -0.5) {$\square$ Patch Levels};
+                    \node[anchor=east, font=\tiny] at (-1.1, 0.55) {$\square$ Firewall Rules};
+                    \node[anchor=east, font=\tiny] at (-1.1, 0.0) {$\square$ User Access};
+                    \node[anchor=east, font=\tiny] at (-1.1, -0.55) {$\square$ Patch Levels};
                     \node at (2, -1) {\icondog[0.8cm]};
                     \node[below, font=\tiny] at (2, -1.5) {Agent Snoopy};
                     \draw[->, thick, networkgreen] (2, -0.8) -- (1, -0.5);
@@ -271,8 +271,7 @@ This section introduces core security principles, governance terms, and foundati
                     \draw[red, thick] (1.5, 1) rectangle (2.5, 2);
                     \node[font=\tiny, text=red] at (2, 2.3) {Vuln (No Patch)};
                     \node (cat) at (-1, 1.5) {\iconcat[0.7cm]};
-                    \draw[->, ultra thick, alertred] (cat) -- (1.5, 1.5);
-                    \node[font=\tiny, below] at (-0.5, 1.5) {Zero-Day Exploit};
+                    \draw[->, ultra thick, alertred] (cat) -- (1.5, 1.5) node[midway, above, sloped, font=\tiny] {Zero-Day Exploit};
                 \end{tikzpicture}
             \end{center}
             
@@ -738,9 +737,7 @@ This section examines identity and traffic manipulation attacks such as spoofing
                     
                     \draw[->, thick, alertred] (user) -- (attacker);
                     \draw[->, thick, alertred] (attacker) -- (server);
-                    
-                    \node[font=\tiny, fill=white] at (-1, 1) {Hello};
-                    \node[font=\tiny, fill=white] at (1, 1) {Goodbye};
+                    \node[font=\tiny, fill=white, align=center] at (0, -1.0) {Traffic is relayed and can be modified in the middle.};
                 \end{tikzpicture}
             \end{center}
         \end{column}
@@ -962,19 +959,19 @@ Rogue infrastructure services can redirect or intercept traffic; this section co
                 \begin{tikzpicture}[scale=0.7]
                     % Real AP
                     \node (real) at (-2, 2) {\faIcon{wifi}};
-                    \node[above, font=\tiny, text=networkgreen] at (-2, 2.3) {Corp-WiFi (Real)};
+                    \node[above=0.25cm, font=\tiny, text=networkgreen] at (-2, 2.3) {Corp-WiFi (Real)};
                     
                     % Evil Twin
                     \node (fake) at (2, 2) {\faIcon{wifi}};
-                    \node[above, font=\tiny, text=alertred] at (2, 2.3) {Corp-WiFi (Fake)};
+                    \node[above=0.25cm, font=\tiny, text=alertred] at (2, 2.3) {Corp-WiFi (Fake)};
                     \node at (2, 1.5) {\iconcat[0.5cm]};
                     
                     % Victim
                     \node (vic) at (0, 0) {\iconpc[0.6cm]};
                     
                     % Signal strength
-                    \draw[->, dashed, thick, alertred] (fake) -- (vic) node[midway, right, font=\tiny] {Stronger Signal!};
-                    \draw[->, dashed, gray] (real) -- (vic) node[midway, left, font=\tiny] {Weaker};
+                    \draw[->, dashed, thick, alertred] (fake) -- (vic) node[midway, right, font=\tiny, xshift=0.15cm] {Stronger Signal!};
+                    \draw[->, dashed, gray] (real) -- (vic) node[midway, left, font=\tiny, xshift=-0.15cm] {Weaker};
                 \end{tikzpicture}
             \end{center}
             \vspace{-0.2em}
@@ -1440,7 +1437,7 @@ The final section synthesizes offensive/defensive perspectives and maps them to 
                     \node[font=\tiny, anchor=west] at (0.2, 2.5) {6.6.6.6 $\to$ 10.1.1.5 : TCP SYN};
                     
                     \node (snoopy) at (9, 0.5) {\icondog[0.8cm]};
-                    \node[left, font=\tiny, fill=white, draw] at (8.5, 0.5) {Found the SYN Flood!};
+                    \node[left, font=\tiny, fill=white, draw] at (8.1, 0.5) {Found the SYN Flood!};
                 \end{tikzpicture}
             \end{center}
             \vspace{-0.2em}
