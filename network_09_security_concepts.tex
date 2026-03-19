@@ -183,6 +183,8 @@ This section introduces core security principles, governance terms, and foundati
                     \draw[->, thick, networkgreen] (2, -0.8) -- (1, -0.5);
                 \end{tikzpicture}
             \end{center}
+            \vspace{-0.2em}
+            \centering\footnotesize\emph{Audit checklists are easiest to understand when each item can be checked directly.}
             
 \articleonly{
 \par\small\emph{This audit compliance diagram visualizes the security checklist approach: a clipboard with three checkboxes covers Firewall Rules, User Access, and Patch Levels. Agent Snoopy (the auditor) examines the document and draws a green arrow pointing to each checkbox. This represents the systematic verification process that audits conduct: walking through documented infrastructure, verifying each setting matches policy, and checking patches are current. The presence of a checklist and auditor (not just hoping security is good) emphasizes the "verify, don't trust" principle central to external audits and compliance verification.}\par
@@ -892,6 +894,8 @@ This section examines identity and traffic manipulation attacks such as spoofing
                     \node (wifi) at (1, 1) {\faIcon{wifi}};
                 \end{tikzpicture}
             \end{center}
+            \vspace{-0.2em}
+            \centering\footnotesize\emph{A browser certificate warning is the clue that traffic may be going through someone else.}
         \end{column}
     \end{columns}
 \end{frame}
@@ -973,6 +977,8 @@ Rogue infrastructure services can redirect or intercept traffic; this section co
                     \draw[->, dashed, gray] (real) -- (vic) node[midway, left, font=\tiny] {Weaker};
                 \end{tikzpicture}
             \end{center}
+            \vspace{-0.2em}
+            \centering\footnotesize\emph{The evil twin wins by copying the name and broadcasting more loudly.}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1437,6 +1443,8 @@ The final section synthesizes offensive/defensive perspectives and maps them to 
                     \node[left, font=\tiny, fill=white, draw] at (8.5, 0.5) {Found the SYN Flood!};
                 \end{tikzpicture}
             \end{center}
+            \vspace{-0.2em}
+            \centering\footnotesize\emph{Repeated SYN packets from one source are a classic flood pattern in packet captures.}
         \end{column}
     \end{columns}
 \end{frame}
