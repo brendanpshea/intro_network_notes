@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Module 4: IPv4 and IPv6 Addressing — IP fundamentals, subnetting, CIDR, VLSM, and IPv6 — Introduction to Networking">
+    <meta name="author" content="Brendan Shea">
+    <title>Module 4: IPv4 and IPv6 Addressing — Introduction to Networking</title>
+    <link rel="stylesheet" href="../css/lectures.css">
+
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Mermaid.js for diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme:         'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels:  true,
+                curve:       'basis',
+            },
+            themeVariables: {
+                background:          '#ffffff',
+                primaryColor:        '#e8f1fb',
+                primaryBorderColor:  '#004a88',
+                primaryTextColor:    '#1f2a37',
+                lineColor:           '#004a88',
+                secondaryColor:      '#fff7e0',
+                tertiaryColor:       '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder:          '#004a88',
+                clusterBkg:          '#f4f7fb',
+                titleColor:          '#1f2a37',
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- ================================================================
+         SIDEBAR
+         ================================================================ -->
+    <aside class="sidebar">
+        <a href="../../index.html" class="back-link">&larr; All Modules</a>
+        <nav>
+            <a href="#introduction" class="toc-h2">Introduction</a>
+            <a href="#review-module-3" class="toc-h3">Review from Module 3</a>
+            <a href="#learning-outcomes" class="toc-h3">Learning Outcomes</a>
+
+            <a href="#ip-fundamentals" class="toc-h2">IP Fundamentals &amp; Address Resolution</a>
+            <a href="#ipv4-header" class="toc-h3">The IPv4 Datagram Header</a>
+            <a href="#layer2-vs-layer3" class="toc-h3">Layer 2 vs Layer 3 Addressing</a>
+            <a href="#routers-both-addresses" class="toc-h3">How Routers Use Both Addresses</a>
+            <a href="#arp" class="toc-h3">Address Resolution Protocol (ARP)</a>
+            <a href="#arp-table" class="toc-h3">ARP Table and Cache</a>
+            <a href="#address-types" class="toc-h3">Unicast, Broadcast, Multicast, Anycast</a>
+            <a href="#case-study-homer" class="toc-h3">Case Study: Homer's Home Network</a>
+
+            <a href="#subnetting" class="toc-h2">Subnetting and Host Addressing</a>
+            <a href="#ipv4-format" class="toc-h3">IPv4 Address Format</a>
+            <a href="#subnet-masks" class="toc-h3">Network Masks Explained</a>
+            <a href="#mask-examples" class="toc-h3">Subnet Mask Examples</a>
+            <a href="#host-ranges" class="toc-h3">Calculating Host Address Ranges</a>
+            <a href="#default-gateway" class="toc-h3">Default Gateway</a>
+            <a href="#case-study-moe" class="toc-h3">Case Study: Moe's Tavern</a>
+
+            <a href="#address-planning" class="toc-h2">Address Planning Strategies</a>
+            <a href="#classful" class="toc-h3">Classful Addressing (Legacy)</a>
+            <a href="#public-private" class="toc-h3">Public vs Private Addressing</a>
+            <a href="#reserved-ranges" class="toc-h3">Other Reserved Ranges</a>
+            <a href="#cidr" class="toc-h3">CIDR Notation</a>
+            <a href="#vlsm" class="toc-h3">Variable Length Subnet Masks (VLSM)</a>
+            <a href="#case-study-springfield" class="toc-h3">Case Study: Springfield Elementary</a>
+
+            <a href="#ip-diagnostics" class="toc-h2">IP Configuration &amp; Diagnostics</a>
+            <a href="#ipconfig" class="toc-h3">ipconfig (Windows)</a>
+            <a href="#ifconfig-ip" class="toc-h3">ifconfig and ip (Linux)</a>
+            <a href="#arp-command" class="toc-h3">The arp Command</a>
+            <a href="#ping" class="toc-h3">ping: The Essential Test</a>
+            <a href="#ping-methodology" class="toc-h3">Ping Troubleshooting Methodology</a>
+
+            <a href="#ipv6" class="toc-h2">IPv6 Fundamentals</a>
+            <a href="#why-ipv6" class="toc-h3">Why IPv6?</a>
+            <a href="#ipv6-format" class="toc-h3">IPv6 Address Format</a>
+            <a href="#ipv6-prefixes" class="toc-h3">IPv6 Prefixes and Address Types</a>
+            <a href="#ipv6-types" class="toc-h3">IPv6 Address Types Explained</a>
+            <a href="#ipv6-transition" class="toc-h3">IPv4 to IPv6 Transition</a>
+
+            <a href="#module-summary" class="toc-h2">Module Summary</a>
+        </nav>
+    </aside>
+
+    <!-- ================================================================
+         MAIN CONTENT
+         ================================================================ -->
+    <main class="content">
+
+        <!-- Chapter Header -->
+        <header class="chapter-header">
+            <span class="module-label">Module 4</span>
+            <h1>IPv4 and IPv6 Addressing</h1>
+            <p class="subtitle">IP fundamentals, subnetting, CIDR, VLSM, and the transition to IPv6.</p>
+        </header>
+
+        <!-- ============================================================
+             INTRODUCTION
+             ============================================================ -->
+        <h2 id="introduction">Introduction</h2>
+
+        <p>
+            In Module 3, we explored how <strong class="key-term">switches</strong> use
+            <strong class="key-term">MAC addresses</strong> to deliver frames within a single
+            network. But what happens when you need to communicate with a device on a different
+            network — perhaps on the other side of the world? That question is answered by
+            <strong class="key-term">Layer 3 (IP) addressing</strong>. This module covers everything
+            you need to know about <strong class="key-term">IPv4</strong> and
+            <strong class="key-term">IPv6</strong>: how addresses are structured, how they are divided
+            into subnets, how routers use them to move traffic across networks, and how to diagnose
+            connectivity problems using standard tools.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC["fa:fa-desktop PC<br/>192.168.1.10"] -->|Ethernet| GW["fa:fa-wifi Router<br/>Gateway"]
+    GW ==>|WAN| IN(["fa:fa-cloud Internet"])
+    IN ==>|WAN| SRV["fa:fa-server Server<br/>203.0.113.50"]
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style GW fill:#e8f1fb,stroke:#004a88
+    style IN fill:#fff7e0,stroke:#d97706
+    style SRV fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 1: End-to-end IP communication — a source PC on a local network connects through a gateway router to the internet, ultimately reaching a destination server. IP addresses (Layer 3) enable communication across different networks; Ethernet (Layer 2) handles delivery within each local segment.</p>
+        </div>
+
+        <!-- Review from Module 3 -->
+        <h3 id="review-module-3">Review from Module 3</h3>
+
+        <div class="review-section">
+            <h3>Review from Module 3</h3>
+            <p>
+                Module 3 covered <strong>switches</strong> and <strong>MAC addresses</strong> at
+                Layer 2 of the OSI model. A switch builds a <strong>MAC address table</strong> by
+                observing source MAC addresses on incoming frames, then uses that table to forward
+                frames only to the correct port. MAC addresses are hardware addresses burned into
+                each network interface card (NIC) and are only meaningful within a single network
+                segment — a switch does not forward frames to other networks.
+            </p>
+            <p>
+                Today's key question is: how do we communicate <em>beyond</em> our local network?
+                The answer requires <strong class="key-term">IP addresses</strong> at Layer 3.
+                While MAC addresses provide <em>local</em> (hop-by-hop) delivery, IP addresses
+                provide <em>end-to-end</em> delivery across the entire path from source to
+                destination.
+            </p>
+            <div class="callout callout-warning">
+                <div class="callout-title">The Key Difference</div>
+                <p><strong>MAC address</strong> = local delivery (within your network segment, changes at every router hop)</p>
+                <p><strong>IP address</strong> = end-to-end delivery (stays the same from source to destination)</p>
+            </div>
+        </div>
+
+        <!-- Learning Outcomes -->
+        <h3 id="learning-outcomes">Learning Outcomes</h3>
+
+        <div class="learning-outcomes">
+            <h3>After completing this module, you will be able to:</h3>
+            <ul>
+                <li>Explain the role of <strong class="key-term">Layer 3 (IP) addressing</strong> and how it differs from Layer 2 (MAC) addressing.</li>
+                <li>Describe <strong class="key-term">ARP</strong> (Address Resolution Protocol) and how it maps IP addresses to MAC addresses.</li>
+                <li>Interpret <strong class="key-term">IPv4 addresses</strong> in dotted decimal notation and understand the role of <strong class="key-term">subnet masks</strong>.</li>
+                <li>Calculate network addresses, broadcast addresses, and usable host ranges using <strong class="key-term">CIDR notation</strong>.</li>
+                <li>Apply <strong class="key-term">VLSM</strong> (Variable Length Subnet Masking) to create subnets of different sizes.</li>
+                <li>Identify <strong class="key-term">private IP ranges</strong> (RFC 1918) and explain <strong class="key-term">NAT</strong> (Network Address Translation).</li>
+                <li>Configure IP addresses, subnet masks, and <strong class="key-term">default gateways</strong> on network devices.</li>
+                <li>Use troubleshooting tools including <strong class="key-term">ping</strong>, <strong class="key-term">arp</strong>, <strong class="key-term">ipconfig/ifconfig</strong>, and <strong class="key-term">traceroute</strong>.</li>
+                <li>Compare <strong class="key-term">IPv4</strong> and <strong class="key-term">IPv6</strong> addressing formats and describe IPv6 adoption strategies.</li>
+            </ul>
+        </div>
+
+        <!-- ============================================================
+             SECTION 1: IP FUNDAMENTALS AND ADDRESS RESOLUTION
+             ============================================================ -->
+        <div class="section-divider"><h2>IP Fundamentals &amp; Address Resolution</h2></div>
+
+        <h2 id="ip-fundamentals">IP Fundamentals &amp; Address Resolution</h2>
+
+        <p>
+            This section introduces the structure of IPv4 packets and the relationship between
+            Layer 2 and Layer 3 addressing during local delivery and routing. Understanding how
+            these layers interact is fundamental to diagnosing nearly every networking problem.
+        </p>
+
+        <!-- IPv4 Header -->
+        <h3 id="ipv4-header">The IPv4 Datagram Header</h3>
+
+        <p>
+            Just as Ethernet frames have headers at Layer 2, IP wraps data in a
+            <strong class="key-term">datagram</strong> at Layer 3. The IPv4 datagram header
+            contains addressing and control information that routers use to forward packets
+            across the network. The minimum header size is 20 bytes and includes the following
+            key fields:
+        </p>
+
+        <ul>
+            <li><strong>Version</strong> — identifies the IP version (4 for IPv4).</li>
+            <li><strong>TTL (Time to Live)</strong> — a counter decremented by 1 at each router hop; when it reaches 0, the packet is discarded to prevent infinite routing loops.</li>
+            <li><strong>Protocol</strong> — identifies what Layer 4 protocol is inside (e.g., TCP = 6, UDP = 17).</li>
+            <li><strong>Source IP Address</strong> — the sender's IP address; remains unchanged end-to-end.</li>
+            <li><strong>Destination IP Address</strong> — the receiver's IP address; remains unchanged end-to-end.</li>
+        </ul>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    subgraph IPv4_Header["IPv4 Datagram Header (≥ 20 bytes)"]
+        R1["Version | IHL | DSCP | Total Length"]
+        R2["Identification | Flags | Fragment Offset"]
+        R3["<b>TTL</b> | <b>Protocol</b> | Header Checksum"]
+        R4["<b>Source IP Address</b>"]
+        R5["<b>Destination IP Address</b>"]
+        R6["Data Payload"]
+    end
+    R1 --- R2 --- R3 --- R4 --- R5 --- R6
+
+    style R3 fill:#fff7e0,stroke:#d97706
+    style R4 fill:#e8f1fb,stroke:#004a88
+    style R5 fill:#e8f1fb,stroke:#004a88
+    style R6 fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 2: Simplified IPv4 header structure showing the key fields. The TTL, Protocol, Source IP, and Destination IP fields are highlighted because they are the most important for routing and troubleshooting.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">TTL Prevents Loops</div>
+            <p>Each router decrements the TTL by 1. When TTL reaches 0, the packet is discarded and an ICMP "Time Exceeded" message is sent back to the source. This is exactly how <code>traceroute</code> works — it intentionally sends packets with low TTL values to map each hop along the path.</p>
+        </div>
+
+        <!-- Layer 2 vs Layer 3 -->
+        <h3 id="layer2-vs-layer3">Layer 2 vs Layer 3 Addressing</h3>
+
+        <p>
+            Every device on a network that communicates at Layer 3 has both a
+            <strong class="key-term">MAC address</strong> (Layer 2) and an
+            <strong class="key-term">IP address</strong> (Layer 3). These two types of addresses
+            serve very different roles:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Feature</th>
+                    <th scope="col">MAC Address (Layer 2)</th>
+                    <th scope="col">IP Address (Layer 3)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Type</td>
+                    <td>Hardware address (burned into NIC)</td>
+                    <td>Logical address (assigned by admin)</td>
+                </tr>
+                <tr>
+                    <td>Scope</td>
+                    <td>Local network only</td>
+                    <td>Across networks (end-to-end)</td>
+                </tr>
+                <tr>
+                    <td>Changes?</td>
+                    <td>Changes at every router hop</td>
+                    <td>Stays the same source to destination</td>
+                </tr>
+                <tr>
+                    <td>Format</td>
+                    <td><code>00:1A:2B:3C:4D:5E</code> (48 bits)</td>
+                    <td><code>192.168.1.100</code> (32 bits)</td>
+                </tr>
+                <tr>
+                    <td>Analogy</td>
+                    <td>Apartment number (only useful inside the building)</td>
+                    <td>Full mailing address (works anywhere)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Mailing Analogy</div>
+            <p>
+                Think of sending a package across multiple delivery depots. The <strong>IP address</strong>
+                is like the full mailing address (123 Main St, Springfield, USA) — it stays on the
+                package the entire journey. The <strong>MAC address</strong> is like the local
+                room number at each depot — it only matters within that building, and it changes
+                at every stop.
+            </p>
+        </div>
+
+        <!-- How Routers Use Both Addresses -->
+        <h3 id="routers-both-addresses">How Routers Use Both Addresses</h3>
+
+        <p>
+            When a packet travels from a source PC to a destination server across a router,
+            the Layer 3 IP addresses remain unchanged throughout the entire journey. However,
+            the Layer 2 MAC addresses change at every hop. The router strips off the incoming
+            Ethernet frame, examines the destination IP address to decide where to forward
+            the packet, then creates a <em>brand new</em> Ethernet frame with new source and
+            destination MAC addresses for the next network segment.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph NetA["Network A: 10.0.0.0/24"]
+        PC["fa:fa-desktop PC<br/>10.0.0.5"]
+        SW1["fa:fa-network-wired Switch"]
+    end
+    subgraph NetB["Network B: 192.168.1.0/24"]
+        SW2["fa:fa-network-wired Switch"]
+        SRV["fa:fa-server Server<br/>192.168.1.50"]
+    end
+    RTR["fa:fa-wifi Router"]
+
+    PC -->|"Src MAC: PC<br/>Dst MAC: Router"| SW1
+    SW1 --> RTR
+    RTR -->|"Src MAC: Router<br/>Dst MAC: Server"| SW2
+    SW2 --> SRV
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style SRV fill:#f0fdf4,stroke:#16a34a
+    style RTR fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 3: How MAC addresses change at each hop while IP addresses stay constant. On Network A, the frame uses the PC's MAC and the Router's MAC. On Network B, the router creates a new frame using its own MAC and the server's MAC. The IP header (10.0.0.5 → 192.168.1.50) is unchanged throughout.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Key Insight</div>
+            <p>
+                <strong>IP addresses</strong> stay the same from source to destination —
+                they provide end-to-end addressing. <strong>MAC addresses</strong> change at
+                every hop — the router creates a new frame for each network segment.
+            </p>
+        </div>
+
+        <!-- ARP -->
+        <h3 id="arp">Address Resolution Protocol (ARP)</h3>
+
+        <p>
+            Here is a fundamental problem: you know the <em>destination IP address</em>, but to
+            actually send an Ethernet frame you need the destination's <em>MAC address</em>. The
+            <strong class="key-term">Address Resolution Protocol (ARP)</strong> solves this by
+            broadcasting a question to the local network: "Who has IP address X? Tell me your MAC
+            address."
+        </p>
+
+        <p>
+            The ARP process works in two steps:
+        </p>
+
+        <ol>
+            <li><strong>ARP Request</strong> — the source device broadcasts a message to every device on the local segment: "Who has <code>192.168.1.50</code>? Tell <code>192.168.1.10</code>."</li>
+            <li><strong>ARP Reply</strong> — the device with that IP address sends a unicast reply back to the requester: "I have <code>192.168.1.50</code>. My MAC is <code>AA:BB:CC:11:22:33</code>."</li>
+        </ol>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+sequenceDiagram
+    participant A as PC A (.10)
+    participant SW as Switch
+    participant B as PC B (.20)
+    participant C as PC C (.30)
+
+    A->>SW: ARP Request (broadcast): "Who has .30?"
+    SW->>B: ARP Request (broadcast)
+    SW->>C: ARP Request (broadcast)
+    C-->>A: ARP Reply (unicast): "I have .30, my MAC is CC:CC:CC..."
+    Note over A: Stores in ARP cache
+            </pre>
+            <p class="diagram-caption">Figure 4: ARP request/reply sequence. PC A broadcasts an ARP request to all devices on the segment. Only PC C (the owner of .30) sends a unicast reply with its MAC address. PC A caches this mapping to avoid repeating the broadcast for future packets.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Security Note: ARP Spoofing</div>
+            <p>
+                ARP has no authentication — any device can send a fake ARP reply claiming to own
+                any IP address. This attack, called <strong class="key-term">ARP spoofing</strong>
+                (or ARP poisoning), allows an attacker to redirect traffic intended for another
+                host, enabling man-in-the-middle attacks. Dynamic ARP Inspection (DAI) on managed
+                switches can mitigate this threat.
+            </p>
+        </div>
+
+        <!-- ARP Table -->
+        <h3 id="arp-table">ARP Table and Cache</h3>
+
+        <p>
+            To avoid broadcasting an ARP request for every single packet, the results of ARP
+            lookups are stored in an <strong class="key-term">ARP cache</strong> (also called the
+            ARP table). Each entry maps an IP address to its corresponding MAC address. Entries
+            are typically marked as <em>dynamic</em> (learned via ARP, expires after 2–20 minutes)
+            or <em>static</em> (manually added, never expires).
+        </p>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Common ARP Commands</div>
+            <pre><code>arp -a                      # Display all ARP cache entries
+arp -a 192.168.1.1          # Show entry for a specific IP
+arp -d 192.168.1.1          # Delete an entry from the cache
+arp -s 192.168.1.1 00-1a-2b-3c-4d-5e  # Add a static entry</code></pre>
+        </div>
+
+        <p>Sample output of <code>arp -a</code>:</p>
+
+        <pre><code>Interface: 192.168.1.100
+Internet Address     Physical Address      Type
+192.168.1.1          00-1a-2b-3c-4d-01     dynamic
+192.168.1.25         00-1a-2b-3c-4d-25     dynamic
+192.168.1.50         00-1a-2b-3c-4d-50     dynamic
+192.168.1.254        00-1a-2b-3c-4d-fe     static</code></pre>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Troubleshooting Tip</div>
+            <p>An <strong>empty ARP table</strong> means no successful local communication is occurring — ARP requests are not being answered. This almost always points to a Layer 1 or Layer 2 problem (cable unplugged, NIC disabled, wrong VLAN, dead switch port), not an IP configuration issue.</p>
+        </div>
+
+        <!-- Address Types -->
+        <h3 id="address-types">Unicast, Broadcast, Multicast, and Anycast</h3>
+
+        <p>
+            IPv4 supports four types of communication, each serving a different purpose:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Common Uses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong class="key-term">Unicast</strong></td>
+                    <td>One-to-one: sent from one device to exactly one destination</td>
+                    <td>Web browsing, email, file transfers</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Broadcast</strong></td>
+                    <td>One-to-all: sent to every device on the local subnet</td>
+                    <td>ARP requests, DHCP discovery</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Multicast</strong></td>
+                    <td>One-to-group: sent to a subscribed group of devices</td>
+                    <td>Video streaming, routing protocol updates (e.g., OSPF)</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Anycast</strong></td>
+                    <td>One-to-nearest: routed to the closest member of a group</td>
+                    <td>DNS root servers, CDNs</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    subgraph Unicast["Unicast (One-to-One)"]
+        U_SRC["fa:fa-desktop Source"] -->|single packet| U_DST["fa:fa-desktop Destination"]
+    end
+    subgraph Broadcast["Broadcast (One-to-All)"]
+        B_SRC["fa:fa-desktop Source"] -->|broadcast| B1["fa:fa-desktop Host A"]
+        B_SRC -->|broadcast| B2["fa:fa-desktop Host B"]
+        B_SRC -->|broadcast| B3["fa:fa-desktop Host C"]
+    end
+    subgraph Multicast["Multicast (One-to-Group)"]
+        M_SRC["fa:fa-desktop Source"] -->|multicast| M1["fa:fa-desktop Subscriber A"]
+        M_SRC -->|multicast| M2["fa:fa-desktop Subscriber B"]
+    end
+
+    style U_SRC fill:#e8f1fb,stroke:#004a88
+    style B_SRC fill:#fff7e0,stroke:#d97706
+    style M_SRC fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 5: The three main IPv4 communication types. Unicast targets one specific host; Broadcast reaches every host on the subnet; Multicast delivers only to hosts that have joined the multicast group.</p>
+        </div>
+
+        <!-- Case Study: Homer -->
+        <h3 id="case-study-homer">Case Study: Homer's Home Network Mystery</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study: Homer's Home Network Mystery</div>
+            <p>
+                Homer Simpson just set up a new PC in his home office. He runs some connectivity tests:
+            </p>
+            <ul>
+                <li>He can ping <code>127.0.0.1</code> (loopback) — <strong style="color:#16a34a">Success!</strong></li>
+                <li>He can ping his own IP <code>192.168.1.50</code> — <strong style="color:#16a34a">Success!</strong></li>
+                <li>He <strong>cannot</strong> ping Marge's laptop at <code>192.168.1.51</code> — <strong style="color:#dc2626">Fails!</strong></li>
+                <li>He <strong>cannot</strong> reach the internet — <strong style="color:#dc2626">Fails!</strong></li>
+            </ul>
+            <p>Homer runs <code>arp -a</code> and sees an <strong>empty ARP table</strong>.</p>
+            <p><em>Questions:</em></p>
+            <ol>
+                <li>What does an empty ARP table suggest about network communication?</li>
+                <li>What Layer 1 or Layer 2 issue might cause this?</li>
+                <li>What should Homer check first?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution: Homer's Home Network Mystery</div>
+            <ol>
+                <li>An empty ARP table means <strong>no successful local communication is occurring</strong> — ARP requests are not being answered (or cannot even be sent). Because Homer can ping his own IP and loopback, his TCP/IP stack is working, but his NIC is not communicating with the local network.</li>
+                <li>Likely Layer 1/2 causes include: Ethernet cable unplugged or damaged, NIC disabled in the operating system, dead or disabled switch port, wrong VLAN assignment on the switch port.</li>
+                <li>Homer should check in order: (1) the cable connection at both the PC and switch, (2) link activity lights on the NIC and switch port, (3) NIC status in Windows Network Connections.</li>
+            </ol>
+            <div class="callout callout-warning" style="margin-top:0.5rem;">
+                <div class="callout-title">Key Lesson</div>
+                <p>If the ARP table is empty, the problem is almost always <strong>Layer 1 or Layer 2</strong> — not the IP configuration. Check physical connectivity first!</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 2: SUBNETTING AND HOST ADDRESSING
+             ============================================================ -->
+        <div class="section-divider"><h2>Subnetting and Host Addressing</h2></div>
+
+        <h2 id="subnetting">Subnetting and Host Addressing</h2>
+
+        <p>
+            This section covers IPv4 addressing structure, subnet masks, and host range
+            calculations — the skills used every day in practical network design and administration.
+        </p>
+
+        <!-- IPv4 Format -->
+        <h3 id="ipv4-format">IPv4 Address Format</h3>
+
+        <p>
+            An <strong class="key-term">IPv4 address</strong> is a 32-bit number written in
+            <strong class="key-term">dotted decimal notation</strong> as four
+            <strong class="key-term">octets</strong> (8-bit groups) separated by periods.
+            Each octet ranges from 0 to 255 (because 2<sup>8</sup> = 256 possible values).
+            This gives a total address space of approximately <strong>4.3 billion</strong>
+            addresses — a number that seemed enormous in 1981 but proved insufficient for the
+            modern internet.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph DotDecimal["Dotted Decimal: 192.168.1.100"]
+        O1["11000000<br/><b>192</b><br/>(8 bits)"]
+        O2["10101000<br/><b>168</b><br/>(8 bits)"]
+        O3["00000001<br/><b>1</b><br/>(8 bits)"]
+        O4["01100100<br/><b>100</b><br/>(8 bits)"]
+    end
+    O1 --- O2 --- O3 --- O4
+
+    style O1 fill:#e8f1fb,stroke:#004a88
+    style O2 fill:#e8f1fb,stroke:#004a88
+    style O3 fill:#e8f1fb,stroke:#004a88
+    style O4 fill:#e8f1fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 6: IPv4 address 192.168.1.100 broken into its four 8-bit octets, each shown in binary and decimal. All 32 bits together form the complete address.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Why 0–255?</div>
+            <p>Each octet is 8 bits. 2<sup>8</sup> = 256 possible values, numbered 0 through 255. The maximum value of a single octet (all bits set to 1) is: 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255.</p>
+        </div>
+
+        <!-- Subnet Masks -->
+        <h3 id="subnet-masks">Network Masks Explained</h3>
+
+        <p>
+            Every IPv4 address has two logical parts: a <strong class="key-term">network portion</strong>
+            that identifies which network the address belongs to, and a
+            <strong class="key-term">host portion</strong> that identifies the specific device within
+            that network. The <strong class="key-term">subnet mask</strong> defines the boundary
+            between these two parts.
+        </p>
+
+        <p>
+            A subnet mask uses <strong>1s</strong> in binary to mark the network bits and
+            <strong>0s</strong> to mark the host bits. When written in dotted decimal, the most common
+            masks look like <code>255.255.255.0</code> — where the 255s represent octets where all bits
+            are 1 (network portion) and the 0 represents an octet where all bits are 0 (host portion).
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Network Portion (24 bits)</th>
+                    <th scope="col">Host Portion (8 bits)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>IP Address</strong></td>
+                    <td><code>192.168.1</code></td>
+                    <td><code>.100</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Subnet Mask</strong></td>
+                    <td><code>255.255.255</code></td>
+                    <td><code>.0</code></td>
+                </tr>
+                <tr>
+                    <td><strong>In Binary</strong></td>
+                    <td><code>11111111.11111111.11111111</code></td>
+                    <td><code>.00000000</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Meaning</strong></td>
+                    <td>"Network bits"</td>
+                    <td>"Host bits"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Phone Number Analogy</div>
+            <p>Think of an IP address like a phone number: the <strong>area code</strong> identifies the region (network portion) and the <strong>local number</strong> identifies the specific line (host portion). The subnet mask tells you where the area code ends and the local number begins.</p>
+        </div>
+
+        <!-- Mask Examples -->
+        <h3 id="mask-examples">Subnet Mask Examples</h3>
+
+        <p>
+            The table below shows common subnet masks alongside their CIDR prefix notation,
+            total number of addresses, and usable host count. Note that two addresses are always
+            reserved in every subnet: the <strong class="key-term">network address</strong>
+            (all host bits set to 0) and the <strong class="key-term">broadcast address</strong>
+            (all host bits set to 1). The formula for usable hosts is
+            <strong>2<sup>n</sup> − 2</strong>, where <em>n</em> is the number of host bits.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Subnet Mask</th>
+                    <th scope="col">CIDR</th>
+                    <th scope="col">Total Addresses</th>
+                    <th scope="col">Usable Hosts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>255.0.0.0</code></td>
+                    <td>/8</td>
+                    <td>16,777,216</td>
+                    <td>16,777,214</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.0.0</code></td>
+                    <td>/16</td>
+                    <td>65,536</td>
+                    <td>65,534</td>
+                </tr>
+                <tr style="background:#e8f1fb;">
+                    <td><code>255.255.255.0</code></td>
+                    <td>/24</td>
+                    <td>256</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.128</code></td>
+                    <td>/25</td>
+                    <td>128</td>
+                    <td>126</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.192</code></td>
+                    <td>/26</td>
+                    <td>64</td>
+                    <td>62</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.224</code></td>
+                    <td>/27</td>
+                    <td>32</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.240</code></td>
+                    <td>/28</td>
+                    <td>16</td>
+                    <td>14</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.248</code></td>
+                    <td>/29</td>
+                    <td>8</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td><code>255.255.255.252</code></td>
+                    <td>/30</td>
+                    <td>4</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">The Formula: Usable Hosts = 2<sup>n</sup> − 2</div>
+            <p>
+                The <strong>2</strong> is subtracted because two addresses in every subnet are always reserved:
+                the <strong>network address</strong> (all host bits = 0, e.g., 192.168.1.0) and the
+                <strong>broadcast address</strong> (all host bits = 1, e.g., 192.168.1.255).
+            </p>
+            <p>Example: /24 has 8 host bits → 2<sup>8</sup> − 2 = 256 − 2 = <strong>254 usable hosts</strong>.</p>
+        </div>
+
+        <!-- Host Ranges -->
+        <h3 id="host-ranges">Calculating Host Address Ranges</h3>
+
+        <p>
+            Given a network address and mask, you can always calculate the four key addresses for
+            that subnet using this procedure:
+        </p>
+
+        <ol>
+            <li><strong>Network Address</strong>: The base address — all host bits set to 0. Not assignable to a host. Example: <code>192.168.1.0</code></li>
+            <li><strong>First Usable Host</strong>: Network address + 1. Example: <code>192.168.1.1</code></li>
+            <li><strong>Last Usable Host</strong>: Broadcast address − 1. Example: <code>192.168.1.254</code></li>
+            <li><strong>Broadcast Address</strong>: All host bits set to 1 — sent to every device in the subnet. Example: <code>192.168.1.255</code></li>
+        </ol>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    NA["<b>192.168.1.0</b><br/>Network Address<br/>(reserved — all host bits = 0)"]
+    FH["<b>192.168.1.1</b><br/>First Usable Host"]
+    RANGE["<b>192.168.1.2 – 192.168.1.253</b><br/>Usable Host Range"]
+    LH["<b>192.168.1.254</b><br/>Last Usable Host"]
+    BA["<b>192.168.1.255</b><br/>Broadcast Address<br/>(reserved — all host bits = 1)"]
+
+    NA --> FH --> RANGE --> LH --> BA
+
+    style NA fill:#fee2e2,stroke:#dc2626
+    style FH fill:#f0fdf4,stroke:#16a34a
+    style RANGE fill:#f0fdf4,stroke:#16a34a
+    style LH fill:#f0fdf4,stroke:#16a34a
+    style BA fill:#fee2e2,stroke:#dc2626
+            </pre>
+            <p class="diagram-caption">Figure 7: Address allocation within the 192.168.1.0/24 subnet. The first and last addresses are reserved (network and broadcast). The 254 addresses between them are available for hosts.</p>
+        </div>
+
+        <!-- Default Gateway -->
+        <h3 id="default-gateway">Default Gateway</h3>
+
+        <p>
+            When a device wants to send a packet to an IP address that is <em>not</em> on its own
+            local subnet, it sends the packet to the <strong class="key-term">default gateway</strong>
+            — the router interface on the local subnet that connects to other networks. The default
+            gateway acts as the "exit door" from your local network.
+        </p>
+
+        <p>
+            There is one critical rule: <strong>the default gateway must be on the same subnet as the
+            host</strong>. If the gateway address is on a different subnet, the host cannot reach
+            it via ARP (ARP only works locally), and all communication outside the local network
+            will fail. The gateway is typically assigned the first or last usable address in the
+            subnet (e.g., <code>.1</code> or <code>.254</code>).
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph Local["Local Network: 192.168.1.0/24"]
+        PC["fa:fa-desktop PC<br/>192.168.1.100<br/>GW: 192.168.1.1"]
+        GW["fa:fa-wifi Gateway<br/>192.168.1.1"]
+    end
+    IN(["fa:fa-cloud Internet"])
+
+    PC -->|local traffic| GW
+    GW ==>|external traffic| IN
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style GW fill:#fff7e0,stroke:#d97706
+    style IN fill:#f4f7fb,stroke:#6b7280
+            </pre>
+            <p class="diagram-caption">Figure 8: Default gateway topology. The PC (192.168.1.100) and gateway router (192.168.1.1) are on the same /24 subnet. Local traffic between devices on the subnet does not go through the gateway; traffic destined for any other network is forwarded to the gateway.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Common Misconfiguration</div>
+            <p>If the gateway is configured on a <strong>different subnet</strong> than the host, the host cannot reach the gateway via ARP and cannot access anything outside the local network. This is one of the most frequent IP configuration mistakes.</p>
+        </div>
+
+        <!-- Case Study: Moe's Tavern -->
+        <h3 id="case-study-moe">Case Study: Moe's Tavern Network Problem</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study: Moe's Tavern Network Problem</div>
+            <p>
+                Moe is setting up a new point-of-sale (POS) system at the tavern to track Duff Beer
+                sales. The system is configured as follows:
+            </p>
+            <table>
+                <thead>
+                    <tr><th scope="col">Setting</th><th scope="col">Value</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>IP Address</td><td><code>192.168.10.50</code></td></tr>
+                    <tr><td>Subnet Mask</td><td><code>255.255.255.0</code></td></tr>
+                    <tr><td>Default Gateway</td><td><code>192.168.20.1</code></td></tr>
+                </tbody>
+            </table>
+            <p>
+                Barney's laptop (<code>192.168.10.25</code>) can ping the POS system just fine.
+                However, the POS system <strong>cannot</strong> reach the internet or the beer
+                distributor's ordering website.
+            </p>
+            <p><em>Questions:</em></p>
+            <ol>
+                <li>What is wrong with this configuration?</li>
+                <li>Why can Barney reach the POS but the POS cannot reach the internet?</li>
+                <li>What should the gateway address be?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution: Moe's Tavern Network Problem</div>
+            <ol>
+                <li>The gateway <code>192.168.20.1</code> is on a <strong>different subnet</strong> (<code>192.168.20.x</code>) than the POS system (<code>192.168.10.x</code>). The POS cannot reach the gateway via ARP.</li>
+                <li>Barney's laptop (<code>192.168.10.25</code>) and the POS (<code>192.168.10.50</code>) are on the <em>same</em> subnet, so local communication works without needing the gateway. But internet-bound traffic must go through the gateway, which is unreachable because it is on a different subnet.</li>
+                <li>The gateway should be on the same subnet as the POS — for example, <code>192.168.10.1</code>.</li>
+            </ol>
+            <div class="callout callout-warning" style="margin-top:0.5rem;">
+                <div class="callout-title">Key Lesson</div>
+                <p>The default gateway <strong>must</strong> be on the same subnet as the host. This is one of the most common misconfigurations in real-world networks.</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 3: ADDRESS PLANNING STRATEGIES
+             ============================================================ -->
+        <div class="section-divider"><h2>Address Planning Strategies</h2></div>
+
+        <h2 id="address-planning">Address Planning Strategies</h2>
+
+        <p>
+            Address planning evolved from the rigid constraints of classful addressing to the
+            flexible tools of <strong class="key-term">CIDR</strong> and
+            <strong class="key-term">VLSM</strong>. Understanding this evolution explains many
+            of the design choices in modern IP networks.
+        </p>
+
+        <!-- Classful Addressing -->
+        <h3 id="classful">Classful Addressing (Legacy)</h3>
+
+        <p>
+            The original IPv4 design divided the address space into <strong>classes</strong>
+            based on the value of the first octet. Each class had a fixed network/host boundary —
+            there was no flexibility to choose a different split. This proved extremely wasteful:
+            a company needing 300 hosts had to obtain a Class B network with 65,534 addresses,
+            leaving over 65,000 addresses unused.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Class</th>
+                    <th scope="col">First Octet</th>
+                    <th scope="col">Default Mask</th>
+                    <th scope="col">Networks</th>
+                    <th scope="col">Hosts/Network</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:#e8f1fb;">
+                    <td><strong>A</strong></td>
+                    <td>1–126</td>
+                    <td>255.0.0.0 (/8)</td>
+                    <td>126</td>
+                    <td>16,777,214</td>
+                </tr>
+                <tr style="background:#f0fdf4;">
+                    <td><strong>B</strong></td>
+                    <td>128–191</td>
+                    <td>255.255.0.0 (/16)</td>
+                    <td>16,384</td>
+                    <td>65,534</td>
+                </tr>
+                <tr style="background:#fff7e0;">
+                    <td><strong>C</strong></td>
+                    <td>192–223</td>
+                    <td>255.255.255.0 (/24)</td>
+                    <td>2,097,152</td>
+                    <td>254</td>
+                </tr>
+                <tr>
+                    <td><strong>D</strong></td>
+                    <td>224–239</td>
+                    <td colspan="3">Multicast — not for hosts</td>
+                </tr>
+                <tr>
+                    <td><strong>E</strong></td>
+                    <td>240–255</td>
+                    <td colspan="3">Experimental — reserved</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">The Problem with Classful Addressing</div>
+            <p>Classful addressing was very wasteful. Huge blocks of addresses were assigned to organizations that used only a fraction of them. <strong class="key-term">CIDR</strong> (Classless Inter-Domain Routing) replaced this system in 1993 by allowing any prefix length, eliminating the class boundaries.</p>
+        </div>
+
+        <!-- Public vs Private -->
+        <h3 id="public-private">Public vs Private Addressing</h3>
+
+        <p>
+            Not all IPv4 addresses can be routed on the public internet. The IETF set aside three
+            ranges of addresses in <strong>RFC 1918</strong> for use in private networks. These
+            <strong class="key-term">private IP addresses</strong> can be freely reused by any
+            organization, but they are not routable on the internet. The
+            <strong class="key-term">NAT (Network Address Translation)</strong> process at the
+            router converts private addresses to the organization's public IP address when traffic
+            leaves the local network.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Range</th>
+                    <th scope="col">CIDR</th>
+                    <th scope="col">Addresses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>10.0.0.0 – 10.255.255.255</code></td>
+                    <td>10.0.0.0/8</td>
+                    <td>16,777,216</td>
+                </tr>
+                <tr>
+                    <td><code>172.16.0.0 – 172.31.255.255</code></td>
+                    <td>172.16.0.0/12</td>
+                    <td>1,048,576</td>
+                </tr>
+                <tr>
+                    <td><code>192.168.0.0 – 192.168.255.255</code></td>
+                    <td>192.168.0.0/16</td>
+                    <td>65,536</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">How NAT Works</div>
+            <p>
+                <strong class="key-term">NAT</strong> is what allows your home router to give every
+                device on your network a private address (e.g., 192.168.1.x) while sharing a single
+                public IP address assigned by your ISP. The router replaces the private source IP with
+                its public IP on outbound packets, and reverses this on inbound replies. This solved the
+                IPv4 address exhaustion problem temporarily but added complexity to end-to-end connectivity.
+            </p>
+        </div>
+
+        <!-- Reserved Ranges -->
+        <h3 id="reserved-ranges">Other Reserved Address Ranges</h3>
+
+        <p>
+            Beyond the RFC 1918 private ranges, several other IPv4 address ranges have special meanings:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Address Range</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background:#e8f1fb;">
+                    <td><code>127.0.0.0/8</code></td>
+                    <td>Loopback</td>
+                    <td>Tests the local TCP/IP stack; never leaves the device</td>
+                </tr>
+                <tr style="background:#fff7e0;">
+                    <td><code>169.254.0.0/16</code></td>
+                    <td>APIPA / Link-Local</td>
+                    <td>Auto-configured when DHCP fails; not routable</td>
+                </tr>
+                <tr style="background:#f0fdf4;">
+                    <td><code>0.0.0.0</code></td>
+                    <td>"This Network"</td>
+                    <td>Default route or unknown/unspecified address</td>
+                </tr>
+                <tr style="background:#fee2e2;">
+                    <td><code>255.255.255.255</code></td>
+                    <td>Limited Broadcast</td>
+                    <td>Broadcasts to all hosts on the local segment</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">APIPA: The 169.254.x.x Warning Sign</div>
+            <p>
+                If a device has an address in the <strong class="key-term">APIPA</strong> range
+                (<code>169.254.0.0/16</code>), it means the device tried and failed to get an
+                address from a DHCP server. The device automatically assigned itself an address in
+                this range so that it can at least communicate with other APIPA devices on the same
+                segment. Common causes: DHCP server is down, Ethernet cable is unplugged, or the
+                device is on the wrong VLAN.
+            </p>
+        </div>
+
+        <!-- CIDR -->
+        <h3 id="cidr">CIDR: Classless Inter-Domain Routing</h3>
+
+        <p>
+            <strong class="key-term">CIDR</strong> (Classless Inter-Domain Routing) replaced
+            classful addressing in 1993. Instead of fixed class boundaries, CIDR allows any prefix
+            length from /0 to /32. The prefix length (the number after the slash) specifies how
+            many bits are used for the network portion, giving network administrators complete
+            flexibility in how they divide the address space.
+        </p>
+
+        <p>
+            CIDR notation simply appends the prefix length to the IP address:
+            <code>192.168.1.0/24</code> means "network address 192.168.1.0, with 24 bits for the
+            network and 8 bits for hosts." The quick formula for the number of addresses in any
+            subnet is <strong>2<sup>(32 − prefix)</sup></strong>.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">CIDR</th>
+                    <th scope="col">Host Bits</th>
+                    <th scope="col">Total Addresses</th>
+                    <th scope="col">Usable Hosts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>/24</td><td>8</td><td>256</td><td>254</td></tr>
+                <tr><td>/25</td><td>7</td><td>128</td><td>126</td></tr>
+                <tr><td>/26</td><td>6</td><td>64</td><td>62</td></tr>
+                <tr><td>/27</td><td>5</td><td>32</td><td>30</td></tr>
+                <tr><td>/28</td><td>4</td><td>16</td><td>14</td></tr>
+                <tr><td>/29</td><td>3</td><td>8</td><td>6</td></tr>
+                <tr><td>/30</td><td>2</td><td>4</td><td>2</td></tr>
+            </tbody>
+        </table>
+
+        <!-- VLSM -->
+        <h3 id="vlsm">Variable Length Subnet Masks (VLSM)</h3>
+
+        <p>
+            <strong class="key-term">VLSM</strong> (Variable Length Subnet Masking) takes CIDR
+            one step further: it allows you to use <em>different</em> subnet sizes within the same
+            larger network block. Rather than dividing a network into equal-sized subnets (which
+            wastes addresses), VLSM lets you right-size each subnet for its actual requirements.
+        </p>
+
+        <p>
+            The golden rule of VLSM is: <strong>always allocate the largest subnets first</strong>,
+            then work downward. This prevents address space from being stranded in unusable gaps.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">VLSM Example</div>
+            <p>A company is assigned <code>172.16.0.0/24</code> and needs four subnets:</p>
+            <ul>
+                <li>Sales: 100 hosts → needs /25 (126 usable) → <code>172.16.0.0/25</code></li>
+                <li>Engineering: 50 hosts → needs /26 (62 usable) → <code>172.16.0.128/26</code></li>
+                <li>Management: 25 hosts → needs /27 (30 usable) → <code>172.16.0.192/27</code></li>
+                <li>Point-to-point link: 2 hosts → needs /30 (2 usable) → <code>172.16.0.224/30</code></li>
+            </ul>
+            <p>Total used: 220 addresses for 177 hosts. Without VLSM, a /23 (512 addresses) would be required, wasting 292 addresses.</p>
+        </div>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    POOL["172.16.0.0/24<br/>256 total addresses"]
+    SALES["<b>Sales</b><br/>172.16.0.0/25<br/>126 usable hosts"]
+    ENG["<b>Engineering</b><br/>172.16.0.128/26<br/>62 usable hosts"]
+    MGMT["<b>Management</b><br/>172.16.0.192/27<br/>30 usable hosts"]
+    P2P["<b>Point-to-Point</b><br/>172.16.0.224/30<br/>2 usable hosts"]
+    FREE["Remaining<br/>(future growth)"]
+
+    POOL --> SALES
+    POOL --> ENG
+    POOL --> MGMT
+    POOL --> P2P
+    POOL --> FREE
+
+    style POOL fill:#e8f1fb,stroke:#004a88
+    style SALES fill:#e8f1fb,stroke:#004a88
+    style ENG fill:#f0fdf4,stroke:#16a34a
+    style MGMT fill:#fff7e0,stroke:#d97706
+    style P2P fill:#f5f3ff,stroke:#7c3aed
+    style FREE fill:#f4f7fb,stroke:#6b7280
+            </pre>
+            <p class="diagram-caption">Figure 9: VLSM allocation from a single /24 block. Each subnet is sized precisely to its requirements, and the remaining addresses are available for future expansion.</p>
+        </div>
+
+        <!-- Case Study: Springfield Elementary -->
+        <h3 id="case-study-springfield">Case Study: Springfield Elementary Network Design</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study: Springfield Elementary Network Design</div>
+            <p>
+                Principal Skinner needs to design the school network with three segments. The
+                district IT department has assigned him <code>172.16.50.0/24</code> (256 addresses).
+            </p>
+            <table>
+                <thead>
+                    <tr><th scope="col">Segment</th><th scope="col">Devices Needed</th><th scope="col">Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Computer Lab</td><td>28</td><td>Student workstations</td></tr>
+                    <tr><td>Admin Office</td><td>12</td><td>Staff computers, printers</td></tr>
+                    <tr><td>Teachers' Lounge</td><td>6</td><td>Laptops, smart TV</td></tr>
+                </tbody>
+            </table>
+            <p>Skinner wants to use VLSM to efficiently allocate addresses without waste.</p>
+            <p><em>Questions:</em></p>
+            <ol>
+                <li>What is the smallest subnet size that can fit 28 hosts?</li>
+                <li>List appropriate subnet assignments for each segment.</li>
+                <li>How many addresses will be "wasted" (unused or reserved)?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution: Springfield Elementary Network Design</div>
+            <ol>
+                <li>28 hosts needs at least 30 usable addresses → <strong>/27</strong> (32 addresses, 30 usable).</li>
+                <li>Subnet assignments (largest first):
+                    <table style="margin-top:0.5rem;">
+                        <thead>
+                            <tr><th scope="col">Segment</th><th scope="col">Subnet</th><th scope="col">Usable Hosts</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Computer Lab</td><td><code>172.16.50.0/27</code></td><td>30 (for 28 devices)</td></tr>
+                            <tr><td>Admin Office</td><td><code>172.16.50.32/28</code></td><td>14 (for 12 devices)</td></tr>
+                            <tr><td>Teachers' Lounge</td><td><code>172.16.50.48/29</code></td><td>6 (for 6 devices)</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>Address accounting: Used 32 + 16 + 8 = 56 addresses. Reserved (network/broadcast) = 6. "Wasted" headroom = 4. Remaining unused = ~200 addresses for future growth.</li>
+            </ol>
+            <div class="callout callout-success" style="margin-top:0.5rem;">
+                <div class="callout-title">Key Lesson</div>
+                <p>VLSM lets you right-size subnets. Always assign the <strong>largest first</strong>, then work down. Leave room for growth!</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 4: IP CONFIGURATION AND DIAGNOSTICS
+             ============================================================ -->
+        <div class="section-divider"><h2>IP Configuration &amp; Diagnostics</h2></div>
+
+        <h2 id="ip-diagnostics">IP Configuration &amp; Diagnostics</h2>
+
+        <p>
+            Understanding IP addressing theory is only half the battle. You also need to know the
+            host-side tools used to view, configure, and troubleshoot IP settings on Windows and
+            Linux systems.
+        </p>
+
+        <!-- ipconfig -->
+        <h3 id="ipconfig">ipconfig (Windows)</h3>
+
+        <p>
+            On Windows, <code>ipconfig</code> is the primary command for viewing and managing
+            network interface configuration. The basic command shows the IP address, subnet mask,
+            and default gateway for each interface. The <code>/all</code> flag adds the MAC address,
+            DHCP status, DNS servers, and more.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Command</th>
+                    <th scope="col">Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>ipconfig</code></td><td>Shows IP, subnet mask, and default gateway</td></tr>
+                <tr><td><code>ipconfig /all</code></td><td>Full detail including MAC, DHCP server, DNS servers</td></tr>
+                <tr><td><code>ipconfig /release</code></td><td>Releases the current DHCP lease</td></tr>
+                <tr><td><code>ipconfig /renew</code></td><td>Requests a new DHCP lease</td></tr>
+                <tr><td><code>ipconfig /flushdns</code></td><td>Clears the local DNS resolver cache</td></tr>
+            </tbody>
+        </table>
+
+        <p>Sample output of <code>ipconfig /all</code>:</p>
+
+        <pre><code>Ethernet adapter Local Area Connection:
+
+   Description . . . . . : Intel Ethernet Adapter
+   Physical Address. . . : 00-1A-2B-3C-4D-5E
+   DHCP Enabled. . . . . : Yes
+   IPv4 Address. . . . . : 192.168.1.100
+   Subnet Mask . . . . . : 255.255.255.0
+   Default Gateway . . . : 192.168.1.1
+   DHCP Server . . . . . : 192.168.1.1
+   DNS Servers . . . . . : 8.8.8.8</code></pre>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Troubleshooting Tip</div>
+            <p>
+                If <code>ipconfig</code> shows <code>169.254.x.x</code>, DHCP has failed — check the
+                DHCP server and physical connection. If it shows <code>0.0.0.0</code>, no IP address
+                has been assigned at all — check the NIC driver and physical link.
+            </p>
+        </div>
+
+        <!-- ifconfig and ip -->
+        <h3 id="ifconfig-ip">ifconfig and ip (Linux)</h3>
+
+        <p>
+            Linux provides two tools for interface configuration: the older
+            <code>ifconfig</code> command (now deprecated on most distributions) and the
+            modern <code>ip</code> command from the <em>iproute2</em> package. The <code>ip</code>
+            command is preferred on any modern Linux system.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Legacy (ifconfig)</th>
+                    <th scope="col">Modern (ip)</th>
+                    <th scope="col">Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>ifconfig</code></td><td><code>ip addr</code> / <code>ip a</code></td><td>Show IP addresses for all interfaces</td></tr>
+                <tr><td><code>ifconfig eth0</code></td><td><code>ip addr show eth0</code></td><td>Show a specific interface</td></tr>
+                <tr><td><code>ifconfig eth0 down</code></td><td><code>ip link set eth0 down</code></td><td>Disable an interface</td></tr>
+                <tr><td><code>ifconfig eth0 up</code></td><td><code>ip link set eth0 up</code></td><td>Enable an interface</td></tr>
+                <tr><td><em>(no equivalent)</em></td><td><code>ip route</code></td><td>Show routing table and default gateway</td></tr>
+                <tr><td><em>(no equivalent)</em></td><td><code>ip neigh</code></td><td>Show ARP cache (neighbor table)</td></tr>
+            </tbody>
+        </table>
+
+        <p>Sample output of <code>ip addr</code>:</p>
+
+        <pre><code>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;
+    inet 192.168.1.50/24 brd 192.168.1.255 scope global eth0
+    link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff</code></pre>
+
+        <!-- ARP command -->
+        <h3 id="arp-command">The arp Command</h3>
+
+        <p>
+            The <code>arp</code> command lets you inspect and manipulate the ARP cache directly.
+            It works the same way on Windows, Linux, and macOS.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Command</th>
+                    <th scope="col">Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>arp -a</code></td><td>Display all ARP cache entries</td></tr>
+                <tr><td><code>arp -a 192.168.1.1</code></td><td>Display the entry for a specific IP</td></tr>
+                <tr><td><code>arp -d 192.168.1.1</code></td><td>Delete an entry from the cache</td></tr>
+                <tr><td><code>arp -s 192.168.1.1 00-1a-2b-3c-4d-5e</code></td><td>Add a permanent static entry</td></tr>
+            </tbody>
+        </table>
+
+        <p>
+            Use the ARP command when troubleshooting:
+        </p>
+
+        <ul>
+            <li><strong>Local connectivity problems</strong> — is the gateway's MAC in the cache?</li>
+            <li><strong>Duplicate IP addresses</strong> — if two devices have the same IP, the ARP cache may show unexpected MAC addresses.</li>
+            <li><strong>Suspected ARP poisoning</strong> — look for unexpected MAC addresses mapped to known IPs.</li>
+        </ul>
+
+        <!-- Ping -->
+        <h3 id="ping">ping: The Essential Connectivity Test</h3>
+
+        <p>
+            The <code>ping</code> command tests whether a remote host is reachable by sending
+            <strong class="key-term">ICMP</strong> (Internet Control Message Protocol) Echo Request
+            messages and waiting for Echo Reply responses. It reports the
+            <strong class="key-term">round-trip time (RTT)</strong> in milliseconds and the
+            <strong class="key-term">TTL</strong> in the reply (which indicates approximately
+            how many hops away the destination is).
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Command</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>ping 192.168.1.1</code></td><td>Basic connectivity test (4 pings on Windows)</td></tr>
+                <tr><td><code>ping -t 192.168.1.1</code></td><td>Continuous ping (Windows) — press Ctrl+C to stop</td></tr>
+                <tr><td><code>ping -c 5 192.168.1.1</code></td><td>Send exactly 5 pings (Linux/macOS)</td></tr>
+                <tr><td><code>ping 127.0.0.1</code></td><td>Test the local TCP/IP stack</td></tr>
+            </tbody>
+        </table>
+
+        <p>Sample ping output:</p>
+
+        <pre><code>Pinging 192.168.1.1 with 32 bytes of data:
+Reply from 192.168.1.1: bytes=32 time=2ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
+Reply from 192.168.1.1: bytes=32 time=2ms TTL=64
+
+Ping statistics for 192.168.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</code></pre>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Interpreting Ping Results</div>
+            <ul>
+                <li><strong>Reply from …</strong> — the host is reachable and responding.</li>
+                <li><strong>Request timed out</strong> — no response received; the host may be down, unreachable, or blocking ICMP.</li>
+                <li><strong>Destination host unreachable</strong> — a router on the path cannot forward the packet; likely a routing problem.</li>
+                <li><strong>High RTT (&gt; 100ms for local)</strong> — possible congestion or long routing path.</li>
+            </ul>
+        </div>
+
+        <!-- Ping Troubleshooting Methodology -->
+        <h3 id="ping-methodology">Ping Troubleshooting Methodology</h3>
+
+        <p>
+            A systematic four-step ping methodology isolates connectivity problems to a specific
+            layer or segment. Each step tests a progressively larger portion of the network path,
+            and the step that fails identifies exactly where the problem is.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    S1["<b>Step 1</b><br/>Ping 127.0.0.1<br/><i>Tests TCP/IP stack</i>"]
+    S2["<b>Step 2</b><br/>Ping Own IP<br/><i>Tests NIC config</i>"]
+    S3["<b>Step 3</b><br/>Ping Gateway<br/><i>Tests local network</i>"]
+    S4["<b>Step 4</b><br/>Ping Remote IP<br/><i>Tests routing/WAN</i>"]
+
+    S1 -->|Pass| S2 -->|Pass| S3 -->|Pass| S4
+
+    style S1 fill:#e8f1fb,stroke:#004a88
+    style S2 fill:#e8f1fb,stroke:#004a88
+    style S3 fill:#e8f1fb,stroke:#004a88
+    style S4 fill:#e8f1fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 10: The four-step ping troubleshooting methodology. Each step tests a larger scope. The first step that fails identifies the layer or segment where the problem exists.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Step Fails</th>
+                    <th scope="col">Problem Location</th>
+                    <th scope="col">What to Check</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Step 1 (<code>127.0.0.1</code>)</td>
+                    <td>TCP/IP stack is broken</td>
+                    <td>Reinstall network drivers; reset TCP/IP stack (<code>netsh int ip reset</code>)</td>
+                </tr>
+                <tr>
+                    <td>Step 2 (own IP)</td>
+                    <td>NIC not configured properly</td>
+                    <td>Check IP settings, physical cable, NIC driver</td>
+                </tr>
+                <tr>
+                    <td>Step 3 (gateway)</td>
+                    <td>Local network issue</td>
+                    <td>Check cable, switch port, gateway address, ARP table, VLAN</td>
+                </tr>
+                <tr>
+                    <td>Step 4 (remote IP)</td>
+                    <td>Routing or remote issue</td>
+                    <td>Check gateway config, ISP connection, firewall rules</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================================
+             SECTION 5: IPv6 FUNDAMENTALS
+             ============================================================ -->
+        <div class="section-divider"><h2>IPv6 Fundamentals</h2></div>
+
+        <h2 id="ipv6">IPv6 Fundamentals</h2>
+
+        <p>
+            The final section introduces IPv6 structure, address types, and migration approaches
+            from IPv4 environments. IPv6 is not just "a bigger IPv4" — it includes fundamental
+            improvements to how addresses are structured, assigned, and used.
+        </p>
+
+        <!-- Why IPv6 -->
+        <h3 id="why-ipv6">Why IPv6? The Problem with IPv4</h3>
+
+        <p>
+            IPv4's address space of approximately 4.3 billion addresses seemed enormous in 1981.
+            By 2011, IANA had assigned the last blocks of IPv4 addresses to the Regional Internet
+            Registries. Workarounds like NAT and CIDR extended the life of IPv4 but added
+            complexity and broke end-to-end connectivity. <strong class="key-term">IPv6</strong>
+            provides a permanent solution with an address space so large it will never be exhausted.
+        </p>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">IPv6 Address Space</div>
+            <p>
+                IPv6 uses 128-bit addresses, providing 2<sup>128</sup> = <strong>340 undecillion</strong>
+                unique addresses (340,282,366,920,938,463,463,374,607,431,768,211,456).
+                To put this in perspective: IPv6 could assign a unique address to every atom on
+                Earth's surface and still have addresses to spare.
+            </p>
+        </div>
+
+        <p>IPv6 also brings several technical improvements over IPv4:</p>
+
+        <ul>
+            <li>Simpler, fixed-size header (40 bytes) for faster routing</li>
+            <li>Built-in support for IPsec (encryption and authentication)</li>
+            <li>No need for NAT — every device can have a globally routable address</li>
+            <li>Stateless Address Autoconfiguration (<strong class="key-term">SLAAC</strong>) eliminates the need for DHCP in many cases</li>
+            <li>Better multicast support replaces broadcast traffic</li>
+        </ul>
+
+        <!-- IPv6 Format -->
+        <h3 id="ipv6-format">IPv6 Address Format</h3>
+
+        <p>
+            An <strong class="key-term">IPv6 address</strong> is 128 bits long, written as
+            eight groups of four hexadecimal digits separated by colons. This gives an address
+            like <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>.
+        </p>
+
+        <p>
+            Two rules allow IPv6 addresses to be abbreviated:
+        </p>
+
+        <ol>
+            <li><strong>Rule 1 — Drop leading zeros</strong> within each group. <code>0db8</code> becomes <code>db8</code>; <code>0000</code> becomes <code>0</code>.</li>
+            <li><strong>Rule 2 — Replace ONE consecutive run of all-zero groups with <code>::</code></strong>. For example, <code>:0000:0000:</code> becomes <code>::</code>. You can only use <code>::</code> once in an address — using it twice would make the address ambiguous.</li>
+        </ol>
+
+        <div class="callout callout-success">
+            <div class="callout-title">IPv6 Abbreviation Example</div>
+            <p>Full form: <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code></p>
+            <p>After Rule 1 (drop leading zeros): <code>2001:db8:85a3:0:0:8a2e:370:7334</code></p>
+            <p>After Rule 2 (compress consecutive zeros): <code>2001:db8:85a3::8a2e:370:7334</code></p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Important: Use :: Only Once!</div>
+            <p>You can only use <code>::</code> once per IPv6 address. Using it twice would make the address ambiguous — you would not know how many zero groups each <code>::</code> represents.</p>
+            <p>Valid: <code>2001:db8::1</code></p>
+            <p>Invalid: <code>2001::db8::1</code> — this has two <code>::</code> and is not a valid address.</p>
+        </div>
+
+        <!-- IPv6 Prefixes and Types -->
+        <h3 id="ipv6-prefixes">IPv6 Network Prefixes and Address Types</h3>
+
+        <p>
+            IPv6 uses <strong class="key-term">prefix length</strong> notation (e.g., <code>/64</code>)
+            instead of subnet masks. The standard allocation for a single subnet is <strong>/64</strong>:
+            the first 64 bits identify the network prefix, and the last 64 bits are the
+            <strong class="key-term">interface identifier</strong> (similar to the host portion in IPv4).
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Address Type</th>
+                    <th scope="col">Prefix</th>
+                    <th scope="col">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong class="key-term">Global Unicast (GUA)</strong></td>
+                    <td><code>2000::/3</code></td>
+                    <td>Public, routable addresses — equivalent to IPv4 public IPs</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Link-Local</strong></td>
+                    <td><code>fe80::/10</code></td>
+                    <td>Auto-configured on every interface; not routable; used for neighbor discovery</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Unique Local</strong></td>
+                    <td><code>fc00::/7</code></td>
+                    <td>Private addresses — equivalent to RFC 1918; not routable on internet</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Multicast</strong></td>
+                    <td><code>ff00::/8</code></td>
+                    <td>One-to-many; replaces broadcast in IPv6</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Loopback</strong></td>
+                    <td><code>::1/128</code></td>
+                    <td>Equivalent to IPv4's 127.0.0.1</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Unspecified</strong></td>
+                    <td><code>::/128</code></td>
+                    <td>Indicates "no address" — used during autoconfiguration</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- IPv6 Address Types Explained -->
+        <h3 id="ipv6-types">IPv6 Address Types Explained</h3>
+
+        <p>
+            The most important IPv6 address types to understand for network administration and
+            the Network+ exam are:
+        </p>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Global Unicast Address (GUA)</div>
+            <p>
+                Global unicast addresses (starting with <code>2</code> or <code>3</code>) are the
+                public, routable addresses of IPv6 — equivalent to public IPv4 addresses. They are
+                assigned by ISPs and are globally unique. Most internet-connected IPv6 traffic uses
+                GUAs.
+            </p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Link-Local Address (fe80::)</div>
+            <p>
+                Every IPv6-enabled interface automatically generates a link-local address starting
+                with <code>fe80::</code>, even without any manual configuration or DHCP server.
+                Link-local addresses are only valid on the local network segment — they are never
+                routed. They are essential for IPv6 neighbor discovery (which replaces ARP) and
+                routing protocol communication.
+            </p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Unique Local Address (fc00::/7)</div>
+            <p>
+                Unique local addresses are the IPv6 equivalent of RFC 1918 private addresses
+                (like <code>10.x.x.x</code> or <code>192.168.x.x</code>). They are for internal
+                use only and are not routable on the public internet. Unlike link-local addresses,
+                unique local addresses can be routed within an organization's internal network.
+            </p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Multicast (ff00::/8)</div>
+            <p>
+                IPv6 replaces broadcast with multicast. Common multicast addresses include
+                <code>ff02::1</code> (all nodes on the local segment) and <code>ff02::2</code>
+                (all routers on the local segment). This improves efficiency since multicast
+                packets are only delivered to devices that have joined the relevant group.
+            </p>
+        </div>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    IPV6["IPv6 Address Types"]
+    GUA["<b>Global Unicast</b><br/>2000::/3<br/>Public &amp; Routable<br/>(like IPv4 public)"]
+    LL["<b>Link-Local</b><br/>fe80::/10<br/>Auto-configured<br/>Not Routed"]
+    UL["<b>Unique Local</b><br/>fc00::/7<br/>Private use<br/>(like RFC 1918)"]
+    MC["<b>Multicast</b><br/>ff00::/8<br/>One-to-many<br/>(replaces broadcast)"]
+    LO["<b>Loopback</b><br/>::1/128<br/>Like 127.0.0.1"]
+
+    IPV6 --> GUA
+    IPV6 --> LL
+    IPV6 --> UL
+    IPV6 --> MC
+    IPV6 --> LO
+
+    style GUA fill:#f0fdf4,stroke:#16a34a
+    style LL fill:#e8f1fb,stroke:#004a88
+    style UL fill:#fff7e0,stroke:#d97706
+    style MC fill:#f5f3ff,stroke:#7c3aed
+    style LO fill:#fee2e2,stroke:#dc2626
+            </pre>
+            <p class="diagram-caption">Figure 11: IPv6 address type hierarchy. Each type serves a different scope and purpose, from globally routable addresses (GUA) to automatically configured local addresses (link-local).</p>
+        </div>
+
+        <!-- IPv6 Transition -->
+        <h3 id="ipv6-transition">IPv4 to IPv6 Transition</h3>
+
+        <p>
+            The internet cannot switch from IPv4 to IPv6 overnight — the transition requires
+            running both protocols simultaneously for years. Three main transition strategies
+            have been deployed:
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Strategy</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Pros / Cons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong class="key-term">Dual Stack</strong></td>
+                    <td>Devices run IPv4 and IPv6 simultaneously, using whichever is appropriate</td>
+                    <td>Most common and practical; gradual migration; devices have both address types</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">Tunneling</strong></td>
+                    <td>IPv6 packets are encapsulated inside IPv4 packets to cross IPv4-only networks (6to4, Teredo, ISATAP)</td>
+                    <td>Allows IPv6 over legacy infrastructure; adds overhead and complexity</td>
+                </tr>
+                <tr>
+                    <td><strong class="key-term">NAT64</strong></td>
+                    <td>Translates between IPv6 and IPv4 at the network boundary, allowing IPv6-only hosts to reach IPv4 servers</td>
+                    <td>Useful in IPv6-only deployments; complex to manage; last resort</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Recommendation: Dual Stack</div>
+            <p>
+                <strong>Dual stack</strong> is the preferred and most widely deployed transition method.
+                Run both IPv4 and IPv6 until IPv4 can be safely retired. Most modern operating systems
+                (Windows, Linux, macOS, iOS, Android) support dual stack by default and prefer IPv6
+                when available.
+            </p>
+        </div>
+
+        <!-- ============================================================
+             MODULE SUMMARY
+             ============================================================ -->
+        <div class="section-divider"><h2>Module Summary</h2></div>
+
+        <div class="module-summary">
+            <h2 id="module-summary">Module Summary</h2>
+            <p>In this module, we covered the core concepts of IPv4 and IPv6 addressing. Here are the key takeaways:</p>
+
+            <ul>
+                <li><strong class="key-term">IP (Layer 3)</strong> provides end-to-end addressing; <strong class="key-term">MAC (Layer 2)</strong> provides local, hop-by-hop delivery. <strong class="key-term">ARP</strong> resolves IP addresses to MAC addresses on the local network.</li>
+                <li><strong class="key-term">IPv4 addresses</strong> are 32-bit values written in dotted decimal (e.g., <code>192.168.1.100</code>). The <strong class="key-term">subnet mask</strong> divides each address into network and host portions.</li>
+                <li>The <strong>network address</strong> and <strong>broadcast address</strong> are always reserved; usable hosts = 2<sup>n</sup> − 2 (where n = host bits).</li>
+                <li><strong class="key-term">CIDR notation</strong> (e.g., /24) replaced classful addressing, allowing flexible prefix lengths.</li>
+                <li><strong class="key-term">VLSM</strong> (Variable Length Subnet Masking) allows subnets of different sizes, enabling efficient IP allocation. Always allocate the largest subnets first.</li>
+                <li><strong class="key-term">Private IP ranges</strong> (RFC 1918): 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16. <strong class="key-term">NAT</strong> translates private to public for internet access.</li>
+                <li>Special addresses: <code>127.0.0.1</code> (loopback), <code>169.254.x.x</code> (APIPA — DHCP failure indicator).</li>
+                <li>Address types: <strong class="key-term">Unicast</strong> (one-to-one), <strong class="key-term">Broadcast</strong> (one-to-all on subnet), <strong class="key-term">Multicast</strong> (one-to-group), <strong class="key-term">Anycast</strong> (one-to-nearest).</li>
+                <li>The <strong class="key-term">default gateway</strong> <em>must</em> be on the same subnet as the host. <strong class="key-term">TTL</strong> prevents routing loops by limiting packet lifetimes.</li>
+                <li>Diagnostic tools: <code>ipconfig</code>/<code>ifconfig</code>/<code>ip addr</code> (view config), <code>arp -a</code> (view MAC mappings), <code>ping</code> (test reachability), <code>traceroute</code>/<code>tracert</code> (map the path).</li>
+                <li>Ping methodology: (1) loopback → (2) own IP → (3) gateway → (4) remote host. The first failing step isolates the problem.</li>
+                <li><strong class="key-term">IPv6</strong> uses 128-bit addresses in hex notation (e.g., <code>2001:db8::1</code>). Use <code>::</code> to compress consecutive zero groups (only once per address).</li>
+                <li>IPv6 address types: <strong class="key-term">Link-local</strong> (fe80::/10, auto-configured on every interface), <strong class="key-term">Global unicast</strong> (2000::/3, public), <strong class="key-term">Unique local</strong> (fc00::/7, private).</li>
+                <li><strong class="key-term">Dual stack</strong> — running IPv4 and IPv6 simultaneously — is the preferred transition method.</li>
+            </ul>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">What's Next</div>
+            <p>
+                This module has given you the tools to understand and configure IP addressing.
+                In <strong>Module 5</strong>, we will explore how routers use the destination IP
+                address to forward packets across multiple networks — covering routing protocols,
+                static routes, and how the internet's routing infrastructure works.
+            </p>
+        </div>
+
+        <!-- Chapter Footer -->
+        <footer class="chapter-footer">
+            <p>Introduction to Networking &copy; 2025 Brendan Shea, PhD &mdash; Rochester Community and Technical College &mdash; Licensed under CC-BY-NC 4.0</p>
+            <nav class="chapter-nav">
+                <a href="../network_03_switches_interfaces/index.html">&larr; Previous: Switches &amp; Interfaces</a>
+                <a href="../network_05_routing/index.html">Next: Routing &amp; Network Infrastructure &rarr;</a>
+            </nav>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
