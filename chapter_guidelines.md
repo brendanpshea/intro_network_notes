@@ -85,19 +85,33 @@ Every chapter HTML file should follow this skeleton:
     <title>Module X: [Title] — Introduction to Networking</title>
     <link rel="stylesheet" href="../css/lectures.css">
 
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <!-- Mermaid.js for diagrams -->
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'base',
+            theme:         'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels:  true,
+                curve:       'basis',
+            },
             themeVariables: {
-                primaryColor:       '#e8f1fb',
-                primaryBorderColor: '#004a88',
-                primaryTextColor:   '#1f2a37',
-                lineColor:          '#0b5cab',
-                secondaryColor:     '#fff7e0',
-                tertiaryColor:      '#f0fdf4'
+                background:          '#ffffff',
+                primaryColor:        '#e8f1fb',
+                primaryBorderColor:  '#004a88',
+                primaryTextColor:    '#1f2a37',
+                lineColor:           '#004a88',
+                secondaryColor:      '#fff7e0',
+                tertiaryColor:       '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder:          '#004a88',
+                clusterBkg:          '#f4f7fb',
+                titleColor:          '#1f2a37',
             }
         });
     </script>
@@ -244,6 +258,42 @@ or rendered TikZ output.
 | Comparison / classification | `graph TD` or use an HTML table | Better as a table in many cases |
 | State machine | `stateDiagram-v2` | Port states (STP), etc. |
 
+### Font Awesome Icons in Diagrams
+
+Font Awesome 6 Free icons are available in all Mermaid flowcharts via the `fa:fa-xxx` prefix.
+The config uses `htmlLabels: true` and `securityLevel: 'loose'`, which enables full HTML in labels.
+
+| Device | FA Icon Syntax | Notes |
+|--------|---------------|-------|
+| PC / Desktop | `fa:fa-desktop` | |
+| Laptop | `fa:fa-laptop` | |
+| Switch | `fa:fa-network-wired` | also use for NICs |
+| Router / WAP | `fa:fa-wifi` | |
+| Server | `fa:fa-server` | |
+| Cloud / Internet | `fa:fa-cloud` | use with `([...])` node shape |
+| Database | `fa:fa-database` | |
+| Phone / Mobile | `fa:fa-mobile` | |
+| Tablet | `fa:fa-tablet` | |
+| Building / ISP | `fa:fa-building` | |
+| Lock / Security | `fa:fa-lock` | |
+| Shield / Firewall | `fa:fa-shield-halved` | |
+| User | `fa:fa-user` | |
+
+**Plain text in node:**
+```
+SW[fa:fa-network-wired Switch]
+```
+
+**Multi-line label** (requires `securityLevel: 'loose'`):
+```
+RT["fa:fa-wifi Router<br/>192.168.1.1"]
+```
+
+**Bold text in label:**
+```
+S1["<b>Step 1:</b> Identify the Problem<br/>Question users, check recent changes"]
+```
+
 ### Mermaid Style Tips
 
 - Prefer `graph LR` (left-to-right) for network topologies — it reads naturally.
@@ -253,6 +303,7 @@ or rendered TikZ output.
   simplify to a small representative diagram.
 - For complex diagrams with many nodes, break them into **multiple smaller Mermaid diagrams**
   with explanatory text between them rather than one massive diagram.
+- Use `\n` **only** in unquoted labels. For quoted labels `["..."]`, use `<br/>` for line breaks.
 
 ---
 

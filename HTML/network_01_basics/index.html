@@ -8,20 +8,33 @@
     <title>Module 1: Networking Fundamentals — Introduction to Networking</title>
     <link rel="stylesheet" href="../css/lectures.css">
 
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <!-- Mermaid.js for diagrams -->
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'base',
+            theme:         'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels:  true,
+                curve:       'basis',
+            },
             themeVariables: {
-                primaryColor:       '#e8f1fb',
-                primaryBorderColor: '#004a88',
-                primaryTextColor:   '#1f2a37',
-                lineColor:          '#0b5cab',
-                secondaryColor:     '#fff7e0',
-                tertiaryColor:      '#f0fdf4',
-                edgeLabelBackground: '#ffffff'
+                background:          '#ffffff',
+                primaryColor:        '#e8f1fb',
+                primaryBorderColor:  '#004a88',
+                primaryTextColor:    '#1f2a37',
+                lineColor:           '#004a88',
+                secondaryColor:      '#fff7e0',
+                tertiaryColor:       '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder:          '#004a88',
+                clusterBkg:          '#f4f7fb',
+                titleColor:          '#1f2a37',
             }
         });
     </script>
@@ -109,9 +122,9 @@
         <div class="diagram-container">
             <pre class="mermaid">
 graph LR
-    PC[💻 PC] -->|Ethernet| SW[🔀 Switch]
-    SW -->|Ethernet| RT[📡 Router]
-    RT -->|WAN| IN((Internet))
+    PC[fa:fa-laptop PC] -->|Ethernet| SW[fa:fa-network-wired Switch]
+    SW -->|Ethernet| RT[fa:fa-wifi Router]
+    RT ==>|WAN| IN([fa:fa-cloud Internet])
 
     style PC fill:#e8f1fb,stroke:#004a88
     style SW fill:#e8f1fb,stroke:#004a88
@@ -205,11 +218,11 @@ graph LR
         <div class="diagram-container">
             <pre class="mermaid">
 graph TD
-    SW[🔀 Switch] --- PC1[💻 PC 1]
-    SW --- PC2[💻 PC 2]
-    SW --- LT[🖥 Laptop]
+    SW[fa:fa-network-wired Switch] --- PC1[fa:fa-desktop PC 1]
+    SW --- PC2[fa:fa-desktop PC 2]
+    SW --- LT[fa:fa-laptop Laptop]
 
-    style SW fill:#e8f1fb,stroke:#004a88,font-weight:bold
+    style SW fill:#e8f1fb,stroke:#004a88,stroke-width:3px
     style PC1 fill:#f0fdf4,stroke:#16a34a
     style PC2 fill:#f0fdf4,stroke:#16a34a
     style LT fill:#f0fdf4,stroke:#16a34a
@@ -349,11 +362,11 @@ graph TD
         <div class="diagram-container">
             <pre class="mermaid">
 graph TD
-    SW((🔀 Switch)) --- PC1[💻 PC]
-    SW --- PC2[💻 PC]
-    SW --- LT1[🖥 Laptop]
-    SW --- PC3[💻 PC]
-    SW --- LT2[🖥 Laptop]
+    SW((fa:fa-network-wired)) --- PC1[fa:fa-desktop PC]
+    SW --- PC2[fa:fa-desktop PC]
+    SW --- LT1[fa:fa-laptop Laptop]
+    SW --- PC3[fa:fa-desktop PC]
+    SW --- LT2[fa:fa-laptop Laptop]
 
     style SW fill:#e8f1fb,stroke:#004a88,stroke-width:3px
             </pre>
@@ -873,13 +886,13 @@ graph TD
         <div class="diagram-container">
             <pre class="mermaid">
 graph LR
-    PC[💻 PC\n192.168.1.10] -->|Ethernet| RT
-    LT[🖥 Laptop\n192.168.1.11] -->|Ethernet| RT
-    RT{🌐 SOHO Router\nPublic: 74.125.x.x} -.->|Wi-Fi| PH[📱 Smartphone]
-    RT -.->|Wi-Fi| TB[📟 Tablet]
-    RT -->|WAN| ISP[ISP]
-    ISP --> IN((Internet))
-    IN --- SRV[(Web Server)]
+    PC["fa:fa-desktop PC<br/>192.168.1.10"] -->|Ethernet| RT
+    LT["fa:fa-laptop Laptop<br/>192.168.1.11"] -->|Ethernet| RT
+    RT{"fa:fa-wifi SOHO Router<br/>Public: 74.125.x.x"} -.->|Wi-Fi| PH[fa:fa-mobile Phone]
+    RT -.->|Wi-Fi| TB[fa:fa-tablet Tablet]
+    RT -->|WAN| ISP[fa:fa-building ISP]
+    ISP ==>|WAN| IN([fa:fa-cloud Internet])
+    IN --- SRV[(fa:fa-server Web Server)]
 
     style RT fill:#e8f1fb,stroke:#004a88,stroke-width:3px
     style IN fill:#fff7e0,stroke:#d97706
@@ -948,11 +961,11 @@ graph LR
         <div class="diagram-container">
             <pre class="mermaid">
 graph LR
-    PC[PC\n192.168.1.10] --> RT
-    LT[Laptop\n192.168.1.11] --> RT
-    RT[SOHO Router\nNAT: private → public] -->|Public IP\n74.125.x.x| ISP[ISP Network]
-    ISP --> IN((Internet))
-    IN --- SRV[(Web Server\n142.250.x.x)]
+    PC["fa:fa-desktop PC<br/>192.168.1.10"] --> RT
+    LT["fa:fa-laptop Laptop<br/>192.168.1.11"] --> RT
+    RT["fa:fa-wifi SOHO Router<br/>NAT: private → public"] -->|"Public IP 74.125.x.x"| ISP[fa:fa-building ISP Network]
+    ISP ==>|WAN| IN([fa:fa-cloud Internet])
+    IN --- SRV[("fa:fa-server Web Server<br/>142.250.x.x")]
 
     style RT fill:#e8f1fb,stroke:#004a88
     style IN fill:#fff7e0,stroke:#d97706
@@ -1125,15 +1138,15 @@ graph LR
         <div class="diagram-container">
             <pre class="mermaid">
 graph TD
-    S1["1️⃣ Identify the Problem\nQuestion users, find scope, check recent changes"] --> S2
-    S2["2️⃣ Establish a Theory\nOccam's Razor, use OSI model framework"] --> S3
-    S3["3️⃣ Test the Theory\nConfirm or eliminate the probable cause"]
+    S1["<b>1 — Identify the Problem</b><br/>Question users, find scope, check recent changes"] --> S2
+    S2["<b>2 — Establish a Theory</b><br/>Occam's Razor, use OSI model framework"] --> S3
+    S3["<b>3 — Test the Theory</b><br/>Confirm or eliminate the probable cause"]
     S3 -->|Theory confirmed| S4
     S3 -->|Theory wrong| S2
-    S4["4️⃣ Establish a Plan\nConsider impact, get approvals, plan rollback"] --> S5
-    S5["5️⃣ Implement the Solution\nOne change at a time; escalate if needed"] --> S6
-    S6["6️⃣ Verify Full Functionality\nConfirm fix, check for side effects"] --> S7
-    S7["7️⃣ Document Findings\nRecord symptoms, cause, actions, outcome"]
+    S4["<b>4 — Establish a Plan</b><br/>Consider impact, get approvals, plan rollback"] --> S5
+    S5["<b>5 — Implement the Solution</b><br/>One change at a time; escalate if needed"] --> S6
+    S6["<b>6 — Verify Full Functionality</b><br/>Confirm fix, check for side effects"] --> S7
+    S7["<b>7 — Document Findings</b><br/>Record symptoms, cause, actions, outcome"]
 
     style S3 fill:#fff7e0,stroke:#d97706
             </pre>
