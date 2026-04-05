@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Module 1: Introduction to Networking Fundamentals — network types, topologies, OSI model, SOHO networks, and troubleshooting methodology.">
+    <meta name="author" content="Brendan Shea, PhD">
+    <title>Module 1: Networking Fundamentals — Introduction to Networking</title>
+    <link rel="stylesheet" href="../css/lectures.css">
+
+    <!-- Mermaid.js for diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor:       '#e8f1fb',
+                primaryBorderColor: '#004a88',
+                primaryTextColor:   '#1f2a37',
+                lineColor:          '#0b5cab',
+                secondaryColor:     '#fff7e0',
+                tertiaryColor:      '#f0fdf4',
+                edgeLabelBackground: '#ffffff'
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- ================================================================
+         SIDEBAR
+         ================================================================ -->
+    <aside class="sidebar">
+        <a href="../../index.html" class="back-link">&larr; All Modules</a>
+        <nav>
+            <a href="#introduction" class="toc-h2">Introduction to Networks</a>
+            <a href="#learning-outcomes" class="toc-h3">Learning Outcomes</a>
+            <a href="#key-terms" class="toc-h3">Key Terms Preview</a>
+
+            <a href="#networking-fundamentals" class="toc-h2">Networking Fundamentals</a>
+            <a href="#what-is-a-network" class="toc-h3">What is a Network?</a>
+            <a href="#basic-concepts" class="toc-h3">Basic Networking Concepts</a>
+            <a href="#network-types" class="toc-h3">Network Types</a>
+
+            <a href="#topologies" class="toc-h2">Network Topologies</a>
+            <a href="#topology-overview" class="toc-h3">Physical vs. Logical Topology</a>
+            <a href="#star-topology" class="toc-h3">Star Topology</a>
+            <a href="#mesh-topology" class="toc-h3">Mesh Topology</a>
+            <a href="#legacy-topologies" class="toc-h3">Legacy Topologies</a>
+            <a href="#case-study-topology" class="toc-h3">Case Study: Mystery Inc.</a>
+
+            <a href="#osi-model" class="toc-h2">The OSI Model</a>
+            <a href="#osi-intro" class="toc-h3">Introduction &amp; Purpose</a>
+            <a href="#encapsulation" class="toc-h3">Data Encapsulation &amp; PDUs</a>
+            <a href="#seven-layers" class="toc-h3">The Seven Layers</a>
+            <a href="#osi-summary" class="toc-h3">OSI Summary &amp; Mnemonics</a>
+            <a href="#case-study-osi" class="toc-h3">Case Study: Haunted Network</a>
+
+            <a href="#soho-networks" class="toc-h2">SOHO Networks</a>
+            <a href="#what-is-soho" class="toc-h3">What is a SOHO Network?</a>
+            <a href="#soho-router" class="toc-h3">SOHO Router Functions</a>
+            <a href="#internet-connection" class="toc-h3">Connecting to the Internet</a>
+            <a href="#case-study-soho" class="toc-h3">Case Study: Scooby Snacks Café</a>
+
+            <a href="#number-systems" class="toc-h2">Number Systems</a>
+            <a href="#binary" class="toc-h3">Binary</a>
+            <a href="#hexadecimal" class="toc-h3">Hexadecimal</a>
+
+            <a href="#troubleshooting" class="toc-h2">Troubleshooting Methodology</a>
+            <a href="#seven-steps" class="toc-h3">The 7-Step Process</a>
+            <a href="#steps-1-3" class="toc-h3">Steps 1–3: Identify &amp; Theorize</a>
+            <a href="#steps-4-7" class="toc-h3">Steps 4–7: Solve &amp; Document</a>
+            <a href="#case-study-troubleshoot" class="toc-h3">Case Study: Mystery Machine</a>
+
+            <a href="#module-summary" class="toc-h2">Module Summary</a>
+        </nav>
+    </aside>
+
+    <!-- ================================================================
+         MAIN CONTENT
+         ================================================================ -->
+    <main class="content">
+
+        <!-- Chapter Header -->
+        <header class="chapter-header">
+            <span class="module-label">Module 1</span>
+            <h1>Introduction to Networking Fundamentals</h1>
+            <p class="subtitle">Network types, topologies, the OSI model, SOHO networks, and troubleshooting methodology.</p>
+        </header>
+
+        <!-- ============================================================
+             SECTION 1: INTRODUCTION TO NETWORKS
+             ============================================================ -->
+        <h2 id="introduction">Introduction to Networks</h2>
+
+        <p>
+            This module introduces the fundamental concepts you need to understand computer networks.
+            We will explore different types of networks and how they are physically and logically
+            organized. The <strong class="key-term">OSI Model</strong> provides a framework for
+            understanding how data travels across networks, while
+            <strong class="key-term">SOHO networks</strong> demonstrate how these concepts apply
+            in small office and home environments. A systematic
+            <strong class="key-term">troubleshooting methodology</strong> ties these ideas together,
+            giving you tools to diagnose and resolve network problems efficiently.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC[💻 PC] -->|Ethernet| SW[🔀 Switch]
+    SW -->|Ethernet| RT[📡 Router]
+    RT -->|WAN| IN((Internet))
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style SW fill:#e8f1fb,stroke:#004a88
+    style RT fill:#e8f1fb,stroke:#004a88
+    style IN fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 1: A simple network path — PC to Switch to Router to the Internet. This basic layout is the foundation of most networks.</p>
+        </div>
+
+        <!-- Learning Outcomes -->
+        <h3 id="learning-outcomes">Learning Outcomes</h3>
+
+        <div class="learning-outcomes">
+            <h3>After completing this module, you will be able to:</h3>
+            <ul>
+                <li>Define fundamental <strong class="key-term">networking concepts</strong> and terminology used by IT professionals.</li>
+                <li>Identify different <strong class="key-term">network types</strong> including LAN, WAN, PAN, MAN, and CAN.</li>
+                <li>Describe common <strong class="key-term">network topologies</strong> and explain their advantages and disadvantages.</li>
+                <li>Explain the seven layers of the <strong class="key-term">OSI model</strong> and the function of each layer.</li>
+                <li>Describe the components and functions of a <strong class="key-term">SOHO router</strong>.</li>
+                <li>Apply a systematic <strong class="key-term">troubleshooting methodology</strong> to diagnose network problems.</li>
+            </ul>
+        </div>
+
+        <!-- Key Terms Preview -->
+        <h3 id="key-terms">Key Terms Preview</h3>
+
+        <p>The following key terms appear throughout this module. Familiarize yourself with them before reading:</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Network Basics</div>
+                <dl class="glossary">
+                    <dt>Node</dt><dd>Any device on a network</dd>
+                    <dt>Host</dt><dd>A device with an IP address</dd>
+                    <dt>Topology</dt><dd>Network layout/design</dd>
+                    <dt>Protocol</dt><dd>Rules for communication</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Network Types</div>
+                <dl class="glossary">
+                    <dt>LAN</dt><dd>Local Area Network</dd>
+                    <dt>WAN</dt><dd>Wide Area Network</dd>
+                    <dt>SOHO</dt><dd>Small Office/Home Office</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">OSI &amp; Data</div>
+                <dl class="glossary">
+                    <dt>OSI Model</dt><dd>7-layer reference model</dd>
+                    <dt>Encapsulation</dt><dd>Wrapping data with headers</dd>
+                    <dt>PDU</dt><dd>Protocol Data Unit</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Number Systems</div>
+                <dl class="glossary">
+                    <dt>Binary</dt><dd>Base-2 (0 and 1)</dd>
+                    <dt>Hexadecimal</dt><dd>Base-16 (0–F)</dd>
+                    <dt>MAC Address</dt><dd>Hardware address</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 2: NETWORKING FUNDAMENTALS
+             ============================================================ -->
+        <div class="section-divider"><h2>Networking Fundamentals</h2></div>
+
+        <h2 id="networking-fundamentals">Networking Fundamentals</h2>
+
+        <h3 id="what-is-a-network">What is a Network?</h3>
+
+        <p>
+            A computer network is fundamentally about connectivity and resource sharing. In this
+            section, we explore the basic concepts that define networks and the terminology used
+            by networking professionals.
+        </p>
+
+        <p>
+            A <strong class="key-term">computer network</strong> is two or more devices connected
+            together to share resources and communicate. Networks allow users to share files,
+            printers, internet connections, and applications across multiple devices. Every network
+            requires three basic components: <strong class="key-term">nodes</strong> (devices),
+            <strong class="key-term">links</strong> (connections), and
+            <strong class="key-term">protocols</strong> (rules). Networks can be as simple as two
+            laptops connected via Bluetooth, or as complex as the global internet.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    SW[🔀 Switch] --- PC1[💻 PC 1]
+    SW --- PC2[💻 PC 2]
+    SW --- LT[🖥 Laptop]
+
+    style SW fill:#e8f1fb,stroke:#004a88,font-weight:bold
+    style PC1 fill:#f0fdf4,stroke:#16a34a
+    style PC2 fill:#f0fdf4,stroke:#16a34a
+    style LT fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 2: A simple star network — two PCs and a laptop connected to a central switch. Every device can communicate with every other device through the switch.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Why Networks Matter</div>
+            <p>Networks enable collaboration, centralized data storage, resource sharing, and
+            communication — the foundation of modern business and daily life.</p>
+        </div>
+
+        <h3 id="basic-concepts">Basic Networking Concepts</h3>
+
+        <p>
+            With the fundamental purpose of networks established, we now examine the terminology
+            used to describe network components and their roles.
+        </p>
+
+        <p>
+            A <strong class="key-term">node</strong> is any device connected to a network,
+            including computers, printers, and smartphones. A
+            <strong class="key-term">host</strong> is a specific type of node that has an IP
+            address and can send or receive data. <strong class="key-term">Clients</strong> are
+            devices that request resources or services from other computers on the network.
+            <strong class="key-term">Servers</strong> are computers that provide resources or
+            services to clients, such as web pages, files, or email. In a
+            <strong class="key-term">peer-to-peer</strong> network, devices act as both clients
+            and servers, sharing resources directly with each other.
+        </p>
+
+        <p>
+            The distinction between clients and servers is foundational to understanding network
+            architecture. While the client-server model dominates modern networking, peer-to-peer
+            architectures offer an alternative for certain applications such as BitTorrent or some
+            voice communications.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Client–Server Example</div>
+            <p>When you visit a website, your computer (client) sends a request to a web server,
+            which responds by sending the web page back to your browser. Your browser and the
+            server never need to be in the same location — they can be on opposite sides of the
+            world.</p>
+        </div>
+
+        <h3 id="network-types">Network Types</h3>
+
+        <p>
+            Networks are classified by their geographic scope and purpose. Understanding these
+            classifications helps in designing, managing, and troubleshooting networks of different
+            scales.
+        </p>
+
+        <ul>
+            <li>A <strong class="key-term">LAN (Local Area Network)</strong> connects devices in a small geographic area like a home, office, or school building.</li>
+            <li>A <strong class="key-term">WAN (Wide Area Network)</strong> connects LANs across large geographic distances, often using leased telecommunication lines.</li>
+            <li>A <strong class="key-term">PAN (Personal Area Network)</strong> connects devices within a person's immediate workspace, typically within 10 meters.</li>
+            <li>A <strong class="key-term">MAN (Metropolitan Area Network)</strong> spans a city or campus, larger than a LAN but smaller than a WAN.</li>
+            <li>A <strong class="key-term">CAN (Campus Area Network)</strong> connects multiple LANs within a limited geographic area like a university or corporate campus.</li>
+        </ul>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">The Internet</div>
+            <p>The <strong class="key-term">internet</strong> is the largest WAN in existence — a
+            global network of interconnected networks using standardized protocols (TCP/IP).</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Range</th>
+                    <th>Example</th>
+                    <th>Typical Speed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>PAN</strong></td><td>&lt; 10 meters</td><td>Bluetooth headset</td><td>1–3 Mbps</td></tr>
+                <tr><td><strong>LAN</strong></td><td>Building / floor</td><td>Office network</td><td>100 Mbps – 10 Gbps</td></tr>
+                <tr><td><strong>CAN</strong></td><td>Campus</td><td>University network</td><td>1–10 Gbps</td></tr>
+                <tr><td><strong>MAN</strong></td><td>City</td><td>City library system</td><td>100 Mbps – 1 Gbps</td></tr>
+                <tr><td><strong>WAN</strong></td><td>Global</td><td>Corporate branch offices</td><td>1 Mbps – 1 Gbps</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Size Relationship</div>
+            <p>PAN ⊂ LAN ⊂ CAN ⊂ MAN ⊂ WAN. Generally, smaller networks offer faster speeds
+            due to shorter cable runs and fewer devices competing for bandwidth.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 3: NETWORK TOPOLOGIES
+             ============================================================ -->
+        <div class="section-divider"><h2>Network Topologies</h2></div>
+
+        <h2 id="topologies">Network Topologies</h2>
+
+        <p>
+            Network topology — the arrangement of devices and connections — fundamentally impacts
+            network performance, cost, scalability, and reliability. This section explores the
+            most important topologies used in computer networks.
+        </p>
+
+        <h3 id="topology-overview">Physical vs. Logical Topology</h3>
+
+        <p>
+            <strong class="key-term">Network topology</strong> describes the arrangement of nodes
+            and connections in a network. There are two important dimensions to topology:
+        </p>
+
+        <ul>
+            <li><strong class="key-term">Physical topology</strong> refers to the actual layout of cables, devices, and other hardware components — how things are literally wired together.</li>
+            <li><strong class="key-term">Logical topology</strong> describes how data flows through the network, regardless of physical layout.</li>
+        </ul>
+
+        <p>
+            Understanding the difference is important: a network might be physically wired in a
+            star pattern (all cables to a central switch), but logically function as a bus where
+            all devices receive all transmissions. The choice of topology affects cost, performance,
+            scalability, and fault tolerance.
+        </p>
+
+        <h3 id="star-topology">Star Topology</h3>
+
+        <p>
+            In a <strong class="key-term">star topology</strong>, all nodes connect to a central
+            device such as a switch or hub. This is the most common topology used in modern LANs
+            due to its simplicity and reliability. If one node or cable fails, only that device is
+            affected — other nodes continue to function normally. The central device, however, is a
+            <strong class="key-term">single point of failure</strong>: if it fails, the entire
+            network goes down.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    SW((🔀 Switch)) --- PC1[💻 PC]
+    SW --- PC2[💻 PC]
+    SW --- LT1[🖥 Laptop]
+    SW --- PC3[💻 PC]
+    SW --- LT2[🖥 Laptop]
+
+    style SW fill:#e8f1fb,stroke:#004a88,stroke-width:3px
+            </pre>
+            <p class="diagram-caption">Figure 3: Star topology — five devices (PCs and laptops) each connected by a dedicated cable to a central switch. A failure in any one cable affects only that device.</p>
+        </div>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Advantages of Star Topology</div>
+            <p>Easy to install, manage, and troubleshoot. Simple to add or remove devices without
+            disrupting the rest of the network. Because each device has its own dedicated link,
+            faults are easy to isolate.</p>
+        </div>
+
+        <h3 id="mesh-topology">Mesh Topology</h3>
+
+        <p>
+            In a <strong class="key-term">mesh topology</strong>, nodes are interconnected with
+            multiple redundant paths between them. A
+            <strong class="key-term">full mesh</strong> connects every node directly to every
+            other node, providing maximum redundancy. A
+            <strong class="key-term">partial mesh</strong> connects only some nodes with multiple
+            paths, balancing cost and redundancy. Mesh topologies are highly fault-tolerant because
+            data can take alternate routes if a link fails.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    N1[Node 1] --- N2[Node 2]
+    N1 --- N3[Node 3]
+    N1 --- N4[Node 4]
+    N1 --- N5[Node 5]
+    N2 --- N3
+    N2 --- N4
+    N2 --- N5
+    N3 --- N4
+    N3 --- N5
+    N4 --- N5
+            </pre>
+            <p class="diagram-caption">Figure 4: Full mesh topology with 5 nodes — every node has a direct link to every other node, creating 10 total connections. This provides maximum redundancy at the cost of significantly more cabling.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Full Mesh Link Formula</div>
+            <p>The number of links required for a full mesh is: <strong>n(n−1) / 2</strong>, where
+            <em>n</em> is the number of nodes. For 5 nodes: 5 × 4 / 2 = <strong>10 links</strong>.
+            This grows rapidly — 10 nodes require 45 links, making full mesh impractical for large
+            networks.</p>
+        </div>
+
+        <h3 id="legacy-topologies">Legacy Topologies: Bus and Ring</h3>
+
+        <p>
+            While star and mesh topologies dominate modern networks, understanding legacy topologies
+            helps explain the evolution of networking technology and why certain design decisions
+            were made.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+            <div>
+                <div class="diagram-container" style="margin-bottom: 0.75rem;">
+                    <pre class="mermaid">
+graph LR
+    PC1[PC 1] ===|backbone| PC2[PC 2]
+    PC2 ===|backbone| PC3[PC 3]
+    PC3 ===|backbone| LT[Laptop]
+                    </pre>
+                    <p class="diagram-caption">Figure 5a: Bus topology — all devices share a single cable backbone.</p>
+                </div>
+                <div class="callout callout-info" style="margin-top: 0;">
+                    <div class="callout-title">Bus Topology</div>
+                    <p>All nodes connect to a single central cable called the
+                    <strong class="key-term">backbone</strong>. Signals travel along the bus and are
+                    received by all nodes. A break anywhere in the cable disables the entire network.</p>
+                </div>
+            </div>
+            <div>
+                <div class="diagram-container" style="margin-bottom: 0.75rem;">
+                    <pre class="mermaid">
+graph TD
+    N1[Node 1] -->|data| N2[Node 2]
+    N2 -->|data| N3[Node 3]
+    N3 -->|data| N4[Node 4]
+    N4 -->|data| N1
+                    </pre>
+                    <p class="diagram-caption">Figure 5b: Ring topology — data travels in one direction around the circle.</p>
+                </div>
+                <div class="callout callout-info" style="margin-top: 0;">
+                    <div class="callout-title">Ring Topology</div>
+                    <p>Each node connects to exactly two other nodes, forming a circular data path.
+                    Data travels in one direction (or both in a
+                    <strong class="key-term">dual ring</strong>). A single node failure can break
+                    the entire ring.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Why "Legacy"?</div>
+            <p>Bus and ring topologies are rarely used today due to their vulnerability to single
+            points of failure and difficulty in troubleshooting. However, they may still appear in
+            certain industrial control systems or older installations and are tested on the
+            CompTIA Network+ exam.</p>
+        </div>
+
+        <!-- Case Study 1 -->
+        <h3 id="case-study-topology">Case Study: Mystery Inc. Network Setup</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Mystery Inc. Opens a Detective Agency</div>
+            <p>The Mystery Inc. gang is opening a new detective agency headquarters and needs to set
+            up a computer network for five workstations.</p>
+            <p><strong>Shaggy</strong> suggests: "Like, let's just connect every computer to every
+            other computer, man. That way if Scooby chews through one cable, we're still connected!"</p>
+            <p><strong>Velma</strong> responds: "Jinkies! That's overkill. Let's connect everything
+            to one central switch instead — it's much more practical."</p>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>What network topology is Shaggy describing?</li>
+                <li>What network topology is Velma describing?</li>
+                <li>Which topology would be more practical for a small office, and why?</li>
+                <li>How many cables would Shaggy's design require for 5 computers?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Mystery Inc. Network Setup</div>
+            <ol>
+                <li>Shaggy is describing a <strong>full mesh topology</strong>, where every device connects directly to every other device.</li>
+                <li>Velma is describing a <strong>star topology</strong>, where all devices connect to a central switch.</li>
+                <li><strong>Star topology</strong> is more practical because it requires fewer cables (5 vs. 10), is easier to install and manage, is simpler to add new devices later, and is more cost-effective for small networks.</li>
+                <li>Shaggy's full mesh would require <strong>5 × 4 / 2 = 10 cables</strong>.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Takeaway</div>
+            <p>While mesh topologies offer excellent redundancy, star topologies are the standard
+            choice for most LANs due to their balance of simplicity, cost, and reliability. Mesh
+            is used where uptime is critical — such as core internet infrastructure.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 4: THE OSI MODEL
+             ============================================================ -->
+        <div class="section-divider"><h2>The OSI Model</h2></div>
+
+        <h2 id="osi-model">The OSI Model</h2>
+
+        <p>
+            The Open Systems Interconnection (OSI) model is one of the most important concepts in
+            networking. This seven-layer framework provides a systematic way to understand network
+            communication and serves as an essential troubleshooting tool for network professionals.
+        </p>
+
+        <h3 id="osi-intro">Introduction &amp; Purpose</h3>
+
+        <p>
+            The <strong class="key-term">OSI (Open Systems Interconnection) Model</strong> is a
+            conceptual framework that standardizes network communication into seven layers. Developed
+            by the International Organization for Standardization (ISO) in 1984, it promotes
+            interoperability between different vendors and technologies. Each layer performs specific
+            functions and communicates with the layers directly above and below it.
+        </p>
+
+        <p>
+            Importantly, the OSI model is a <strong class="key-term">reference model</strong> — it
+            describes concepts, not a specific implementation or protocol. It provides a
+            <strong class="key-term">common vocabulary</strong> that allows network professionals to
+            communicate clearly, enables <strong class="key-term">vendor interoperability</strong>
+            by defining standard interfaces between layers, and supports
+            <strong class="key-term">modular design</strong> so changes to one layer don't require
+            rewriting everything else.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">OSI as a Troubleshooting Framework</div>
+            <p>"The cable is fine (Layer 1), and the switch sees the MAC address (Layer 2), but
+            there's no IP address (Layer 3)." This kind of layer-by-layer reasoning pinpoints the
+            problem to Layer 3 — likely a DHCP issue. The OSI model makes this systematic
+            thinking possible.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">The Seven Layers (Bottom to Top)</div>
+            <p><strong>1.</strong> Physical &nbsp;|&nbsp; <strong>2.</strong> Data Link &nbsp;|&nbsp;
+            <strong>3.</strong> Network &nbsp;|&nbsp; <strong>4.</strong> Transport &nbsp;|&nbsp;
+            <strong>5.</strong> Session &nbsp;|&nbsp; <strong>6.</strong> Presentation &nbsp;|&nbsp;
+            <strong>7.</strong> Application</p>
+        </div>
+
+        <h3 id="encapsulation">Data Encapsulation and PDUs</h3>
+
+        <p>
+            As data moves through the OSI layers, each layer adds its own header information in a
+            process called <strong class="key-term">encapsulation</strong>. Understanding this
+            process is crucial for comprehending how network communication actually works.
+        </p>
+
+        <p>
+            <strong class="key-term">Encapsulation</strong> is the process of wrapping data with
+            protocol headers (and sometimes trailers) as it moves <em>down</em> the OSI layers from
+            sender to wire. Each layer adds its own control information to the data received from
+            the layer above. <strong class="key-term">Decapsulation</strong> is the reverse process
+            — removing headers as data moves back <em>up</em> the layers at the receiving device.
+            The data unit at each layer has a specific name called a
+            <strong class="key-term">Protocol Data Unit (PDU)</strong>.
+        </p>
+
+        <!-- Encapsulation visual using HTML table to better show nesting -->
+        <div class="diagram-container">
+            <table style="width: auto; margin: 0 auto; border-collapse: collapse; font-size: 0.9rem;">
+                <thead>
+                    <tr>
+                        <th style="text-align:right; padding: 0.4rem 1rem; background: none; color: var(--color-muted); border: none;">Layer</th>
+                        <th style="text-align:center; padding: 0.4rem 1rem; background: none; color: var(--color-muted); border: none;">PDU Structure</th>
+                        <th style="text-align:left; padding: 0.4rem 1rem; background: none; color: var(--color-muted); border: none;">PDU Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:right; padding: 0.3rem 1rem; border: none; color: var(--color-muted);">5–7</td>
+                        <td style="text-align:center; padding: 0.3rem; border: none;">
+                            <div style="background:#fff7e0;border:2px solid #d97706;border-radius:4px;padding:0.3rem 2rem;display:inline-block;">Data (Application payload)</div>
+                        </td>
+                        <td style="text-align:left; padding: 0.3rem 1rem; border: none;"><strong>Data</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right; padding: 0.3rem 1rem; border: none; color: var(--color-muted);">4</td>
+                        <td style="text-align:center; padding: 0.3rem; border: none;">
+                            <div style="background:#f0fdf4;border:2px solid #16a34a;border-radius:4px;padding:0.3rem 1.2rem;display:inline-block;">TCP/UDP Header | Data</div>
+                        </td>
+                        <td style="text-align:left; padding: 0.3rem 1rem; border: none;"><strong>Segment</strong> (TCP) / <strong>Datagram</strong> (UDP)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right; padding: 0.3rem 1rem; border: none; color: var(--color-muted);">3</td>
+                        <td style="text-align:center; padding: 0.3rem; border: none;">
+                            <div style="background:#e8f1fb;border:2px solid #004a88;border-radius:4px;padding:0.3rem 0.8rem;display:inline-block;">IP Header | TCP/UDP Header | Data</div>
+                        </td>
+                        <td style="text-align:left; padding: 0.3rem 1rem; border: none;"><strong>Packet</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right; padding: 0.3rem 1rem; border: none; color: var(--color-muted);">2</td>
+                        <td style="text-align:center; padding: 0.3rem; border: none;">
+                            <div style="background:#fef2f2;border:2px solid #dc2626;border-radius:4px;padding:0.3rem 0.4rem;display:inline-block;">MAC Header | IP | TCP | Data | FCS</div>
+                        </td>
+                        <td style="text-align:left; padding: 0.3rem 1rem; border: none;"><strong>Frame</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right; padding: 0.3rem 1rem; border: none; color: var(--color-muted);">1</td>
+                        <td style="text-align:center; padding: 0.3rem; border: none;">
+                            <div style="background:#f0f4f8;border:2px solid #6b7280;border-radius:4px;padding:0.3rem 0.2rem;display:inline-block; font-family: monospace; font-size: 0.85em;">01001000 01100101 01101100 01101100 ... (raw bits on the wire)</div>
+                        </td>
+                        <td style="text-align:left; padding: 0.3rem 1rem; border: none;"><strong>Bits</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="diagram-caption">Figure 6: Data encapsulation — as data travels down from the Application layer to the Physical layer, each layer wraps the data with its own header (and trailer at Layer 2). The receiving device strips these headers in reverse order.</p>
+        </div>
+
+        <h3 id="seven-layers">The Seven Layers</h3>
+
+        <p>
+            Each of the seven OSI layers has specific responsibilities. We examine each layer from
+            bottom to top, understanding what each layer does and what devices operate there.
+        </p>
+
+        <!-- Layer 1 -->
+        <h4>Layer 1: Physical</h4>
+        <p>
+            The <strong class="key-term">Physical layer</strong> is responsible for transmitting
+            raw <strong class="key-term">bits</strong> (1s and 0s) over a physical medium. It
+            defines electrical, mechanical, and procedural specifications for cables, connectors,
+            and signaling — including voltage levels, timing, data rates, and maximum transmission
+            distances. This layer has no understanding of data meaning; it simply moves bits from
+            one device to another.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">PDU: Bits</div>
+                <p>At Layer 1, data is represented as individual bits transmitted as electrical signals, light pulses, or radio waves.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 1 Devices</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Cables (copper, fiber optic)</li>
+                    <li>Connectors (RJ-45)</li>
+                    <li><strong class="key-term">Hubs</strong> and <strong class="key-term">repeaters</strong></li>
+                    <li>Network interface cards (physical layer)</li>
+                    <li>Wireless radios</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Layer 2 -->
+        <h4>Layer 2: Data Link</h4>
+        <p>
+            The <strong class="key-term">Data Link layer</strong> packages bits into
+            <strong class="key-term">frames</strong> and provides node-to-node communication on
+            the same network segment. It uses
+            <strong class="key-term">MAC (Media Access Control) addresses</strong> to identify
+            devices — unique 48-bit hardware addresses burned into network cards. This layer handles
+            error detection using a <strong class="key-term">Frame Check Sequence (FCS)</strong> to
+            verify data integrity, and it is divided into two sublayers:
+            <strong class="key-term">LLC</strong> (Logical Link Control) and
+            <strong class="key-term">MAC</strong>.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">MAC Address Format</div>
+                <p><code>00:1A:2B:3C:4D:5E</code> — six pairs of hexadecimal digits (48 bits total). The first three pairs identify the manufacturer (OUI); the last three are device-specific.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 2 Devices</div>
+                <ul style="margin-bottom: 0;">
+                    <li><strong class="key-term">Switches</strong></li>
+                    <li><strong class="key-term">Bridges</strong></li>
+                    <li>Wireless access points</li>
+                    <li>Network interface cards</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>
+            Layers 1 and 2 work together to enable communication between devices on the same local
+            network. Layer 1 moves the bits; Layer 2 organizes them into frames and provides
+            addressing and error checking.
+        </p>
+
+        <!-- Layer 3 -->
+        <h4>Layer 3: Network</h4>
+        <p>
+            The <strong class="key-term">Network layer</strong> handles
+            <strong class="key-term">logical addressing</strong> and
+            <strong class="key-term">routing</strong> of data between different networks. It uses
+            <strong class="key-term">IP (Internet Protocol) addresses</strong> to identify devices
+            across interconnected networks. <strong class="key-term">Routing</strong> is the process
+            of selecting the best path for data to travel from source to destination. This layer
+            enables communication beyond the local network — it's what makes the internet possible.
+        </p>
+        <div class="callout callout-success">
+            <div class="callout-title">IP Address Examples</div>
+            <p><strong>IPv4:</strong> <code>192.168.1.100</code> (32-bit, written as four decimal octets)<br>
+            <strong>IPv6:</strong> <code>2001:0db8:85a3::8a2e:0370:7334</code> (128-bit, written in hexadecimal)<br>
+            Key Layer 3 devices: <strong class="key-term">Routers</strong>, Layer 3 switches, and firewalls.</p>
+        </div>
+
+        <!-- Layer 4 -->
+        <h4>Layer 4: Transport</h4>
+        <p>
+            The <strong class="key-term">Transport layer</strong> provides end-to-end communication
+            between applications running on different hosts. It uses
+            <strong class="key-term">port numbers</strong> (0–65535) to identify specific
+            applications or services on a device.
+            <strong class="key-term">TCP (Transmission Control Protocol)</strong> provides reliable,
+            connection-oriented delivery with error correction and flow control, while
+            <strong class="key-term">UDP (User Datagram Protocol)</strong> provides fast,
+            connectionless delivery without guaranteed delivery or ordering.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">TCP vs. UDP</div>
+                <p><strong>TCP:</strong> Web browsing, email, file transfer — when accuracy matters.<br>
+                <strong>UDP:</strong> Video streaming, VoIP, online gaming — when speed matters.</p>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Common Port Numbers</div>
+                <dl class="glossary" style="margin: 0;">
+                    <dt>HTTP</dt><dd>Port 80</dd>
+                    <dt>HTTPS</dt><dd>Port 443</dd>
+                    <dt>SSH</dt><dd>Port 22</dd>
+                    <dt>DNS</dt><dd>Port 53</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Layers 5-7 -->
+        <h4>Layers 5–7: Session, Presentation, and Application</h4>
+        <p>
+            The upper three layers are closest to the end user and handle application-level
+            communication:
+        </p>
+        <ul>
+            <li><strong>Layer 5 — Session:</strong> Manages <strong class="key-term">sessions</strong> (dialogs) between applications — establishing, maintaining, and terminating connections. Handles authentication and reconnection. Examples: NetBIOS, RPC.</li>
+            <li><strong>Layer 6 — Presentation:</strong> Translates data formats between applications, handles <strong class="key-term">encryption</strong> and decryption, and manages <strong class="key-term">compression</strong> and character encoding. Examples: SSL/TLS, JPEG, ASCII, MPEG.</li>
+            <li><strong>Layer 7 — Application:</strong> The closest layer to the end user. Provides network services directly to applications and interfaces with user software. Examples: HTTP, FTP, SMTP, DNS, DHCP.</li>
+        </ul>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Important Note: OSI vs. TCP/IP</div>
+            <p>In practice, the upper layers (5, 6, 7) are often combined in the TCP/IP model as
+            a single "Application" layer, since many protocols span multiple OSI layers. The OSI
+            model is a reference framework — TCP/IP is the protocol suite that actually runs the
+            internet.</p>
+        </div>
+
+        <h3 id="osi-summary">OSI Model Summary &amp; Mnemonics</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Layer Name</th>
+                    <th>PDU</th>
+                    <th>Key Devices</th>
+                    <th>Protocols / Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>7</td><td>Application</td><td>Data</td><td>Hosts, firewalls</td><td>HTTP, FTP, SMTP, DNS</td></tr>
+                <tr><td>6</td><td>Presentation</td><td>Data</td><td>Hosts</td><td>SSL/TLS, JPEG, MPEG</td></tr>
+                <tr><td>5</td><td>Session</td><td>Data</td><td>Hosts</td><td>NetBIOS, RPC</td></tr>
+                <tr><td>4</td><td>Transport</td><td>Segment / Datagram</td><td>Hosts, firewalls</td><td>TCP, UDP</td></tr>
+                <tr><td>3</td><td>Network</td><td>Packet</td><td>Routers, L3 switches</td><td>IP, ICMP, ARP</td></tr>
+                <tr><td>2</td><td>Data Link</td><td>Frame</td><td>Switches, bridges</td><td>Ethernet, Wi-Fi (802.11)</td></tr>
+                <tr><td>1</td><td>Physical</td><td>Bits</td><td>Hubs, cables, NICs</td><td>Ethernet (physical), DSL</td></tr>
+            </tbody>
+        </table>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Mnemonic: Layer 1 → 7</div>
+                <p><strong>P</strong>lease <strong>D</strong>o <strong>N</strong>ot <strong>T</strong>hrow <strong>S</strong>ausage <strong>P</strong>izza <strong>A</strong>way<br>
+                <em>Physical, Data Link, Network, Transport, Session, Presentation, Application</em></p>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Mnemonic: Layer 7 → 1</div>
+                <p><strong>A</strong>ll <strong>P</strong>eople <strong>S</strong>eem <strong>T</strong>o <strong>N</strong>eed <strong>D</strong>ata <strong>P</strong>rocessing<br>
+                <em>Application, Presentation, Session, Transport, Network, Data Link, Physical</em></p>
+            </div>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Quick PDU Mnemonic (Layer 7 → 1)</div>
+            <p><strong>D</strong>on't <strong>S</strong>ome <strong>P</strong>eople <strong>F</strong>ear <strong>B</strong>irthdays?<br>
+            <em>Data, Segment, Packet, Frame, Bits</em></p>
+        </div>
+
+        <!-- Case Study 2 -->
+        <h3 id="case-study-osi">Case Study: The Haunted Network</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — The Haunted Network</div>
+            <p>Daphne reports that she cannot access any websites from her computer at Mystery Inc.
+            headquarters. Fred runs some diagnostic tests and finds:</p>
+            <ul>
+                <li>Her computer has an IP address (<code>192.168.1.105</code>)</li>
+                <li>She can successfully ping the router (<code>192.168.1.1</code>)</li>
+                <li>She can successfully ping <code>8.8.8.8</code> (Google's DNS server)</li>
+                <li>She <strong>cannot</strong> access <code>www.mysteryinc.com</code> or any other website</li>
+            </ul>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>Which OSI layers appear to be working correctly based on Fred's tests?</li>
+                <li>At which OSI layer is the problem most likely occurring?</li>
+                <li>What might be causing this issue?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — The Haunted Network</div>
+            <ol>
+                <li><strong>Layers 1–3 are working correctly:</strong> Layer 1 (Physical) is fine since the cable is transmitting; Layer 2 (Data Link) works since frames are reaching the router; Layer 3 (Network) works since an IP is assigned and pinging 8.8.8.8 (a public IP) succeeds.</li>
+                <li>The problem is most likely at <strong>Layer 7 (Application)</strong> or involves <strong>DNS resolution</strong> — pinging by IP works, but name resolution may be broken.</li>
+                <li>Possible causes: DNS server down or misconfigured, browser misconfiguration or corruption, firewall blocking HTTP/HTTPS (ports 80/443), or malware redirecting web traffic.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Takeaway</div>
+            <p>The OSI model helps isolate problems layer by layer. If Layer 3 works (can ping by
+            IP address), check Layers 4–7 next. The ability to ping by IP but not by name almost
+            always points to a DNS problem.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 5: SOHO NETWORKS
+             ============================================================ -->
+        <div class="section-divider"><h2>SOHO Networks</h2></div>
+
+        <h2 id="soho-networks">SOHO Networks</h2>
+
+        <p>
+            Small Office/Home Office (SOHO) networks demonstrate how the networking concepts we've
+            learned apply in practice. These networks typically serve fewer than 10 users and use
+            integrated devices that combine multiple networking functions into one unit.
+        </p>
+
+        <h3 id="what-is-soho">What is a SOHO Network?</h3>
+
+        <p>
+            <strong class="key-term">SOHO</strong> stands for
+            <strong class="key-term">Small Office/Home Office</strong> and refers to networks with
+            fewer than 10 users. SOHO networks are designed to be simple, affordable, and easy to
+            manage without dedicated IT staff. A typical SOHO network connects computers, printers,
+            smartphones, and tablets to share internet access and resources. Common examples include
+            home networks, small retail shops, home-based businesses, and small professional offices
+            (law, accounting, medical).
+        </p>
+
+        <h3 id="soho-router">SOHO Router Functions</h3>
+
+        <p>
+            The SOHO router is a remarkable device that performs functions across multiple OSI
+            layers. Understanding these functions helps explain how a simple home network connects
+            to the internet and keeps devices secure.
+        </p>
+
+        <p>
+            A <strong class="key-term">SOHO router</strong> is an all-in-one device that combines
+            multiple networking functions into a single unit. Despite being called a "router," these
+            devices typically include a router, switch, wireless access point, DHCP server, and
+            often a built-in firewall. Most SOHO routers also provide basic security features such
+            as wireless encryption support.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC[💻 PC\n192.168.1.10] -->|Ethernet| RT
+    LT[🖥 Laptop\n192.168.1.11] -->|Ethernet| RT
+    RT{🌐 SOHO Router\nPublic: 74.125.x.x} -.->|Wi-Fi| PH[📱 Smartphone]
+    RT -.->|Wi-Fi| TB[📟 Tablet]
+    RT -->|WAN| ISP[ISP]
+    ISP --> IN((Internet))
+    IN --- SRV[(Web Server)]
+
+    style RT fill:#e8f1fb,stroke:#004a88,stroke-width:3px
+    style IN fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 7: A typical SOHO network. The router connects two wired devices (PC, Laptop) and two wireless devices (Smartphone, Tablet) to the Internet via the ISP. The router performs NAT, translating all private IP addresses to a single public IP address.</p>
+        </div>
+
+        <p><strong>SOHO router functions by OSI layer:</strong></p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 1 — Physical</div>
+                <p>Provides physical connections: 4–8 <strong class="key-term">RJ-45 Ethernet ports</strong> for wired devices, a separate <strong class="key-term">WAN port</strong> for the ISP connection, and a built-in <strong class="key-term">wireless radio</strong> (typically 2.4 GHz and 5 GHz).</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 2 — Data Link</div>
+                <p>Functions as a <strong class="key-term">switch</strong> for LAN ports by maintaining a MAC address table. Handles 802.11 wireless frame formatting. Supports <strong class="key-term">WPA3/WPA2 encryption</strong> and optional MAC address filtering.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 3 — Network</div>
+                <p><strong class="key-term">NAT (Network Address Translation)</strong> allows multiple devices to share one public IP. The built-in <strong class="key-term">DHCP server</strong> auto-assigns IP addresses. Acts as the <strong class="key-term">default gateway</strong> for all LAN devices.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 4 &amp; 7 — Transport &amp; Application</div>
+                <p><strong class="key-term">Port forwarding</strong> directs incoming traffic to specific internal devices. Web-based management UI. DNS relay. QoS (Quality of Service) traffic prioritization. Built-in <strong class="key-term">stateful firewall</strong>.</p>
+            </div>
+        </div>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Security Warning: MAC Filtering</div>
+            <p>MAC address filtering alone is <strong>not a reliable security measure</strong> —
+            MAC addresses can be spoofed (faked) by an attacker. Always use strong wireless
+            encryption (WPA3 or WPA2) as your primary wireless security control.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Private IP Address Ranges</div>
+            <p>SOHO routers use <strong class="key-term">private IP addresses</strong> on the LAN
+            side. These addresses are not routable on the public internet:</p>
+            <ul style="margin-bottom: 0; font-family: monospace;">
+                <li>10.0.0.0/8</li>
+                <li>172.16.0.0/12</li>
+                <li>192.168.0.0/16</li>
+            </ul>
+        </div>
+
+        <h3 id="internet-connection">Connecting to the Internet</h3>
+
+        <p>
+            The <strong class="key-term">internet</strong> is a global network of interconnected
+            networks that use standardized protocols (TCP/IP) to communicate. Your SOHO router
+            connects your local network to your
+            <strong class="key-term">ISP (Internet Service Provider)</strong>, which connects to
+            larger networks up to the internet's backbone. Your ISP assigns your router a
+            <strong class="key-term">public IP address</strong> that identifies your network on
+            the internet.
+        </p>
+
+        <p>
+            <strong class="key-term">NAT (Network Address Translation)</strong> is the mechanism
+            that bridges private and public addressing: private IPs work only on your LAN, while
+            public IPs are routable on the internet. NAT translates between them, allowing dozens
+            of home devices to share a single public IP address provided by the ISP.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC[PC\n192.168.1.10] --> RT
+    LT[Laptop\n192.168.1.11] --> RT
+    RT[SOHO Router\nNAT: private → public] -->|Public IP\n74.125.x.x| ISP[ISP Network]
+    ISP --> IN((Internet))
+    IN --- SRV[(Web Server\n142.250.x.x)]
+
+    style RT fill:#e8f1fb,stroke:#004a88
+    style IN fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 8: Network address translation (NAT) in action. Private addresses (192.168.1.x) on the home LAN are translated by the SOHO router's NAT function to the single public IP address assigned by the ISP before reaching the internet.</p>
+        </div>
+
+        <!-- Case Study 3 -->
+        <h3 id="case-study-soho">Case Study: Scooby Snacks Café Wi-Fi</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Scooby Snacks Café Wi-Fi</div>
+            <p>Shaggy has opened "Scooby Snacks Café" and set up a SOHO router to provide free
+            Wi-Fi for customers. A customer connects to the Wi-Fi and receives the IP address
+            <code>192.168.1.50</code>. They can successfully print to the café's wireless printer
+            at <code>192.168.1.25</code>, but cannot access any websites. Velma checks the router's
+            status page and sees the WAN port shows "Disconnected."</p>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>Is <code>192.168.1.50</code> a public or private IP address?</li>
+                <li>Which SOHO router function successfully assigned this IP address?</li>
+                <li>Why can the customer reach the printer but not websites?</li>
+                <li>What should Shaggy check to fix the internet connectivity?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Scooby Snacks Café Wi-Fi</div>
+            <ol>
+                <li><code>192.168.1.50</code> is a <strong>private IP address</strong> (from the 192.168.0.0/16 private range).</li>
+                <li>The <strong>DHCP server</strong> function is working correctly — it assigned a valid IP to the customer's device.</li>
+                <li>The customer can reach the printer because both devices are on the <strong>same local network</strong> — Layer 2 switching works fine. Websites require internet access through the WAN connection, which is disconnected.</li>
+                <li>Shaggy should check: Is the cable from the WAN port to the modem connected? Is the ISP modem powered on? Did Shaggy pay the internet bill?</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Takeaway</div>
+            <p>A SOHO router combines many functions. When troubleshooting, identify which
+            functions work (DHCP, switching) and which don't (WAN/internet) to isolate the
+            problem. A device can receive a valid DHCP address (Layer 3 local) while the internet
+            connection (WAN) is completely down.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 6: NUMBER SYSTEMS
+             ============================================================ -->
+        <div class="section-divider"><h2>Number Systems for Networking</h2></div>
+
+        <h2 id="number-systems">Number Systems for Networking</h2>
+
+        <p>
+            Understanding binary and hexadecimal number systems is essential for working with IP
+            addresses, subnet masks, and MAC addresses. These number systems form the foundation
+            of how computers represent and process network information.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">The Same Address in Three Formats</div>
+            <table style="width: auto; margin: 0;">
+                <tbody>
+                    <tr><td style="border: none; padding: 0.2rem 0.5rem;"><strong>Binary:</strong></td><td style="border: none; padding: 0.2rem 0.5rem;"><code>11000000.10101000.00000001.00001010</code></td></tr>
+                    <tr><td style="border: none; padding: 0.2rem 0.5rem;"><strong>Decimal:</strong></td><td style="border: none; padding: 0.2rem 0.5rem;"><code>192.168.1.10</code></td></tr>
+                    <tr><td style="border: none; padding: 0.2rem 0.5rem;"><strong>Hexadecimal:</strong></td><td style="border: none; padding: 0.2rem 0.5rem;"><code>C0.A8.01.0A</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 id="binary">Binary Number System</h3>
+
+        <p>
+            The <strong class="key-term">binary</strong> (base-2) system uses only two digits: 0
+            and 1. Each digit is called a <strong class="key-term">bit</strong>; eight bits form a
+            <strong class="key-term">byte</strong> (representing values 0–255 in decimal). Place
+            values double from right to left: 1, 2, 4, 8, 16, 32, 64, 128. To convert to decimal,
+            multiply each bit by its place value and add.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Example: Converting <code>11010110</code> to Decimal</div>
+            <table style="width: auto; font-family: monospace; font-size: 0.9rem;">
+                <thead>
+                    <tr>
+                        <th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center;">
+                        <td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td>
+                    </tr>
+                    <tr style="text-align: center; color: var(--color-muted);">
+                        <td>128</td><td>64</td><td>—</td><td>16</td><td>—</td><td>4</td><td>2</td><td>—</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 0.5rem; margin-bottom: 0;"><strong>128 + 64 + 16 + 4 + 2 = 214</strong></p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Memorize the Powers of 2</div>
+            <p><code>2⁰=1 &nbsp; 2¹=2 &nbsp; 2²=4 &nbsp; 2³=8 &nbsp; 2⁴=16 &nbsp; 2⁵=32 &nbsp; 2⁶=64 &nbsp; 2⁷=128</code></p>
+            <p style="margin-bottom: 0;">These eight values are the building blocks of every byte in a network address.</p>
+        </div>
+
+        <h3 id="hexadecimal">Hexadecimal Number System</h3>
+
+        <p>
+            <strong class="key-term">Hexadecimal</strong> (base-16) uses digits 0–9 and letters
+            A–F (where A=10 through F=15). Each hex digit represents exactly 4 bits, making it a
+            compact way to write binary. MAC addresses use hex notation:
+            <code>00:1A:2B:3C:4D:5E</code>. To convert 8-bit binary to hex, split into two
+            4-bit groups and convert each group separately.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Binary to Hex Example</div>
+            <p>Convert <code>11010110</code>:<br>
+            Split: <code>1101 | 0110</code><br>
+            Convert: <code>D | 6</code><br>
+            Result: <strong>0xD6</strong></p>
+        </div>
+
+        <table style="max-width: 300px;">
+            <caption style="text-align: left; font-weight: 600; margin-bottom: 0.5rem; color: var(--rctc-blue);">4-Bit Binary, Decimal, and Hexadecimal Reference</caption>
+            <thead>
+                <tr><th>Decimal</th><th>Binary</th><th>Hex</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td><code>0000</code></td><td>0</td></tr>
+                <tr><td>1</td><td><code>0001</code></td><td>1</td></tr>
+                <tr><td>2</td><td><code>0010</code></td><td>2</td></tr>
+                <tr><td>3</td><td><code>0011</code></td><td>3</td></tr>
+                <tr><td>4</td><td><code>0100</code></td><td>4</td></tr>
+                <tr><td>5</td><td><code>0101</code></td><td>5</td></tr>
+                <tr><td>6</td><td><code>0110</code></td><td>6</td></tr>
+                <tr><td>7</td><td><code>0111</code></td><td>7</td></tr>
+                <tr><td>8</td><td><code>1000</code></td><td>8</td></tr>
+                <tr><td>9</td><td><code>1001</code></td><td>9</td></tr>
+                <tr><td>10</td><td><code>1010</code></td><td>A</td></tr>
+                <tr><td>11</td><td><code>1011</code></td><td>B</td></tr>
+                <tr><td>12</td><td><code>1100</code></td><td>C</td></tr>
+                <tr><td>13</td><td><code>1101</code></td><td>D</td></tr>
+                <tr><td>14</td><td><code>1110</code></td><td>E</td></tr>
+                <tr><td>15</td><td><code>1111</code></td><td>F</td></tr>
+            </tbody>
+        </table>
+
+        <!-- ============================================================
+             SECTION 7: TROUBLESHOOTING METHODOLOGY
+             ============================================================ -->
+        <div class="section-divider"><h2>Network Troubleshooting Methodology</h2></div>
+
+        <h2 id="troubleshooting">Network Troubleshooting Methodology</h2>
+
+        <p>
+            Effective troubleshooting requires a systematic approach. CompTIA defines a seven-step
+            methodology that provides structure to the problem-solving process, ensuring issues are
+            resolved efficiently and completely.
+        </p>
+
+        <h3 id="seven-steps">The 7-Step Process</h3>
+
+        <p>
+            The <strong class="key-term">CompTIA 7-step troubleshooting methodology</strong>
+            applies to all types of technical problems, not just networking. Following a structured
+            process saves time, ensures problems are fully resolved (not just temporarily patched),
+            and creates documentation that builds an organizational knowledge base.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    S1["1️⃣ Identify the Problem\nQuestion users, find scope, check recent changes"] --> S2
+    S2["2️⃣ Establish a Theory\nOccam's Razor, use OSI model framework"] --> S3
+    S3["3️⃣ Test the Theory\nConfirm or eliminate the probable cause"]
+    S3 -->|Theory confirmed| S4
+    S3 -->|Theory wrong| S2
+    S4["4️⃣ Establish a Plan\nConsider impact, get approvals, plan rollback"] --> S5
+    S5["5️⃣ Implement the Solution\nOne change at a time; escalate if needed"] --> S6
+    S6["6️⃣ Verify Full Functionality\nConfirm fix, check for side effects"] --> S7
+    S7["7️⃣ Document Findings\nRecord symptoms, cause, actions, outcome"]
+
+    style S3 fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 9: The CompTIA 7-step troubleshooting methodology. Note the loop back from Step 3 to Step 2 — if a theory is disproven, formulate a new one before testing again.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Step</th>
+                    <th>Key Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Identify the problem</td><td>Question users, identify symptoms, determine scope, check recent changes</td></tr>
+                <tr><td>2</td><td>Establish a theory</td><td>Consider probable causes, use OSI model, apply Occam's Razor</td></tr>
+                <tr><td>3</td><td>Test the theory</td><td>Confirm or eliminate; if wrong, return to Step 2</td></tr>
+                <tr><td>4</td><td>Establish a plan</td><td>Plan the fix, consider impact, get approvals, prepare rollback</td></tr>
+                <tr><td>5</td><td>Implement solution</td><td>Execute plan, change one thing at a time, escalate if needed</td></tr>
+                <tr><td>6</td><td>Verify functionality</td><td>Confirm fix works, check for side effects, implement preventive measures</td></tr>
+                <tr><td>7</td><td>Document findings</td><td>Record problem, cause, actions taken, and outcome</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Memory Tip</div>
+            <p><strong>I</strong> <strong>E</strong>at <strong>T</strong>acos <strong>E</strong>very
+            <strong>I</strong>nstant <strong>V</strong>ery <strong>D</strong>eliciously<br>
+            <em>(Identify, Establish theory, Test, Establish plan, Implement, Verify, Document)</em></p>
+        </div>
+
+        <h3 id="steps-1-3">Steps 1–3: Problem Identification and Theory</h3>
+
+        <p>
+            <strong>Step 1 — Identify the Problem:</strong> Gather information and clearly define
+            what is wrong before attempting any fixes. <strong class="key-term">Question users</strong>
+            to understand the symptoms — ask what they were doing, when it started, and what error
+            messages appeared. <strong class="key-term">Determine the scope</strong>: is this
+            affecting one user, one department, or the entire network? Check for
+            <strong class="key-term">recent changes</strong> — new software, hardware, or
+            configuration changes often cause problems.
+        </p>
+
+        <p>
+            <strong>Step 2 — Establish a Theory:</strong> Based on the symptoms, develop one or
+            more <strong class="key-term">theories</strong> about what might be causing the problem.
+            Start with the most likely or simplest explanation — this principle is called
+            <strong class="key-term">Occam's Razor</strong>. Use the OSI model as a framework:
+            start at Layer 1 (physical) and work up, or start at Layer 7 and work down. Common
+            first-check causes: loose cables, incorrect IP settings, DHCP failure, DNS problems,
+            firewall blocking.
+        </p>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Occam's Razor</div>
+            <p>"The simplest explanation is usually correct." Always check the obvious things first:
+            Is it plugged in? Is it powered on? Has the password changed? Save complex theories
+            for after the simple ones are eliminated.</p>
+        </div>
+
+        <p>
+            <strong>Step 3 — Test the Theory:</strong> Confirm or eliminate your theory using
+            diagnostic tools — <code>ping</code>, <code>traceroute</code>, <code>ipconfig</code>,
+            <code>nslookup</code>, etc. If confirmed, proceed to Step 4. If not confirmed, return
+            to Step 2 and revise your theory. Always note what you change so you can undo it.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Theory Confirmed</div>
+                <p><strong>Theory:</strong> Cable is bad.<br>
+                <strong>Test:</strong> Swap cable.<br>
+                <strong>Result:</strong> Connection works!<br>
+                → Proceed to Step 4.</p>
+            </div>
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">Theory Not Confirmed</div>
+                <p><strong>Theory:</strong> Cable is bad.<br>
+                <strong>Test:</strong> Swap cable.<br>
+                <strong>Result:</strong> Still doesn't work.<br>
+                → Return to Step 2.</p>
+            </div>
+        </div>
+
+        <h3 id="steps-4-7">Steps 4–7: Implementation and Verification</h3>
+
+        <p>
+            <strong>Step 4 — Establish a Plan:</strong> Create a clear plan to resolve the problem
+            based on your confirmed theory. Consider the <strong class="key-term">impact</strong>
+            on users — can you fix it now, or must you schedule a maintenance window? Identify
+            resources needed, get necessary <strong class="key-term">approvals</strong> before
+            making changes, and have a <strong class="key-term">rollback plan</strong> ready.
+        </p>
+
+        <p>
+            <strong>Step 5 — Implement the Solution:</strong> Execute your plan, changing
+            <strong>one thing at a time</strong> so you know what fixed the problem. If the fix is
+            beyond your skill level, <strong class="key-term">escalate</strong> to senior staff or
+            vendors. Keep notes on exactly what you changed.
+        </p>
+
+        <p>
+            <strong>Step 6 — Verify Full Functionality:</strong> Confirm the original problem is
+            resolved — don't assume! Have the <strong class="key-term">user verify</strong> the fix
+            works for them. Check that your fix didn't break anything else. Implement preventive
+            measures where appropriate to avoid recurrence.
+        </p>
+
+        <p>
+            <strong>Step 7 — Document Findings:</strong> Record the problem symptoms, root cause,
+            all actions taken, and the outcome. Good documentation helps solve similar problems
+            faster, trains other staff, provides evidence for management, and builds an
+            organizational knowledge base.
+        </p>
+
+        <!-- Case Study 4 -->
+        <h3 id="case-study-troubleshoot">Case Study: The Mystery Machine Won't Connect</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — The Mystery Machine Won't Connect</div>
+            <p>The gang is on a stakeout in the Mystery Machine. Velma's laptop suddenly cannot
+            connect to Fred's mobile hotspot, but Daphne's tablet connects without any problems.
+            Velma has already tried rebooting her laptop, but it still won't connect. She sees
+            the hotspot name in her Wi-Fi list, but gets an "Unable to connect" error when she
+            tries to join.</p>
+            <p><strong>Review Questions (Apply the 7-Step Methodology):</strong></p>
+            <ol>
+                <li><strong>Step 1:</strong> Based on the information given, what is the scope of this problem?</li>
+                <li><strong>Step 2:</strong> Using Occam's Razor, list two simple theories for the probable cause.</li>
+                <li><strong>Step 3:</strong> What test could Velma perform to confirm or eliminate one of your theories?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — The Mystery Machine Won't Connect</div>
+            <ol>
+                <li><strong>Step 1 (Scope):</strong> The problem affects only Velma's laptop. Daphne's tablet works fine and the hotspot is functioning — this points to an issue with Velma's device specifically, not the hotspot.</li>
+                <li><strong>Step 2 (Theories):</strong> Simple explanations: (a) Velma's saved password for the hotspot is incorrect (Fred may have changed it); (b) Velma's Wi-Fi adapter is malfunctioning; (c) the hotspot has a device limit and Velma's laptop was previously blocked.</li>
+                <li><strong>Step 3 (Test):</strong> Velma could "forget" the saved network and re-enter the password. If that works, the theory is confirmed (wrong password). If not, try connecting to a different Wi-Fi network to test if her adapter works at all — this helps isolate whether the problem is the adapter or the hotspot.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Takeaway</div>
+            <p>Determining the <strong>scope</strong> (one device vs. many) quickly narrows down
+            where the problem lies. When only one device is affected, the problem is almost always
+            with that device's configuration or hardware — not the network infrastructure.</p>
+        </div>
+
+        <!-- ============================================================
+             MODULE SUMMARY
+             ============================================================ -->
+        <h2 id="module-summary">Module Summary</h2>
+
+        <div class="module-summary">
+            <h2>Module 1 Summary</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                    <h3 style="margin-top: 0;">Networking Fundamentals</h3>
+                    <ul>
+                        <li>Networks connect devices using <strong>nodes</strong>, <strong>links</strong>, and <strong>protocols</strong>.</li>
+                        <li>Types (smallest to largest): PAN → LAN → CAN → MAN → WAN.</li>
+                        <li>Topologies: Star (most common), Mesh (most redundant), Bus/Ring (legacy).</li>
+                    </ul>
+                    <h3>SOHO Networks</h3>
+                    <ul>
+                        <li>SOHO routers combine router, switch, wireless AP, DHCP server, and firewall in one device.</li>
+                        <li>NAT allows private IPs to share one public IP address.</li>
+                        <li>Private IP ranges: 10.x.x.x, 172.16.x.x – 172.31.x.x, 192.168.x.x.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-top: 0;">OSI Model (7 Layers)</h3>
+                    <ul>
+                        <li>PDUs bottom-to-top: Bits → Frames → Packets → Segments → Data.</li>
+                        <li>Physical (1), Data Link (2), Network (3), Transport (4), Session (5), Presentation (6), Application (7).</li>
+                        <li>Use the OSI model as a troubleshooting framework: isolate by layer.</li>
+                    </ul>
+                    <h3>Troubleshooting (7 Steps)</h3>
+                    <ul>
+                        <li>Identify → Theory → Test → Plan → Implement → Verify → Document.</li>
+                        <li>Apply Occam's Razor: check the simplest causes first.</li>
+                        <li>Determine scope early — one device vs. many changes everything.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Next Steps</div>
+            <p>Review the key terms, practice binary and hexadecimal conversions, and memorize the
+            OSI layers and troubleshooting steps. In <strong>Module 2</strong>, we build on the
+            Physical layer (Layer 1) to explore cabling standards, connectors, and physical
+            network installations.</p>
+        </div>
+
+        <p>
+            This module has provided a comprehensive introduction to networking fundamentals. You've
+            learned about different network types and topologies, explored the seven-layer OSI model,
+            examined practical SOHO networking, studied number systems used in addressing, and
+            learned a systematic troubleshooting methodology. These concepts form the foundation for
+            all subsequent networking topics.
+        </p>
+
+        <!-- Chapter Footer -->
+        <footer class="chapter-footer">
+            <p>Introduction to Networking &copy; 2025 Brendan Shea, PhD &mdash; Rochester Community and Technical College &mdash; Licensed under CC-BY-NC 4.0</p>
+            <nav class="chapter-nav">
+                <span style="color: var(--color-muted); font-size: 0.9rem;">← Module 1 is the first chapter</span>
+                <a href="../network_02_phys_inf/index.html">Next: Physical Layer &amp; Cabling &rarr;</a>
+            </nav>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
