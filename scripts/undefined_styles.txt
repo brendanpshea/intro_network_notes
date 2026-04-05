@@ -1,3 +1,0 @@
-UNDEFINED: 'frameseg' used in: network_03_switches_interfaces.tex
-UNDEFINED: 'frameseg highlight' used in: network_03_switches_interfaces.tex
-UNDEFINED: 'macbox' used in: network_04_IP.tex

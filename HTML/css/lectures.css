@@ -1,0 +1,527 @@
+/* ==========================================================================
+   Intro to Networking – Lecture Chapter Stylesheet
+   ==========================================================================
+   Designed for LLM-generated HTML chapters converted from LaTeX/Beamer source.
+   Uses Mermaid.js for diagrams (replacing TikZ).
+   ========================================================================== */
+
+/* ---------- CSS Custom Properties ---------------------------------------- */
+:root {
+    /* RCTC brand palette */
+    --rctc-blue:        #004a88;
+    --rctc-blue-light:  #0b5cab;
+    --rctc-blue-pale:   #e8f1fb;
+    --rctc-gold:        #ffc72c;
+    --rctc-gold-pale:   #fff7e0;
+
+    /* Semantic colours */
+    --color-bg:         #f4f7fb;
+    --color-panel:      #ffffff;
+    --color-text:       #1f2a37;
+    --color-muted:      #4b5563;
+    --color-border:     #dbe4f0;
+    --color-link:       var(--rctc-blue-light);
+    --color-link-hover: var(--rctc-blue);
+    --color-success:    #16a34a;
+    --color-warning:    #d97706;
+    --color-danger:     #dc2626;
+
+    /* Typography */
+    --font-body:  "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-heading: var(--font-body);
+    --font-mono:  "Cascadia Code", "Fira Code", "Consolas", "Monaco", monospace;
+    --line-height: 1.75;
+
+    /* Layout */
+    --content-max-width: 960px;
+    --sidebar-width:     260px;
+}
+
+/* ---------- Reset & Base ------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: var(--line-height);
+}
+
+/* ---------- Page Layout -------------------------------------------------- */
+.page-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar / Table of Contents */
+.sidebar {
+    position: sticky;
+    top: 0;
+    width: var(--sidebar-width);
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1rem;
+    background: var(--color-panel);
+    border-right: 1px solid var(--color-border);
+    flex-shrink: 0;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: 0.35rem 0.75rem;
+    margin-bottom: 0.15rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background: var(--rctc-blue-pale);
+    color: var(--rctc-blue);
+}
+
+.sidebar nav a.toc-h2 { font-weight: 600; }
+.sidebar nav a.toc-h3 { padding-left: 1.5rem; font-size: 0.84rem; }
+
+.sidebar .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--color-link);
+    text-decoration: none;
+}
+.sidebar .back-link:hover { text-decoration: underline; }
+
+/* Main content area */
+.content {
+    flex: 1;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 2.5rem 3rem 4rem;
+}
+
+/* ---------- Chapter Header ----------------------------------------------- */
+.chapter-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid var(--rctc-blue);
+}
+
+.chapter-header .module-label {
+    display: inline-block;
+    background: var(--rctc-blue);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0.3rem 0.9rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+}
+
+.chapter-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--rctc-blue);
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+}
+
+.chapter-header .subtitle {
+    font-size: 1.05rem;
+    color: var(--color-muted);
+}
+
+/* ---------- Typography --------------------------------------------------- */
+h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    color: var(--rctc-blue);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 1.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--rctc-blue-pale);
+}
+
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; }
+
+p { margin-bottom: 1rem; }
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; color: var(--color-link-hover); }
+
+/* ---------- Key Terms ---------------------------------------------------- */
+.key-term {
+    font-weight: 700;
+    color: var(--rctc-blue);
+}
+
+/* ---------- Lists -------------------------------------------------------- */
+ul, ol {
+    margin: 0 0 1.25rem 1.5rem;
+    padding: 0;
+}
+
+li { margin-bottom: 0.4rem; }
+
+/* Definition lists (for key-term glossaries) */
+dl.glossary {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+dl.glossary dt {
+    font-weight: 700;
+    color: var(--rctc-blue);
+}
+
+dl.glossary dd {
+    margin: 0;
+}
+
+/* ---------- Tables ------------------------------------------------------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+}
+
+th, td {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+
+thead th {
+    background: var(--rctc-blue);
+    color: #fff;
+    font-weight: 600;
+}
+
+tbody tr:nth-child(even) {
+    background: var(--rctc-blue-pale);
+}
+
+/* ---------- Code --------------------------------------------------------- */
+code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: #f0f4f8;
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+}
+
+pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+/* ---------- Callout Boxes ------------------------------------------------ */
+.callout {
+    border-left: 4px solid;
+    border-radius: 6px;
+    padding: 1.1rem 1.4rem;
+    margin: 1.5rem 0;
+    background: var(--color-panel);
+}
+
+.callout-title {
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Variants */
+.callout-info {
+    border-color: var(--rctc-blue-light);
+    background: var(--rctc-blue-pale);
+}
+.callout-info .callout-title { color: var(--rctc-blue); }
+
+.callout-warning {
+    border-color: var(--color-warning);
+    background: #fffbeb;
+}
+.callout-warning .callout-title { color: var(--color-warning); }
+
+.callout-danger {
+    border-color: var(--color-danger);
+    background: #fef2f2;
+}
+.callout-danger .callout-title { color: var(--color-danger); }
+
+.callout-success {
+    border-color: var(--color-success);
+    background: #f0fdf4;
+}
+.callout-success .callout-title { color: var(--color-success); }
+
+/* Case Study / Solution (mapped from LaTeX environments) */
+.case-study {
+    border-color: var(--color-warning);
+    background: var(--rctc-gold-pale);
+}
+.case-study .callout-title { color: #92400e; }
+
+.case-solution {
+    border-color: var(--color-success);
+    background: #f0fdf4;
+}
+.case-solution .callout-title { color: var(--color-success); }
+
+/* ---------- Learning Outcomes -------------------------------------------- */
+.learning-outcomes {
+    background: var(--rctc-blue-pale);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0;
+}
+
+.learning-outcomes h3 {
+    margin-top: 0;
+    color: var(--rctc-blue);
+    font-size: 1.1rem;
+}
+
+.learning-outcomes ul {
+    margin-bottom: 0;
+}
+
+/* ---------- Mermaid Diagrams --------------------------------------------- */
+.diagram-container {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.diagram-container .mermaid {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.diagram-caption {
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin-top: 0.6rem;
+    text-align: center;
+}
+
+/* ---------- Images ------------------------------------------------------- */
+figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+figcaption {
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* ---------- Section Divider (mapped from \sectionslide) ------------------ */
+.section-divider {
+    background: linear-gradient(135deg, var(--rctc-blue) 0%, var(--rctc-blue-light) 100%);
+    color: #fff;
+    padding: 2rem 2.5rem;
+    border-radius: 8px;
+    margin: 3rem 0 2rem;
+    text-align: center;
+}
+
+.section-divider h2 {
+    color: #fff;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem;
+}
+
+/* ---------- Review Section ----------------------------------------------- */
+.review-section {
+    background: var(--rctc-gold-pale);
+    border: 1px solid #f0dfa0;
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0;
+}
+
+.review-section h3 {
+    margin-top: 0;
+    color: #92400e;
+}
+
+/* ---------- Module Summary ----------------------------------------------- */
+.module-summary {
+    background: var(--rctc-blue-pale);
+    border: 2px solid var(--rctc-blue);
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    margin: 2.5rem 0 1.5rem;
+}
+
+.module-summary h2 {
+    margin-top: 0;
+    border: none;
+}
+
+/* ---------- Footer ------------------------------------------------------- */
+.chapter-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--color-border);
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.chapter-footer a {
+    color: var(--color-link);
+}
+
+/* Chapter navigation (prev/next) */
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.chapter-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--rctc-blue-pale);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: background 0.15s;
+}
+
+.chapter-nav a:hover {
+    background: var(--rctc-blue);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ---------- Responsive --------------------------------------------------- */
+@media (max-width: 900px) {
+    .page-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding: 1rem;
+    }
+
+    .content {
+        padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .chapter-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .section-divider {
+        padding: 1.2rem 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding: 1rem;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th, td {
+        padding: 0.45rem 0.6rem;
+    }
+
+    .chapter-nav {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}
+
+/* ---------- Print -------------------------------------------------------- */
+@media print {
+    .sidebar,
+    .chapter-nav { display: none; }
+
+    .content {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    body {
+        background: white;
+        color: black;
+        font-size: 11pt;
+    }
+
+    .section-divider {
+        background: none;
+        color: black;
+        border: 2px solid black;
+    }
+
+    .callout {
+        break-inside: avoid;
+    }
+}

@@ -8,15 +8,16 @@
     <title>Introduction to Networking - Full Course</title>
     <style>
         :root {
-            --primary: #0b5cab;
-            --primary-dark: #103f76;
-            --accent: #e8f1fb;
+            --primary: #004a88;
+            --primary-light: #0b5cab;
+            --primary-pale: #e8f1fb;
+            --gold: #ffc72c;
+            --gold-pale: #fff7e0;
             --bg: #f4f7fb;
             --panel: #ffffff;
             --text: #1f2a37;
             --muted: #4b5563;
             --border: #dbe4f0;
-            --shadow: rgba(15, 41, 77, 0.08);
         }
 
         * {
@@ -32,7 +33,7 @@
 
         body {
             font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg) 0%, #e8f1fc 100%);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.7;
         }
@@ -45,7 +46,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #103f76 100%);
             color: white;
             padding: 4rem 2rem;
             margin: -2rem -2rem 3rem -2rem;
@@ -55,7 +56,7 @@
         header h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         header p.subtitle {
@@ -72,7 +73,7 @@
 
         /* Main content */
         main {
-            background: white;
+            background: var(--panel);
             border-radius: 12px;
             padding: 2.5rem;
             box-shadow: 0 8px 24px rgba(15, 41, 77, 0.06);
@@ -84,10 +85,10 @@
         }
 
         .intro-section h2 {
-            color: var(--primary-dark);
+            color: var(--primary);
             font-size: 1.5rem;
             margin-bottom: 0.8rem;
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 2px solid var(--primary-pale);
             padding-bottom: 0.5rem;
         }
 
@@ -97,93 +98,7 @@
             line-height: 1.8;
         }
 
-        /* Chapters grid */
-        .chapters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .chapter-card {
-            background: linear-gradient(135deg, var(--accent) 0%, white 100%);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chapter-card:hover {
-            box-shadow: 0 12px 32px rgba(11, 92, 171, 0.15);
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .chapter-card h3 {
-            color: var(--primary-dark);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .chapter-card .chapter-number {
-            font-size: 0.85rem;
-            color: var(--muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.8rem;
-        }
-
-        .chapter-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
-            flex-grow: 1;
-        }
-
-        .chapter-links {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            text-align: center;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            border: 1px solid var(--primary);
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--accent);
-        }
-
-        /* Course overview */
+        /* Overview grid */
         .overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -192,14 +107,14 @@
         }
 
         .info-box {
-            background: linear-gradient(135deg, var(--accent) 0%, white 100%);
+            background: linear-gradient(135deg, var(--primary-pale) 0%, var(--panel) 100%);
             border-left: 4px solid var(--primary);
             padding: 1.2rem;
             border-radius: 6px;
         }
 
         .info-box h4 {
-            color: var(--primary-dark);
+            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
@@ -214,29 +129,121 @@
             position: relative;
         }
 
-        .info-box li:before {
-            content: "▸";
+        .info-box li::before {
+            content: "\25B8";
             position: absolute;
             left: 0;
             color: var(--primary);
             font-weight: bold;
         }
 
+        /* Module cards grid */
+        .chapters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .chapter-card {
+            background: linear-gradient(135deg, var(--primary-pale) 0%, var(--panel) 100%);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chapter-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 74, 136, 0.14);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+
+        .chapter-card .chapter-number {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card p {
+            color: var(--muted);
+            font-size: 0.93rem;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .chapter-links {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-align: center;
+            flex: 1;
+            min-width: 110px;
+        }
+
+        .btn-html {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-html:hover {
+            background: #103f76;
+            border-color: #103f76;
+        }
+
+        .btn-pdf {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-pdf:hover {
+            background: var(--primary-pale);
+        }
+
+        .btn[aria-disabled="true"] {
+            opacity: 0.45;
+            pointer-events: none;
+            cursor: default;
+        }
+
         /* Resources section */
         .resources {
-            background: var(--accent);
+            background: var(--primary-pale);
             border-radius: 10px;
             padding: 2rem;
             margin-top: 2.5rem;
         }
 
         .resources h2 {
-            color: var(--primary-dark);
+            color: var(--primary);
             margin-bottom: 1.2rem;
         }
 
         .resources a {
-            color: var(--primary);
+            color: var(--primary-light);
             text-decoration: none;
             font-weight: 500;
         }
@@ -255,7 +262,7 @@
         }
 
         footer a {
-            color: var(--primary);
+            color: var(--primary-light);
             text-decoration: none;
         }
 
@@ -289,7 +296,7 @@
         <div class="container">
             <h1>Introduction to Networking</h1>
             <p class="subtitle">A comprehensive guide to networking fundamentals and best practices</p>
-            <p class="instructor">Instructor: <strong>Brendan Shea</strong></p>
+            <p class="instructor">Instructor: <strong>Brendan Shea, PhD</strong> &mdash; Rochester Community and Technical College</p>
         </div>
     </header>
 
@@ -298,13 +305,14 @@
             <section class="intro-section">
                 <h2>Welcome to the Course</h2>
                 <p>
-                    This course provides a comprehensive introduction to networking fundamentals. Designed for students new to IT and networking, 
-                    the materials cover foundational concepts, protocols, and operational practices used in real-world networks.
+                    This course provides a comprehensive introduction to networking fundamentals. Designed for students
+                    new to IT and networking, the materials cover foundational concepts, protocols, and operational
+                    practices used in real-world networks.
                 </p>
                 <p>
-                    Through nine progressive modules, you'll explore the OSI model, network topologies, IP addressing, routing, security concepts, 
-                    and operational best practices. Each module includes both detailed lecture slides (PDF) and interactive web-based chapters (HTML) 
-                    for flexible learning.
+                    Through eleven progressive modules, you'll explore the OSI model, network topologies, IP addressing,
+                    routing, security concepts, and operational best practices. Each module includes both an interactive
+                    HTML chapter and downloadable PDF lecture slides.
                 </p>
             </section>
 
@@ -314,31 +322,29 @@
                     <div class="info-box">
                         <h4>What You'll Learn</h4>
                         <ul>
-                            <li>Network fundamentals and OSI model</li>
-                            <li>IP addressing and routing</li>
-                            <li>Network services and applications</li>
-                            <li>Operations and monitoring</li>
-                            <li>Security concepts and threats</li>
+                            <li>Network fundamentals &amp; OSI model</li>
+                            <li>IP addressing, subnetting &amp; routing</li>
+                            <li>Network services &amp; applications</li>
+                            <li>Operations, monitoring &amp; troubleshooting</li>
+                            <li>Security, hardening &amp; access control</li>
                         </ul>
                     </div>
                     <div class="info-box">
                         <h4>Access Methods</h4>
                         <ul>
-                            <li>Interactive HTML chapters</li>
-                            <li>Downloadable PDF slides</li>
-                            <li>Embedded diagrams</li>
-                            <li>Cross-referenced content</li>
-                            <li>ADA-accessible descriptions</li>
+                            <li>Interactive HTML chapters with Mermaid diagrams</li>
+                            <li>Downloadable PDF lecture slides</li>
+                            <li>Embedded code examples &amp; tables</li>
+                            <li>Mobile-friendly responsive design</li>
                         </ul>
                     </div>
                     <div class="info-box">
                         <h4>Course Structure</h4>
                         <ul>
-                            <li>9 progressive modules</li>
-                            <li>Foundation to advanced</li>
-                            <li>Comprehensive coverage</li>
-                            <li>Real-world examples</li>
-                            <li>Practical activities</li>
+                            <li>11 progressive modules</li>
+                            <li>Foundation to advanced topics</li>
+                            <li>CompTIA Network+ aligned</li>
+                            <li>Case studies &amp; real-world examples</li>
                         </ul>
                     </div>
                 </div>
@@ -347,53 +353,54 @@
             <section class="intro-section">
                 <h2>Course Modules</h2>
                 <div class="chapters">
+
                     <div class="chapter-card">
                         <span class="chapter-number">Module 01</span>
-                        <h3>Networking Basics & Topologies</h3>
-                        <p>Introduction to fundamental networking concepts, common network topologies (star, mesh, ring, bus), and OSI model foundations.</p>
+                        <h3>Networking Basics &amp; Topologies</h3>
+                        <p>Fundamental networking concepts, common topologies (star, mesh, ring, bus), the OSI model, SOHO networks, and troubleshooting methodology.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_01_basics/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_01_basics.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_01_basics/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_01_basics.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 02</span>
-                        <h3>Physical Layer & Cabling</h3>
-                        <p>Physical layer transmission, cabling standards (UTP, fiber optics), signal propagation, and Ethernet fundamentals.</p>
+                        <h3>Physical Layer &amp; Cabling</h3>
+                        <p>Physical layer transmission, copper and fiber cabling standards, connectors, signal propagation, and Ethernet at the physical layer.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_02_phys_inf/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_02_phys_inf.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_02_phys_inf/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_02_phys_inf.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 03</span>
-                        <h3>Switches & Interfaces</h3>
-                        <p>Layer 2 switching, MAC addressing, Frame forwarding, spanning tree protocol, and port aggregation.</p>
+                        <h3>Switches &amp; Interfaces</h3>
+                        <p>Layer 2 switching, MAC addressing, frame forwarding, spanning tree protocol, and port aggregation techniques.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_03_switches_interfaces/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_03_switches_interfaces.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_03_switches_interfaces/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_03_switches_interfaces.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 04</span>
-                        <h3>IP Addressing & Subnetting</h3>
+                        <h3>IP Addressing &amp; Subnetting</h3>
                         <p>IPv4 and IPv6 addressing, subnet calculation, VLSM, address planning, and gateway configuration.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_04_IP/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_04_IP.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_04_IP/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_04_IP.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 05</span>
-                        <h3>Routing & VLANs</h3>
+                        <h3>Routing &amp; VLANs</h3>
                         <p>Router operation, dynamic routing protocols (RIP, OSPF, BGP), NAT/PAT, VLAN segmentation, and trunking.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_05_routing/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_05_routing.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_05_routing/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_05_routing.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
@@ -402,40 +409,61 @@
                         <h3>Network Services</h3>
                         <p>Transport layer protocols (TCP/UDP), DHCP, DNS, IPv6 auto-configuration, and service reliability.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_06_nw_services/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_06_nw_services.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_06_nw_services/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_06_nw_services.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 07</span>
-                        <h3>Applications & Services</h3>
+                        <h3>Applications &amp; Services</h3>
                         <p>Web services (HTTP/HTTPS), file transfer (FTP/SFTP), email protocols, VoIP, and high-availability architectures.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_07_nw_app/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_07_nw_app.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_07_nw_app/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_07_nw_app.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 08</span>
-                        <h3>Operations & Monitoring</h3>
-                        <p>Network documentation, configuration management, change control, discovery tools, and baseline monitoring.</p>
+                        <h3>Operations &amp; Monitoring</h3>
+                        <p>Network documentation, configuration management, change control, discovery tools, and performance baselines.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_08_operations_monitor/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_08_operations_monitor.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_08_operations_monitor/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_08_operations_monitor.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
 
                     <div class="chapter-card">
                         <span class="chapter-number">Module 09</span>
                         <h3>Security Concepts</h3>
-                        <p>Security principles (CIA), threat types, encryption, vulnerabilities, social engineering, and incident response.</p>
+                        <p>CIA triad, threat types, encryption fundamentals, vulnerabilities, social engineering, and incident response.</p>
                         <div class="chapter-links">
-                            <a href="HTML/network_09_security_concepts/" class="btn btn-primary">Read Chapter</a>
-                            <a href="PDFs/network_09_security_concepts.pdf" class="btn btn-secondary">Slides (PDF)</a>
+                            <a href="HTML/network_09_security_concepts/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_09_security_concepts.pdf" class="btn btn-pdf">PDF Slides</a>
                         </div>
                     </div>
+
+                    <div class="chapter-card">
+                        <span class="chapter-number">Module 10</span>
+                        <h3>Identity, Access &amp; Hardening</h3>
+                        <p>Authentication methods, access control models, network hardening techniques, and identity management.</p>
+                        <div class="chapter-links">
+                            <a href="HTML/network_10_auth_access_hardening/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_10_auth_access_hardening.pdf" class="btn btn-pdf">PDF Slides</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <span class="chapter-number">Module 11</span>
+                        <h3>Zones, IoT &amp; Physical Security</h3>
+                        <p>Zone-based security architectures, DMZ design, IoT networking considerations, and physical security controls.</p>
+                        <div class="chapter-links">
+                            <a href="HTML/network_11_zones_iot_physical/index.html" class="btn btn-html">HTML Chapter</a>
+                            <a href="PDFs/network_11_zones_iot_physical.pdf" class="btn btn-pdf">PDF Slides</a>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -443,12 +471,12 @@
                 <h2>Additional Resources</h2>
                 <dl style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
                     <div>
-                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="syllabus.pdf">Course Syllabus</a></dt>
+                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="syllabus.md">Course Syllabus</a></dt>
                         <dd style="color: var(--muted); font-size: 0.9rem;">Full course outline, grading criteria, and learning objectives</dd>
                     </div>
                     <div>
-                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="https://github.com/brend/intro_network_notes">GitHub Repository</a></dt>
-                        <dd style="color: var(--muted); font-size: 0.9rem;">Source code and build system for course materials</dd>
+                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="chapter_guidelines.md">Chapter Conversion Guidelines</a></dt>
+                        <dd style="color: var(--muted); font-size: 0.9rem;">Reference for generating HTML chapters from LaTeX source</dd>
                     </div>
                 </dl>
             </section>
@@ -457,11 +485,10 @@
 
     <footer>
         <p style="margin-bottom: 0.5rem;">
-            <strong>Introduction to Networking</strong> © 2024 Brendan Shea
+            <strong>Introduction to Networking</strong> &copy; 2025 Brendan Shea
         </p>
         <p style="font-size: 0.9rem;">
-            Materials licensed under <a href="LICENSE">CC-BY-NA 4.0</a> • 
-            <a href="https://github.com/brend/intro_network_notes">View on GitHub</a>
+            Materials licensed under <a href="LICENSE">CC-BY-NC 4.0</a>
         </p>
     </footer>
 </body>
