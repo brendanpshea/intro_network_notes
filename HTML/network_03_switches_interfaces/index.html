@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Module 3: Network Interfaces and Switches — NICs, transceivers, MAC addressing, Ethernet frames, switching concepts, STP, PoE, and troubleshooting.">
+    <meta name="author" content="Brendan Shea, PhD">
+    <title>Module 3: Network Interfaces and Switches — Introduction to Networking</title>
+    <link rel="stylesheet" href="../css/lectures.css">
+
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Mermaid.js for diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad:   true,
+            theme:         'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels:  true,
+                curve:       'basis',
+            },
+            packet: {
+                showBits: false,
+            },
+            themeVariables: {
+                background:          '#ffffff',
+                primaryColor:        '#e8f1fb',
+                primaryBorderColor:  '#004a88',
+                primaryTextColor:    '#1f2a37',
+                lineColor:           '#004a88',
+                secondaryColor:      '#fff7e0',
+                tertiaryColor:       '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder:          '#004a88',
+                clusterBkg:          '#f4f7fb',
+                titleColor:          '#1f2a37',
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- ================================================================
+         SIDEBAR
+         ================================================================ -->
+    <aside class="sidebar">
+        <a href="../../index.html" class="back-link">&larr; All Modules</a>
+        <nav>
+            <a href="#introduction" class="toc-h2">Introduction</a>
+            <a href="#learning-outcomes" class="toc-h3">Learning Outcomes</a>
+            <a href="#key-terms" class="toc-h3">Key Terms Preview</a>
+
+            <a href="#nic-fundamentals" class="toc-h2">Network Interface Foundations</a>
+            <a href="#what-is-a-nic" class="toc-h3">What is a NIC?</a>
+            <a href="#nic-features" class="toc-h3">NIC Features &amp; Specifications</a>
+            <a href="#transceivers" class="toc-h3">Transceivers</a>
+            <a href="#transceiver-types" class="toc-h3">Transceiver Types</a>
+            <a href="#transceiver-issues" class="toc-h3">Transceiver Issues</a>
+            <a href="#green-dragon-layer1" class="toc-h3">Applied: Layer 1 at the Green Dragon</a>
+            <a href="#case-study-sam" class="toc-h3">Case Study: Sam's NIC Installation</a>
+
+            <a href="#frames-mac" class="toc-h2">Ethernet Frames &amp; MAC Addressing</a>
+            <a href="#ethernet-frame" class="toc-h3">Ethernet Frame Format</a>
+            <a href="#mac-format" class="toc-h3">MAC Address Format</a>
+            <a href="#mac-deepdive" class="toc-h3">MAC Address Deep Dive</a>
+
+            <a href="#switching" class="toc-h2">Switching Concepts</a>
+            <a href="#why-switches" class="toc-h3">Hub → Bridge → Switch</a>
+            <a href="#hubs" class="toc-h3">Hubs: Shared Bandwidth</a>
+            <a href="#bridges" class="toc-h3">Bridges: MAC Learning</a>
+            <a href="#switches" class="toc-h3">Switches: Modern Solution</a>
+            <a href="#switch-forwarding" class="toc-h3">How Switches Learn &amp; Forward</a>
+            <a href="#green-dragon-layer2" class="toc-h3">Applied: Layer 2 at the Green Dragon</a>
+
+            <a href="#switch-mgmt" class="toc-h2">Switch Management</a>
+            <a href="#managed-vs-unmanaged" class="toc-h3">Unmanaged vs Managed</a>
+            <a href="#l2-vs-l3" class="toc-h3">Layer 2 vs Layer 3 Switches</a>
+            <a href="#interface-config" class="toc-h3">Interface Configuration</a>
+            <a href="#case-study-green-dragon" class="toc-h3">Case Study: Green Dragon Inn</a>
+
+            <a href="#advanced" class="toc-h2">Advanced Switching Topics</a>
+            <a href="#link-aggregation" class="toc-h3">Link Aggregation &amp; NIC Teaming</a>
+            <a href="#mtu" class="toc-h3">MTU &amp; Jumbo Frames</a>
+            <a href="#stp-problem" class="toc-h3">STP: The Loop Problem</a>
+            <a href="#stp-solution" class="toc-h3">STP: The Solution</a>
+            <a href="#poe" class="toc-h3">Power over Ethernet (PoE)</a>
+            <a href="#case-study-bilbo" class="toc-h3">Case Study: Bilbo's Birthday</a>
+
+            <a href="#troubleshooting" class="toc-h2">Troubleshooting</a>
+            <a href="#led-indicators" class="toc-h3">LED Indicators &amp; Hardware</a>
+            <a href="#show-commands" class="toc-h3">Show Commands</a>
+            <a href="#error-counters" class="toc-h3">Interface Error Counters</a>
+            <a href="#mac-table-troubleshoot" class="toc-h3">MAC Table Troubleshooting</a>
+            <a href="#poe-troubleshoot" class="toc-h3">PoE Troubleshooting</a>
+
+            <a href="#module-summary" class="toc-h2">Module Summary</a>
+        </nav>
+    </aside>
+
+    <!-- ================================================================
+         MAIN CONTENT
+         ================================================================ -->
+    <main class="content">
+
+        <!-- Chapter Header -->
+        <header class="chapter-header">
+            <span class="module-label">Module 3</span>
+            <h1>Network Interfaces and Switches</h1>
+            <p class="subtitle">NICs, transceivers, MAC addressing, Ethernet frames, switching concepts, STP, PoE, and troubleshooting.</p>
+        </header>
+
+        <!-- ============================================================
+             SECTION 1: INTRODUCTION
+             ============================================================ -->
+        <h2 id="introduction">Introduction</h2>
+
+        <p>
+            Module 2 covered the physical cables — copper, fiber optic, and connectors. The natural
+            next question is: what do those cables actually <em>plug into</em>? This module answers
+            that question by exploring the two key hardware components that enable Layer 2
+            networking: <strong class="key-term">Network Interface Cards (NICs)</strong> in
+            end-point devices, and <strong class="key-term">switches</strong> that connect
+            everything together.
+        </p>
+
+        <p>
+            We are moving from Layer 1 (Physical) into
+            <strong class="key-term">Layer 2 (Data Link)</strong>. Cables carry bits, but NICs
+            and switches work with <strong class="key-term">frames</strong> and
+            <strong class="key-term">MAC addresses</strong> — the language of local networking.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC1["fa:fa-desktop NIC<br/><code>AA:BB:CC:11:22:33</code>"] -->|Ethernet| SW["fa:fa-network-wired Switch"]
+    SW -->|Ethernet| PC2["fa:fa-desktop NIC<br/><code>AA:BB:CC:44:55:66</code>"]
+
+    style PC1 fill:#e8f1fb,stroke:#004a88
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:3px
+    style PC2 fill:#e8f1fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 1: Two computers connected via Ethernet through a switch. Each NIC has a unique burned-in MAC address that the switch uses to make forwarding decisions.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">OSI Layer Focus</div>
+            <p>Module 2 covered <strong>Layer 1 (Physical)</strong> — cables and signals. This
+            module primarily covers <strong>Layer 2 (Data Link)</strong> — frames, MAC addresses,
+            and switches. Layer 2 is where the switch lives.</p>
+        </div>
+
+        <!-- Learning Outcomes -->
+        <h3 id="learning-outcomes">Learning Outcomes</h3>
+
+        <div class="learning-outcomes">
+            <h3>After completing this module, you will be able to:</h3>
+            <ul>
+                <li>Explain the function of <strong class="key-term">Network Interface Cards (NICs)</strong> and their role in host connectivity.</li>
+                <li>Identify and describe <strong class="key-term">modular transceivers</strong> including SFP, SFP+, and QSFP.</li>
+                <li>Interpret <strong class="key-term">MAC addresses</strong> and explain the <strong class="key-term">OUI</strong> (Organizationally Unique Identifier) format.</li>
+                <li>Describe the structure of an <strong class="key-term">Ethernet frame</strong> and identify its key fields.</li>
+                <li>Compare and contrast <strong class="key-term">hubs</strong>, <strong class="key-term">bridges</strong>, and <strong class="key-term">switches</strong> as Layer 2 devices.</li>
+                <li>Explain how switches use <strong class="key-term">MAC address tables</strong> to make forwarding decisions.</li>
+                <li>Describe advanced switch features including <strong class="key-term">STP</strong>, <strong class="key-term">PoE</strong>, and Layer 3 switching.</li>
+                <li>Troubleshoot common switch problems using LED indicators, <strong class="key-term">show commands</strong>, and error counters.</li>
+            </ul>
+        </div>
+
+        <!-- Key Terms Preview -->
+        <h3 id="key-terms">Key Terms Preview</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Interface Hardware</div>
+                <dl class="glossary">
+                    <dt>NIC</dt><dd>Network Interface Card</dd>
+                    <dt>Transceiver</dt><dd>TX/RX signal converter</dd>
+                    <dt>SFP / SFP+</dt><dd>Modular fiber/copper insert</dd>
+                    <dt>Wake-on-LAN</dt><dd>Remote power-on via network</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Addressing</div>
+                <dl class="glossary">
+                    <dt>MAC Address</dt><dd>48-bit hardware address</dd>
+                    <dt>OUI</dt><dd>Organizationally Unique ID</dd>
+                    <dt>BIA</dt><dd>Burned-In Address</dd>
+                    <dt>Broadcast</dt><dd>FF:FF:FF:FF:FF:FF</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Switching</div>
+                <dl class="glossary">
+                    <dt>Hub</dt><dd>Layer 1 multi-port repeater</dd>
+                    <dt>Bridge</dt><dd>2-port Layer 2 device</dd>
+                    <dt>Switch</dt><dd>Multi-port bridge</dd>
+                    <dt>Flooding</dt><dd>Send to all ports (unknown)</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Advanced Features</div>
+                <dl class="glossary">
+                    <dt>STP</dt><dd>Spanning Tree Protocol</dd>
+                    <dt>PoE</dt><dd>Power over Ethernet</dd>
+                    <dt>LAG / LACP</dt><dd>Link aggregation</dd>
+                    <dt>MTU</dt><dd>Max Transmission Unit</dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 2: NETWORK INTERFACE FOUNDATIONS
+             ============================================================ -->
+        <div class="section-divider"><h2>Network Interface Foundations</h2></div>
+
+        <h2 id="nic-fundamentals">Network Interface Foundations</h2>
+
+        <p>
+            This section introduces network interfaces and transceivers — the hardware endpoints
+            that connect hosts to Ethernet networks and provide both physical and data-link
+            layer functions.
+        </p>
+
+        <h3 id="what-is-a-nic">What is a Network Interface Card (NIC)?</h3>
+
+        <p>
+            A <strong class="key-term">NIC (Network Interface Card)</strong> is the hardware that
+            connects a computer to the network. Every NIC has a unique
+            <strong class="key-term">MAC address</strong> burned in at the factory during
+            manufacturing. NICs translate between computer data and network signals — electrical
+            for copper, or optical for fiber. Modern computers almost always have NICs built
+            directly into the motherboard.
+        </p>
+
+        <p>
+            Without a NIC, your computer is an island with no network access. The NIC handles
+            three responsibilities: creating and processing Ethernet frames, converting data to
+            and from network signals, and managing link speed and duplex settings through
+            auto-negotiation with the connected switch.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph "Computer"
+        CPU["fa:fa-microchip CPU"] --> NIC["fa:fa-network-wired NIC\n00:1A:2B:3C:4D:5E"]
+    end
+    NIC -->|"RJ-45 port"| SW["fa:fa-network-wired Switch"]
+
+    style NIC fill:#e8f1fb,stroke:#004a88,stroke-width:2px
+    style CPU fill:#f4f7fb,stroke:#6b7280
+    style SW fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 2: A NIC inside a computer connects via an RJ-45 port to the switch. The MAC address (shown in the NIC node) is burned into firmware at the factory and uniquely identifies this network interface on the local network.</p>
+        </div>
+
+        <div class="callout callout-success">
+            <div class="callout-title">NIC Responsibilities</div>
+            <ul style="margin-bottom: 0;">
+                <li>Create and process Ethernet frames</li>
+                <li>Convert data to/from electrical or optical network signals</li>
+                <li>Negotiate link speed and duplex mode with the connected switch</li>
+            </ul>
+        </div>
+
+        <h3 id="nic-features">NIC Features and Specifications</h3>
+
+        <p>
+            NICs come in a range of speeds matching the network infrastructure they connect to.
+            Understanding NIC specifications helps in selecting the right hardware and
+            troubleshooting performance issues.
+        </p>
+
+        <ul>
+            <li><strong>Speed ratings</strong>: 1 Gbps (workstations), 10 Gbps (servers), 25 Gbps, 100 Gbps (data centers).</li>
+            <li><strong>Connector types</strong>: RJ-45 for copper, SFP/SFP+ cage for fiber or DAC cables.</li>
+            <li><strong class="key-term">Wake-on-LAN (WoL)</strong>: Allows a powered-off computer to be started remotely by a special "magic packet" sent over the network.</li>
+            <li><strong class="key-term">Offloading</strong>: High-end NICs handle checksums, segmentation, and encryption in hardware — reducing CPU load on the host.</li>
+            <li>Server NICs often have multiple ports for redundancy, throughput, or connecting to separate networks.</li>
+        </ul>
+
+        <table>
+            <thead>
+                <tr><th>NIC Type</th><th>Typical Speed</th><th>Use Case</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1 Gbps RJ-45</td><td>1,000 Mbps</td><td>Desktops, laptops</td></tr>
+                <tr><td>10 Gbps RJ-45</td><td>10,000 Mbps</td><td>High-end workstations</td></tr>
+                <tr><td>10 Gbps SFP+</td><td>10,000 Mbps</td><td>Servers</td></tr>
+                <tr><td>25 / 100 Gbps</td><td>25,000 – 100,000 Mbps</td><td>Data center infrastructure</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Auto-Negotiation</div>
+            <p>NICs and switches automatically negotiate the best mutually supported speed and
+            duplex mode. This usually "just works" — but manually forcing mismatched settings
+            on one side is a common source of performance problems.</p>
+        </div>
+
+        <h3 id="transceivers">What is a Transceiver?</h3>
+
+        <p>
+            A <strong class="key-term">transceiver</strong> is a device that both
+            <strong>tr</strong>ansmits and <strong>rec</strong>eives signals — the name is a
+            portmanteau of the two words. Transceivers convert between the electrical signals
+            inside a device and the optical or electrical signals carried on the cable.
+        </p>
+
+        <ul>
+            <li><strong class="key-term">TX (Transmit)</strong>: The outgoing signal path — typically uses a laser diode or LED to convert electrical signals to light pulses.</li>
+            <li><strong class="key-term">RX (Receive)</strong>: The incoming signal path — a photodetector converts incoming light back to electrical signals.</li>
+        </ul>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    SW["fa:fa-network-wired Switch<br/>SFP+ slot"] -->|"Electrical signal"| TC["fa:fa-bolt Transceiver\n(SFP+)"]
+    TC -->|"Light pulse (TX)"| FC["fa:fa-circle-dot Fiber<br/>Cable"]
+    FC -->|"Light pulse (RX)"| TC2["fa:fa-bolt Transceiver\n(SFP+)"]
+    TC2 -->|"Electrical signal"| SW2["fa:fa-server Server<br/>NIC"]
+
+    style TC fill:#fff7e0,stroke:#d97706
+    style TC2 fill:#fff7e0,stroke:#d97706
+    style FC fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 3: How a transceiver works. Inside the switch, data is an electrical signal. The transceiver's laser converts it to a light pulse for the fiber cable. At the other end, the receiving transceiver's photodetector converts light back to electrical. Without transceivers, switches cannot speak "fiber."</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Why Transceivers Matter</div>
+            <p>Without a transceiver, your switch can't understand fiber optic light signals —
+            it only speaks electrical. Transceivers are the "translators" between the switch's
+            internal electronics and the external cable medium.</p>
+        </div>
+
+        <h3 id="transceiver-types">Types of Transceivers</h3>
+
+        <p>
+            The modular transceiver ecosystem allows a single switch model to support many
+            different cable types and distances simply by swapping a small plug-in module.
+            This is a major advantage over fixed-port switches.
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Transceiver</th>
+                    <th>Speed</th>
+                    <th>Cable Type</th>
+                    <th>Connector</th>
+                    <th>Max Distance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>SFP</strong></td><td>1 Gbps</td><td>MMF or SMF</td><td>LC</td><td>550 m (MMF) / 10 km (SMF)</td></tr>
+                <tr><td><strong>SFP+</strong></td><td>10 Gbps</td><td>MMF or SMF</td><td>LC</td><td>300 m (MMF) / 10–80 km (SMF)</td></tr>
+                <tr><td><strong>QSFP</strong></td><td>40 Gbps</td><td>MMF or SMF</td><td>MPO/MTP</td><td>100 m (MMF) / 10 km (SMF)</td></tr>
+                <tr><td><strong>QSFP28</strong></td><td>100 Gbps</td><td>MMF or SMF</td><td>MPO/MTP</td><td>100 m (MMF) / 10 km (SMF)</td></tr>
+                <tr><td><strong>GBIC</strong> (legacy)</td><td>1 Gbps</td><td>MMF or SMF</td><td>SC</td><td>550 m (MMF) / 10 km (SMF)</td></tr>
+                <tr><td><strong>SFP-T</strong></td><td>1 Gbps</td><td>Copper (UTP)</td><td>RJ-45</td><td>100 m</td></tr>
+                <tr><td><strong>SFP+ DAC</strong></td><td>10 Gbps</td><td>Twinax copper</td><td>Integrated</td><td>3–7 m</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">MMF vs SMF</div>
+            <p><strong class="key-term">MMF (Multimode Fiber)</strong> — multiple light paths, 
+            shorter distances, orange jacket, cheaper transceivers. Used inside buildings.<br>
+            <strong class="key-term">SMF (Single-mode Fiber)</strong> — single light path, 
+            long distances (up to 80 km), yellow jacket, pricier transceivers. Used between buildings or cities.</p>
+        </div>
+
+        <h3 id="transceiver-issues">Transceiver Issues</h3>
+
+        <p>
+            Transceivers are a common source of connectivity problems because of strict compatibility
+            requirements between the transceiver, cable type, and switch model.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">Mismatch Issues</div>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>SFP in SFP+ port</strong>: May work at reduced speed</li>
+                    <li><strong>SFP+ in SFP port</strong>: Will not work</li>
+                    <li><strong>Fiber type mismatch</strong>: MMF transceiver + SMF cable = no link</li>
+                    <li><strong>Vendor incompatibility</strong>: Some switches only accept manufacturer-branded modules</li>
+                </ul>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Signal Strength Issues</div>
+                <ul style="margin-bottom: 0;">
+                    <li><strong class="key-term">TX power</strong>: Transmit signal strength</li>
+                    <li><strong class="key-term">RX sensitivity</strong>: Minimum signal the receiver can detect</li>
+                    <li><strong>Too little power</strong> = signal doesn't reach</li>
+                    <li><strong>Too much power</strong> = overwhelms the receiver</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Transceiver Troubleshooting Order</div>
+            <ol style="margin-bottom: 0;">
+                <li>Check transceiver compatibility with the switch model</li>
+                <li>Verify fiber type (MMF vs SMF) matches the transceiver</li>
+                <li>Confirm cable distance is within the transceiver's rated range</li>
+            </ol>
+        </div>
+
+        <!-- Green Dragon Layer 1 Diagram (Slide A) -->
+        <h3 id="green-dragon-layer1">Applied: Layer 1 at the Green Dragon</h3>
+
+        <p>
+            The Green Dragon Inn uses a mix of cable types that illustrates real-world transceiver
+            and cabling decisions. The building's server lives in the cellar; devices are spread
+            across multiple rooms; and the ISP connection must reach outside the building.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    SRV["fa:fa-server Cellar Server"] -->|"MMF fiber"| SW["fa:fa-network-wired Core Switch"]
+    SW -->|"Cat6"| FD["fa:fa-desktop Front Desk"]
+    SW -->|"Cat6"| KIT["fa:fa-laptop Kitchen"]
+    SW -->|"Cat5e"| MGR["fa:fa-desktop Manager"]
+    SW -->|"SMF fiber"| ISP(["fa:fa-cloud ISP Uplink"])
+
+    style SRV fill:#e8f1fb,stroke:#004a88
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:3px
+    style FD fill:#e8f1fb,stroke:#004a88
+    style KIT fill:#e8f1fb,stroke:#004a88
+    style MGR fill:#e8f1fb,stroke:#004a88
+    style ISP fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure: Green Dragon Layer 1 physical topology. The cellar server connects to the core switch via MMF (multimode fiber) — short indoor run, cost-effective. Front Desk and Kitchen get Cat6 copper. The Manager's older cable run uses Cat5e. The ISP uplink uses SMF (single-mode fiber) because it must span a longer distance outside the building. One physical network — three different cable types, each chosen for its specific distance and cost requirements.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Why Three Cable Types?</div>
+            <p><strong>MMF</strong> (orange) — multimode fiber for the server-to-switch run: higher bandwidth than copper, short indoor distance, reasonable transceiver cost.<br>
+            <strong>Cat6 copper</strong> — standard access layer cabling for most workstations.<br>
+            <strong>Cat5e copper</strong> — older but still functional for the manager's office; supports 1 Gbps at standard distances.<br>
+            <strong>SMF</strong> (yellow) — single-mode fiber for the WAN uplink: required for longer outdoor distances to the ISP demarcation point.</p>
+        </div>
+
+        <!-- Case Study 1 -->
+        <h3 id="case-study-sam">Case Study: Sam's First NIC Installation</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Sam's First NIC Installation</div>
+            <p>Samwise Gamgee is setting up the new admin network for the Shire. He purchases
+            10 Gbps NICs for the hobbit-hole workstations, but the switches only have SFP ports
+            (1 Gbps, not SFP+).</p>
+            <p>Sam also notices one workstation showing a MAC address of
+            <code>00:00:00:00:00:00</code> in the network settings.</p>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>Will the 10 Gbps NICs work in the 1 Gbps switch ports?</li>
+                <li>What speed will the connection actually operate at?</li>
+                <li>What might cause a MAC address of all zeros?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Sam's First NIC Installation</div>
+            <ol>
+                <li><strong>Yes</strong> — 10 Gbps NICs will auto-negotiate down to match the switch's 1 Gbps capability. NICs are backward-compatible.</li>
+                <li>The connection will operate at <strong>1 Gbps</strong>, limited by the slower device (the switch). Sam wasted money on 10G NICs — 1G NICs would have been sufficient.</li>
+                <li>An all-zeros MAC address typically means: the NIC driver is not installed or has failed to load, the NIC hardware has failed, or the adapter is a virtual/unconfigured interface.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Lesson</div>
+            <p>Always match NIC and switch capabilities — buying faster NICs than your switch
+            supports wastes money. A missing or abnormal MAC address always points to a driver
+            or hardware problem, not a network configuration issue.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 3: ETHERNET FRAMES AND MAC ADDRESSING
+             ============================================================ -->
+        <div class="section-divider"><h2>Ethernet Frames &amp; MAC Addressing</h2></div>
+
+        <h2 id="frames-mac">Ethernet Frames &amp; MAC Addressing</h2>
+
+        <p>
+            Data doesn't travel as raw bits across a network — it's packaged into structured
+            units called <strong class="key-term">frames</strong>. Frames contain addressing
+            information so switches know where to send them.
+        </p>
+
+        <h3 id="ethernet-frame">Ethernet Frame Format</h3>
+
+        <p>
+            An <strong class="key-term">Ethernet frame</strong> is the Layer 2 PDU. The standard
+            maximum frame size is <strong>1518 bytes</strong>. Each frame wraps the network-layer
+            packet (IP datagram) with a header containing MAC addresses and a trailer for error
+            detection.
+        </p>
+
+        <!-- Mermaid packet diagram for Ethernet frame -->
+        <div class="diagram-container">
+            <pre class="mermaid">
+packet-beta
+title Ethernet Frame Structure (standard, up to 1518 bytes)
+0-7: "Preamble (8 B)"
+8-13: "Dest MAC (6 B)"
+14-19: "Src MAC (6 B)"
+20-21: "Type (2 B)"
+22-53: "Payload / Data (46–1500 B)"
+54-57: "FCS (4 B)"
+            </pre>
+            <p class="diagram-caption">Figure 4: Ethernet frame structure using a Mermaid packet diagram. Field widths are proportional to byte counts. The Preamble synchronizes receivers; Dest/Src MAC are 6-byte hardware addresses; Type indicates the encapsulated protocol (e.g., 0x0800 = IPv4); Payload carries the IP packet; FCS is a 4-byte checksum for error detection.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Header Fields</div>
+                <dl class="glossary" style="margin: 0;">
+                    <dt>Preamble (8 B)</dt><dd>Synchronization — tells receivers "a frame is coming"</dd>
+                    <dt>Dest MAC (6 B)</dt><dd>Where the frame is going</dd>
+                    <dt>Src MAC (6 B)</dt><dd>Where the frame came from</dd>
+                    <dt>Type/Length (2 B)</dt><dd>Protocol inside (IPv4 = 0x0800, IPv6 = 0x86DD)</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Payload and Trailer</div>
+                <dl class="glossary" style="margin: 0;">
+                    <dt>Payload (46–1500 B)</dt><dd>The actual data (IP packet or other L3 PDU)</dd>
+                    <dt>FCS (4 B)</dt><dd>Frame Check Sequence — CRC checksum; receiver recalculates to detect corruption</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Minimum and Maximum Frame Sizes</div>
+            <p>Minimum payload is 46 bytes (padding added if smaller). Maximum payload is 1500 bytes
+            — this is standard Ethernet MTU. Frames larger than 1518 bytes are either
+            <strong class="key-term">jumbo frames</strong> (up to 9000 bytes, requires explicit
+            support) or <strong class="key-term">giants</strong> (an error condition).</p>
+        </div>
+
+        <h3 id="mac-format">MAC Address Format</h3>
+
+        <p>
+            A <strong class="key-term">MAC (Media Access Control) address</strong> is the hardware
+            address of a NIC — the permanent, factory-assigned identifier used for Layer 2
+            communication. MAC addresses are 48 bits (6 bytes) written in hexadecimal. They are
+            also called the <strong class="key-term">physical address</strong>,
+            <strong class="key-term">hardware address</strong>, or
+            <strong class="key-term">burned-in address (BIA)</strong>.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">MAC Address Written in Three Common Formats</div>
+            <table style="width: auto; margin: 0; font-family: monospace;">
+                <tbody>
+                    <tr><td style="border: none; padding: 0.2rem 1rem;"><code>00:1A:2B:3C:4D:5E</code></td><td style="border: none; padding: 0.2rem 1rem;">Colon-separated (Linux, macOS)</td></tr>
+                    <tr><td style="border: none; padding: 0.2rem 1rem;"><code>00-1A-2B-3C-4D-5E</code></td><td style="border: none; padding: 0.2rem 1rem;">Dash-separated (Windows)</td></tr>
+                    <tr><td style="border: none; padding: 0.2rem 1rem;"><code>001A.2B3C.4D5E</code></td><td style="border: none; padding: 0.2rem 1rem;">Dot-separated (Cisco IOS)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">MAC vs IP Address</div>
+            <p><strong>MAC address</strong> = permanent hardware address (Layer 2). Used only
+            within a local network segment. Switches use MAC addresses.<br>
+            <strong>IP address</strong> = changeable logical address (Layer 3). Used to route
+            traffic between networks. Routers use IP addresses.</p>
+        </div>
+
+        <h3 id="mac-deepdive">MAC Address Deep Dive</h3>
+
+        <p>
+            A MAC address is not just a random number — it has structure. The first half identifies
+            the manufacturer, and the second half identifies the specific device.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+packet-beta
+title MAC Address Structure: 00:50:56:3C:4D:5E
+0-2: "OUI — Manufacturer ID (3 bytes)\ne.g. 00:50:56 = VMware"
+3-5: "Device ID — Unique to this NIC (3 bytes)\ne.g. 3C:4D:5E"
+            </pre>
+            <p class="diagram-caption">Figure 5: MAC address structure. The first 3 bytes (OUI) are assigned by IEEE to identify the manufacturer. The last 3 bytes are assigned by the manufacturer and must be globally unique within that OUI block. The OUI registry is publicly searchable — you can look up any MAC to find who made the hardware.</p>
+        </div>
+
+        <ul>
+            <li><strong class="key-term">OUI (Organizationally Unique Identifier)</strong>: First 3 bytes (24 bits). Assigned by IEEE to each manufacturer. Examples: <code>00:50:56</code> = VMware, <code>00:0C:29</code> = VMware (alternate), <code>00:1A:A0</code> = Dell.</li>
+            <li><strong class="key-term">Device ID</strong>: Last 3 bytes (24 bits). Assigned by the manufacturer. Must be unique for each NIC they produce.</li>
+        </ul>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Special MAC Addresses</div>
+                <dl class="glossary" style="margin: 0;">
+                    <dt><code>FF:FF:FF:FF:FF:FF</code></dt><dd><strong>Broadcast</strong> — sent to every device on the segment</dd>
+                    <dt>Starts with <code>01:00:5E</code></dt><dd><strong>Multicast</strong> — sent to a subscribed group of devices</dd>
+                </dl>
+            </div>
+            <div class="callout callout-danger" style="margin: 0;">
+                <div class="callout-title">Can MACs Be Changed?</div>
+                <p style="margin-bottom: 0;">Yes — software can <strong class="key-term">spoof</strong> (fake) a different MAC address. This is useful for troubleshooting and privacy, but is also a security concern. MAC address filtering alone is <strong>not a reliable security control</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SECTION 4: SWITCHING CONCEPTS AND FORWARDING
+             ============================================================ -->
+        <div class="section-divider"><h2>Switching Concepts and Forwarding</h2></div>
+
+        <h2 id="switching">Switching Concepts and Forwarding</h2>
+
+        <p>
+            Understanding the evolution from hubs to bridges to switches — and how modern switches
+            actually work — is fundamental to troubleshooting any Layer 2 network.
+        </p>
+
+        <h3 id="why-switches">The Evolution: Hub → Bridge → Switch</h3>
+
+        <p>
+            Early networks used hubs, which were cheap but created severe performance problems.
+            Bridges improved on hubs by learning MAC addresses, but were limited to 2–4 ports.
+            Modern switches are essentially multi-port bridges with dedicated bandwidth per port.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    HUB["fa:fa-circle-xmark Hub\n(1990s)\nShared bandwidth\nAll in one collision domain"]
+    BRG["fa:fa-right-left Bridge\n(Late 1990s)\nLearns MACs, 2–4 ports\nSeparates collision domains"]
+    SW["fa:fa-network-wired Switch\n(2000s – Today)\nMany ports\nDedicated bandwidth per port"]
+
+    HUB -->|"Better"| BRG
+    BRG -->|"Better"| SW
+
+    style HUB fill:#fef2f2,stroke:#dc2626
+    style BRG fill:#fff7e0,stroke:#d97706
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+            </pre>
+            <p class="diagram-caption">Figure 6: The evolution of Layer 2 devices. Each generation solved the key problems of the previous one. Switches combine all the benefits of bridges with scalability — making them the universal choice for modern LANs.</p>
+        </div>
+
+        <h3 id="hubs">Hubs: Shared Bandwidth (and Its Problems)</h3>
+
+        <p>
+            A <strong class="key-term">hub</strong> is a Layer 1 device that repeats every
+            incoming signal to <em>every</em> output port. Think of it like shouting in a crowded
+            room — everyone hears everything, even if the message is meant for only one person.
+        </p>
+
+        <ul>
+            <li>All devices share a single <strong class="key-term">collision domain</strong> — only one device can transmit at a time.</li>
+            <li>Only <strong class="key-term">half-duplex</strong> communication is possible — a device can send or receive, but not both simultaneously.</li>
+            <li>More devices connected = more collisions = worse performance. 10 devices on a 100 Mbps hub share roughly 10 Mbps each (minus collision overhead).</li>
+            <li>Hubs have no MAC address awareness — they don't know or care who is connected where.</li>
+        </ul>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Why Hubs Are Obsolete</div>
+            <p>Hubs are no longer manufactured for general use. However, they may still appear in
+            legacy installations and are tested on the CompTIA Network+ exam.
+            A <strong>hub = Layer 1 device</strong>; it is essentially a multi-port repeater.</p>
+        </div>
+
+        <h3 id="bridges">Bridges: Learning MAC Addresses</h3>
+
+        <p>
+            A <strong class="key-term">bridge</strong> operates at Layer 2 and learns which devices
+            are on which side by reading MAC addresses from incoming frames. It maintains a small
+            <strong class="key-term">MAC address table</strong> and only forwards frames that need
+            to cross between segments — keeping local traffic local. This reduces collisions
+            significantly by creating separate <strong class="key-term">collision domains</strong>.
+        </p>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Bridge vs Hub</div>
+            <p>A hub floods every frame to every port. A bridge reads the destination MAC and
+            only forwards frames when necessary. This selective forwarding is called
+            <strong class="key-term">filtering</strong> — a fundamental concept in Layer 2
+            switching that makes networks efficient.</p>
+        </div>
+
+        <h3 id="switches">Switches: The Modern Solution</h3>
+
+        <p>
+            A <strong class="key-term">switch</strong> is essentially a multi-port bridge with
+            dedicated bandwidth per port. Each port is its own collision domain, enabling
+            <strong class="key-term">full-duplex</strong> communication (simultaneous send and
+            receive) on every link.
+        </p>
+
+        <ul>
+            <li>A 24-port Gigabit switch can handle up to 24 Gbps total bandwidth (1 Gbps per port, full-duplex).</li>
+            <li>Each port has dedicated bandwidth — no sharing with other devices.</li>
+            <li>Switches learn MAC addresses automatically and build a forwarding table dynamically.</li>
+        </ul>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    SW["fa:fa-network-wired Switch\n(5 separate collision domains)"]
+    SW --- PC1["fa:fa-desktop PC A\nAA:AA:AA"]
+    SW --- PC2["fa:fa-desktop PC B\nBB:BB:BB"]
+    SW --- LT1["fa:fa-laptop Laptop C\nCC:CC:CC"]
+    SW --- PC3["fa:fa-desktop PC D\nDD:DD:DD"]
+    SW --- LT2["fa:fa-laptop Laptop E\nEE:EE:EE"]
+
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:3px
+            </pre>
+            <p class="diagram-caption">Figure 7: A switch with five connected devices. Each device has its own dedicated link to the switch, forming five separate collision domains. All devices can transmit simultaneously without interfering with each other — a fundamental advantage over hubs.</p>
+        </div>
+
+        <h3 id="switch-forwarding">How Switches Learn and Forward</h3>
+
+        <p>
+            The intelligence of a switch comes from its
+            <strong class="key-term">MAC address table</strong> (also called the
+            <strong class="key-term">CAM table</strong>). The switch builds this table
+            automatically by examining source MAC addresses on incoming frames.
+        </p>
+
+        <p>A switch takes one of four actions for every frame it receives:</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Learning</div>
+                <p>When a frame arrives, the switch reads the <strong>source MAC</strong> and records which port it came from. Over time, the table fills with MAC-to-port mappings.</p>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Forwarding</div>
+                <p>When the switch knows which port a destination MAC is on, it sends the frame <strong>only to that port</strong>. Efficient, targeted delivery.</p>
+            </div>
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">Flooding</div>
+                <p>When the destination MAC is <strong>unknown</strong>, the switch sends the frame to <strong>all ports except the source port</strong>. This is how switches handle new devices or expired table entries.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Filtering</div>
+                <p>When source and destination are on the <strong>same port or segment</strong>, the switch drops the frame — no need to forward it.</p>
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph "Switch with MAC Table"
+        direction TB
+        TBL["<b>MAC Address Table</b><br/>AA:AA:AA → Port 1<br/>BB:BB:BB → Port 2<br/>CC:CC:CC → Port 3"]
+    end
+    PC1["fa:fa-desktop PC A\nAA:AA:AA"] -->|"Port 1"| TBL
+    PC2["fa:fa-desktop PC B\nBB:BB:BB"] -->|"Port 2"| TBL
+    PC3["fa:fa-desktop PC C\nCC:CC:CC"] -->|"Port 3"| TBL
+
+    style TBL fill:#e8f1fb,stroke:#004a88,stroke-width:2px
+            </pre>
+            <p class="diagram-caption">Figure 8: A switch's MAC address table maps each learned MAC to the port it was seen on. When PC A sends a frame to PC C, the switch looks up CC:CC:CC, finds Port 3, and forwards only to that port — PC B never sees the frame.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">MAC Address Table Aging</div>
+            <p>MAC table entries have a <strong>timer</strong> (default 300 seconds on most switches).
+            If a device hasn't transmitted in that time, its entry is removed. When it transmits
+            again, the switch re-learns it. This keeps the table from filling with stale entries
+            for devices that have been moved or powered off.</p>
+        </div>
+
+        <!-- Green Dragon Layer 2 Diagram (Slide B) -->
+        <h3 id="green-dragon-layer2">Applied: Layer 2 MAC Forwarding at the Green Dragon</h3>
+
+        <p>
+            The same Green Dragon network, now seen through Layer 2 eyes. The switch has learned
+            all four MAC addresses and built its forwarding table. When the Front Desk sends a
+            frame to the Manager, watch how the switch uses the table to make a precise forwarding
+            decision — delivering it to exactly one port and blocking the rest.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    subgraph GDSwitch["Green Dragon Switch — MAC Address Table"]
+        direction LR
+        TBL["<b>Port 1</b>: AA:AA:AA &nbsp;&nbsp; <b>Port 2</b>: BB:BB:BB &nbsp;&nbsp; <b>Port 3</b>: CC:CC:CC &nbsp;&nbsp; <b>Port 4</b>: DD:DD:DD"]
+    end
+
+    FD["fa:fa-desktop Front Desk<br/>AA:AA:AA"] -->|"Frame: Dst CC:CC:CC → Port 1"| TBL
+    TBL -->|"fa:fa-check Forwarded to Port 3"| MGR["fa:fa-desktop Manager<br/>CC:CC:CC"]
+    TBL -. "fa:fa-ban Not forwarded (Port 2)" .- KIT["fa:fa-laptop Kitchen<br/>BB:BB:BB"]
+    TBL -. "fa:fa-ban Not forwarded (Port 4)" .- GST["fa:fa-laptop Guest<br/>DD:DD:DD"]
+
+    style GDSwitch fill:#f0fdf4,stroke:#16a34a
+    style TBL fill:#e8f1fb,stroke:#004a88,stroke-width:2px
+    style FD fill:#fff7e0,stroke:#d97706
+    style MGR fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style KIT fill:#fef2f2,stroke:#dc2626
+    style GST fill:#fef2f2,stroke:#dc2626
+            </pre>
+            <p class="diagram-caption">Figure: Layer 2 MAC forwarding at the Green Dragon. The Front Desk (AA:AA:AA) sends a frame destined for the Manager (CC:CC:CC). The switch looks up CC:CC:CC in its table, finds Port 3, and forwards only to that port. The Kitchen (Port 2) and Guest (Port 4) never see this frame — they are filtered out. This is the fundamental efficiency advantage of switches over hubs.</p>
+        </div>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Layer 2 in One Sentence</div>
+            <p>The switch reads the <strong>destination MAC address</strong> in the frame, looks it up in its table, and forwards the frame to <strong>exactly one port</strong> — or floods to all ports if the destination is unknown.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 5: SWITCH INTERFACES AND MANAGEMENT
+             ============================================================ -->
+        <div class="section-divider"><h2>Switch Interfaces and Management</h2></div>
+
+        <h2 id="switch-mgmt">Switch Interfaces and Management</h2>
+
+        <p>
+            Not all switches are created equal. Understanding the difference between switch types
+            and how they are configured is essential for selecting the right hardware and
+            maintaining an enterprise network.
+        </p>
+
+        <h3 id="managed-vs-unmanaged">Unmanaged vs Managed Switches</h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Unmanaged Switch</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Plug and play — no configuration</li>
+                    <li>No VLANs, no monitoring</li>
+                    <li>Cheapest option</li>
+                    <li><strong>Best for:</strong> Home, very small office</li>
+                </ul>
+            </div>
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">Smart / Web Switch</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Limited management features</li>
+                    <li>Basic VLANs, simple web GUI</li>
+                    <li>Middle price range</li>
+                    <li><strong>Best for:</strong> Small business</li>
+                </ul>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Managed Switch</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Full configuration options</li>
+                    <li>VLANs, STP, SNMP, port security</li>
+                    <li>CLI, web GUI, remote management</li>
+                    <li><strong>Best for:</strong> Enterprise, any business</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">The Key Question</div>
+            <p>Do you need to <strong>separate traffic</strong> (VLANs), <strong>monitor performance</strong>
+            (SNMP), or <strong>configure security</strong> (port security, 802.1X)? If yes → managed
+            switch. If it's for a home printer or tiny office with no security requirements → unmanaged.</p>
+        </div>
+
+        <h3 id="l2-vs-l3">Layer 2 vs Layer 3 Switches</h3>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Layer 2 Switch (Standard)</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Forwards based on <strong>MAC addresses</strong></li>
+                    <li>Cannot route between networks or VLANs</li>
+                    <li>Needs an external router for inter-VLAN traffic</li>
+                    <li>Less expensive — common for access layer</li>
+                </ul>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Layer 3 Switch (Multilayer)</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Also routes based on <strong>IP addresses</strong></li>
+                    <li>Can route between VLANs directly ("router on a stick" not needed)</li>
+                    <li>Faster inter-VLAN routing than a separate router</li>
+                    <li>More expensive — common in distribution/core layers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">When to Use Layer 3 Switches</div>
+            <p>Large networks with multiple VLANs benefit most from Layer 3 switches.
+            Inter-VLAN traffic stays fast without bottlenecking through a separate router.
+            For small networks with one or two VLANs, a Layer 2 switch plus a router (or
+            SOHO router) is sufficient.</p>
+        </div>
+
+        <h3 id="interface-config">Switch Interface Configuration Basics</h3>
+
+        <p>
+            Managed switches are configured through several access methods, each suited to
+            different situations:
+        </p>
+
+        <ul>
+            <li><strong class="key-term">Console cable</strong>: A direct serial (RS-232/USB) connection to the switch's console port. Used for initial setup when no network access exists yet.</li>
+            <li><strong class="key-term">SSH (Secure Shell)</strong>: Encrypted remote CLI access over the network. The preferred method for remote management.</li>
+            <li><strong>Telnet</strong>: Unencrypted remote CLI. Avoid this — credentials are transmitted in plain text. Use SSH instead.</li>
+            <li><strong class="key-term">Web GUI</strong>: Browser-based management available on some models. Easier to learn but less powerful than CLI.</li>
+        </ul>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Security Warning: Use SSH, Not Telnet</div>
+            <p>Telnet sends all data, including your admin password, as plain text over the network.
+            Anyone with a packet sniffer can capture your credentials. Always configure
+            <strong>SSH</strong> for remote switch management and disable Telnet.</p>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Speed/Duplex Mismatch</div>
+            <p>If one side of a link is manually configured and the other side is set to
+            auto-negotiate, they may fail to agree on settings correctly. This causes
+            <strong>slow speeds, high error rates, and intermittent packet loss</strong>
+            that can be very difficult to diagnose. Best practice: configure both ends
+            consistently — either both auto or both manually set.</p>
+        </div>
+
+        <!-- Case Study 2 -->
+        <h3 id="case-study-green-dragon">Case Study: The Green Dragon Inn Network</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — The Green Dragon Inn Network</div>
+            <p>The Green Dragon Inn is expanding and needs a network for guest hobbits and staff.
+            Frodo suggests a cheap unmanaged switch. Gandalf recommends a managed switch instead.</p>
+            <p>The network requirements:</p>
+            <ul>
+                <li>Separate guest traffic from staff traffic (security)</li>
+                <li>Support 20 devices total</li>
+                <li>Allow remote management (Gandalf travels frequently)</li>
+            </ul>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>Which switch type should they choose and why?</li>
+                <li>What feature would separate guest from staff traffic?</li>
+                <li>Why is remote management valuable for an inn?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — The Green Dragon Inn Network</div>
+            <ol>
+                <li><strong>Managed switch</strong> — unmanaged switches cannot separate traffic or be configured remotely. All three requirements demand managed switch features.</li>
+                <li><strong class="key-term">VLANs (Virtual LANs)</strong> logically separate guest and staff traffic on the same physical switch. Guest devices would be on one VLAN; staff on another. The switch enforces this separation in software.</li>
+                <li>Remote management lets Gandalf troubleshoot from anywhere in Middle-earth without traveling to the inn. He can monitor bandwidth, detect problems, and change configuration without disrupting operations.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Lesson</div>
+            <p>The extra cost of managed switches pays off in security and flexibility. For any
+            business network handling multiple traffic types or requiring remote administration,
+            a managed switch is the right choice.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 6: ADVANCED SWITCHING TOPICS
+             ============================================================ -->
+        <div class="section-divider"><h2>Advanced Switching Topics</h2></div>
+
+        <h2 id="advanced">Advanced Switching Topics</h2>
+
+        <p>
+            Beyond basic frame forwarding, modern switches support features that improve
+            performance, resilience, and power delivery for connected devices.
+        </p>
+
+        <h3 id="link-aggregation">Link Aggregation and NIC Teaming</h3>
+
+        <p>
+            Sometimes a single cable link is not fast enough for a busy server or inter-switch
+            connection. <strong class="key-term">Link Aggregation (LAG)</strong> solves this by
+            bundling multiple physical cables into one logical link.
+        </p>
+
+        <ul>
+            <li><strong class="key-term">LAG (Link Aggregation Group)</strong>: Combines two or more switch ports into a single logical interface with combined bandwidth.</li>
+            <li><strong class="key-term">LACP (802.3ad)</strong>: The IEEE protocol that automatically negotiates link aggregation between both ends of the connection.</li>
+            <li><strong class="key-term">NIC Teaming</strong>: The same concept implemented on the server/host side — multiple NICs bonded together.</li>
+        </ul>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    SRV["fa:fa-server Server\n(4 NIC ports)"] -->|"Link 1 (1G)"| SW["fa:fa-network-wired Switch\n(LAG bundle)"]
+    SRV -->|"Link 2 (1G)"| SW
+    SRV -->|"Link 3 (1G)"| SW
+    SRV -->|"Link 4 (1G)"| SW
+
+    SW -.->|"Logical: 4 Gbps total<br/>+ failover if one link drops"| NOTE[" "]
+
+    style SRV fill:#e8f1fb,stroke:#004a88
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style NOTE fill:#transparent,stroke:none,color:#6b7280
+            </pre>
+            <p class="diagram-caption">Figure 9: Link Aggregation — four 1 Gbps links bundled between a server and switch provide 4 Gbps effective bandwidth and redundancy. If one cable fails, traffic continues on the remaining three. LACP (802.3ad) coordinates the aggregation automatically on both ends.</p>
+        </div>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Both Ends Must Match</div>
+            <p>LAG must be configured on <strong>both</strong> the switch AND the server or other
+            switch. If only one side has LAG configured, the other side may see a loop and
+            Spanning Tree Protocol will block the extra links, negating all the benefits.</p>
+        </div>
+
+        <h3 id="mtu">Maximum Transmission Unit (MTU) and Jumbo Frames</h3>
+
+        <p>
+            The <strong class="key-term">MTU (Maximum Transmission Unit)</strong> is the maximum
+            payload size a network segment can carry without fragmentation. Standard Ethernet MTU
+            is <strong>1500 bytes</strong>.
+        </p>
+
+        <p>
+            <strong class="key-term">Jumbo frames</strong> extend the MTU up to 9000 bytes.
+            Larger frames = fewer frames for the same amount of data = less header overhead =
+            better efficiency for large transfers. However, every device in the path must support
+            the same MTU.
+        </p>
+
+        <table>
+            <thead>
+                <tr><th>Frame Type</th><th>Payload Size</th><th>Best for</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Standard Ethernet</td><td>Up to 1,500 bytes</td><td>General-purpose networks</td></tr>
+                <tr><td>Jumbo Frame</td><td>Up to 9,000 bytes</td><td>Storage (iSCSI/NFS), backup, data center</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">MTU Mismatch = Silent Packet Loss</div>
+            <p>If one device supports jumbo frames but a switch or router in the path doesn't,
+            oversized frames are silently dropped. This is notoriously difficult to diagnose
+            because small packets work fine but large transfers fail or are very slow.
+            Always configure MTU consistently across every device in a path.</p>
+        </div>
+
+        <h3 id="stp-problem">Spanning Tree Protocol: The Loop Problem</h3>
+
+        <p>
+            Redundant switch paths are good for reliability — if one link fails, data can take
+            another route. But redundant paths create a dangerous problem:
+            <strong class="key-term">Layer 2 loops</strong>.
+        </p>
+
+        <p>
+            Unlike IP packets, Ethernet frames have no TTL (Time To Live). If a broadcast frame
+            enters a loop, it travels around the loop forever, and each pass through a switch
+            creates more copies. This is called a
+            <strong class="key-term">broadcast storm</strong> and can crash an entire network in
+            seconds.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    SW1["fa:fa-network-wired SW1\n(Root Bridge)"] -->|"Active"| SW2["fa:fa-network-wired SW2"]
+    SW1 -->|"Active"| SW3["fa:fa-network-wired SW3"]
+    SW2 -->|"🔁 LOOP — broadcast storm!"| SW3
+
+    style SW1 fill:#fef2f2,stroke:#dc2626,stroke-width:3px
+    style SW2 fill:#fef2f2,stroke:#dc2626
+    style SW3 fill:#fef2f2,stroke:#dc2626
+            </pre>
+            <p class="diagram-caption">Figure 10: A Layer 2 loop — three switches connected in a triangle. A broadcast frame entering SW1 gets forwarded to SW2 and SW3. SW2 forwards it to SW3, which forwards it back to SW1, which forwards it again… The frame circulates forever, multiplying with every pass. The entire network collapses within seconds.</p>
+        </div>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Broadcast Storm Symptoms</div>
+            <ul style="margin-bottom: 0;">
+                <li>All switch LEDs flashing rapidly and simultaneously</li>
+                <li>Network completely unresponsive</li>
+                <li>Switch CPU at 100% (visible in management interface)</li>
+                <li>Triggered within seconds of plugging in an extra cable</li>
+            </ul>
+        </div>
+
+        <h3 id="stp-solution">Spanning Tree Protocol: The Solution</h3>
+
+        <p>
+            <strong class="key-term">STP (Spanning Tree Protocol, 802.1D)</strong> automatically
+            detects and blocks redundant paths to prevent loops — while keeping those paths
+            available as backups in case an active link fails.
+        </p>
+
+        <p>STP works in three steps:</p>
+        <ol>
+            <li><strong>Elect a Root Bridge</strong> — the switch with the lowest Bridge ID becomes the reference point for the entire topology.</li>
+            <li><strong>Calculate the best path</strong> from each switch to the Root Bridge (based on cost/speed).</li>
+            <li><strong>Block redundant ports</strong> — any port that would create a loop is put into a <strong class="key-term">blocking state</strong>. If the active path fails, the blocked port transitions to forwarding.</li>
+        </ol>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    SW1["fa:fa-network-wired SW1\n(Root Bridge)"]
+    SW2["fa:fa-network-wired SW2"]
+    SW3["fa:fa-network-wired SW3"]
+
+    SW1 -->|"fa:fa-check Active"| SW2
+    SW1 -->|"fa:fa-check Active"| SW3
+    SW2 -. "fa:fa-ban BLOCKED by STP" .- SW3
+
+    style SW1 fill:#f0fdf4,stroke:#16a34a,stroke-width:3px
+    style SW2 fill:#e8f1fb,stroke:#004a88
+    style SW3 fill:#e8f1fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 11: STP preventing a loop in the same three-switch triangle. SW1 is the root bridge. Both links from SW1 are active (green). The SW2–SW3 link is blocked (dashed). If the SW1–SW2 link fails, STP automatically unblocks the SW2–SW3 link to restore connectivity. Redundancy without loops.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>STP Version</th><th>Standard</th><th>Convergence Time</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>STP</strong> (original)</td><td>802.1D</td><td>30–50 seconds</td><td>Slow, but widely supported</td></tr>
+                <tr><td><strong>RSTP</strong> (Rapid)</td><td>802.1w</td><td>1–2 seconds</td><td>Modern standard — use this</td></tr>
+                <tr><td><strong>MSTP</strong> (Multiple)</td><td>802.1s</td><td>1–2 seconds</td><td>Per-VLAN spanning trees for large networks</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="poe">Power over Ethernet (PoE)</h3>
+
+        <p>
+            <strong class="key-term">PoE (Power over Ethernet)</strong> delivers both data and
+            electrical power over the same Ethernet cable. This eliminates the need for a
+            separate power adapter and outlet at the device location — a huge advantage for
+            cameras, phones, and access points installed in inconvenient places.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    SW["fa:fa-network-wired PoE Switch\n(120W budget)"] -->|"Cat6 — Data + Power"| PH["fa:fa-phone VoIP Phone\n7W"]
+    SW -->|"Cat6 — Data + Power"| AP1["fa:fa-wifi Main Hall AP\n25W"]
+    SW -->|"Cat6 — Data + Power"| CAM["fa:fa-camera Security Camera\n15W"]
+    SW -->|"Cat6 — Data + Power"| AP2["fa:fa-wifi Garden AP\n28W"]
+
+    style SW fill:#e8f1fb,stroke:#004a88,stroke-width:3px
+    style AP1 fill:#f0fdf4,stroke:#16a34a
+    style AP2 fill:#f0fdf4,stroke:#16a34a
+            </pre>
+            <p class="diagram-caption">Figure 12: PoE powering four devices from a single switch. Total draw: 7+25+15+28 = 75W of the switch's 120W budget. Each device receives both data and power over one Cat6 cable — no separate power adapters or electrical outlets required at device locations.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>Standard</th><th>Max Power (per port)</th><th>Typical Devices</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>802.3af (PoE)</strong></td><td>15.4W</td><td>IP phones, basic cameras</td></tr>
+                <tr><td><strong>802.3at (PoE+)</strong></td><td>30W</td><td>Wireless APs, better cameras</td></tr>
+                <tr><td><strong>802.3bt (PoE++)</strong></td><td>60–100W</td><td>PTZ cameras, small APs, laptops</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">Power Budget Warning</div>
+            <p>PoE switches have a <strong>total power budget</strong> (e.g., 120W for the switch above).
+            Adding up all connected PoE devices must stay under this limit. Plan your PoE deployment
+            carefully — exceeding the budget will cause the switch to deny power to newly connected
+            devices or even reboot under extreme overload.</p>
+        </div>
+
+        <!-- Case Study 3 -->
+        <h3 id="case-study-bilbo">Case Study: Bilbo's Birthday Party Network Disaster</h3>
+
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Bilbo's Birthday Party Network Disaster</div>
+            <p>Bilbo is hosting his 111th birthday party and needs a network for the event planners.
+            Shortly after setup, the <strong>entire network crashes</strong> — all switches show
+            frantically blinking LEDs, and no device can communicate.</p>
+            <p>Merry investigates and discovers someone connected both ends of a patch cable to
+            the same switch to "make the cables neater."</p>
+            <p><strong>Review Questions:</strong></p>
+            <ol>
+                <li>What has happened to the network?</li>
+                <li>What protocol should have prevented this?</li>
+                <li>What should they check on the switches?</li>
+            </ol>
+        </div>
+
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Bilbo's Birthday Party Network Disaster</div>
+            <ol>
+                <li>A <strong class="key-term">switching loop</strong> caused a <strong class="key-term">broadcast storm</strong>. When the cable was plugged into two ports on the same switch, it created a loop. Broadcast frames entered the loop and multiplied until they overwhelmed every switch's processor.</li>
+                <li><strong class="key-term">Spanning Tree Protocol (STP)</strong> should have automatically detected and blocked the redundant port to prevent the loop. If STP is properly enabled, it would block one side of the loop within 30–50 seconds (RSTP within 1–2 seconds).</li>
+                <li>Immediate actions: (a) physically remove the looped cable; (b) verify STP is enabled on all switches; (c) if using unmanaged switches, replace with managed switches that support STP.</li>
+            </ol>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Key Lesson</div>
+            <p>Always use managed switches with STP enabled for any business network. A single
+            accidental loop — even from one person "tidying cables" — can take down an entire
+            network instantly. Unmanaged switches have no loop protection.</p>
+        </div>
+
+        <!-- ============================================================
+             SECTION 7: TROUBLESHOOTING
+             ============================================================ -->
+        <div class="section-divider"><h2>Troubleshooting Interfaces and Switches</h2></div>
+
+        <h2 id="troubleshooting">Troubleshooting Interfaces and Switches</h2>
+
+        <p>
+            Structured troubleshooting using physical indicators, diagnostic commands, and error
+            counters allows network technicians to rapidly isolate and resolve interface and
+            switch problems.
+        </p>
+
+        <h3 id="led-indicators">LED Indicators and Hardware Failures</h3>
+
+        <p>
+            Switch port LEDs are the fastest first indicator of a problem — checking them costs
+            nothing and requires no login.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Solid Green</div>
+                <p>Link is up and connected. Good — this is the normal operating state.</p>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Flashing Green</div>
+                <p>Link is up and actively passing traffic. Normal during data transmission.</p>
+            </div>
+            <div class="callout callout-warning" style="margin: 0;">
+                <div class="callout-title">Amber / Orange</div>
+                <p>Port is disabled, blocked (STP), or experiencing errors. Investigate.</p>
+            </div>
+            <div class="callout callout-info" style="margin: 0;" style="border-color: #6b7280; background: #f9fafb;">
+                <div class="callout-title">Off (No Light)</div>
+                <p>No link detected. Check: Is the cable plugged in? Is the device powered on?</p>
+            </div>
+        </div>
+
+        <p><strong>Common hardware failures and first checks:</strong></p>
+
+        <ul>
+            <li><strong>Bad switch port</strong> — try plugging the cable into a different port on the same switch.</li>
+            <li><strong>Failed transceiver module</strong> — swap the SFP/SFP+ module with a known-good spare.</li>
+            <li><strong>Power supply failure</strong> — switches have redundant PSUs in enterprise models; check both.</li>
+            <li><strong>Overheating</strong> — check that vents are clear and fans are spinning. Overheating causes intermittent failures and reduced performance.</li>
+            <li><strong>Failed backplane</strong> — multiple ports down simultaneously may indicate an internal hardware failure requiring replacement.</li>
+        </ul>
+
+        <div class="callout callout-success">
+            <div class="callout-title">No Link Light? Check in This Order</div>
+            <p><strong>Cable</strong> → <strong>NIC</strong> → <strong>Switch port</strong> → <strong>Transceiver</strong> (if fiber)</p>
+            <p style="margin-bottom: 0;">Each step tests one more variable. Swapping in a known-good component at each stage quickly isolates the failure.</p>
+        </div>
+
+        <h3 id="show-commands">Switch Show Commands</h3>
+
+        <p>
+            On managed switches (particularly Cisco and compatible devices), the
+            <code>show</code> family of commands provides detailed diagnostic information without
+            making any changes to the running configuration.
+        </p>
+
+        <table>
+            <thead>
+                <tr><th>Command</th><th>What it Shows</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>show interfaces</code></td><td>Port status, speed, duplex, and error counters for all interfaces</td></tr>
+                <tr><td><code>show interfaces Gi0/1</code></td><td>Detailed status for a specific port (GigabitEthernet 0/1)</td></tr>
+                <tr><td><code>show mac address-table</code></td><td>Current MAC-to-port mappings learned by the switch</td></tr>
+                <tr><td><code>show spanning-tree</code></td><td>STP topology: root bridge, port roles, and blocked ports</td></tr>
+                <tr><td><code>show power inline</code></td><td>PoE status, power budget, and per-port consumption</td></tr>
+                <tr><td><code>show version</code></td><td>Hardware model, IOS version, uptime</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Example Output: show interfaces</div>
+            <pre style="margin: 0.5rem 0 0 0; font-size: 0.85rem;">Switch# show interfaces GigabitEthernet0/1
+GigabitEthernet0/1 is up, line protocol is up
+  Hardware is Gigabit Ethernet, address is 001a.2b3c.4d01
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+  Full-duplex, 1000Mb/s, link type is auto
+  <span style="color: var(--color-success);">Input errors: 0, CRC: 0, overrun: 0</span>
+  <span style="color: var(--color-success);">Output errors: 0, collisions: 0</span></pre>
+        </div>
+
+        <h3 id="error-counters">Interface Error Counters</h3>
+
+        <p>
+            Error counters visible in <code>show interfaces</code> output reveal the type and
+            volume of problems occurring on a port. A small number of errors accumulated over
+            weeks is normal; rapidly increasing errors indicate an active problem.
+        </p>
+
+        <table>
+            <thead>
+                <tr><th>Counter</th><th>What It Indicates</th><th>Common Causes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong class="key-term">CRC errors</strong></td><td>Frame received with FCS mismatch — the data was corrupted</td><td>Damaged cable, faulty NIC, RF interference</td></tr>
+                <tr><td><strong class="key-term">Collisions</strong></td><td>Frames collided on the wire</td><td>Duplex mismatch, hub in the path</td></tr>
+                <tr><td><strong class="key-term">Runts</strong></td><td>Frames smaller than 64 bytes</td><td>Collision fragments, NIC issue</td></tr>
+                <tr><td><strong class="key-term">Giants</strong></td><td>Frames larger than 1518 bytes</td><td>MTU mismatch, misconfigured device</td></tr>
+                <tr><td><strong class="key-term">Input errors</strong></td><td>Problems receiving frames</td><td>Bad cable, interference, overloaded buffer</td></tr>
+                <tr><td><strong class="key-term">Output errors</strong></td><td>Problems transmitting frames</td><td>Congestion, duplex mismatch, faulty port</td></tr>
+                <tr><td><strong class="key-term">Discards</strong></td><td>Frames dropped by policy or overflow</td><td>QoS policy, full buffers, rate limiting</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Pro Tip: Clear and Monitor</div>
+            <p>Run <code>clear counters</code> on the switch, wait 5 minutes, then check again
+            with <code>show interfaces</code>. If error counters are climbing rapidly, there is
+            an active problem on that port. A counter that stays near zero after clearing
+            indicates past errors, not current ones.</p>
+        </div>
+
+        <h3 id="mac-table-troubleshoot">MAC Address Table Troubleshooting</h3>
+
+        <p>
+            The MAC address table is a powerful diagnostic tool for verifying device connectivity
+            and tracing where a device is physically connected.
+        </p>
+
+        <div class="callout callout-success">
+            <div class="callout-title">Example: show mac address-table</div>
+            <pre style="margin: 0.5rem 0 0 0; font-size: 0.85rem;">Switch# show mac address-table
+VLAN    MAC Address         Type        Ports
+----    -----------         --------    -----
+   1    00:1a:2b:3c:4d:5e   DYNAMIC     Gi0/1
+   1    00:50:56:aa:bb:cc   DYNAMIC     Gi0/2
+   1    ff:ff:ff:ff:ff:ff   STATIC      CPU</pre>
+        </div>
+
+        <ul>
+            <li><strong>MAC appears on expected port</strong> → Device is connected where you think it is.</li>
+            <li><strong>MAC appears on wrong port</strong> → Cable may be patched to the wrong wall jack.</li>
+            <li><strong>MAC not in table</strong> → Device is powered off, disconnected, or NIC has failed.</li>
+        </ul>
+
+        <div class="callout callout-danger">
+            <div class="callout-title">MAC Flapping</div>
+            <p>If the same MAC address appears on multiple ports in rapid alternation (visible
+            in switch logs as "MAC flapping"), this indicates either a
+            <strong>network loop</strong> or a <strong>duplicate MAC address</strong> on two
+            different devices. Both are serious problems requiring immediate investigation.</p>
+        </div>
+
+        <h3 id="poe-troubleshoot">PoE Troubleshooting</h3>
+
+        <p>
+            PoE failures are often silent — the device simply doesn't power on — making
+            systematic troubleshooting especially important.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div class="callout callout-info" style="margin: 0;">
+                <div class="callout-title">Common PoE Issues</div>
+                <ul style="margin-bottom: 0;">
+                    <li>Device not powering on at all</li>
+                    <li>Insufficient power budget on the switch</li>
+                    <li>Wrong PoE class negotiated</li>
+                    <li>Cable uses only 2 pairs (PoE requires all 4)</li>
+                </ul>
+            </div>
+            <div class="callout callout-success" style="margin: 0;">
+                <div class="callout-title">Troubleshooting Steps</div>
+                <ol style="margin-bottom: 0;">
+                    <li>Verify the switch port and switch model support PoE</li>
+                    <li>Check total power budget remaining (<code>show power inline</code>)</li>
+                    <li>Verify cable uses all 4 pairs (Cat5e or better)</li>
+                    <li>Check device's PoE class requirement vs. switch standard</li>
+                    <li>Try a known-good cable and a different PoE port</li>
+                </ol>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr><th>PoE Class</th><th>Max Power</th><th>Typical Device</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Class 0 (default)</td><td>15.4W</td><td>Unknown / unclassified devices</td></tr>
+                <tr><td>Class 1</td><td>4.0W</td><td>Very low power devices</td></tr>
+                <tr><td>Class 2</td><td>7.0W</td><td>IP phones</td></tr>
+                <tr><td>Class 3</td><td>15.4W</td><td>Basic cameras, basic APs</td></tr>
+                <tr><td>Class 4</td><td>30.0W (PoE+)</td><td>802.3at devices (most APs)</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Cable Matters for PoE</div>
+            <p>A cable that "works fine for data" may fail for PoE if some of the 4 pairs are
+            damaged or disconnected. PoE requires all four copper pairs to deliver adequate
+            power, whereas Fast Ethernet only uses two pairs. Always use Cat5e or better for
+            PoE installations and verify the physical cable when troubleshooting power failures.</p>
+        </div>
+
+        <!-- ============================================================
+             MODULE SUMMARY
+             ============================================================ -->
+        <h2 id="module-summary">Module Summary</h2>
+
+        <div class="module-summary">
+            <h2>Module 3 Summary</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div>
+                    <h3 style="margin-top: 0;">NICs and Transceivers</h3>
+                    <ul>
+                        <li>NICs connect hosts to networks; each has a unique 48-bit <strong>MAC address</strong> (BIA).</li>
+                        <li>Transceivers (SFP, SFP+, QSFP) convert between electrical and optical signals — always match transceiver to cable type and distance.</li>
+                        <li>Auto-negotiation determines speed and duplex; manual mismatches cause errors.</li>
+                    </ul>
+                    <h3>Ethernet Frames</h3>
+                    <ul>
+                        <li>Frame structure: Preamble | Dest MAC | Src MAC | Type | Payload (46–1500 B) | FCS.</li>
+                        <li>FCS detects corruption; CRC errors indicate physical layer problems.</li>
+                        <li>Standard MTU = 1500 bytes; jumbo frames up to 9000 bytes (requires end-to-end support).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-top: 0;">Switching Concepts</h3>
+                    <ul>
+                        <li>Hub (L1) → Bridge (L2, 2–4 ports) → Switch (L2, multi-port bridge).</li>
+                        <li>Switches: Learn (source MAC), Forward (known dest), Flood (unknown dest), Filter (same segment).</li>
+                        <li>Layer 3 switches also route based on IP — enabling inter-VLAN routing without an external router.</li>
+                    </ul>
+                    <h3>Advanced Features</h3>
+                    <ul>
+                        <li><strong>STP (802.1D / RSTP 802.1w)</strong>: Prevents Layer 2 loops by blocking redundant ports.</li>
+                        <li><strong>PoE (802.3af/at/bt)</strong>: Delivers power and data over Ethernet. Track power budget.</li>
+                        <li><strong>LAG / LACP (802.3ad)</strong>: Bonds multiple links for bandwidth and redundancy.</li>
+                        <li>Troubleshoot with LEDs, <code>show</code> commands, and error counter analysis.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Next Steps</div>
+            <p>Module 3 completes the Layer 1–2 picture. In <strong>Module 4</strong>, we move
+            to <strong>Layer 3 (Network)</strong> to explore IP addressing, subnetting, and
+            how routers make decisions about moving packets between different networks.</p>
+        </div>
+
+        <p>
+            This module has provided a comprehensive examination of Layer 2 networking hardware
+            and concepts. You've explored NICs and transceivers (the physical endpoints), MAC
+            addresses and Ethernet frames (the Layer 2 data units), and the evolution from hubs
+            to modern managed switches. Advanced topics including STP, PoE, and link aggregation
+            complete the picture of what enterprise switches can do. Systematic troubleshooting
+            using LEDs, show commands, and error counters gives you practical tools for diagnosing
+            real-world switch problems.
+        </p>
+
+        <!-- Chapter Footer -->
+        <footer class="chapter-footer">
+            <p>Introduction to Networking &copy; 2025 Brendan Shea, PhD &mdash; Rochester Community and Technical College &mdash; Licensed under CC-BY-NC 4.0</p>
+            <nav class="chapter-nav">
+                <a href="../network_02_phys_inf/index.html">&larr; Previous: Physical Layer &amp; Cabling</a>
+                <a href="../network_04_IP/index.html">Next: IP Addressing &rarr;</a>
+            </nav>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
