@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Module 5: Routing, Switching, and Network Infrastructure — routing tables, dynamic routing, NAT, firewalls, and VLANs.">
+    <meta name="author" content="Brendan Shea, PhD">
+    <title>Module 5: Routing, Switching, and Network Infrastructure — Introduction to Networking</title>
+    <link rel="stylesheet" href="../css/lectures.css">
+
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Mermaid.js for diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+            },
+            packet: {
+                showBits: false,
+            },
+            themeVariables: {
+                background: '#ffffff',
+                primaryColor: '#e8f1fb',
+                primaryBorderColor: '#004a88',
+                primaryTextColor: '#1f2a37',
+                lineColor: '#004a88',
+                secondaryColor: '#fff7e0',
+                tertiaryColor: '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder: '#004a88',
+                clusterBkg: '#f4f7fb',
+                titleColor: '#1f2a37',
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <aside class="sidebar">
+        <a href="../../index.html" class="back-link">&larr; All Modules</a>
+        <nav>
+            <a href="#introduction" class="toc-h2">Introduction</a>
+            <a href="#review-module-4" class="toc-h3">Review from Module 4</a>
+            <a href="#learning-outcomes" class="toc-h3">Learning Outcomes</a>
+
+            <a href="#routing-foundations" class="toc-h2">Routing Foundations</a>
+            <a href="#router-gateway" class="toc-h3">Router: Gateway Between Networks</a>
+            <a href="#routing-table" class="toc-h3">Routing Tables &amp; Path Selection</a>
+            <a href="#static-default" class="toc-h3">Static and Default Routes</a>
+            <a href="#routing-example" class="toc-h3">Routing Table Example</a>
+            <a href="#packet-forwarding" class="toc-h3">Packet Forwarding Process</a>
+            <a href="#fragmentation" class="toc-h3">Fragmentation &amp; MTU</a>
+            <a href="#case-study-westley" class="toc-h3">Case Study: Westley</a>
+
+            <a href="#router-tools" class="toc-h2">Router Configuration and Tools</a>
+            <a href="#basic-config" class="toc-h3">Basic Router Configuration</a>
+            <a href="#routing-tools" class="toc-h3">Routing Table Tools</a>
+            <a href="#traceroute" class="toc-h3">tracert and traceroute</a>
+
+            <a href="#dynamic-routing" class="toc-h2">Dynamic Routing Protocols</a>
+            <a href="#routing-overview" class="toc-h3">Dynamic Routing Overview</a>
+            <a href="#rip-eigrp" class="toc-h3">RIP and EIGRP</a>
+            <a href="#ospf" class="toc-h3">OSPF</a>
+            <a href="#bgp" class="toc-h3">BGP</a>
+            <a href="#administrative-distance" class="toc-h3">Route Selection &amp; Administrative Distance</a>
+            <a href="#case-study-inigo" class="toc-h3">Case Study: Inigo</a>
+
+            <a href="#edge-services" class="toc-h2">Edge Services and Translation</a>
+            <a href="#edge-router" class="toc-h3">Edge Routers and Boundaries</a>
+            <a href="#nat" class="toc-h3">NAT</a>
+            <a href="#nat-types" class="toc-h3">NAT Types</a>
+            <a href="#pat" class="toc-h3">PAT</a>
+            <a href="#firewalls" class="toc-h3">Firewall Uses and Types</a>
+            <a href="#dmz" class="toc-h3">Firewall Placement and DMZ</a>
+
+            <a href="#vlans" class="toc-h2">VLAN Segmentation and Trunking</a>
+            <a href="#vlan-intro" class="toc-h3">Introduction to VLANs</a>
+            <a href="#trunking" class="toc-h3">VLAN Trunking and 802.1Q</a>
+            <a href="#voice-vlans" class="toc-h3">Voice VLANs</a>
+            <a href="#native-vlan" class="toc-h3">Native VLAN and Security</a>
+            <a href="#case-study-miracle-max" class="toc-h3">Case Study: Miracle Max</a>
+
+            <a href="#module-summary" class="toc-h2">Module Summary</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="chapter-header">
+            <span class="module-label">Module 5</span>
+            <h1>Routing, Switching, and Network Infrastructure</h1>
+            <p class="subtitle">Routing tables, static and dynamic routing, NAT/PAT, firewalls, VLANs, and enterprise network design.</p>
+        </header>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>
+            Module 4 focused on <strong class="key-term">IP addressing</strong> and subnetting.
+            This chapter builds on that foundation by showing how packets actually move across
+            multiple networks, how routers choose paths, and how organizations secure and segment
+            their infrastructure at the network edge and inside the LAN.
+        </p>
+        <p>
+            The chapter moves from <strong class="key-term">Layer 3 routing</strong> into
+            boundary services such as <strong class="key-term">NAT</strong> and
+            <strong class="key-term">firewalls</strong>, then finishes with
+            <strong class="key-term">VLANs</strong> and trunking. Those topics matter together
+            because real networks rarely stop at a single switch or a single subnet.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC["fa:fa-desktop Source PC<br/>192.168.1.10"] --> SW["fa:fa-network-wired Switch"]
+    SW --> R1["fa:fa-wifi Router"]
+    R1 --> C["fa:fa-cloud Internet"]
+    C --> R2["fa:fa-wifi Router"]
+    R2 --> SW2["fa:fa-network-wired Switch"]
+    SW2 --> S["fa:fa-server Destination Server"]
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style SW fill:#f0fdf4,stroke:#16a34a
+    style R1 fill:#fff7e0,stroke:#d97706
+    style R2 fill:#fff7e0,stroke:#d97706
+    style C fill:#f4f7fb,stroke:#004a88
+    style SW2 fill:#f0fdf4,stroke:#16a34a
+    style S fill:#e8f1fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 1: A packet's path through routing infrastructure. Layer 3 addresses stay constant end-to-end, while Layer 2 addresses change at each hop.</p>
+        </div>
+
+        <h3 id="review-module-4">Review from Module 4</h3>
+        <div class="review-section">
+            <p>
+                Module 4 explained that IP addresses identify <em>networks</em> and hosts, while
+                MAC addresses identify hardware on a local link. Routers use the destination IP to
+                decide where a packet should go next. That decision is what makes communication
+                across separate networks possible.
+            </p>
+            <div class="callout callout-warning">
+                <div class="callout-title">Core Distinction</div>
+                <p><strong>Switches</strong> forward frames using MAC addresses at Layer 2. <strong>Routers</strong> forward packets using IP addresses at Layer 3.</p>
+            </div>
+        </div>
+
+        <h3 id="learning-outcomes">Learning Outcomes</h3>
+        <div class="learning-outcomes">
+            <p>After completing this module, you will be able to:</p>
+            <ul>
+                <li>Explain how routers forward packets using routing tables and longest prefix match.</li>
+                <li>Compare static routing, dynamic routing, and default routes.</li>
+                <li>Interpret traceroute output and common router diagnostic commands.</li>
+                <li>Describe RIP, EIGRP, OSPF, and BGP at a high level.</li>
+                <li>Explain NAT, PAT, firewall types, and DMZ placement.</li>
+                <li>Design and secure VLAN-based segmentation with trunking and voice VLANs.</li>
+            </ul>
+        </div>
+
+        <div class="section-divider"><h2>Routing Foundations</h2></div>
+        <h2 id="routing-foundations">Routing Foundations</h2>
+
+        <h3 id="router-gateway">Router: Gateway Between Networks</h3>
+        <p>
+            A <strong class="key-term">router</strong> connects different networks at Layer 3.
+            Each interface belongs to a different subnet, and the router uses the destination IP
+            address to decide the best outgoing interface or next hop. Every packet passing
+            through a router has its <strong class="key-term">TTL</strong> decremented by one.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph A["Network A: 192.168.1.0/24"]
+        PC1["fa:fa-desktop PC"]
+        PC2["fa:fa-desktop PC"]
+    end
+    R["fa:fa-wifi Router"]
+    subgraph B["Network B: 10.0.0.0/24"]
+        SRV["fa:fa-server Server"]
+        PC3["fa:fa-desktop PC"]
+    end
+    C["fa:fa-cloud Internet"]
+    PC1 --> R
+    PC2 --> R
+    R --> SRV
+    R --> PC3
+    R --> C
+
+    style R fill:#fff7e0,stroke:#d97706,stroke-width:3px
+            </pre>
+            <p class="diagram-caption">Figure 2: The router sits between networks and the wider internet. Each interface is assigned to a different subnet.</p>
+        </div>
+
+        <div class="callout callout-info">
+            <div class="callout-title">Why Routers Matter</div>
+            <p>Switches keep traffic local inside a broadcast domain. Routers move traffic between broadcast domains and can apply policy, translation, and filtering at the edge.</p>
+        </div>
+
+        <h3 id="routing-table">Routing Tables and Path Selection</h3>
+        <p>
+            Every router keeps a <strong class="key-term">routing table</strong> containing known
+            destination networks, next hops, and metrics. When a packet arrives, the router reads
+            the destination IP, searches the table, and selects the most specific matching entry.
+            That rule is called <strong class="key-term">longest prefix match</strong>.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    A["Packet arrives"] --> B["Read destination IP"]
+    B --> C["Search routing table"]
+    C --> D["Find longest prefix match"]
+    D --> E["Forward to next hop or exit interface"]
+            </pre>
+            <p class="diagram-caption">Figure 3: Routing is a simple decision chain. The router never guesses; it matches the destination address against known prefixes and forwards accordingly.</p>
+        </div>
+
+        <h3 id="static-default">Static and Default Routes</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">Static Routes</div>
+                <p>Static routes are manually configured and stay in place until an administrator changes them. They are predictable and useful for small or tightly controlled networks.</p>
+                <pre style="margin:0.5rem 0 0;font-size:0.88rem;">ip route 10.0.0.0 255.0.0.0 192.168.1.1</pre>
+            </div>
+            <div class="callout callout-success">
+                <div class="callout-title">Default Route</div>
+                <p>The <strong>route of last resort</strong> handles anything not matched more specifically.</p>
+                <pre style="margin:0.5rem 0 0;font-size:0.88rem;">ip route 0.0.0.0 0.0.0.0 203.0.113.1</pre>
+            </div>
+        </div>
+
+        <h3 id="routing-example">Routing Table Example</h3>
+        <p>
+            A real routing table usually includes directly connected networks, static entries, and
+            a default route. The router prefers the most specific valid entry; if no specific
+            route exists, it falls back to the default route.
+        </p>
+        <table>
+            <thead>
+                <tr><th>Network</th><th>Mask</th><th>Next Hop</th><th>Metric</th><th>Type</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>192.168.1.0</td><td>/24</td><td>Gig0/0</td><td>0</td><td>Direct</td></tr>
+                <tr><td>10.0.0.0</td><td>/24</td><td>Gig0/1</td><td>0</td><td>Direct</td></tr>
+                <tr><td>172.16.0.0</td><td>/16</td><td>10.0.0.2</td><td>1</td><td>Static</td></tr>
+                <tr><td>0.0.0.0</td><td>/0</td><td>192.168.1.254</td><td>1</td><td>Default</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="packet-forwarding">Packet Forwarding Process</h3>
+        <p>
+            A router changes the Layer 2 header at each hop because it has to deliver the packet
+            across the next local link. The Layer 3 source and destination addresses stay the same
+            end-to-end, but the source and destination MAC addresses are replaced at every hop.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["Incoming frame<br/>Src MAC / Dst MAC<br/>Src IP / Dst IP"] --> R["fa:fa-wifi Router<br/>Lookup + TTL--"]
+    R --> B["Outgoing frame<br/>New Src MAC / New Dst MAC<br/>Same Src IP / Same Dst IP"]
+            </pre>
+            <p class="diagram-caption">Figure 4: The router rewrites Layer 2 addresses while preserving Layer 3 addresses. That is why a packet can cross many routers without changing its IP identity.</p>
+        </div>
+
+        <h3 id="fragmentation">Fragmentation and MTU</h3>
+        <p>
+            The <strong class="key-term">MTU</strong> is the largest packet payload a link can
+            carry. Standard Ethernet uses an MTU of 1500 bytes. If a packet is too large, it must
+            be fragmented or dropped. Modern systems try to avoid fragmentation by using Path MTU
+            Discovery.
+        </p>
+        <div class="callout callout-warning">
+            <div class="callout-title">Why Fragmentation Hurts</div>
+            <p>Fragmentation adds processing overhead, and if a single fragment is lost, the entire packet has to be retransmitted.</p>
+        </div>
+
+        <h3 id="case-study-westley">Case Study: Westley’s Journey to Florin</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Westley’s Journey to Florin</div>
+            <p>Westley is sending a message from the Pirate Ship network to Castle Florin. His router knows a specific route to the castle network and a default route for everything else.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>Which route will the router use?</li>
+                <li>What happens if the specific route is removed?</li>
+                <li>Why is the default route important?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Westley’s Journey to Florin</div>
+            <ol>
+                <li>The router uses the most specific match, the route to Florin’s network.</li>
+                <li>If that route is removed, the default route becomes the fallback.</li>
+                <li>The default route is the route of last resort for all unknown destinations.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Router Configuration and Tools</h2></div>
+        <h2 id="router-tools">Router Configuration and Tools</h2>
+
+        <h3 id="basic-config">Basic Router Configuration</h3>
+        <p>
+            At minimum, a router needs interface IP addresses, enabled interfaces, a hostname, and
+            whatever routes are necessary to reach other networks. In practice, administrators also
+            configure passwords and save the running configuration after changes.
+        </p>
+        <pre><code>enable
+configure terminal
+hostname Florin-GW
+interface g0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+copy run start</code></pre>
+
+        <h3 id="routing-tools">Routing Table Tools</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">Cisco / IOS</div>
+                <ul>
+                    <li><code>show ip route</code></li>
+                    <li><code>show ip interface brief</code></li>
+                    <li><code>show running-config</code></li>
+                </ul>
+            </div>
+            <div class="callout callout-info">
+                <div class="callout-title">Windows / Linux</div>
+                <ul>
+                    <li><code>route print</code></li>
+                    <li><code>netstat -r</code></li>
+                    <li><code>ip route</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 id="traceroute">tracert and traceroute</h3>
+        <p>
+            <code>tracert</code> on Windows and <code>traceroute</code> on Linux/macOS use TTL
+            manipulation to reveal each hop along a path. The tool sends probes with increasing TTL
+            values; each router along the path decrements the TTL and returns an ICMP Time Exceeded
+            response until the destination is reached.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    S["fa:fa-desktop Source"] --> H1["fa:fa-wifi Hop 1"] --> H2["fa:fa-wifi Hop 2"] --> H3["fa:fa-wifi Hop 3"] --> D["fa:fa-server Destination"]
+    S -. "TTL=1" .-> H1
+    S -. "TTL=2" .-> H2
+    S -. "TTL=3" .-> H3
+            </pre>
+            <p class="diagram-caption">Figure 5: traceroute / tracert discovers the route one hop at a time by using TTL values that expire at successive routers.</p>
+        </div>
+
+        <div class="section-divider"><h2>Dynamic Routing Protocols</h2></div>
+        <h2 id="dynamic-routing">Dynamic Routing Protocols</h2>
+
+        <h3 id="routing-overview">Dynamic Routing Overview</h3>
+        <p>
+            Static routes are simple, but they do not adapt when links fail or new paths appear.
+            Dynamic routing protocols share reachability information automatically and converge on
+            new paths when the topology changes. Inside an organization they are called
+            <strong class="key-term">IGPs</strong>; between organizations, the internet uses
+            <strong class="key-term">BGP</strong>, an <strong class="key-term">EGP</strong>.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph A["AS 100 - Your Company"]
+        R1["fa:fa-wifi Router"] --- R2["fa:fa-wifi Router"]
+    end
+    subgraph B["AS 200 - ISP"]
+        R3["fa:fa-wifi Router"] --- R4["fa:fa-wifi Router"]
+    end
+    R2 ==>|"BGP"| R3
+            </pre>
+            <p class="diagram-caption">Figure 6: OSPF, RIP, and EIGRP are IGPs inside one organization. BGP is the inter-AS protocol used to exchange routes between organizations.</p>
+        </div>
+
+        <h3 id="rip-eigrp">RIP and EIGRP</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">RIP</div>
+                <p>RIP uses hop count. It is simple, but it ignores link speed and caps routes at 15 hops.</p>
+            </div>
+            <div class="callout callout-success">
+                <div class="callout-title">EIGRP</div>
+                <p>EIGRP uses bandwidth and delay, converges quickly, and supports more advanced balancing behavior.</p>
+            </div>
+        </div>
+
+        <h3 id="ospf">OSPF</h3>
+        <p>
+            <strong class="key-term">OSPF</strong> is an open standard, link-state protocol. It
+            builds a topology map and calculates route cost using bandwidth. Large networks use
+            hierarchical areas with an <strong class="key-term">Area 0 backbone</strong> and area
+            border routers connecting other areas to the backbone.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    A0["Area 0 Backbone"]
+    A1["Area 1"]
+    A2["Area 2"]
+    A0 --- A1
+    A0 --- A2
+            </pre>
+            <p class="diagram-caption">Figure 7: OSPF scales through hierarchy. Areas reduce route flooding and keep topology calculations manageable.</p>
+        </div>
+
+        <h3 id="bgp">BGP</h3>
+        <p>
+            <strong class="key-term">BGP</strong> is the protocol of the internet. It is used to
+            exchange routing information between autonomous systems and is policy-driven rather than
+            purely metric-driven. Enterprises use BGP when they need multihoming or control over
+            upstream paths.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    C["fa:fa-building Company AS"] --> I1["fa:fa-wifi ISP Alpha"]
+    C --> I2["fa:fa-wifi ISP Beta"]
+    I1 --> N["fa:fa-cloud Internet"]
+    I2 --> N
+            </pre>
+            <p class="diagram-caption">Figure 8: BGP multihoming. A company can connect to multiple ISPs for redundancy and policy control.</p>
+        </div>
+
+        <h3 id="administrative-distance">Route Selection and Administrative Distance</h3>
+        <p>
+            When multiple sources know the same route, <strong class="key-term">Administrative
+            Distance</strong> decides which source to trust. Lower is better. Direct routes beat
+            static routes, and static routes beat learned routing protocols.
+        </p>
+        <table>
+            <thead>
+                <tr><th>Route Source</th><th>Administrative Distance</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Directly Connected</td><td>0</td></tr>
+                <tr><td>Static Route</td><td>1</td></tr>
+                <tr><td>EIGRP (internal)</td><td>90</td></tr>
+                <tr><td>OSPF</td><td>110</td></tr>
+                <tr><td>RIP</td><td>120</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="case-study-inigo">Case Study: Inigo’s Path to Count Rugen</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Inigo’s Path to Count Rugen</div>
+            <p>Inigo has learned two routes to Count Rugen’s network. One route came from OSPF and the other from RIP. Both are valid, but one must be preferred.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>Which route will the router prefer?</li>
+                <li>Why does that route win?</li>
+                <li>What happens if the preferred route fails?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Inigo’s Path to Count Rugen</div>
+            <ol>
+                <li>The router prefers the OSPF route.</li>
+                <li>OSPF has a lower Administrative Distance than RIP.</li>
+                <li>If OSPF fails, the RIP route becomes the backup path.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Edge Services and Translation</h2></div>
+        <h2 id="edge-services">Edge Services and Translation</h2>
+
+        <h3 id="edge-router">Edge Routers and Network Boundaries</h3>
+        <p>
+            The edge router sits at the <strong class="key-term">demarcation point</strong> between
+            the internal network and the ISP. It can route, translate addresses, and enforce policy
+            before traffic leaves or enters the organization.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph LAN["Internal Network"]
+        PC["fa:fa-desktop PC"] --> SW["fa:fa-network-wired Switch"] --> ER["fa:fa-wifi Edge Router"]
+    end
+    ER --> ISP["fa:fa-cloud ISP / Internet"]
+            </pre>
+            <p class="diagram-caption">Figure 9: The edge router is the first device that handles traffic leaving the local network and often the first line of policy enforcement.</p>
+        </div>
+
+        <h3 id="nat">Network Address Translation (NAT)</h3>
+        <p>
+            <strong class="key-term">NAT</strong> translates private addresses into public
+            addresses. It is one answer to IPv4 address exhaustion and lets many internal hosts
+            share fewer public addresses.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    P["fa:fa-desktop Private Host<br/>192.168.1.10"] --> N["fa:fa-wifi NAT Router"] --> W["fa:fa-cloud Internet<br/>203.0.113.50"]
+            </pre>
+            <p class="diagram-caption">Figure 10: NAT rewrites inside-local private addresses into inside-global public addresses on outbound traffic, then reverses the mapping for return traffic.</p>
+        </div>
+
+        <h3 id="nat-types">NAT Types</h3>
+        <table>
+            <thead>
+                <tr><th>Type</th><th>Description</th><th>Best For</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Static NAT</td><td>One private address maps to one public address</td><td>Servers needing stable public identity</td></tr>
+                <tr><td>Dynamic NAT</td><td>Private hosts use a pool of public addresses</td><td>Smaller environments with spare public IPs</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="pat">PAT: Port Address Translation</h3>
+        <p>
+            <strong class="key-term">PAT</strong> lets many private devices share a single public
+            IP address by tracking unique source ports. This is the most common home and small
+            business setup.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["192.168.1.10:12345"] --> R["fa:fa-wifi PAT Router\n203.0.113.1:40001"]
+    B["192.168.1.11:12345"] --> R
+    C["192.168.1.12:54321"] --> R
+    R --> I["fa:fa-cloud Internet"]
+            </pre>
+            <p class="diagram-caption">Figure 11: PAT uses ports to multiplex many internal connections across one public address.</p>
+        </div>
+
+        <h3 id="firewalls">Firewall Uses and Types</h3>
+        <p>
+            Firewalls filter traffic according to policy. Most use a default-deny stance and only
+            allow traffic that has been explicitly permitted. Stateful inspection and application
+            awareness improve on simple packet filtering by tracking sessions and higher-layer data.
+        </p>
+        <table>
+            <thead>
+                <tr><th>Firewall Type</th><th>Summary</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Packet Filtering</td><td>Stateless, checks IPs and ports</td></tr>
+                <tr><td>Stateful Inspection</td><td>Tracks connection state</td></tr>
+                <tr><td>Application Firewall</td><td>Inspects application payloads</td></tr>
+                <tr><td>NGFW</td><td>Advanced inspection, IPS, and policy enforcement</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="dmz">Firewall Placement and DMZ</h3>
+        <p>
+            A <strong class="key-term">DMZ</strong> is a screened subnet for public-facing
+            servers. If a web or mail server in the DMZ is compromised, the internal LAN remains
+            protected by the inner firewall.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    I["fa:fa-cloud Internet"] --> F1["fa:fa-shield-halved Outer Firewall"]
+    F1 --> D["fa:fa-server DMZ Servers"]
+    D --> F2["fa:fa-shield-halved Inner Firewall"]
+    F2 --> L["fa:fa-network-wired Internal LAN"]
+            </pre>
+            <p class="diagram-caption">Figure 12: A DMZ creates a buffer zone between the public internet and the internal LAN.</p>
+        </div>
+
+        <div class="section-divider"><h2>VLAN Segmentation and Trunking</h2></div>
+        <h2 id="vlans">VLAN Segmentation and Trunking</h2>
+
+        <h3 id="vlan-intro">Introduction to VLANs</h3>
+        <p>
+            VLANs divide one physical switch into multiple logical broadcast domains. That improves
+            security and performance because traffic from one VLAN does not automatically reach
+            devices in another VLAN. If traffic needs to cross VLAN boundaries, a router or Layer 3
+            switch must handle it.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph V10["VLAN 10 - Sales"]
+        S1["fa:fa-desktop PC"]
+        S2["fa:fa-desktop PC"]
+    end
+    subgraph V20["VLAN 20 - Engineering"]
+        E1["fa:fa-laptop PC"]
+        E2["fa:fa-laptop PC"]
+    end
+    SW["fa:fa-network-wired Switch"]
+    S1 --> SW
+    S2 --> SW
+    E1 --> SW
+    E2 --> SW
+            </pre>
+            <p class="diagram-caption">Figure 13: VLANs isolate groups of devices logically, even when they share the same physical switch.</p>
+        </div>
+
+        <h3 id="trunking">VLAN Trunking and 802.1Q</h3>
+        <p>
+            A <strong class="key-term">trunk</strong> carries traffic for multiple VLANs between
+            switches or between a switch and a router. The 802.1Q tag identifies the VLAN so the
+            receiving switch can place the frame in the correct logical network.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    SW1["fa:fa-network-wired Switch 1"] --> T["802.1Q Trunk"] --> SW2["fa:fa-network-wired Switch 2"]
+    SW1 --- A["VLAN 10"]
+    SW1 --- B["VLAN 20"]
+    SW2 --- C["VLAN 10"]
+    SW2 --- D["VLAN 20"]
+            </pre>
+            <p class="diagram-caption">Figure 14: Trunk links transport multiple VLANs over one physical connection using 802.1Q tagging.</p>
+        </div>
+
+        <h3 id="voice-vlans">Voice VLANs</h3>
+        <p>
+            Voice VLANs keep phone traffic separate from general data traffic while still letting
+            a desk phone act as a pass-through for the workstation behind it. That keeps voice
+            traffic prioritized and simplifies cabling.
+        </p>
+        <div class="callout callout-success">
+            <div class="callout-title">Why Voice VLANs Help</div>
+            <p>Voice is sensitive to delay and jitter. Giving it a dedicated VLAN and higher QoS priority keeps calls stable under load.</p>
+        </div>
+
+        <h3 id="native-vlan">Native VLAN and Security</h3>
+        <p>
+            Untagged traffic on a trunk belongs to the <strong class="key-term">native VLAN</strong>.
+            If the two ends of a trunk disagree on the native VLAN, or if default VLAN 1 is used
+            carelessly, the network can be exposed to VLAN hopping risks. Good practice is to move
+            the native VLAN away from the default and keep it consistent on both ends.
+        </p>
+
+        <h3 id="case-study-miracle-max">Case Study: Miracle Max’s Potion Shop</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Miracle Max’s Potion Shop</div>
+            <p>Miracle Max separates potion brewing, customer sales, and billing into different VLANs. The sales team needs access to the brewing server, but the VLANs are isolated by default.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>Why can’t Sales talk directly to Brewing?</li>
+                <li>What device is required to enable communication?</li>
+                <li>What is that process called?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Miracle Max’s Potion Shop</div>
+            <ol>
+                <li>The VLANs are separate Layer 2 broadcast domains.</li>
+                <li>A router or Layer 3 switch is required.</li>
+                <li>The process is called inter-VLAN routing.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Module Summary</h2></div>
+        <h2 id="module-summary">Module Summary</h2>
+        <div class="module-summary">
+            <h2>Module 5 Summary</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+                <div>
+                    <h3 style="margin-top:0;">Routing</h3>
+                    <ul>
+                        <li>Routers forward packets at Layer 3 using routing tables.</li>
+                        <li>Longest prefix match selects the best route.</li>
+                        <li>Static routes and default routes are simple and predictable.</li>
+                        <li>Dynamic routing protocols adapt automatically to change.</li>
+                    </ul>
+                    <h3>NAT and Security</h3>
+                    <ul>
+                        <li>NAT and PAT conserve IPv4 addresses.</li>
+                        <li>Firewalls enforce policy at the edge and between segments.</li>
+                        <li>DMZs isolate public servers from the internal LAN.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-top:0;">VLANs</h3>
+                    <ul>
+                        <li>VLANs create logical broadcast domains on the same switch.</li>
+                        <li>802.1Q trunks carry multiple VLANs between devices.</li>
+                        <li>Voice VLANs prioritize voice traffic and reduce cabling complexity.</li>
+                        <li>Native VLAN handling matters for both compatibility and security.</li>
+                    </ul>
+                    <h3>Protocol Hierarchy</h3>
+                    <ul>
+                        <li>RIP, EIGRP, OSPF, and BGP serve different scopes.</li>
+                        <li>Administrative Distance determines which learned route is trusted.</li>
+                        <li>Enterprise design often combines routing, segmentation, and security at the edge.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Next Steps</div>
+            <p>Module 6 moves deeper into network services such as DHCP and DNS, which build on the routing and segmentation foundations introduced here.</p>
+        </div>
+
+        <footer class="chapter-footer">
+            <p>Introduction to Networking &copy; 2025 Brendan Shea, PhD &mdash; Rochester Community and Technical College &mdash; Licensed under CC-BY-NC 4.0</p>
+            <nav class="chapter-nav">
+                <a href="../network_04_IP/index.html">&larr; Previous: IPv4 and IPv6 Addressing</a>
+                <a href="../network_06_nw_services/index.html">Next: Network Services &rarr;</a>
+            </nav>
+        </footer>
+    </main>
+</div>
+</body>
+</html>
