@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Module 2: Physical Layer and Cabling — copper, fiber, structured cabling, environmental controls, and troubleshooting.">
+    <meta name="author" content="Brendan Shea, PhD">
+    <title>Module 2: Physical Layer and Cabling — Introduction to Networking</title>
+    <link rel="stylesheet" href="../css/lectures.css">
+
+    <!-- Font Awesome 6 Free — icons in diagrams -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Mermaid.js for diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+            },
+            themeVariables: {
+                background: '#ffffff',
+                primaryColor: '#e8f1fb',
+                primaryBorderColor: '#004a88',
+                primaryTextColor: '#1f2a37',
+                lineColor: '#004a88',
+                secondaryColor: '#fff7e0',
+                tertiaryColor: '#f0fdf4',
+                edgeLabelBackground: '#ffffff',
+                nodeBorder: '#004a88',
+                clusterBkg: '#f4f7fb',
+                titleColor: '#1f2a37',
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <aside class="sidebar">
+        <a href="../../index.html" class="back-link">&larr; All Modules</a>
+        <nav>
+            <a href="#introduction" class="toc-h2">Introduction</a>
+            <a href="#review-module-1" class="toc-h3">Review from Module 1</a>
+            <a href="#learning-outcomes" class="toc-h3">Learning Outcomes</a>
+            <a href="#key-terms" class="toc-h3">Key Terms Preview</a>
+
+            <a href="#physical-fundamentals" class="toc-h2">Physical Layer Fundamentals</a>
+            <a href="#signal-transmission" class="toc-h3">Signal Transmission</a>
+            <a href="#duplex" class="toc-h3">Half-Duplex vs Full-Duplex</a>
+            <a href="#ethernet-standards" class="toc-h3">Ethernet Standards</a>
+            <a href="#collision-domains" class="toc-h3">Collision Domains</a>
+            <a href="#ethernet-timeline" class="toc-h3">Ethernet Evolution</a>
+            <a href="#signal-quality" class="toc-h3">Why Faster Speeds Need Better Cables</a>
+            <a href="#case-study-addams" class="toc-h3">Case Study: Addams Mansion</a>
+
+            <a href="#copper" class="toc-h2">Copper Cabling</a>
+            <a href="#twisted-pair" class="toc-h3">Twisted Pair Technology</a>
+            <a href="#utp" class="toc-h3">UTP</a>
+            <a href="#stp" class="toc-h3">STP</a>
+            <a href="#categories" class="toc-h3">Category Ratings</a>
+            <a href="#cat-table" class="toc-h3">Cat Comparison</a>
+            <a href="#rj45" class="toc-h3">RJ-45 Connector</a>
+            <a href="#cable-types" class="toc-h3">Plenum, Coax, Twinax</a>
+            <a href="#case-study-conservatory" class="toc-h3">Case Study: Conservatory</a>
+
+            <a href="#structured" class="toc-h2">Structured Cabling Systems</a>
+            <a href="#organization" class="toc-h3">Organizing the Chaos</a>
+            <a href="#wiring" class="toc-h3">T568A and T568B</a>
+            <a href="#straight-crossover" class="toc-h3">Straight-Through vs Crossover</a>
+            <a href="#patch-panels" class="toc-h3">Patch Panels</a>
+            <a href="#termination-tools" class="toc-h3">Termination Tools</a>
+            <a href="#installation" class="toc-h3">Installation Best Practices</a>
+
+            <a href="#fiber" class="toc-h2">Fiber Optic Cabling</a>
+            <a href="#why-fiber" class="toc-h3">Why Fiber Optic?</a>
+            <a href="#fiber-structure" class="toc-h3">Fiber Optic Cable Structure</a>
+            <a href="#mmf-smf" class="toc-h3">Single-Mode vs Multimode</a>
+            <a href="#connectors" class="toc-h3">Fiber Connector Types</a>
+            <a href="#advanced-fiber" class="toc-h3">Fiber Splicing and WDM</a>
+            <a href="#case-study-wednesday" class="toc-h3">Case Study: Wednesday's Office</a>
+
+            <a href="#infrastructure" class="toc-h2">Network Infrastructure</a>
+            <a href="#racks" class="toc-h3">Rack Systems</a>
+            <a href="#environmental" class="toc-h3">Environmental Factors</a>
+            <a href="#power" class="toc-h3">Power Management</a>
+            <a href="#fire" class="toc-h3">Fire Suppression</a>
+
+            <a href="#troubleshooting" class="toc-h2">Cable Testing and Troubleshooting</a>
+            <a href="#problems" class="toc-h3">Common Cable Problems</a>
+            <a href="#tools" class="toc-h3">Cable Testing Tools</a>
+            <a href="#advanced-tools" class="toc-h3">Advanced Testing Tools</a>
+            <a href="#case-study-pugsley" class="toc-h3">Case Study: Pugsley's Connection</a>
+
+            <a href="#module-summary" class="toc-h2">Module Summary</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="chapter-header">
+            <span class="module-label">Module 2</span>
+            <h1>Physical Layer and Cabling</h1>
+            <p class="subtitle">Copper, fiber, structured cabling, environmental controls, and physical-layer troubleshooting.</p>
+        </header>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>
+            This chapter focuses on <strong class="key-term">Layer 1</strong>, the physical layer.
+            If the cable does not work, nothing above it matters. That means we need to understand
+            how bits move across wires, what different cable types are for, how to install them
+            correctly, and how to troubleshoot them when they fail.
+        </p>
+        <p>
+            The physical layer is where networking becomes tangible: copper pairs, fiber strands,
+            racks, patch panels, connectors, cooling, and power. It is also where installation
+            mistakes are easiest to make and often hardest to diagnose later.
+        </p>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    PC["fa:fa-desktop PC"] -->|Copper| SW["fa:fa-network-wired Switch"]
+    SW -->|Fiber| SRV["fa:fa-server Server"]
+
+    style PC fill:#e8f1fb,stroke:#004a88
+    style SW fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style SRV fill:#fff7e0,stroke:#d97706
+            </pre>
+            <p class="diagram-caption">Figure 1: A simple physical network path. Copper and fiber are both Layer 1 media, but they solve different problems.</p>
+        </div>
+
+        <h3 id="review-module-1">Review from Module 1</h3>
+        <div class="review-section">
+            <p>
+                Module 1 introduced the OSI model. This chapter picks up at Layer 1, where data is
+                represented as electrical or optical signals rather than frames or packets.
+            </p>
+            <div class="callout callout-warning">
+                <div class="callout-title">Layer 1 Reminder</div>
+                <p>If the signal is broken, no amount of addressing, routing, or application logic can fix it.</p>
+            </div>
+        </div>
+
+        <h3 id="learning-outcomes">Learning Outcomes</h3>
+        <div class="learning-outcomes">
+            <p>After completing this module, you will be able to:</p>
+            <ul>
+                <li>Explain how bits travel as electrical signals or light pulses.</li>
+                <li>Compare UTP, STP, coaxial, twinax, and fiber cabling.</li>
+                <li>Select the proper category rating, connector, and wiring standard for a run.</li>
+                <li>Distinguish MMF from SMF and choose the right fiber type for a distance.</li>
+                <li>Apply structured cabling and termination best practices.</li>
+                <li>Identify environmental and safety requirements for physical installations.</li>
+                <li>Troubleshoot physical-layer faults using the right tools.</li>
+            </ul>
+        </div>
+
+        <h3 id="key-terms">Key Terms Preview</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin:1rem 0;">
+            <div class="callout callout-info" style="margin:0;">
+                <div class="callout-title">Signal Concepts</div>
+                <dl class="glossary">
+                    <dt>Bits</dt><dd>1s and 0s carried by voltage or light</dd>
+                    <dt>EMI</dt><dd>Electromagnetic interference</dd>
+                    <dt>Attenuation</dt><dd>Signal loss over distance</dd>
+                    <dt>Crosstalk</dt><dd>Signal bleed between conductors</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin:0;">
+                <div class="callout-title">Copper</div>
+                <dl class="glossary">
+                    <dt>UTP</dt><dd>Unshielded twisted pair</dd>
+                    <dt>STP</dt><dd>Shielded twisted pair</dd>
+                    <dt>Cat6a</dt><dd>Common 10 Gbps cabling choice</dd>
+                    <dt>RJ-45</dt><dd>Standard Ethernet connector</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin:0;">
+                <div class="callout-title">Fiber</div>
+                <dl class="glossary">
+                    <dt>MMF</dt><dd>Multimode fiber</dd>
+                    <dt>SMF</dt><dd>Single-mode fiber</dd>
+                    <dt>LC</dt><dd>Popular small fiber connector</dd>
+                    <dt>WDM</dt><dd>Multiple wavelengths on one fiber</dd>
+                </dl>
+            </div>
+            <div class="callout callout-info" style="margin:0;">
+                <div class="callout-title">Installation</div>
+                <dl class="glossary">
+                    <dt>MDF</dt><dd>Main distribution frame</dd>
+                    <dt>IDF</dt><dd>Intermediate distribution frame</dd>
+                    <dt>Plenum</dt><dd>Air-handling space needing special cable</dd>
+                    <dt>Patch panel</dt><dd>Termination point for building cabling</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="section-divider"><h2>Physical Layer Fundamentals</h2></div>
+        <h2 id="physical-fundamentals">Physical Layer Fundamentals</h2>
+
+        <h3 id="signal-transmission">How Does Data Travel on a Wire?</h3>
+        <p>
+            Computers represent data as <strong class="key-term">bits</strong>. On copper cables,
+            bits are carried as voltage changes. On fiber, they are carried as light pulses. The
+            key idea is simple: a physical medium has to represent 1s and 0s in a way that the
+            receiver can reliably interpret.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["0"] --> B["1"] --> C["0"] --> D["1"] --> E["0"]
+    style A fill:#f4f7fb,stroke:#004a88
+    style B fill:#f0fdf4,stroke:#16a34a
+    style C fill:#f4f7fb,stroke:#004a88
+    style D fill:#f0fdf4,stroke:#16a34a
+    style E fill:#f4f7fb,stroke:#004a88
+            </pre>
+            <p class="diagram-caption">Figure 2: A simplified digital signal pattern. Real networks move bits at much higher speeds, but the principle is the same.</p>
+        </div>
+        <div class="callout callout-info">
+            <div class="callout-title">Baseband Signaling</div>
+            <p>Ethernet uses baseband signaling, meaning one signal occupies the cable at a time rather than dividing it into many separate channels.</p>
+        </div>
+
+        <h3 id="duplex">Half-Duplex vs Full-Duplex</h3>
+        <p>
+            Duplex mode describes whether devices can transmit and receive at the same time.
+            Half-duplex allows only one direction at a time and was common with hubs. Full-duplex
+            allows simultaneous send and receive and is standard on modern switched Ethernet.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-warning">
+                <div class="callout-title">Half-Duplex</div>
+                <p>One side transmits while the other listens. If both try to speak at once, the result is a collision.</p>
+            </div>
+            <div class="callout callout-success">
+                <div class="callout-title">Full-Duplex</div>
+                <p>Both ends can transmit at the same time. No collisions, better throughput, and better efficiency.</p>
+            </div>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    H["fa:fa-circle-half-stroke Half-Duplex"] --- S["fa:fa-walkie-talkie One direction at a time"]
+    F["fa:fa-right-left Full-Duplex"] --- T["fa:fa-phone Simultaneous send and receive"]
+            </pre>
+            <p class="diagram-caption">Figure 3: Half-duplex behaves like a walkie-talkie. Full-duplex behaves like a phone call.</p>
+        </div>
+
+        <h3 id="ethernet-standards">Ethernet Standards</h3>
+        <p>
+            Ethernet standard names encode speed, signal type, and cable type. Once you can read
+            them, standards like 100BASE-TX and 10GBASE-SR become easy to interpret.
+        </p>
+        <div class="callout callout-info">
+            <div class="callout-title">Reading 100BASE-TX</div>
+            <p>100 = 100 Mbps, BASE = baseband, T = twisted pair copper, TX = an Ethernet variant for copper media.</p>
+        </div>
+        <table>
+            <thead>
+                <tr><th>Standard</th><th>Speed</th><th>Cable</th><th>Max Distance</th><th>Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>10BASE-T</td><td>10 Mbps</td><td>Cat3</td><td>100 m</td><td>Legacy Ethernet</td></tr>
+                <tr><td>100BASE-TX</td><td>100 Mbps</td><td>Cat5</td><td>100 m</td><td>Older LANs</td></tr>
+                <tr><td>1000BASE-T</td><td>1 Gbps</td><td>Cat5e</td><td>100 m</td><td>Office standard</td></tr>
+                <tr><td>10GBASE-T</td><td>10 Gbps</td><td>Cat6a</td><td>100 m</td><td>Modern copper</td></tr>
+                <tr><td>10GBASE-SR</td><td>10 Gbps</td><td>MMF</td><td>400 m</td><td>Short-range fiber</td></tr>
+                <tr><td>10GBASE-LR</td><td>10 Gbps</td><td>SMF</td><td>10 km</td><td>Long-range fiber</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="collision-domains">Collisions: A Problem We Solved</h3>
+        <p>
+            Early Ethernet shared one collision domain. If two devices transmitted at the same time,
+            the signals collided. Hubs created this problem; switches solved it by giving each port
+            its own collision domain.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph H["Hub: one collision domain"]
+        HA["fa:fa-desktop PC"] --- HUB["fa:fa-circle-nodes Hub"] --- HB["fa:fa-desktop PC"]
+        HC["fa:fa-desktop PC"] --- HUB
+    end
+            </pre>
+            <p class="diagram-caption">Figure 4: A hub repeats traffic to every port, creating one shared collision domain.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph S["Switch: separate collision domains"]
+        SA["fa:fa-desktop PC"] --- SW["fa:fa-network-wired Switch"] --- SB["fa:fa-desktop PC"]
+        SC["fa:fa-desktop PC"] --- SW
+    end
+            </pre>
+            <p class="diagram-caption">Figure 5: A switch gives each port its own collision domain, eliminating collisions in normal operation.</p>
+        </div>
+
+        <h3 id="ethernet-timeline">Ethernet Speeds: Then and Now</h3>
+        <p>
+            Ethernet has advanced from 10 Mbps to 100 Gbps and beyond. Each leap in speed has
+            typically demanded better cabling, tighter specifications, and more capable hardware.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["10BASE-T\n10 Mbps"] --> B["100BASE-TX\n100 Mbps"] --> C["1000BASE-T\n1 Gbps"] --> D["10GBASE-T\n10 Gbps"] --> E["40/100G\nData center"]
+            </pre>
+            <p class="diagram-caption">Figure 6: Ethernet speed evolution. Faster standards require tighter cabling and better signal integrity.</p>
+        </div>
+
+        <h3 id="signal-quality">Why Do Faster Speeds Need Better Cables?</h3>
+        <p>
+            Faster signaling means more bits per second, which makes the signal more sensitive to
+            attenuation, crosstalk, and EMI. Good cabling keeps the signal recognizable; poor
+            cabling turns clean transitions into noise.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-success">
+                <div class="callout-title">Good Cable</div>
+                <p>Clean transitions, low noise, and a receiver that can clearly distinguish 1s from 0s.</p>
+            </div>
+            <div class="callout callout-danger">
+                <div class="callout-title">Poor Cable</div>
+                <p>Degraded transitions, more noise, and a much higher chance of errors or retransmission.</p>
+            </div>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    G["Clean signal"] --> H["Receiver reads bits correctly"]
+    P["Noisy signal"] --> Q["Receiver sees errors"]
+            </pre>
+            <p class="diagram-caption">Figure 7: Better cables preserve signal quality. Poor cables distort the waveform and make high-speed links unstable.</p>
+        </div>
+
+        <h3 id="case-study-addams">Case Study: The Addams Mansion Network</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — The Addams Mansion Network</div>
+            <p>Gomez wants to upgrade the mansion’s aging network. The cabling is labeled Cat5e, the longest run is 80 meters, and the current switches only run at 100 Mbps.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>What speed can Cat5e support?</li>
+                <li>Is 80 meters within spec?</li>
+                <li>What would it take to move to 10 Gbps?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — The Addams Mansion Network</div>
+            <ol>
+                <li>Cat5e supports 1 Gbps.</li>
+                <li>Yes, 80 meters is within the 100 meter limit.</li>
+                <li>To reach 10 Gbps, they need Cat6a cabling, 10G-capable switches, and network adapters that support 10 Gbps.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Copper Cabling</h2></div>
+        <h2 id="copper">Copper Cabling</h2>
+
+        <h3 id="twisted-pair">Twisted Pair Technology</h3>
+        <p>
+            Twisted pair cable works because twisting the conductors helps cancel out interference.
+            The two wires in a pair experience roughly the same noise, so the receiver can subtract
+            the noise and recover the intended signal.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["Wire A"] --- B["Wire B"]
+    N["Noise affects both wires similarly"] --> R["Receiver subtracts noise"]
+            </pre>
+            <p class="diagram-caption">Figure 8: Twisted pair reduces EMI and crosstalk by exposing both conductors to similar noise.</p>
+        </div>
+
+        <h3 id="utp">Unshielded Twisted Pair (UTP)</h3>
+        <p>
+            UTP is the most common network cabling type. It uses four twisted pairs and no metal
+            shielding. It is inexpensive, flexible, and easy to terminate, which makes it the
+            default choice for most offices and homes.
+        </p>
+        <div class="callout callout-info">
+            <div class="callout-title">UTP Strengths and Limits</div>
+            <p>UTP is cheap and flexible, but it is more sensitive to strong EMI than shielded cable.</p>
+        </div>
+
+        <h3 id="stp">Shielded Twisted Pair (STP)</h3>
+        <p>
+            STP adds shielding for harsher environments. It is useful near motors, fluorescent
+            lighting, factories, and other strong sources of interference. If shielding is used,
+            it must be grounded correctly.
+        </p>
+        <div class="callout callout-warning">
+            <div class="callout-title">Grounding Matters</div>
+            <p>Un-grounded shielding can behave like an antenna and make the problem worse.</p>
+        </div>
+
+        <h3 id="categories">Category Ratings</h3>
+        <p>
+            Cable categories describe performance. Higher numbers mean tighter tolerances and better
+            performance at higher frequencies.
+        </p>
+        <table id="cat-table">
+            <thead>
+                <tr><th>Category</th><th>Max Speed</th><th>Bandwidth</th><th>10G Distance</th><th>Typical Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Cat5</td><td>100 Mbps</td><td>100 MHz</td><td>---</td><td>Obsolete</td></tr>
+                <tr><td>Cat5e</td><td>1 Gbps</td><td>100 MHz</td><td>---</td><td>Home, small office</td></tr>
+                <tr><td>Cat6</td><td>10 Gbps</td><td>250 MHz</td><td>55 m</td><td>Office standard</td></tr>
+                <tr><td>Cat6a</td><td>10 Gbps</td><td>500 MHz</td><td>100 m</td><td>Recommended minimum</td></tr>
+                <tr><td>Cat7</td><td>10 Gbps</td><td>600 MHz</td><td>100 m</td><td>Specialized uses</td></tr>
+                <tr><td>Cat8</td><td>25-40 Gbps</td><td>2000 MHz</td><td>30 m</td><td>Data centers</td></tr>
+            </tbody>
+        </table>
+        <div class="callout callout-success">
+            <div class="callout-title">Rule of Thumb</div>
+            <p>For new installations, Cat6a is the safest practical choice because it supports 10 Gbps at 100 meters.</p>
+        </div>
+
+        <h3 id="rj45">The RJ-45 Connector</h3>
+        <p>
+            RJ-45 is the common Ethernet plug, technically an 8P8C connector. It is used on copper
+            cabling and requires proper crimping or termination to function reliably.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    C["RJ-45 / 8P8C"] --> P["8 pins\n4 wire pairs"]
+    C --> T["Tab/clip locks the plug in place"]
+            </pre>
+            <p class="diagram-caption">Figure 9: RJ-45 connectors use eight positions and eight contacts. Good terminations matter.</p>
+        </div>
+        <div class="callout callout-warning">
+            <div class="callout-title">RJ-45 vs RJ-11</div>
+            <p>RJ-11 is smaller and used for telephone lines. Do not force a phone connector into an Ethernet port.</p>
+        </div>
+
+        <h3 id="cable-types">Plenum, Coax, and Twinax</h3>
+        <p>
+            Not all copper cable is twisted pair. Some environments require plenum- or riser-rated
+            cable for fire safety. Coaxial cable is still used for cable internet and legacy CCTV,
+            while twinaxial cable is common for short direct-attach links in data centers.
+        </p>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">Plenum and Riser</div>
+                <p>Plenum cable is required in air-handling spaces. Riser cable is designed for vertical runs between floors.</p>
+            </div>
+            <div class="callout callout-info">
+                <div class="callout-title">Coax and Twinax</div>
+                <p>Coax uses a single center conductor and shielding. Twinax uses two conductors and is popular for DAC links.</p>
+            </div>
+        </div>
+
+        <h3 id="case-study-conservatory">Case Study: Wiring the Addams Mansion Conservatory</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Wiring the Addams Mansion Conservatory</div>
+            <p>Morticia wants network cabling in a greenhouse. The cable route passes through a plenum space. Gomez also has legacy RG-59 security cameras with long runs.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>What cable rating is required in the plenum?</li>
+                <li>Why is the cheapest cable a bad idea?</li>
+                <li>Is RG-59 a good choice for 150 meters?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Wiring the Addams Mansion Conservatory</div>
+            <ol>
+                <li>Plenum-rated CMP cable is required.</li>
+                <li>Cheap standard cable can fail code, create safety issues, and fail inspection.</li>
+                <li>No. RG-59 is a poor choice for 150 meters. RG-6 or IP cameras over Cat6 are better options.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Structured Cabling Systems</h2></div>
+        <h2 id="structured">Structured Cabling Systems</h2>
+
+        <h3 id="organization">Organizing the Chaos</h3>
+        <p>
+            Structured cabling organizes building cabling into a manageable system of distribution
+            frames, patch panels, and standardized runs. The goal is to make moves, adds, and
+            changes easy without disturbing the permanent wiring.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    MDF["fa:fa-server MDF"] --> IDF["fa:fa-network-wired IDF"]
+    IDF --> J["fa:fa-wall-brick Wall Jack"]
+            </pre>
+            <p class="diagram-caption">Figure 10: Structured cabling uses a backbone from the MDF to each IDF and horizontal runs from the IDF to wall jacks.</p>
+        </div>
+
+        <h3 id="wiring">T568A and T568B Wiring Standards</h3>
+        <p>
+            T568A and T568B are the two accepted pinout standards for RJ-45 terminations. Both work
+            correctly as long as you use the same standard on both ends of a straight-through cable.
+        </p>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">T568A</div>
+                <p>Common in government installations and legacy environments.</p>
+            </div>
+            <div class="callout callout-info">
+                <div class="callout-title">T568B</div>
+                <p>Most common in commercial installations.</p>
+            </div>
+        </div>
+        <div class="callout callout-warning">
+            <div class="callout-title">Critical Rule</div>
+            <p>Use the same standard on both ends of a straight-through cable. Mixed standards create crossover wiring.</p>
+        </div>
+
+        <h3 id="straight-crossover">Straight-Through vs Crossover Cables</h3>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    A["T568B"] --> S["Straight-through\nlike devices"] --> B["T568B"]
+    C["T568A"] --> X["Crossover\nunlike devices"] --> D["T568B"]
+            </pre>
+            <p class="diagram-caption">Figure 11: Straight-through cables use the same pinout on both ends. Crossover cables use different pinouts and are now rarely needed because of auto-MDI-X.</p>
+        </div>
+        <div class="callout callout-success">
+            <div class="callout-title">Auto-MDI-X</div>
+            <p>Most modern switches and NICs detect cable type automatically, which makes crossover cables largely obsolete.</p>
+        </div>
+
+        <h3 id="patch-panels">Patch Panels</h3>
+        <p>
+            Patch panels terminate permanent building cabling in one place. Short patch cords then
+            connect the panel to network equipment, keeping the building cabling stable and
+            organized.
+        </p>
+        <div class="callout callout-info">
+            <div class="callout-title">Why Patch Panels Help</div>
+            <p>Moves and changes happen on patch cords instead of the permanent in-wall runs.</p>
+        </div>
+
+        <h3 id="termination-tools">Termination Tools</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-success">
+                <div class="callout-title">Crimping Tool</div>
+                <p>Attaches RJ-45 connectors to cable ends. Bad crimps are a common source of problems.</p>
+            </div>
+            <div class="callout callout-success">
+                <div class="callout-title">Punchdown Tool</div>
+                <p>Seats wire into patch panels and keystone jacks. The excess conductor is cut automatically.</p>
+            </div>
+        </div>
+
+        <h3 id="installation">Cable Installation Best Practices</h3>
+        <p>
+            Good installation practices prevent expensive troubleshooting later. Respect bend radius,
+            keep cable away from power, label both ends, and follow the 90/10 rule for horizontal
+            cabling.
+        </p>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-success">
+                <div class="callout-title">Do This</div>
+                <ul>
+                    <li>Maintain proper bend radius</li>
+                    <li>Cross power cables at 90 degrees</li>
+                    <li>Label both ends</li>
+                    <li>Test each cable after termination</li>
+                </ul>
+            </div>
+            <div class="callout callout-warning">
+                <div class="callout-title">Don’t Do This</div>
+                <ul>
+                    <li>Do not sharply bend cable</li>
+                    <li>Do not exceed pull tension</li>
+                    <li>Do not untwist pairs too far</li>
+                    <li>Do not leave runs unlabeled</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider"><h2>Fiber Optic Cabling</h2></div>
+        <h2 id="fiber">Fiber Optic Cabling</h2>
+
+        <h3 id="why-fiber">Why Fiber Optic?</h3>
+        <p>
+            Fiber transmits light instead of electricity. That makes it immune to EMI, capable of
+            much longer distances, and well suited for high-speed uplinks and between-building
+            runs. It costs more and requires more specialized termination, but it solves problems
+            copper cannot.
+        </p>
+        <div class="callout callout-info">
+            <div class="callout-title">Choose Fiber When...</div>
+            <p>You need more than 100 meters, want immunity to EMI, need a building-to-building link, or want a harder-to-tap medium.</p>
+        </div>
+
+        <h3 id="fiber-structure">Fiber Optic Cable Structure</h3>
+        <p>
+            Fiber has a core where light travels, a cladding layer that reflects light back inward,
+            a protective coating, and an outer jacket. The cladding has a lower refractive index
+            than the core so total internal reflection can keep light inside.
+        </p>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    C["Core"] --> L["Cladding"] --> P["Buffer coating"] --> J["Jacket"]
+            </pre>
+            <p class="diagram-caption">Figure 12: Fiber cable anatomy. The cladding keeps light trapped in the core through total internal reflection.</p>
+        </div>
+
+        <h3 id="mmf-smf">Single-Mode vs Multimode Fiber</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">Multimode Fiber (MMF)</div>
+                <p>Shorter distances, larger core, lower cost. Common for building-scale links.</p>
+            </div>
+            <div class="callout callout-success">
+                <div class="callout-title">Single-Mode Fiber (SMF)</div>
+                <p>Long distances, tiny core, more expensive optics. Common for campus or WAN links.</p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr><th>Type</th><th>Core</th><th>Distance</th><th>Jacket</th><th>Best For</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>MMF</td><td>50-62.5 microns</td><td>Up to 550 m</td><td>Orange / Aqua</td><td>Inside a building</td></tr>
+                <tr><td>SMF</td><td>8-10 microns</td><td>Up to 80+ km</td><td>Yellow</td><td>Between buildings or campuses</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="connectors">Fiber Optic Connector Types</h3>
+        <table>
+            <thead>
+                <tr><th>Connector</th><th>Notes</th><th>Typical Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>LC</td><td>Small form factor, very common</td><td>Modern installations</td></tr>
+                <tr><td>SC</td><td>Square push-pull connector</td><td>Still common in some environments</td></tr>
+                <tr><td>ST</td><td>Legacy twist-lock connector</td><td>Older installations</td></tr>
+                <tr><td>MPO/MTP</td><td>Multi-fiber connector</td><td>Data center trunks</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="advanced-fiber">Fiber Splicing and WDM</h3>
+        <p>
+            Fiber splicing joins fiber ends permanently or semi-permanently. Wavelength division
+            multiplexing lets multiple light colors ride on one strand at the same time.
+        </p>
+        <div class="callout callout-info">
+            <div class="callout-title">WDM</div>
+            <p>WDM is like sending different colored flashlights down the same fiber. Each wavelength carries separate data.</p>
+        </div>
+
+        <h3 id="case-study-wednesday">Case Study: Wednesday’s Cemetery Office</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Wednesday’s Cemetery Office</div>
+            <p>Wednesday needs a 300 meter connection to her office. Uncle Fester wants to use Cat6a through electrical conduits. Lurch recommends fiber.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>Can Cat6a reach 300 meters?</li>
+                <li>What two advantages does fiber have here?</li>
+                <li>Should she choose MMF or SMF?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Wednesday’s Cemetery Office</div>
+            <ol>
+                <li>No. Cat6a maxes out at 100 meters.</li>
+                <li>Fiber handles 300 meters easily and is immune to EMI from the electrical lines.</li>
+                <li>MMF is enough because 300 meters is well within its range and the optics are cheaper.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Network Infrastructure</h2></div>
+        <h2 id="infrastructure">Network Infrastructure</h2>
+
+        <h3 id="racks">Rack Systems</h3>
+        <p>
+            Equipment racks keep devices organized, accessible, and cool. Rack size is measured in
+            rack units, where 1U equals 1.75 inches. Two-post racks are common for patch panels and
+            lighter gear, while four-post racks or cabinets support heavier equipment.
+        </p>
+        <table>
+            <thead>
+                <tr><th>Rack Size</th><th>Typical Equipment</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1U</td><td>Patch panels, small switches</td></tr>
+                <tr><td>2U</td><td>Larger switches, UPS units</td></tr>
+                <tr><td>4U</td><td>Servers, storage equipment</td></tr>
+            </tbody>
+        </table>
+
+        <h3 id="environmental">Environmental Factors</h3>
+        <p>
+            Temperature, humidity, and airflow matter as much as the hardware itself. Too hot means
+            overheating. Too cold can produce condensation. Too dry increases static. Too humid
+            increases corrosion risk.
+        </p>
+        <div class="callout callout-warning">
+            <div class="callout-title">Hot Aisle / Cold Aisle</div>
+            <p>Data centers separate cold intake air from hot exhaust air so heat does not recirculate into equipment.</p>
+        </div>
+
+        <h3 id="power">Power Management</h3>
+        <p>
+            UPS devices provide battery-backed power and conditioning. PDUs distribute power in the
+            rack. Grounding matters, and circuits should not be overloaded.
+        </p>
+        <div class="callout callout-success">
+            <div class="callout-title">Plan Before You Plug In</div>
+            <p>Sum the wattage and leave headroom so you do not overload circuits or UPS capacity.</p>
+        </div>
+
+        <h3 id="fire">Fire Suppression</h3>
+        <p>
+            Server rooms should use clean agents or pre-action sprinklers, not ordinary water
+            sprinklers. For electrical equipment, use Class C or ABC-rated extinguishers nearby.
+        </p>
+        <div class="callout callout-danger">
+            <div class="callout-title">Safety First</div>
+            <p>Equipment can be replaced. People cannot.</p>
+        </div>
+
+        <div class="section-divider"><h2>Cable Testing and Troubleshooting</h2></div>
+        <h2 id="troubleshooting">Cable Testing and Troubleshooting</h2>
+
+        <h3 id="problems">Common Cable Problems</h3>
+        <p>
+            Physical-layer problems include attenuation, EMI, crosstalk, opens, and shorts. In many
+            cases, the root cause is not the cable category itself but a bad termination or damaged
+            connector.
+        </p>
+        <div class="callout callout-warning">
+            <div class="callout-title">Most Common Problem</div>
+            <p>Bad terminations cause a surprising number of cable failures. If a link is intermittent, inspect both ends first.</p>
+        </div>
+
+        <h3 id="tools">Cable Testing Tools</h3>
+        <div class="columns" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="callout callout-info">
+                <div class="callout-title">Basic Tools</div>
+                <ul>
+                    <li>Cable tester</li>
+                    <li>Wire map tester</li>
+                    <li>Tone generator and probe</li>
+                </ul>
+            </div>
+            <div class="callout callout-info">
+                <div class="callout-title">Advanced Tools</div>
+                <ul>
+                    <li>TDR for copper</li>
+                    <li>OTDR for fiber</li>
+                    <li>Certification tester</li>
+                    <li>Visual fault locator</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 id="advanced-tools">Advanced Testing Tools</h3>
+        <p>
+            Basic testers tell you whether conductors are connected. Advanced tools tell you where a
+            problem is, how far down the cable it occurs, and whether the cable meets the category
+            standard.
+        </p>
+
+        <h3 id="case-study-pugsley">Case Study: Pugsley’s Flickering Connection</h3>
+        <div class="callout case-study">
+            <div class="callout-title">Case Study — Pugsley’s Flickering Connection</div>
+            <p>Pugsley’s connection drops whenever the patch panel cable is moved, even though the cable tester says all eight wires have continuity.</p>
+            <p>Review questions:</p>
+            <ol>
+                <li>If continuity passes, what kind of problem is likely?</li>
+                <li>What should Lurch inspect at the patch panel?</li>
+                <li>What tool would identify the problem most clearly?</li>
+            </ol>
+        </div>
+        <div class="callout case-solution">
+            <div class="callout-title">Solution — Pugsley’s Flickering Connection</div>
+            <ol>
+                <li>A bad termination is likely.</li>
+                <li>Lurch should inspect the punchdown seating, untwisted pair length, and strain relief.</li>
+                <li>A certification tester would show the cable’s actual quality, not just continuity.</li>
+            </ol>
+        </div>
+
+        <div class="section-divider"><h2>Module Summary</h2></div>
+        <h2 id="module-summary">Module Summary</h2>
+        <div class="module-summary">
+            <h2>Module 2 Summary</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+                <div>
+                    <h3 style="margin-top:0;">Copper and Signals</h3>
+                    <ul>
+                        <li>Layer 1 sends bits as voltage changes or light pulses.</li>
+                        <li>Twisted pair is the standard copper medium because twisting helps reject noise.</li>
+                        <li>Cat5e is enough for 1 Gbps; Cat6a is the safer choice for 10 Gbps.</li>
+                        <li>RJ-45 is the common Ethernet connector on copper cabling.</li>
+                    </ul>
+                    <h3>Installation Basics</h3>
+                    <ul>
+                        <li>Use plenum cable where code requires it.</li>
+                        <li>Respect bend radius and the 90/10 rule.</li>
+                        <li>Use patch panels and label everything.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-top:0;">Fiber and Infrastructure</h3>
+                    <ul>
+                        <li>MMF is for building-scale runs; SMF is for long-distance runs.</li>
+                        <li>LC connectors dominate modern fiber installs.</li>
+                        <li>Racks, cooling, power, and fire suppression all affect uptime.</li>
+                        <li>Test cables with the right tool for the problem.</li>
+                    </ul>
+                    <h3>Troubleshooting</h3>
+                    <ul>
+                        <li>Bad terminations are common.</li>
+                        <li>Continuity testing is not the same as certification.</li>
+                        <li>Layer 1 problems must be fixed before higher-layer troubleshooting matters.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="callout callout-warning">
+            <div class="callout-title">Next Steps</div>
+            <p>Module 3 moves from the physical medium to the interfaces and switches that connect devices to that medium.</p>
+        </div>
+
+        <footer class="chapter-footer">
+            <p>Introduction to Networking &copy; 2025 Brendan Shea, PhD &mdash; Rochester Community and Technical College &mdash; Licensed under CC-BY-NC 4.0</p>
+            <nav class="chapter-nav">
+                <a href="../network_01_basics/index.html">&larr; Previous: Networking Basics &amp; Topologies</a>
+                <a href="../network_03_switches_interfaces/index.html">Next: Switches &amp; Network Interfaces &rarr;</a>
+            </nav>
+        </footer>
+    </main>
+</div>
+</body>
+</html>
