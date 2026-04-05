@@ -3,33 +3,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Introduction to Networking - A comprehensive guide to networking fundamentals, protocols, and practices">
-    <meta name="author" content="Brendan Shea">
-    <title>Introduction to Networking - Full Course</title>
+    <meta name="description" content="Introduction to Networking: An Open Textbook aligned to CompTIA Network+ exam objectives. Free, openly licensed HTML chapters and PDF lecture slides.">
+    <meta name="author" content="Brendan Shea, PhD">
+    <title>Introduction to Networking — An Open Textbook</title>
     <style>
         :root {
-            --primary: #004a88;
-            --primary-light: #0b5cab;
-            --primary-pale: #e8f1fb;
-            --gold: #ffc72c;
-            --gold-pale: #fff7e0;
-            --bg: #f4f7fb;
-            --panel: #ffffff;
-            --text: #1f2a37;
-            --muted: #4b5563;
-            --border: #dbe4f0;
+            --blue:       #004a88;
+            --blue-mid:   #0b5cab;
+            --blue-pale:  #e8f1fb;
+            --gold:       #ffc72c;
+            --bg:         #f4f7fb;
+            --panel:      #ffffff;
+            --text:       #1f2a37;
+            --muted:      #4b5563;
+            --border:     #dbe4f0;
+            --radius:     8px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+        html { font-size: 16px; scroll-behavior: smooth; }
 
         body {
             font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -38,458 +31,456 @@
             line-height: 1.7;
         }
 
-        .container {
-            max-width: 1200px;
+        a { color: var(--blue-mid); text-decoration: none; }
+        a:hover { text-decoration: underline; color: var(--blue); }
+
+        /* ── Hero ─────────────────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(150deg, #002f5a 0%, var(--blue) 55%, #1a6fba 100%);
+            color: #fff;
+            padding: 3.5rem 2rem 3rem;
+        }
+
+        .hero-inner {
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: start;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, #103f76 100%);
-            color: white;
-            padding: 4rem 2rem;
-            margin: -2rem -2rem 3rem -2rem;
-            border-radius: 0;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        .hero-text .eyebrow {
+            font-size: 0.78rem;
             font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
         }
 
-        header p.subtitle {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            margin-bottom: 0.3rem;
+        .hero-text h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
         }
 
-        header p.instructor {
-            font-size: 1rem;
-            opacity: 0.85;
-            margin-top: 1rem;
+        .hero-text .tagline {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 1.25rem;
+            max-width: 55ch;
         }
 
-        /* Main content */
-        main {
+        .hero-text .author {
+            font-size: 0.92rem;
+            opacity: 0.8;
+        }
+
+        .hero-text .author strong { opacity: 1; }
+
+        /* CC badge block */
+        .cc-badge {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: var(--radius);
+            padding: 1rem 1.2rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.85);
+            min-width: 150px;
+            flex-shrink: 0;
+        }
+
+        .cc-badge .cc-icons {
+            font-size: 1.6rem;
+            display: block;
+            margin-bottom: 0.4rem;
+            letter-spacing: 2px;
+        }
+
+        .cc-badge a { color: var(--gold); font-weight: 600; }
+
+        /* ── Layout ───────────────────────────────────────────────────────── */
+        .site-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        /* ── About strip ─────────────────────────────────────────────────── */
+        .about {
             background: var(--panel);
-            border-radius: 12px;
-            padding: 2.5rem;
-            box-shadow: 0 8px 24px rgba(15, 41, 77, 0.06);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .about-item h3 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .about-item p {
+            font-size: 0.93rem;
+            color: var(--text);
+        }
+
+        /* ── Section heading ─────────────────────────────────────────────── */
+        .section-heading {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--blue);
+            border-bottom: 2px solid var(--blue-pale);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* ── Chapter table ───────────────────────────────────────────────── */
+        .chapter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
             margin-bottom: 3rem;
         }
 
-        .intro-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .intro-section h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
-            border-bottom: 2px solid var(--primary-pale);
-            padding-bottom: 0.5rem;
-        }
-
-        .intro-section p {
-            margin-bottom: 1rem;
-            color: var(--text);
-            line-height: 1.8;
-        }
-
-        /* Overview grid */
-        .overview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, var(--primary-pale) 0%, var(--panel) 100%);
-            border-left: 4px solid var(--primary);
-            padding: 1.2rem;
-            border-radius: 6px;
-        }
-
-        .info-box h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .info-box ul {
-            list-style: none;
-            color: var(--muted);
-        }
-
-        .info-box li {
-            padding: 0.3rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .info-box li::before {
-            content: "\25B8";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        /* Module cards grid */
-        .chapters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .chapter-card {
-            background: linear-gradient(135deg, var(--primary-pale) 0%, var(--panel) 100%);
+        .chapter-row {
+            background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            display: grid;
+            grid-template-columns: 2.5rem 1fr auto;
+            gap: 0.75rem 1rem;
+            align-items: center;
+            transition: box-shadow 0.18s, border-color 0.18s;
         }
 
-        .chapter-card:hover {
-            box-shadow: 0 12px 32px rgba(0, 74, 136, 0.14);
-            transform: translateY(-4px);
-            border-color: var(--primary-light);
+        .chapter-row:hover {
+            box-shadow: 0 4px 16px rgba(0,74,136,0.10);
+            border-color: var(--blue-mid);
         }
 
-        .chapter-card .chapter-number {
-            font-size: 0.8rem;
+        .ch-num {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--blue);
+            background: var(--blue-pale);
+            border-radius: 4px;
+            padding: 0.2rem 0.3rem;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .ch-meta h3 {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .ch-meta p {
+            font-size: 0.83rem;
             color: var(--muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            line-height: 1.4;
         }
 
-        .chapter-card h3 {
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .chapter-card p {
-            color: var(--muted);
-            font-size: 0.93rem;
-            margin-bottom: 1.2rem;
-            flex-grow: 1;
-        }
-
-        .chapter-links {
+        .ch-links {
             display: flex;
-            gap: 0.7rem;
-            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         .btn {
             display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.38rem 0.85rem;
+            border-radius: 5px;
+            font-size: 0.82rem;
+            font-weight: 600;
             text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            text-align: center;
-            flex: 1;
-            min-width: 110px;
+            white-space: nowrap;
+            transition: all 0.15s;
         }
 
         .btn-html {
-            background: var(--primary);
-            color: white;
-            border: 1px solid var(--primary);
+            background: var(--blue);
+            color: #fff;
+            border: 1px solid var(--blue);
         }
-
-        .btn-html:hover {
-            background: #103f76;
-            border-color: #103f76;
-        }
+        .btn-html:hover { background: #002f5a; border-color: #002f5a; text-decoration: none; }
 
         .btn-pdf {
             background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
+            color: var(--blue);
+            border: 1px solid var(--border);
         }
+        .btn-pdf:hover { background: var(--blue-pale); border-color: var(--blue); text-decoration: none; }
 
-        .btn-pdf:hover {
-            background: var(--primary-pale);
-        }
-
-        .btn[aria-disabled="true"] {
-            opacity: 0.45;
-            pointer-events: none;
+        .btn-soon {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
             cursor: default;
+            opacity: 0.6;
+            font-style: italic;
+            font-weight: 400;
         }
 
-        /* Resources section */
-        .resources {
-            background: var(--primary-pale);
-            border-radius: 10px;
-            padding: 2rem;
-            margin-top: 2.5rem;
+        /* ── Acknowledgment ──────────────────────────────────────────────── */
+        .ack {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.9rem;
+            color: var(--muted);
         }
 
-        .resources h2 {
-            color: var(--primary);
-            margin-bottom: 1.2rem;
-        }
+        .ack strong { color: var(--text); }
 
-        .resources a {
-            color: var(--primary-light);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .resources a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
+        /* ── Footer ──────────────────────────────────────────────────────── */
         footer {
             text-align: center;
-            padding: 2rem;
-            color: var(--muted);
+            padding: 1.5rem 2rem;
             border-top: 1px solid var(--border);
-            margin-top: 3rem;
+            font-size: 0.86rem;
+            color: var(--muted);
         }
 
-        footer a {
-            color: var(--primary-light);
-            text-decoration: none;
+        footer a { color: var(--blue-mid); }
+
+        /* ── Responsive ──────────────────────────────────────────────────── */
+        @media (max-width: 700px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+            .cc-badge { text-align: left; }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .chapter-row {
+                grid-template-columns: 2.5rem 1fr;
+            }
+
+            .ch-links {
+                grid-column: 1 / -1;
+                padding-left: 3.25rem;
+            }
         }
 
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            main {
-                padding: 1.5rem;
-            }
-
-            header {
-                padding: 2rem 1rem;
-                margin: -1rem -1rem 2rem -1rem;
-            }
+        @media (max-width: 480px) {
+            .btn { padding: 0.35rem 0.65rem; font-size: 0.78rem; }
+            .site-body { padding: 1.5rem 1rem 3rem; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
+
+<header class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <p class="eyebrow">Open Educational Resource &mdash; CompTIA Network+</p>
             <h1>Introduction to Networking</h1>
-            <p class="subtitle">A comprehensive guide to networking fundamentals and best practices</p>
-            <p class="instructor">Instructor: <strong>Brendan Shea, PhD</strong> &mdash; Rochester Community and Technical College</p>
+            <p class="tagline">A free, openly licensed textbook covering networking fundamentals from the OSI model through security hardening — aligned to CompTIA Network+ exam objectives.</p>
+            <p class="author">
+                <strong>Brendan Shea, PhD</strong><br>
+                Rochester Community and Technical College
+            </p>
         </div>
-    </header>
+        <div class="cc-badge">
+            <span class="cc-icons">CC BY NC</span>
+            <div>
+                <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a><br>
+                Free to use &amp; adapt<br>for non-commercial purposes
+            </div>
+        </div>
+    </div>
+</header>
 
-    <div class="container">
-        <main>
-            <section class="intro-section">
-                <h2>Welcome to the Course</h2>
-                <p>
-                    This course provides a comprehensive introduction to networking fundamentals. Designed for students
-                    new to IT and networking, the materials cover foundational concepts, protocols, and operational
-                    practices used in real-world networks.
-                </p>
-                <p>
-                    Through eleven progressive modules, you'll explore the OSI model, network topologies, IP addressing,
-                    routing, security concepts, and operational best practices. Each module includes both an interactive
-                    HTML chapter and downloadable PDF lecture slides.
-                </p>
-            </section>
+<div class="site-body">
 
-            <section class="intro-section">
-                <h2>Course Overview</h2>
-                <div class="overview-grid">
-                    <div class="info-box">
-                        <h4>What You'll Learn</h4>
-                        <ul>
-                            <li>Network fundamentals &amp; OSI model</li>
-                            <li>IP addressing, subnetting &amp; routing</li>
-                            <li>Network services &amp; applications</li>
-                            <li>Operations, monitoring &amp; troubleshooting</li>
-                            <li>Security, hardening &amp; access control</li>
-                        </ul>
-                    </div>
-                    <div class="info-box">
-                        <h4>Access Methods</h4>
-                        <ul>
-                            <li>Interactive HTML chapters with Mermaid diagrams</li>
-                            <li>Downloadable PDF lecture slides</li>
-                            <li>Embedded code examples &amp; tables</li>
-                            <li>Mobile-friendly responsive design</li>
-                        </ul>
-                    </div>
-                    <div class="info-box">
-                        <h4>Course Structure</h4>
-                        <ul>
-                            <li>11 progressive modules</li>
-                            <li>Foundation to advanced topics</li>
-                            <li>CompTIA Network+ aligned</li>
-                            <li>Case studies &amp; real-world examples</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <section class="intro-section">
-                <h2>Course Modules</h2>
-                <div class="chapters">
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 01</span>
-                        <h3>Networking Basics &amp; Topologies</h3>
-                        <p>Fundamental networking concepts, common topologies (star, mesh, ring, bus), the OSI model, SOHO networks, and troubleshooting methodology.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_01_basics/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_01_basics.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 02</span>
-                        <h3>Physical Layer &amp; Cabling</h3>
-                        <p>Physical layer transmission, copper and fiber cabling standards, connectors, signal propagation, and Ethernet at the physical layer.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_02_phys_inf/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_02_phys_inf.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 03</span>
-                        <h3>Switches &amp; Interfaces</h3>
-                        <p>Layer 2 switching, MAC addressing, frame forwarding, spanning tree protocol, and port aggregation techniques.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_03_switches_interfaces/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_03_switches_interfaces.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 04</span>
-                        <h3>IP Addressing &amp; Subnetting</h3>
-                        <p>IPv4 and IPv6 addressing, subnet calculation, VLSM, address planning, and gateway configuration.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_04_IP/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_04_IP.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 05</span>
-                        <h3>Routing &amp; VLANs</h3>
-                        <p>Router operation, dynamic routing protocols (RIP, OSPF, BGP), NAT/PAT, VLAN segmentation, and trunking.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_05_routing/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_05_routing.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 06</span>
-                        <h3>Network Services</h3>
-                        <p>Transport layer protocols (TCP/UDP), DHCP, DNS, IPv6 auto-configuration, and service reliability.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_06_nw_services/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_06_nw_services.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 07</span>
-                        <h3>Applications &amp; Services</h3>
-                        <p>Web services (HTTP/HTTPS), file transfer (FTP/SFTP), email protocols, VoIP, and high-availability architectures.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_07_nw_app/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_07_nw_app.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 08</span>
-                        <h3>Operations &amp; Monitoring</h3>
-                        <p>Network documentation, configuration management, change control, discovery tools, and performance baselines.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_08_operations_monitor/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_08_operations_monitor.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 09</span>
-                        <h3>Security Concepts</h3>
-                        <p>CIA triad, threat types, encryption fundamentals, vulnerabilities, social engineering, and incident response.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_09_security_concepts/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_09_security_concepts.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 10</span>
-                        <h3>Identity, Access &amp; Hardening</h3>
-                        <p>Authentication methods, access control models, network hardening techniques, and identity management.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_10_auth_access_hardening/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_10_auth_access_hardening.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                    <div class="chapter-card">
-                        <span class="chapter-number">Module 11</span>
-                        <h3>Zones, IoT &amp; Physical Security</h3>
-                        <p>Zone-based security architectures, DMZ design, IoT networking considerations, and physical security controls.</p>
-                        <div class="chapter-links">
-                            <a href="HTML/network_11_zones_iot_physical/index.html" class="btn btn-html">HTML Chapter</a>
-                            <a href="PDFs/network_11_zones_iot_physical.pdf" class="btn btn-pdf">PDF Slides</a>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <section class="resources">
-                <h2>Additional Resources</h2>
-                <dl style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
-                    <div>
-                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="syllabus.md">Course Syllabus</a></dt>
-                        <dd style="color: var(--muted); font-size: 0.9rem;">Full course outline, grading criteria, and learning objectives</dd>
-                    </div>
-                    <div>
-                        <dt style="font-weight: 600; margin-bottom: 0.5rem;"><a href="chapter_guidelines.md">Chapter Conversion Guidelines</a></dt>
-                        <dd style="color: var(--muted); font-size: 0.9rem;">Reference for generating HTML chapters from LaTeX source</dd>
-                    </div>
-                </dl>
-            </section>
-        </main>
+    <div class="about">
+        <div class="about-item">
+            <h3>Format</h3>
+            <p>Interactive HTML chapters with diagrams, plus downloadable PDF lecture slides for every module.</p>
+        </div>
+        <div class="about-item">
+            <h3>Scope</h3>
+            <p>11 modules from physical cabling through security hardening — covering all Network+ domain areas.</p>
+        </div>
+        <div class="about-item">
+            <h3>Audience</h3>
+            <p>Students new to IT networking; also useful as a refresher for those preparing for the N10-009 exam.</p>
+        </div>
     </div>
 
-    <footer>
-        <p style="margin-bottom: 0.5rem;">
-            <strong>Introduction to Networking</strong> &copy; 2025 Brendan Shea
-        </p>
-        <p style="font-size: 0.9rem;">
-            Materials licensed under <a href="LICENSE">CC-BY-NC 4.0</a>
-        </p>
-    </footer>
+    <h2 class="section-heading">Chapters</h2>
+
+    <div class="chapter-list">
+
+        <div class="chapter-row">
+            <div class="ch-num">01</div>
+            <div class="ch-meta">
+                <h3>Networking Basics &amp; Topologies</h3>
+                <p>OSI and TCP/IP models, network topologies (star, mesh, bus, ring), SOHO networks, troubleshooting methodology.</p>
+            </div>
+            <div class="ch-links">
+                <a href="HTML/network_01_basics/index.html" class="btn btn-html">Read HTML</a>
+                <a href="PDFs/network_01_basics.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">02</div>
+            <div class="ch-meta">
+                <h3>Physical Layer &amp; Cabling</h3>
+                <p>Copper and fiber cabling standards, connectors, signal propagation, Ethernet at the physical layer.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_02_phys_inf.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">03</div>
+            <div class="ch-meta">
+                <h3>Switches &amp; Network Interfaces</h3>
+                <p>Layer 2 switching, MAC addressing, frame forwarding, spanning tree protocol, VLANs, port aggregation.</p>
+            </div>
+            <div class="ch-links">
+                <a href="HTML/network_03_switches_interfaces/index.html" class="btn btn-html">Read HTML</a>
+                <a href="PDFs/network_03_switches_interfaces.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">04</div>
+            <div class="ch-meta">
+                <h3>IPv4 &amp; IPv6 Addressing</h3>
+                <p>IPv4 and IPv6 address structure, subnetting, VLSM, CIDR, address planning, gateway configuration.</p>
+            </div>
+            <div class="ch-links">
+                <a href="HTML/network_04_IP/index.html" class="btn btn-html">Read HTML</a>
+                <a href="PDFs/network_04_IP.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">05</div>
+            <div class="ch-meta">
+                <h3>Routing &amp; WAN Connectivity</h3>
+                <p>Router operation, static and dynamic routing (RIP, OSPF, BGP), NAT/PAT, WAN technologies.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_05_routing.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">06</div>
+            <div class="ch-meta">
+                <h3>Network Services</h3>
+                <p>Transport layer (TCP/UDP), DHCP, DNS, NTP, IPv6 auto-configuration, and service reliability.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_06_nw_services.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">07</div>
+            <div class="ch-meta">
+                <h3>Applications &amp; Services</h3>
+                <p>HTTP/HTTPS, FTP/SFTP, email protocols, VoIP, remote access, and high-availability architectures.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_07_nw_app.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">08</div>
+            <div class="ch-meta">
+                <h3>Network Operations &amp; Monitoring</h3>
+                <p>Network documentation, configuration management, change control, discovery tools, performance baselines, SNMP.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_08_operations_monitor.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">09</div>
+            <div class="ch-meta">
+                <h3>Security Concepts</h3>
+                <p>CIA triad, threat types, common attacks, encryption fundamentals, vulnerabilities, and incident response.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_09_security_concepts.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">10</div>
+            <div class="ch-meta">
+                <h3>Authentication, Access &amp; Hardening</h3>
+                <p>Authentication methods, access control models (DAC, MAC, RBAC), network hardening, and identity management.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_10_auth_access_hardening.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+        <div class="chapter-row">
+            <div class="ch-num">11</div>
+            <div class="ch-meta">
+                <h3>Security Zones, IoT &amp; Physical Security</h3>
+                <p>Zone-based architectures, DMZ design, IoT networking considerations, and physical security controls.</p>
+            </div>
+            <div class="ch-links">
+                <span class="btn btn-soon">HTML coming soon</span>
+                <a href="PDFs/network_11_zones_iot_physical.pdf" class="btn btn-pdf">PDF Slides</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ack">
+        <strong>A note on AI assistance:</strong> The PDF lecture slides were authored in LaTeX/Beamer. The interactive HTML chapters were converted from that source with substantial assistance from <strong>Claude</strong> (Anthropic) and other large language models, which generated the HTML, CSS, and Mermaid diagram markup from the original LaTeX. All content was reviewed and edited by the author.
+    </div>
+
+</div>
+
+<footer>
+    <p>
+        <strong>Introduction to Networking</strong> &copy; 2025 Brendan Shea, PhD &mdash;
+        licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>.
+        &nbsp;|&nbsp;
+        <a href="https://github.com/brendanshea" target="_blank" rel="noopener">Source on GitHub</a>
+    </p>
+</footer>
+
 </body>
 </html>
