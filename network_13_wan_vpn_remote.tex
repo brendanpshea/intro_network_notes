@@ -308,11 +308,10 @@
             \begin{block}{FTTC --- Fiber to the Curb / Node}
                 \begin{itemize}
                     \footnotesize
-                    \item \textbf{Fiber} runs from the ISP to a street cabinet near your home.
-                    \item The final 100--300 meters use \textbf{copper} (phone line or coax).
-                    \item Less expensive to deploy --- no fiber trench to every door.
-                    \item Speed is \textbf{limited by the copper tail}; the longer the copper, the slower the speed.
-                    \item Many ISPs advertise this as ``fiber'' --- it is not pure fiber.
+                    \item Fiber reaches a nearby street cabinet.
+                    \item The final 100--300 meters use \textbf{copper}.
+                    \item Cheaper to deploy because fiber stops short of the building.
+                    \item The copper tail limits speed, especially as distance grows.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -320,11 +319,10 @@
             \begin{block}{FTTP / FTTH --- Fiber to the Premises / Home}
                 \begin{itemize}
                     \footnotesize
-                    \item \textbf{Pure fiber} from the ISP all the way to your home.
-                    \item An \keyterm{ONT (Optical Network Terminal)} at the home converts light signals to Ethernet.
-                    \item Best possible speeds and lowest latency --- no copper bottleneck.
-                    \item Higher deployment cost due to trenching fiber to every building.
-                    \item Example services: Google Fiber, many municipal broadband networks.
+                    \item \textbf{Pure fiber} runs all the way to the home.
+                    \item An \keyterm{ONT} converts light to Ethernet indoors.
+                    \item Delivers the best speed and latency because there is no copper bottleneck.
+                    \item Costs more because the ISP must run fiber to each building.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -354,9 +352,6 @@
         \end{tikzpicture}
         \par\tiny\textit{FTTC stops fiber at a street cabinet and uses copper for the final run. FTTP runs fiber directly to an ONT at the home.}
     \end{center}
-    \begin{alertblock}{\footnotesize Ask Your ISP!}
-        \footnotesize When an ISP advertises ``fiber internet,'' always ask: is fiber going all the way to \textit{your door} (FTTP), or only to the street cabinet (FTTC)?
-    \end{alertblock}
 \end{frame}
 
 \articleonly{
@@ -472,9 +467,9 @@
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
             \begin{itemize}
-                \item The public internet is \textbf{not private} --- packets can be intercepted by anyone on the path.
-                \item A \keyterm{VPN (Virtual Private Network)} creates a secure, private channel \textit{through} the public internet.
-                \item Every VPN needs three things:
+                \item The public internet is \textbf{not private}.
+                \item A \keyterm{VPN} creates a secure path \textit{through} that untrusted network.
+                \item Every VPN depends on three ideas:
                     \begin{enumerate}
                         \footnotesize
                         \item \textbf{Tunneling} --- wraps your packet inside another packet.
@@ -482,10 +477,6 @@
                         \item \textbf{Authentication} --- proves each side is who they claim to be.
                     \end{enumerate}
             \end{itemize}
-            \vspace{0.3em}
-            \begin{exampleblock}{Analogy}
-                \footnotesize A VPN is like putting your letter in a \textbf{locked box} before handing it to the postal service. Workers carry it --- but cannot read what is inside.
-            \end{exampleblock}
         \end{column}
         \begin{column}{0.47\textwidth}
             \begin{center}
@@ -670,24 +661,20 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{itemize}
-                \item Before IPsec can protect data, both endpoints must agree on \textit{how} --- which algorithms, which keys.
-                \item \keyterm{IKE (Internet Key Exchange)} is the protocol that negotiates this agreement automatically.
-                \item The agreed-upon parameters are stored in a \keyterm{Security Association (SA)}.
+                \item Before IPsec works, both peers must agree on algorithms and keys.
+                \item \keyterm{IKE (Internet Key Exchange)} automates that negotiation.
+                \item The result is stored in a \keyterm{Security Association (SA)}.
             \end{itemize}
             \vspace{0.3em}
             \begin{block}{Phase 1 --- Authenticate}
                 \footnotesize
-                Endpoints prove their identities using a \textbf{pre-shared key (PSK)} or a \textbf{digital certificate}. They establish a \textbf{secure, encrypted channel} to negotiate inside.
+                Peers authenticate with a \textbf{PSK} or \textbf{certificate} and create a secure channel.
             \end{block}
             \vspace{0.2em}
             \begin{block}{Phase 2 --- Negotiate Session Keys}
                 \footnotesize
-                Inside the Phase 1 channel, endpoints agree on the specific \textbf{encryption and hashing algorithms} and generate the \textbf{session keys} that will protect the actual data. This creates the IPsec SA.
+                Inside that secure channel, peers choose IPsec settings and generate the session keys for data traffic.
             \end{block}
-            \vspace{0.2em}
-            \begin{exampleblock}{\footnotesize Analogy}
-                \footnotesize Phase 1 = showing your ID at the security desk. Phase 2 = agreeing on a secret code before talking business.
-            \end{exampleblock}
         \end{column}
         \begin{column}{0.49\textwidth}
             \begin{center}
@@ -739,16 +726,15 @@
         \begin{column}{0.48\textwidth}
             \begin{itemize}
                 \item Also called a \keyterm{remote access VPN}.
-                \item An individual user installs \textbf{VPN client software} on their device and connects to a corporate VPN gateway over the internet.
-                \item The user is assigned a \textbf{virtual IP address} on the corporate subnet --- their device appears to be physically inside the office.
-                \item Common use: employees working from home.
+                \item A user runs \textbf{VPN client software} and connects to a corporate gateway over the internet.
+                \item The gateway assigns a \textbf{virtual IP address}, so the device behaves like it is on the office network.
             \end{itemize}
             \vspace{0.3em}
             \begin{block}{Full Tunnel vs.\ Split Tunnel}
                 \begin{itemize}
                     \footnotesize
-                    \item \keyterm{Full tunnel}: \textit{all} user traffic is routed through the VPN. Most secure; uses more corporate bandwidth.
-                    \item \keyterm{Split tunnel}: only corporate-destined traffic uses the VPN; regular internet browsing goes direct. More efficient; slight security trade-off.
+                    \item \keyterm{Full tunnel}: all traffic uses the VPN. More secure, but heavier on corporate bandwidth.
+                    \item \keyterm{Split tunnel}: only company traffic uses the VPN. More efficient, but less isolated.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -799,20 +785,13 @@
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
             \begin{itemize}
-                \item A \keyterm{clientless VPN} (also called an \keyterm{SSL VPN}) requires \textbf{no software installation} on the user's device.
-                \item The user opens a \textbf{web browser}, navigates to a secure portal (HTTPS), and logs in.
-                \item The VPN gateway \textbf{proxies} the connection --- fetching internal resources on the user's behalf.
-                \item Best for:
-                    \begin{itemize}
-                        \footnotesize
-                        \item Contractors or guests on unmanaged devices.
-                        \item Temporary or one-time access to a single web application.
-                        \item Environments where software installation is restricted.
-                    \end{itemize}
+                \item A \keyterm{clientless VPN} uses a \textbf{web browser} instead of VPN software.
+                \item The user visits a secure portal, logs in, and the gateway \textbf{proxies} access to internal web resources.
+                \item Best for contractors, guests, or short-term access from unmanaged devices.
             \end{itemize}
             \vspace{0.2em}
             \begin{alertblock}{Limitation}
-                \footnotesize Works only for \textbf{web-based resources} (HTTP/HTTPS). Cannot tunnel arbitrary protocols (file shares, RDP) without a browser plug-in.
+                \footnotesize It mainly works for \textbf{web-based resources}; it does not replace a full VPN for RDP or file shares.
             \end{alertblock}
         \end{column}
         \begin{column}{0.47\textwidth}
@@ -842,9 +821,6 @@
                 \end{tikzpicture}
                 \par\tiny\textit{Clientless SSL VPN: the browser connects to a secure web portal; the gateway proxies access to internal web resources. No VPN client software is needed.}
             \end{center}
-            \begin{exampleblock}{\footnotesize Example}
-                \footnotesize You visit \texttt{https://vpn.company.com}, enter your password, and browse internal web apps --- with \textit{zero} software installed.
-            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
@@ -860,15 +836,14 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{itemize}
-                \item A \keyterm{site-to-site VPN} connects \textbf{two entire networks} --- not individual users.
-                \item The encrypted tunnel exists between two \textbf{routers or firewalls}, not between user devices.
-                \item End users need \textbf{no VPN client software} --- the tunnel is transparent to them.
-                \item The connection is typically \textbf{permanent and always-on}.
-                \item Common use: connecting branch offices to headquarters, or linking two data centers.
+                \item A \keyterm{site-to-site VPN} connects \textbf{two networks}, not two individual users.
+                \item The tunnel is built between \textbf{routers or firewalls}.
+                \item End users need no VPN software because the connection is transparent.
+                \item Common use: branch-to-HQ or data-center links.
             \end{itemize}
             \vspace{0.3em}
             \begin{block}{What Users Experience}
-                \footnotesize A branch employee connecting to an HQ server just types the server's IP address. The routers handle the VPN tunnel automatically --- the user never knows a VPN is involved.
+                \footnotesize Users just connect to remote resources normally; the gateways handle the VPN in the background.
             \end{block}
         \end{column}
         \begin{column}{0.49\textwidth}
@@ -936,7 +911,7 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{alertblock}{Network+ Exam Tip}
-                \footnotesize Read VPN scenario questions carefully. Key questions to ask: Is an \textit{individual user} connecting? (client-to-site.) \textit{Browser-only} access needed? (clientless.) \textit{Two office networks} linking? (site-to-site.)
+                \footnotesize Ask three questions: one user, browser-only access, or two full office networks?
             \end{alertblock}
         \end{column}
         \begin{column}{0.48\textwidth}
@@ -955,8 +930,7 @@
 \begin{frame}[t]{Case Study: Shadow and G.U.N.\ Remote Access}
     \begin{casestudy}{Shadow and G.U.N.\ Remote Access}
         \footnotesize
-        Shadow the Hedgehog manages network security for G.U.N.\ (Guardian Units of Nations).
-        He must solve three separate access problems:
+        Shadow must solve three remote-access problems for G.U.N.:
 
         \vspace{0.3em}
         \begin{center}
@@ -964,9 +938,9 @@
                 \toprule
                 \textbf{Situation} & \textbf{Details} \\
                 \midrule
-                A & G.U.N.\ has three field offices that need access to HQ file servers as if on the same LAN. Each office has a managed router/firewall. Users should not need to do anything special. \\
-                B & Undercover agents in safe houses use \textit{personal} laptops on untrusted networks and need full access to all G.U.N.\ internal systems. \\
-                C & A civilian contractor must access \textit{one specific} internal web portal for a single project. No software may be installed on their device. \\
+                A & Three field offices need always-on access to HQ file servers through managed routers/firewalls. \\
+                B & Agents on personal laptops need full access from untrusted networks. \\
+                C & A contractor needs browser-only access to one internal web portal with no install. \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -988,14 +962,14 @@
     \begin{casesolution}{Shadow and G.U.N.\ Remote Access}
         \begin{enumerate}
             \footnotesize
-            \item \textbf{Site-to-site VPN} --- IPsec ESP in tunnel mode between the HQ firewall and each field office router. The tunnel is permanent and always-on. Agents at each office work normally without any VPN client software.
-            \item \textbf{Client-to-site VPN} with VPN client software on each personal laptop. Given that safe-house networks are untrusted, use \textbf{full tunnel} so that \textit{all} traffic (not just G.U.N.\ traffic) goes through the encrypted VPN. This prevents data leakage over the unsafe local network.
-            \item \textbf{Clientless SSL VPN}. The contractor visits a browser-based portal over HTTPS --- no software installation needed. Access is scoped to only the one web application. This \textbf{limits exposure} if the contractor's device is compromised, because they cannot tunnel to other internal systems.
+            \item \textbf{Site-to-site VPN}: permanent IPsec tunnel between the HQ firewall and each office router.
+            \item \textbf{Client-to-site VPN}: use a \textbf{full tunnel} because the laptops are on untrusted networks.
+            \item \textbf{Clientless SSL VPN}: browser-only access to one web app with no software install.
         \end{enumerate}
     \end{casesolution}
     \vspace{0.2em}
     \begin{alertblock}{Key Lesson}
-        \footnotesize Site-to-site, client-to-site, and clientless VPNs solve different problems. Always match the VPN type to \textit{who} is connecting and \textit{what level of access} they need.
+        \footnotesize Match the VPN type to who is connecting and how much access they need.
     \end{alertblock}
 \end{frame}
 
@@ -1050,29 +1024,27 @@
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
             \begin{itemize}
-                \item \keyterm{SSH (Secure Shell)} is the industry standard for remote \textbf{command-line access} to routers, switches, and servers.
-                \item Runs on \textbf{TCP port 22}.
-                \item Encrypts \textit{all} traffic --- including usernames and passwords.
-                \item Always use \textbf{SSH version 2}. SSH version 1 has known security weaknesses.
+                \item \keyterm{SSH} is the standard tool for secure remote \textbf{CLI access}.
+                \item It runs on \textbf{TCP 22} and encrypts credentials and commands.
+                \item Always use \textbf{SSH version 2}.
             \end{itemize}
             \vspace{0.3em}
             \begin{block}{Authentication Options}
                 \begin{itemize}
                     \footnotesize
-                    \item \keyterm{Password authentication}: simple to set up, but vulnerable to brute-force attacks.
-                    \item \keyterm{Key-based authentication}: you generate a \textbf{key pair}. The \textit{public key} is placed on the server; the \textit{private key} stays with you. No password ever crosses the wire --- much more secure.
+                    \item \keyterm{Password authentication}: simple, but weaker against brute force.
+                    \item \keyterm{Key-based authentication}: stronger because the private key never leaves your device.
                 \end{itemize}
             \end{block}
             \vspace{0.2em}
             \begin{exampleblock}{Common Commands}
                 \footnotesize
-                \texttt{ssh admin@192.168.1.1} \\
-                \texttt{ssh -i mykey.pem user@10.0.0.5}
+                \texttt{ssh admin@192.168.1.1}
             \end{exampleblock}
         \end{column}
         \begin{column}{0.47\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.85]
+                \begin{tikzpicture}[scale=0.78]
                     % Engineer
                     \node[laptop] (eng) at (0,4.0) {\iconlaptop[0.5cm]};
                     \node[font=\small] at (0,4.6) {Engineer};
@@ -1113,32 +1085,18 @@
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
             \begin{itemize}
-                \item \keyterm{Telnet} (RFC 854, 1983) was the original remote CLI protocol.
-                \item Runs on \textbf{TCP port 23}.
-                \item Transmits \textit{everything} as \textbf{plaintext} --- including usernames and passwords.
-                \item Any attacker on the network path can capture credentials with a basic packet sniffer.
+                \item \keyterm{Telnet} was the original remote CLI protocol.
+                \item It uses \textbf{TCP 23} and sends everything in \textbf{plaintext}.
+                \item Any attacker on the path can capture usernames and passwords.
             \end{itemize}
             \vspace{0.3em}
             \begin{alertblock}{Never Use Telnet in Production}
-                \footnotesize Telnet is only acceptable on a \textbf{completely isolated lab network} with no real credentials. On any real network, \textbf{disable Telnet} and use SSH instead.
+                \footnotesize On real networks, disable Telnet and use SSH instead.
             \end{alertblock}
-            \vspace{0.3em}
-            \begin{block}{SSH vs.\ Telnet --- Quick Comparison}
-                \footnotesize
-                \begin{tabular}{l c c}
-                    \toprule
-                           & \textbf{SSH} & \textbf{Telnet} \\
-                    \midrule
-                    Port       & 22 & 23 \\
-                    Encrypted  & \textcolor{networkgreen}{\checkmark} & \textcolor{alertred}{\texttimes} \\
-                    Production-safe & \textcolor{networkgreen}{\checkmark} & \textcolor{alertred}{\texttimes} \\
-                    \bottomrule
-                \end{tabular}
-            \end{block}
         \end{column}
         \begin{column}{0.47\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.85]
+                \begin{tikzpicture}[scale=0.78]
                     % Engineer
                     \node[laptop] (eng) at (0,3.0) {\iconlaptop[0.4cm]};
                     \node[font=\tiny] at (0,3.5) {Engineer};
@@ -1182,20 +1140,18 @@
     \begin{columns}[T]
         \begin{column}{0.50\textwidth}
             \begin{itemize}
-                \item \keyterm{RDP (Remote Desktop Protocol)} provides a full \textbf{graphical desktop session} over the network --- you see and control the remote screen.
-                \item Runs on \textbf{TCP port 3389}. Built into Windows; clients also exist for Mac and Linux.
-                \item Session traffic is encrypted using TLS.
+                \item \keyterm{RDP} provides a full \textbf{graphical desktop session} to a remote Windows system.
+                \item It uses \textbf{TCP 3389} and encrypts traffic with TLS.
                 \item Common uses:
                     \begin{itemize}
                         \footnotesize
-                        \item Managing Windows servers without being physically present.
-                        \item IT help-desk: take control of a user's screen to fix a problem.
-                        \item Accessing your work desktop from home.
+                        \item Managing Windows servers.
+                        \item Help-desk support or remote work access.
                     \end{itemize}
             \end{itemize}
             \vspace{0.3em}
             \begin{alertblock}{Critical Security Warning}
-                \footnotesize Exposing RDP \textbf{directly to the internet} (TCP 3389 open on the public firewall) is one of the \textit{most common} ransomware entry points. Always place RDP \textbf{behind a VPN or firewall}, or access it through a jump box.
+                \footnotesize Never expose RDP directly to the internet. Put it behind a VPN, firewall, or jump box.
             \end{alertblock}
         \end{column}
         \begin{column}{0.47\textwidth}
@@ -1247,19 +1203,18 @@
             \begin{block}{Console Port Access}
                 \begin{itemize}
                     \footnotesize
-                    \item Every router and switch has a \keyterm{console port} --- a physical serial or USB port.
-                    \item Provides CLI access that \textbf{bypasses the network entirely}.
-                    \item Requires a \textbf{console cable} (Cisco ``rollover'') and terminal emulator software (e.g., PuTTY).
-                    \item Use when: IP is misconfigured, an interface crashed, or a password reset is needed. This is your \textbf{last resort}.
+                    \item A \keyterm{console port} is a physical serial or USB management connection.
+                    \item It gives CLI access that \textbf{bypasses the network entirely}.
+                    \item Use it when IP settings are broken or remote access fails.
                 \end{itemize}
             \end{block}
             \vspace{0.3em}
             \begin{block}{Out-of-Band (OOB) Management}
                 \begin{itemize}
                     \footnotesize
-                    \item \keyterm{Out-of-band (OOB) management} uses a \textbf{separate, dedicated management network} isolated from the production data network.
-                    \item If production goes down, management access \textit{still works}.
-                    \item Methods: dedicated management Ethernet port on device, iDRAC/iLO for servers, cellular OOB routers.
+                    \item \keyterm{OOB management} uses a \textbf{separate management network}.
+                    \item If the production network fails, management access can still work.
+                    \item Examples include dedicated management ports, iDRAC/iLO, and cellular OOB routers.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -1313,16 +1268,9 @@
             \begin{block}{Jump Box (Bastion Host)}
                 \begin{itemize}
                     \footnotesize
-                    \item A \keyterm{jump box} is a \textbf{hardened, monitored server} at the boundary between external access and the secure internal network.
-                    \item Admins first SSH or RDP \textit{to the jump box}, then connect from there to internal devices.
-                    \item Benefits:
-                        \begin{itemize}
-                            \tiny
-                            \item Single, audited entry point into the network.
-                            \item Internal devices are never directly exposed externally.
-                            \item All administrative sessions are logged for review.
-                        \end{itemize}
-                    \item This is an example of \keyterm{defense in depth}: even if an admin's laptop is compromised, the attacker cannot directly reach internal systems.
+                    \item A \keyterm{jump box} is a hardened server used as the single admin entry point.
+                    \item Admins connect to it first, then move to internal devices.
+                    \item It provides one audited entry path and keeps internal devices off the public edge.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -1330,16 +1278,12 @@
             \begin{block}{API-Based Management}
                 \begin{itemize}
                     \footnotesize
-                    \item Modern network devices expose \keyterm{APIs} for \textbf{programmatic, automated} management.
-                    \item \keyterm{REST API}: uses standard HTTP verbs (GET, POST, PUT, DELETE) and returns data in JSON. Most common.
-                    \item \keyterm{NETCONF}: XML-based protocol over SSH, purpose-built for network configuration. Uses YANG data models.
-                    \item \keyterm{gRPC / gNMI}: streaming telemetry used in modern SDN environments.
+                    \item Modern devices expose \keyterm{APIs} for automated management.
+                    \item \keyterm{REST API}: HTTP plus JSON.
+                    \item \keyterm{NETCONF}: XML over SSH with YANG models.
+                    \item \keyterm{gRPC / gNMI}: common for streaming telemetry.
                 \end{itemize}
             \end{block}
-            \vspace{0.2em}
-            \begin{exampleblock}{\footnotesize Why APIs Matter}
-                \footnotesize Instead of manually SSH-ing into 200 switches one at a time, a single Python script calls each device's REST API and saves all configurations automatically --- in minutes, not hours.
-            \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1350,8 +1294,7 @@
 \begin{frame}[t]{Case Study: Dr.\ Eggman's Remote Management Crisis}
     \begin{casestudy}{Dr.\ Eggman's Remote Management Crisis}
         \footnotesize
-        Dr.\ Eggman (Ivo Robotnik) manages robotics factories from his Egg Mobile command center.
-        Assistant Orbot reports four urgent issues that need solving right now:
+        Orbot reports four urgent remote-management problems:
 
         \vspace{0.3em}
         \begin{center}
@@ -1359,10 +1302,10 @@
                 \toprule
                 \textbf{Problem} & \textbf{Details} \\
                 \midrule
-                1 & Eggmanland factory switches are unresponsive over SSH. The entire production network is down. \\
-                2 & The Death Egg's Windows management server needs a GUI session to install a critical patch. \\
-                3 & Eggman wants to automate daily configuration backups from 200+ devices without manual logins. \\
-                4 & A contractor (untrusted) needs one-time access to a single internal web portal. No software installation allowed. \\
+                1 & Factory switches are unreachable over SSH because the production network is down. \\
+                2 & A Windows server needs a GUI session for a critical patch. \\
+                3 & 200+ devices need automated daily configuration backups. \\
+                4 & An untrusted contractor needs browser-only access to one internal web portal. \\
                 \bottomrule
             \end{tabular}
         \end{center}
@@ -1370,10 +1313,8 @@
     \begin{block}{Review Questions}
         \begin{enumerate}
             \footnotesize
-            \item How does Eggman access the factory switches if the network is down?
-            \item Which protocol should he use for the Windows server, and what mistake must he avoid?
-            \item What management approach enables automated backup of 200 devices?
-            \item What remote access type is correct for the untrusted contractor?
+            \item What should Eggman use when SSH is unavailable?
+            \item Which tool fits the Windows server, automated backups, and contractor portal?
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -1385,15 +1326,12 @@
     \begin{casesolution}{Dr.\ Eggman's Remote Management Crisis}
         \begin{enumerate}
             \footnotesize
-            \item \textbf{Console port or out-of-band (OOB) management.} SSH is an in-band tool that requires a working network. When the production network is down, Eggman must use a physical console cable directly connected to each switch, or a dedicated OOB management network that is independent of the production data plane.
-            \item \textbf{RDP (TCP 3389)} for the Windows GUI session. The critical mistake to avoid: \textit{never expose port 3389 directly to the internet}. Eggman should connect via VPN first, then RDP to the server on the internal network --- or route through a jump box for additional audit logging.
-            \item \textbf{REST API or NETCONF.} A script can call each device's API endpoint sequentially or in parallel, retrieving and saving configurations automatically. Manual SSH logins to 200 devices would take hours and introduce human error.
-            \item \textbf{Clientless SSL VPN.} Browser-based, no installation required, and access can be scoped to \textit{only} that one web portal. This limits the blast radius if the contractor's device is compromised.
+            \item \textbf{Console port or OOB management}: use a path that does not depend on the production network.
+            \item \textbf{RDP}: use it through a VPN or jump box, never directly from the internet.
+            \item \textbf{REST API or NETCONF}: automate backups instead of doing manual SSH logins.
+            \item \textbf{Clientless SSL VPN}: browser-only access scoped to one portal.
         \end{enumerate}
     \end{casesolution}
-    \begin{alertblock}{\footnotesize Real-World Reminder}
-        \footnotesize These map to real incidents: exposed RDP leads to ransomware; no OOB means a misconfiguration bricks a remote site for days; manual config management on 200 devices creates drift and errors. Plan for failure \textit{before} it happens.
-    \end{alertblock}
 \end{frame}
 
 % =============================================================================
