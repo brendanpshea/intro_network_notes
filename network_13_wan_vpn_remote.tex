@@ -156,7 +156,7 @@
             \end{itemize}
             \vspace{0.3em}
             \begin{exampleblock}{Everyday Example}
-                When you load a website, your data travels: home LAN $\rightarrow$ ISP's WAN $\rightarrow$ internet $\rightarrow$ a server somewhere else. You own the first hop; the ISP owns the rest.
+                Loading a website: home LAN $\rightarrow$ ISP WAN $\rightarrow$ internet $\rightarrow$ server. You own the LAN; the ISP owns the WAN.
             \end{exampleblock}
         \end{column}
         \begin{column}{0.45\textwidth}
@@ -178,11 +178,6 @@
                     \node[osilayer highlight] at (5.55,1.89) {2: Data Link};
                     \node[osilayer highlight] at (5.55,1.26) {1: Physical};
                     \node[font=\small\bfseries] at (5.55,3.75) {LAN B};
-                    % Brace label
-                    \draw[decorate,decoration={brace,amplitude=5pt,mirror},
-                          line width=1pt, aborange]
-                        (-1.7,1.05) -- (-1.7,2.7);
-                    \node[font=\tiny, aborange, left] at (-1.8,1.85) {WAN};
                 \end{tikzpicture}
                 \par\tiny\textit{WANs operate at Layers 1--3. Upper-layer processing happens at each LAN endpoint.}
             \end{center}
@@ -251,7 +246,6 @@
                     \item \textbf{Dedicated} line per subscriber --- neighbors do not share your speed.
                     \item Speed drops with \textbf{distance} from the ISP's central office.
                     \item \textbf{ADSL}: asymmetric --- faster download than upload.
-                    \item \textbf{VDSL}: faster than ADSL but shorter maximum range.
                     \item Customer device: \textbf{DSL modem} (plus router).
                 \end{itemize}
             \end{block}
@@ -263,15 +257,14 @@
                     \item Uses \textbf{coaxial cable} (same physical cable as TV service).
                     \item \textbf{Shared} among homes in a neighborhood node.
                     \item \keyterm{DOCSIS} (Data Over Cable Service Interface Specification) is the industry standard.
-                    \item DOCSIS 3.1 supports over \textbf{1 Gbps} downstream.
                     \item Customer device: \textbf{cable modem} (plus router).
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
-    \vspace{0.3em}
+    \vspace{0.1em}
     \begin{center}
-        \begin{tikzpicture}[scale=0.82]
+        \begin{tikzpicture}[scale=0.75]
             % DSL side
             \node[pc] at (0,0) {\iconpc[0.4cm]};
             \draw[copper noarrow, line width=2pt] (0.4,0) -- (1.5,0);
@@ -370,7 +363,6 @@
                     \item A \keyterm{cellular router} with a SIM card provides broadband over the mobile network.
                     \item Common uses: primary WAN at remote sites, \textbf{failover backup} if wired WAN fails, IoT devices in the field.
                     \item \textbf{5G sub-6 GHz}: broad coverage, 100--500 Mbps typical.
-                    \item \textbf{5G mmWave}: very fast but extremely short range --- dense urban areas only.
                     \item Bandwidth is \textbf{shared} with all mobile users on the tower.
                 \end{itemize}
             \end{block}
@@ -387,10 +379,10 @@
             \end{block}
         \end{column}
     \end{columns}
-    \vspace{0.3em}
+    \vspace{0.1em}
     \begin{exampleblock}{Real-World Use: Automatic Failover}
         \footnotesize
-        Many businesses use cellular WAN as a \textbf{secondary / backup} link. If the primary fiber circuit fails, the router automatically switches to LTE --- keeping operations online within seconds. This is called \textbf{WAN failover}.
+        Many businesses use cellular WAN as a \textbf{secondary / backup} link. If the primary circuit fails, the router switches to LTE automatically --- called \textbf{WAN failover}.
     \end{exampleblock}
 \end{frame}
 
@@ -400,12 +392,10 @@
 \begin{frame}[t]{Case Study: Tails Sets Up the Freedom Fighter Network}
     \begin{casestudy}{Tails Sets Up the Freedom Fighter Network}
         \footnotesize
-        Miles ``Tails'' Prower is building internet connectivity for three Freedom Fighter outposts on Mobius.
-        Each needs at least \textbf{50 Mbps} for video surveillance and team coordination.
-
-        \vspace{0.3em}
+        Tails must choose WAN connectivity for three outposts, each needing \textbf{50 Mbps} minimum.
+        \vspace{0.1em}
         \begin{center}
-            \begin{tabular}{l p{8cm}}
+            \begin{tabular}{l p{7cm}}
                 \toprule
                 \textbf{Outpost}              & \textbf{Situation} \\
                 \midrule
@@ -417,8 +407,7 @@
         \end{center}
 
         \vspace{0.3em}
-        Tails also notices: Outpost Gamma's video calls have a \textbf{1.2-second audio delay}, and
-        Beta's cellular link drops to \textbf{30 Mbps} during peak evening hours.
+        Tails also notices: Gamma has a \textbf{1.2-second audio delay} on video calls; Beta drops to \textbf{30 Mbps} during peak hours.
     \end{casestudy}
 
     \begin{block}{Review Questions}
@@ -519,7 +508,7 @@
 % =============================================================================
 \begin{frame}[t]{Tunneling and Common VPN Protocols}
     \begin{columns}[T]
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.47\textwidth}
             \begin{block}{How Tunneling Works}
                 \begin{itemize}
                     \footnotesize
@@ -534,7 +523,7 @@
                 \footnotesize Tunneling alone only \textit{wraps} the packet. You still need \textbf{encryption} to keep the contents private!
             \end{alertblock}
         \end{column}
-        \begin{column}{0.52\textwidth}
+        \begin{column}{0.50\textwidth}
             \begin{center}
                 \begin{tikzpicture}[scale=0.8]
                     % Outer IP header
@@ -597,20 +586,20 @@
                 \item \textbf{Two operating modes:}
                     \begin{itemize}
                         \footnotesize
-                        \item \keyterm{Transport mode}: encrypts only the payload; the original IP header stays visible. Used for host-to-host communication.
-                        \item \keyterm{Tunnel mode}: encrypts the \textit{entire} original packet and adds a new outer IP header. Used in VPN gateways.
+                        \item \keyterm{Transport mode}: encrypts only the payload; IP header stays visible. Host-to-host.
+                        \item \keyterm{Tunnel mode}: encrypts the entire packet, adds new outer IP header. Used in VPN gateways.
                     \end{itemize}
                 \item \textbf{Two sub-protocols:}
                     \begin{itemize}
                         \footnotesize
-                        \item \keyterm{AH (Authentication Header)}: provides integrity and authentication --- \textbf{no encryption}.
-                        \item \keyterm{ESP (Encapsulating Security Payload)}: provides integrity, authentication, \textit{and} \textbf{encryption}. This is what VPNs use.
+                        \item \keyterm{AH}: integrity and authentication --- \textbf{no encryption}.
+                        \item \keyterm{ESP}: integrity, authentication, and \textbf{encryption}. Standard VPN choice.
                     \end{itemize}
             \end{itemize}
         \end{column}
         \begin{column}{0.49\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.8]
+                \begin{tikzpicture}[scale=0.72, xshift=0.2cm]
                     % AH row
                     \node[font=\small\bfseries] at (2.5,4.1) {AH --- no encryption};
                     \node[pktseg, minimum width=1.4cm] at (0.5,3.5) {IP Hdr};
@@ -740,11 +729,10 @@
         \end{column}
         \begin{column}{0.49\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.80]
+                \begin{tikzpicture}[scale=0.73, xshift=0.5cm]
                     % Home laptop
                     \node[laptop] (home) at (0,2.8) {\iconlaptop[0.5cm]};
                     \node[font=\tiny, below=0.05cm of home] {Home Laptop};
-                    \node[font=\tiny\ttfamily, ipblue] at (0,2.05) {10.8.0.2 (virtual)};
                     % Internet
                     \node[cloud] (cloud) at (3.2,2.8) {\iconcloud[0.55cm]};
                     \node[font=\tiny] at (3.2,2.15) {Internet};
@@ -848,7 +836,7 @@
         \end{column}
         \begin{column}{0.49\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.80]
+                \begin{tikzpicture}[scale=0.68, xshift=0.48cm]
                     % HQ site
                     \draw[dashed, rctcblue, rounded corners, line width=1.5pt]
                         (-0.7,-0.4) rectangle (2.7,3.6);
@@ -932,7 +920,7 @@
         \footnotesize
         Shadow must solve three remote-access problems for G.U.N.:
 
-        \vspace{0.3em}
+        \vspace{0.1em}
         \begin{center}
             \begin{tabular}{l p{7.8cm}}
                 \toprule
@@ -1011,7 +999,7 @@
             \bottomrule
         \end{tabular}
     \end{center}
-    \vspace{0.3em}
+    \vspace{0.1em}
     \begin{exampleblock}{Rule of Thumb}
         \footnotesize If it is not encrypted, it should not be used in production. \textbf{Telnet} is the primary offender: replace it with \textbf{SSH} everywhere.
     \end{exampleblock}
@@ -1208,19 +1196,18 @@
                     \item Use it when IP settings are broken or remote access fails.
                 \end{itemize}
             \end{block}
-            \vspace{0.3em}
+            \vspace{0.1em}
             \begin{block}{Out-of-Band (OOB) Management}
                 \begin{itemize}
                     \footnotesize
                     \item \keyterm{OOB management} uses a \textbf{separate management network}.
                     \item If the production network fails, management access can still work.
-                    \item Examples include dedicated management ports, iDRAC/iLO, and cellular OOB routers.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.49\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.82]
+                \begin{tikzpicture}[scale=0.77, xshift=0.47cm]
                     % Core switch
                     \node[switch] (sw) at (3.5,3.2) {\iconswitch[0.55cm]};
                     \node[font=\small] at (3.5,3.8) {Core Switch};
@@ -1234,8 +1221,8 @@
                     % Console path
                     \draw[networkgreen, line width=2.5pt]
                         (3.5,2.9) .. controls (0.8,2.8) .. (0.8,1.3);
-                    \node[font=\tiny\bfseries, networkgreen] at (-0.3,2.2) {Console};
-                    \node[font=\tiny, networkgreen] at (-0.3,1.9) {(always works)};
+                    \node[font=\tiny\bfseries, networkgreen] at (0.3,2.2) {Console};
+                    \node[font=\tiny, networkgreen] at (0.3,1.9) {(always works)};
                     \node[laptop] at (0.8,1.0) {\iconlaptop[0.35cm]};
                     \node[font=\tiny] at (0.8,0.6) {Serial / USB};
                     % OOB path
@@ -1249,7 +1236,7 @@
                 \par\tiny\textit{When the production network is down, the console port (direct physical connection) and OOB management network provide alternative access paths to the device.}
             \end{center}
             \begin{alertblock}{\footnotesize Sysadmin Saying}
-                \footnotesize ``When everything is on fire and SSH won't connect, the console port is your parachute.''
+                \footnotesize ``When SSH won't connect, the console port is your parachute.''
             \end{alertblock}
         \end{column}
     \end{columns}
