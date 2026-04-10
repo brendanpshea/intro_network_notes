@@ -2,53 +2,17 @@
 \documentclass[aspectratio=169]{beamer}
 
 % =============================================================================
-% COMMON PREAMBLE (Assuming your network_preamble.tex handles standard packages)
+% COMMON PREAMBLE
 % =============================================================================
 \input{network_preamble.tex}
-
-% Additional TikZ styles specific to this lecture
-\tikzset{
-    boxstyle/.style={
-        rectangle,
-        draw=rctcblue,
-        fill=rctcblue!10,
-        rounded corners=3pt,
-        minimum width=2cm,
-        minimum height=0.6cm,
-        font=\small
-    },
-    process/.style={
-        rectangle,
-        draw=rctcblue,
-        fill=rctcblue!20,
-        text width=2.5cm,
-        text centered,
-        rounded corners,
-        minimum height=0.8cm,
-        font=\scriptsize\bfseries
-    },
-    decision/.style={
-        diamond,
-        draw=networkgreen,
-        fill=networkgreen!20,
-        text width=1.5cm,
-        text centered,
-        minimum height=1cm,
-        font=\scriptsize\bfseries
-    },
-    channel curve/.style={
-        thick,
-        opacity=0.6
-    }
-}
 
 % =============================================================================
 % DOCUMENT INFO
 % =============================================================================
-\title{Wireless Networking Fundamentals}
-\subtitle{Module 12.0 -- Deep Dive}
-\author[B. Shea]{Brendan Shea, PhD}
-\institute[RCTC]{Rochester Community and Technical College\\Intro to Networking}
+\title[Wireless Networking]{Module 12: Wireless Networking Fundamentals}
+\subtitle{Intro to Networks}
+\author{Brendan Shea, PhD}
+\institute{Rochester Community and Technical College}
 \date{}
 
 \begin{document}
@@ -60,240 +24,377 @@
     \titlepage
     \begin{center}
         \begin{tikzpicture}[scale=0.9]
-            % Simple wireless illustration for title
-            \node[pc] (pc1) at (0,0) {\iconpc[0.6cm]};
-            \node[laptop] (lap) at (0,1.5) {\iconlaptop[0.6cm]};
-            \node[wifi] (ap) at (3,0.75) {\iconwifi[0.8cm]};
-            \node[switch] (sw) at (6,0.75) {\iconswitch[0.6cm]};
-            
-            \draw[wireless] (pc1) -- (ap);
-            \draw[wireless] (lap) -- (ap);
-            \draw[ethernet noarrow] (ap) -- (sw);
+            \node[laptop] (lap) at (0,1.5)  {\iconlaptop[0.6cm]};
+            \node[phone]  (phn) at (0,0)    {\iconphone[0.6cm]};
+            \node[tablet] (tab) at (0,-1.5) {\icontablet[0.6cm]};
+            \node[wifi]   (ap)  at (3,0)    {\iconwifi[0.9cm]};
+            \node[switch] (sw)  at (6,0)    {\iconswitch[0.6cm]};
+            \node[server] (srv) at (9,0)    {\iconserver[0.6cm]};
+            \draw[wireless noarrow] (lap) -- (ap);
+            \draw[wireless noarrow] (phn) -- (ap);
+            \draw[wireless noarrow] (tab) -- (ap);
+            \draw[ethernet noarrow] (ap)  -- (sw);
+            \draw[ethernet noarrow] (sw)  -- (srv);
         \end{tikzpicture}
     \end{center}
 \end{frame}
 
+\presentationonly{
+\begin{frame}[allowframebreaks]{Outline}
+\small
+\tableofcontents[hideallsubsections]
+\end{frame}
+}
+
 % =============================================================================
-% SLIDE 2: REVIEW
+\section*{Review from Module 11}
 % =============================================================================
-\begin{frame}{Review: From Wired to Wireless Physical Layers}
+
+\begin{frame}{Review: Security Zones and Physical Controls}
     \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \begin{itemize}
-                \item \textbf{Layer 1 \& 2 Shift:} We are moving from IEEE \textbf{802.3 (Ethernet)} to IEEE \textbf{802.11 (WLAN)}.
-                \item \textbf{Guided vs. Unguided Media:} Instead of voltages on copper or photons in glass fiber (guided), data is modulated onto electromagnetic waves broadcasted into open space (unguided).
-                \item \textbf{Collision Domains:} A wired switch port is a collision domain of one (Full-Duplex). A wireless channel is a massive, shared collision domain (Half-Duplex) acting logically like a legacy Ethernet hub.
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.4\textwidth}
-            \begin{alertblock}{The Core Challenge}
-                In wired networks, the cable protects the signal. In wireless, the medium is hostile, shared, and constantly subject to physical interference and atmospheric degradation.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% =============================================================================
-% SLIDE 3: LEARNING OUTCOMES
-% =============================================================================
-\begin{frame}{Learning Outcomes (Network+ Objectives)}
-    Mapping directly to CompTIA Network+ domains, you will be able to:
-    \vspace{0.5em}
-    \begin{itemize}
-        \item \textbf{Analyze} fundamental RF characteristics: frequency, amplitude, and phase modulation.
-        \item \textbf{Calculate} the impact of overlapping vs. non-overlapping channels in 2.4GHz, 5GHz, and 6GHz bands.
-        \item \textbf{Deconstruct} the CSMA/CA protocol, including the RTS/CTS mechanism for resolving the hidden node problem.
-        \item \textbf{Differentiate} 802.11 iterations based on modulation techniques (DSSS, OFDM, OFDMA) and spatial streaming (MIMO).
-        \item \textbf{Design} physical AP layouts utilizing appropriate antenna polarizations and radiation patterns (Omni vs. Yagi/Patch).
-    \end{itemize}
-\end{frame}
-
-% =============================================================================
-% SLIDE 4: SECTION 1 INTRO
-% =============================================================================
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Section 1}\\
-        \vspace{0.5em}
-        \Large \textcolor{rctcblue}{Basic Wireless Concepts}
-    \end{center}
-\end{frame}
-
-% =============================================================================
-% SLIDE 5: THE WIRELESS MEDIUM
-% =============================================================================
-\begin{frame}{The Wireless Medium: Radio Frequency (RF)}
-    \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \begin{itemize}
-                \item \textbf{Carrier Waves:} Access Points generate a continuous sine wave (the carrier). 
-                \item \textbf{Modulation:} Data (1s and 0s) is superimposed onto the carrier wave by rapidly altering its state.
-                \item \textbf{QAM (Quadrature Amplitude Modulation):} Modern Wi-Fi alters \emph{both} the phase and the amplitude simultaneously to encode multiple bits per symbol (e.g., 256-QAM or 1024-QAM).
-                \item \textbf{Environmental Variables:} Unlike a Cat6 cable, an RF signal's SNR (Signal-to-Noise Ratio) constantly fluctuates based on moving physical objects and competing transmitters.
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.4\textwidth}
-            \begin{block}{The Half-Duplex Reality}
-                A wireless radio uses the exact same antenna to transmit and receive. It cannot do both at once without deafening itself. 
-                \\ \vspace{0.5em}
-                Therefore, \textbf{all Wi-Fi is strictly half-duplex}.
+        \begin{column}{0.52\textwidth}
+            \begin{block}{Key Module 11 Ideas}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Security zones} separate traffic by trust level (Internet, DMZ, Internal).
+                    \item \textbf{IoT devices} have long lifecycles and poor patch support---they need isolated VLANs.
+                    \item \textbf{Physical security} (locks, cameras, mantraps) is the last line of defense.
+                    \item \textbf{Defense in depth} means layering many controls so no single failure is catastrophic.
+                \end{itemize}
             \end{block}
         \end{column}
-    \end{columns}
-\end{frame}
-
-% =============================================================================
-% SLIDE 6: RF CHARACTERISTICS
-% =============================================================================
-\begin{frame}{RF Characteristics: Frequency, Wavelength, and Amplitude}
-    \begin{itemize}
-        \item \textbf{Frequency ($f$):} The number of full wave cycles per second, measured in Hertz (Hz). Wi-Fi operates in the Gigahertz (GHz) range (billions of cycles per second).
-        \item \textbf{Wavelength ($\lambda$):} The physical distance between two consecutive peaks of a wave.
-    \end{itemize}
-    
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{alertblock}{The Speed of Light Equation}
-                $c = \lambda f$ \\
-                \vspace{0.5em}
-                \scriptsize Because the speed of light ($c$) is constant, frequency and wavelength are inversely related. As frequency increases, wavelength gets shorter.
+        \begin{column}{0.44\textwidth}
+            \begin{alertblock}{Where Module 12 Takes This}
+                \footnotesize
+                Module 11 assumed a \emph{wired} boundary you could physically protect. Module 12 tears down the wall: Wi-Fi broadcasts your network into open air, visible to anyone nearby. Understanding \textbf{how radio waves work}, \textbf{how standards evolved}, and \textbf{how to secure an airwave} is the focus.
             \end{alertblock}
         \end{column}
-        \begin{column}{0.45\textwidth}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+\section*{Learning Outcomes}
+% =============================================================================
+
+\begin{frame}[t,allowframebreaks]{Learning Outcomes}
+    After completing this module, you will be able to:
+    \vspace{0.3em}
+    \footnotesize
+    \begin{itemize}
+        \item Explain how \keyterm{radio waves} carry data and how frequency, wavelength, and amplitude affect wireless performance.
+        \item Describe the trade-offs between the \keyterm{2.4 GHz}, \keyterm{5 GHz}, and \keyterm{6 GHz} frequency bands.
+        \item Explain why only channels \textbf{1, 6, and 11} are used in 2.4 GHz, and what \keyterm{co-channel} vs.\ \keyterm{adjacent-channel interference} means.
+        \item Describe how \keyterm{CSMA/CA} prevents collisions and how \keyterm{RTS/CTS} solves the hidden node problem.
+        \item Compare 802.11 standards (b, a, g, n, ac, ax, be) and identify the key technology added by each generation.
+        \item Explain the difference between \keyterm{autonomous (fat) APs} and \keyterm{lightweight (thin) APs} managed by a \keyterm{WLC}.
+        \item Design a basic enterprise wireless layout using appropriate \keyterm{site survey} methods and antenna types.
+        \item Compare \keyterm{WEP}, \keyterm{WPA}, \keyterm{WPA2}, and \keyterm{WPA3} and explain why older protocols were replaced.
+        \item Distinguish \keyterm{Personal (PSK)} from \keyterm{Enterprise (802.1X)} authentication and explain when each is appropriate.
+        \item Identify wireless threats---\keyterm{rogue APs}, \keyterm{evil twin attacks}---and describe defenses.
+        \item Interpret \keyterm{RSSI} and \keyterm{SNR} values and troubleshoot common wireless issues.
+    \end{itemize}
+\end{frame}
+
+% =============================================================================
+\section{How Radio Waves Carry Data}
+\subsection{The Wireless Medium}
+% =============================================================================
+
+\sectionslide{Section 1: How Radio Waves Carry Data}
+
+% =============================================================================
+% SLIDE: WHAT MAKES WIRELESS DIFFERENT?
+% =============================================================================
+\begin{frame}{What Makes Wireless Different?}
+    \begin{columns}[T]
+        \begin{column}{0.46\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \textbf{Amplitude:} The power/strength of the wave, often measured in decibel-milliwatts (dBm). 
-                \item Lower frequency (longer wavelength) waves penetrate solid objects much better than high-frequency waves.
+                \item In a \textbf{wired} network, your data travels as electrical signals or light inside a \emph{private} cable---only your device and the switch see it.
+                \item In a \textbf{wireless} network, your data is broadcast as radio waves into open air---\emph{everyone within range} can receive it.
+                \item This changes everything: security, performance, and interference all work differently when the medium is invisible and shared.
             \end{itemize}
+            \vspace{0.3em}
+            \begin{exampleblock}{Analogy}
+                \footnotesize
+                A wired network is like whispering through a private tube. A wireless network is like shouting across a crowded room---everyone hears you, and you can only talk when no one else is talking.
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.70]
+                    % Wired side
+                    \node[font=\small\bfseries, rctcblue] at (-1.8, 2.5) {Wired};
+                    \node[pc]     (pc1) at (-3, 1.2)  {\iconpc[0.5cm]};
+                    \node[switch] (sw1) at (-0.6, 1.2) {\iconswitch[0.5cm]};
+                    \draw[ethernet noarrow] (pc1) -- (sw1);
+                    \node[font=\tiny, align=center] at (-1.8, 0.3) {Private cable---\\signal stays inside};
+
+                    % Vertical divider
+                    \draw[gray, dashed] (0.2, -0.5) -- (0.2, 3.0);
+
+                    % Wireless side
+                    \node[font=\small\bfseries, aborange] at (2.5, 2.5) {Wireless};
+                    \node[wifi]   (ap1) at (2.0, 1.2) {\iconwifi[0.5cm]};
+                    \node[laptop] (l1)  at (3.8, 2.2) {\iconlaptop[0.4cm]};
+                    \node[phone]  (ph1) at (4.0, 0.4) {\iconphone[0.4cm]};
+                    \node[pc]     (pc2) at (0.6, 0.2) {\iconpc[0.4cm]};
+                    \draw[wireless noarrow] (ap1) -- (l1);
+                    \draw[wireless noarrow] (ap1) -- (ph1);
+                    \draw[wireless noarrow] (ap1) -- (pc2);
+                    \node[font=\tiny, align=center] at (2.2, -0.3) {Broadcast---everyone\\within range receives};
+                \end{tikzpicture}
+            \end{center}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 7: 2.4 vs 5 GHz
+% SLIDE: WHAT IS A RADIO WAVE?
 % =============================================================================
-\begin{frame}{The 2.4 GHz vs. 5 GHz Bands}
+\begin{frame}{What Is a Radio Wave? Frequency, Wavelength, Amplitude}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \footnotesize
+            \begin{itemize}
+                \item A \keyterm{radio wave} is an electromagnetic wave---the same physical phenomenon as visible light, just at a much lower frequency.
+                \item \textbf{Frequency ($f$):} How many wave cycles occur per second. Measured in Hertz (Hz). Wi-Fi uses \emph{billions} of cycles per second---the GHz range.
+                \item \textbf{Wavelength ($\lambda$):} The physical distance between two peaks. Since the speed of light is constant ($c = \lambda f$), higher frequency = shorter wavelength.
+                \item \textbf{Amplitude:} The height of the wave---how much energy it carries. Stronger signal = higher amplitude.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \begin{alertblock}{Why This Matters in Practice}
+                \footnotesize
+                \textbf{Lower frequency (2.4 GHz):} Longer wavelength, passes through walls easily, travels farther---but the band is crowded.\\[0.3em]
+                \textbf{Higher frequency (5 GHz):} Shorter wavelength, faster data rates, but absorbed by walls and human bodies more readily---shorter range.
+            \end{alertblock}
+            \vspace{0.3em}
+            \begin{exampleblock}{Ocean Wave Analogy}
+                \footnotesize
+                Think of frequency as how rapidly waves arrive at the beach. Low frequency = slow gentle rollers that travel far. High frequency = rapid choppy waves that die out quickly.
+            \end{exampleblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE: HALF-DUPLEX AND MODULATION
+% =============================================================================
+\begin{frame}{Half-Duplex: The Walkie-Talkie Constraint}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \footnotesize
+            \begin{itemize}
+                \item A wireless radio uses the \textbf{same antenna} to both transmit and receive.
+                \item It physically cannot do both at the same time---transmitting would deafen its own receiver.
+                \item This means \textbf{all Wi-Fi is half-duplex}: only one device on a channel can transmit at any instant.
+                \item \textbf{Modulation:} To encode data, the AP rapidly changes properties of the carrier wave---altering its phase or amplitude---to represent 1s and 0s.
+                \item \textbf{QAM (Quadrature Amplitude Modulation):} Modern Wi-Fi changes both phase \emph{and} amplitude simultaneously. 1024-QAM encodes 10 bits per symbol.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \begin{block}{Walkie-Talkie Analogy}
+                \footnotesize
+                Wireless works exactly like a walkie-talkie:\\[0.3em]
+                \textbf{``Can you hear me? Over.''}\\
+                \textbf{``Yes, loud and clear. Over.''}\\[0.3em]
+                Both sides share one frequency. If two people transmit simultaneously, signals collide and neither message gets through---hence the need for \emph{collision avoidance}.
+            \end{block}
+            \vspace{0.3em}
+            \begin{alertblock}{Contrast with Wired Ethernet}
+                \footnotesize
+                A switched Ethernet port is \emph{full-duplex}: it can send and receive simultaneously because the Tx and Rx wires are physically separate.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+\subsection{Frequency Bands}
+% =============================================================================
+
+% =============================================================================
+% SLIDE: 2.4 GHz vs 5 GHz vs 6 GHz
+% =============================================================================
+\begin{frame}[shrink=5]{Frequency Bands: 2.4 GHz, 5 GHz, and 6 GHz}
     \begin{table}[]
-        \renewcommand{\arraystretch}{1.5}
+        \renewcommand{\arraystretch}{1.3}
         \centering
-        \small
-        \begin{tabular}{|p{2.5cm}|p{5.5cm}|p{5.5cm}|}
+        \scriptsize
+        \begin{tabular}{|p{2.0cm}|p{3.4cm}|p{3.4cm}|p{3.0cm}|}
         \hline
-        \rowcolor[HTML]{EFEFEF} \textbf{Metric} & \textbf{2.4 GHz ISM Band} & \textbf{5 GHz UNII Bands} \\ \hline
-        \textbf{Wavelength} & $\approx 4.9$ inches (Longer) & $\approx 2.3$ inches (Shorter) \\ \hline
-        \textbf{Attenuation} & Excellent at penetrating drywall, brick, and wood. & Absorbed quickly by walls; heavily attenuated by water. \\ \hline
-        \textbf{Capacity} & Only 3 non-overlapping channels (1, 6, 11). & Up to 24 non-overlapping 20MHz channels. \\ \hline
-        \textbf{Interference} & Highly congested (Microwaves, Bluetooth, IoT, neighbors). & Relatively clean, though some channels require DFS (radar avoidance). \\ \hline
-        \textbf{Max Throughput} & Low (Usually constrained to 20MHz widths). & High (Supports 40MHz, 80MHz, and 160MHz channel bonding). \\ \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Property} & \textbf{2.4 GHz} & \textbf{5 GHz} & \textbf{6 GHz} \\ \hline
+        \textbf{Range} & Excellent (far, penetrates walls) & Moderate (shorter range) & Short (mostly indoor) \\ \hline
+        \textbf{Speed} & Limited (few channels, congested) & High (many wide channels) & Very High (fresh spectrum) \\ \hline
+        \textbf{Congestion} & Very crowded (microwaves, Bluetooth, neighbors) & Relatively clean & Uncrowded (new!) \\ \hline
+        \textbf{Non-overlapping ch.} & Only \textbf{3} (1, 6, 11) & Up to \textbf{24} at 20 MHz & Up to \textbf{59} at 20 MHz \\ \hline
+        \textbf{Standard} & 802.11b/g/n/ax & 802.11a/n/ac/ax & 802.11ax (6E), 802.11be \\ \hline
         \end{tabular}
     \end{table}
-\end{frame}
-
-% =============================================================================
-% SLIDE 8: 6 GHz
-% =============================================================================
-\begin{frame}{The New Frontier: 6 GHz and Wi-Fi 6E/7}
+    \vspace{0.2em}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{itemize}
-                \item \textbf{The Spectrum Starvation Problem:} Enterprise 5 GHz networks ran out of space when trying to bond channels for higher gigabit speeds.
-                \item \textbf{The 6 GHz Solution:} The FCC opened 1,200 MHz of entirely new, contiguous spectrum for Wi-Fi 6E and Wi-Fi 7.
-                \item Yields \textbf{59} new 20 MHz channels, or 7 massive 160 MHz channels.
-            \end{itemize}
+        \begin{column}{0.48\textwidth}
+            \begin{exampleblock}{Rule of Thumb}
+                \footnotesize
+                Choose \textbf{2.4 GHz} when range matters most (large homes, legacy IoT). Choose \textbf{5 or 6 GHz} when speed matters most (video, large files).
+            \end{exampleblock}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Greenfield Deployment}
-                Unlike 2.4/5 GHz, the 6 GHz band strictly prohibits legacy standards (802.11a/b/g/n/ac). Only highly efficient 802.11ax/be devices are allowed.
-                \\ \vspace{0.5em}
-                \textbf{Security Constraint:} WPA3 is strictly mandatory on the 6 GHz band. You cannot configure an open or WPA2 6 GHz SSID.
+            \begin{block}{The 6 GHz Greenfield Advantage}
+                \footnotesize
+                The 6 GHz band (Wi-Fi 6E and Wi-Fi 7) is \emph{brand new} spectrum with zero legacy devices. It \textbf{requires WPA3}---no open networks or WPA2 allowed.
             \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 9: CHANNELS
+\subsection{Channels and Interference}
 % =============================================================================
-\begin{frame}{Channels and Co-Channel Interference}
+
+% =============================================================================
+% SLIDE: CHANNELS EXPLAINED
+% =============================================================================
+\begin{frame}{Channels: Dividing the Spectrum into Lanes}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item The 2.4GHz band is 72 MHz wide, divided into 11 channels (in the US).
-                \item \textbf{The Math Problem:} Each 802.11 standard channel requires roughly 20-22 MHz of frequency space, but the channels are drawn only \textbf{5 MHz apart}.
-                \item Therefore, Channel 2 physically overlaps with 1, 3, 4, and 5. 
-                \item \textbf{CCI (Co-Channel):} APs on the exact same channel politely wait their turn.
-                \item \textbf{ACI (Adjacent Channel):} APs on overlapping channels (e.g., 1 and 2) talk over each other as unintelligible RF noise, causing massive packet loss.
+                \item The 2.4 GHz band is about 72 MHz wide. The US defines 11 numbered \keyterm{channels}, each 22 MHz wide---but spaced only \textbf{5 MHz apart}.
+                \item \textbf{The Math Problem:} Because channels are wider than their spacing, most physically \emph{overlap} in frequency.
+                \item \textbf{Co-Channel Interference (CCI):} Two APs on the \emph{same} channel. They politely take turns (CSMA/CA). Manageable.
+                \item \textbf{Adjacent-Channel Interference (ACI):} Two APs on \emph{overlapping but different} channels. They cannot coordinate---RF static. Far worse than CCI.
+                \item In the US, only channels \textbf{1, 6, and 11} are far enough apart to be non-overlapping.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.75]
-                    % Frequency line
-                    \draw[thick, ->] (0,0) -- (7.5,0) node[right, font=\scriptsize] {Freq (GHz)};
-                    
+                \begin{tikzpicture}[scale=0.72]
+                    \draw[thick, ->] (-0.2,0) -- (7.8,0) node[right, font=\scriptsize] {Freq (GHz)};
+                    \node[font=\tiny] at (0,   -0.35) {2.412};
+                    \node[font=\tiny] at (2.5, -0.35) {2.437};
+                    \node[font=\tiny] at (5.0, -0.35) {2.462};
+
                     % Channel 1
-                    \draw[fill=rctcblue!30, draw=rctcblue, channel curve] (0,0) to[out=90,in=180] (1.5,2) to[out=0,in=90] (3,0);
-                    \node[font=\footnotesize, font=\bfseries] at (1.5, 1) {Ch 1};
-                    
-                    % Channel 2 (overlapping)
-                    \draw[fill=gray!20, draw=gray, channel curve, dashed] (0.5,0) to[out=90,in=180] (2.0,1.5) to[out=0,in=90] (3.5,0);
-                    \node[font=\tiny] at (2.0, 0.5) {Ch 2};
-                    
+                    \draw[fill=rctcblue!30, draw=rctcblue, thick, opacity=0.8]
+                        (0,0) to[out=85,in=180] (1.2,2.2) to[out=0,in=95] (2.4,0);
+                    \node[font=\footnotesize\bfseries, text=rctcblue] at (1.2, 1.2) {Ch 1};
+
+                    % Channel 3 (overlapping -- bad)
+                    \draw[fill=alertred!25, draw=alertred, thick, dashed, opacity=0.8]
+                        (0.8,0) to[out=85,in=180] (2.0,1.6) to[out=0,in=95] (3.2,0);
+                    \node[font=\tiny, text=alertred, align=center] at (2.0, 0.65) {Ch 3\\(ACI!)};
+
                     % Channel 6
-                    \draw[fill=networkgreen!30, draw=networkgreen, channel curve] (2.2,0) to[out=90,in=180] (3.7,2) to[out=0,in=90] (5.2,0);
-                    \node[font=\footnotesize, font=\bfseries] at (3.7, 1) {Ch 6};
-                    
+                    \draw[fill=networkgreen!30, draw=networkgreen, thick, opacity=0.8]
+                        (2.2,0) to[out=85,in=180] (3.5,2.2) to[out=0,in=95] (4.8,0);
+                    \node[font=\footnotesize\bfseries, text=networkgreen] at (3.5, 1.2) {Ch 6};
+
                     % Channel 11
-                    \draw[fill=aborange!30, draw=aborange, channel curve] (4.4,0) to[out=90,in=180] (5.9,2) to[out=0,in=90] (7.4,0);
-                    \node[font=\footnotesize, font=\bfseries] at (5.9, 1) {Ch 11};
+                    \draw[fill=aborange!30, draw=aborange, thick, opacity=0.8]
+                        (4.5,0) to[out=85,in=180] (5.8,2.2) to[out=0,in=95] (7.1,0);
+                    \node[font=\footnotesize\bfseries, text=aborange] at (5.8, 1.2) {Ch 11};
+
+                    \node[font=\tiny, align=center, fill=rctcblue!10, draw=rctcblue, rounded corners]
+                        at (3.5, -1.0) {Non-overlapping: 1, 6, 11};
                 \end{tikzpicture}
             \end{center}
             \vspace{0.2em}
-            \begin{center}
-                \scriptsize\parbox{0.92\linewidth}{\centering \textbf{2.4 GHz rule:}\\Use channels \textbf{1, 6, and 11} only.}
-            \end{center}
+            \begin{alertblock}{Key Rule}
+                \footnotesize
+                Never assign a 2.4 GHz AP to channels 2--5, 7--10, or 12. Use only \textbf{1, 6, or 11}.
+            \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 10: CSMA/CA
+\subsection{CSMA/CA and the Hidden Node Problem}
 % =============================================================================
-\begin{frame}{CSMA/CA \& The Hidden Node Problem}
+
+% =============================================================================
+% SLIDE: CSMA/CA
+% =============================================================================
+\begin{frame}{CSMA/CA: ``Listen Before You Talk''}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \textbf{CSMA/CA} relies on a Clear Channel Assessment (CCA).
-                \item \textbf{Hidden Node Problem:} Laptop A and Laptop B can both reach the AP, but are too far apart to hear \emph{each other}. They might transmit simultaneously, causing a collision at the AP.
-                \item \textbf{Solution (RTS/CTS):} Instead of just sending data, the device sends a tiny Request-To-Send. The AP replies with a Clear-To-Send, which tells \emph{all} other devices to set their Network Allocation Vector (NAV) timer and be quiet.
+                \item Wired Ethernet used CSMA/\textbf{CD} (Collision \emph{Detection}): transmit, detect a collision after the fact, and retransmit. This works because wired devices \emph{can} hear a collision while transmitting.
+                \item Wi-Fi cannot detect collisions while transmitting (half-duplex), so it uses CSMA/\textbf{CA} (Collision \emph{Avoidance}).
+                \item \textbf{Step 1 -- Listen:} Before transmitting, the device checks if the channel is idle (\keyterm{Clear Channel Assessment}).
+                \item \textbf{Step 2 -- Wait:} If busy, the device sets a random \keyterm{backoff timer} and waits.
+                \item \textbf{Step 3 -- Transmit:} When the timer expires and the channel is still idle, the device sends.
+                \item \textbf{Step 4 -- ACK:} The receiver confirms receipt. No ACK = retransmit.
             \end{itemize}
         \end{column}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.44\textwidth}
+            \begin{exampleblock}{Classroom Analogy}
+                \footnotesize
+                CSMA/CA works like a polite classroom: before speaking, you \emph{listen} to ensure no one else is talking. If someone is, you wait a random amount of time before trying again. The random wait prevents everyone from retrying at the same moment.
+            \end{exampleblock}
+            \vspace{0.3em}
+            \begin{alertblock}{Why Backoff is Random}
+                \footnotesize
+                If all devices waited the \emph{same} amount of time, they would all retry simultaneously and collide again. A random timer means they retry at different moments, letting one get through first.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE: HIDDEN NODE AND RTS/CTS
+% =============================================================================
+\begin{frame}{The Hidden Node Problem and RTS/CTS}
+    \begin{columns}[T]
+        \begin{column}{0.46\textwidth}
+            \begin{block}{The Hidden Node Problem}
+                \footnotesize
+                Laptop A and Laptop B can both reach the AP, but they are on opposite sides of the building and \emph{cannot hear each other}. CSMA/CA fails: each thinks the channel is idle and transmits simultaneously, causing a collision at the AP.
+            \end{block}
+            \vspace{0.3em}
+            \begin{block}{The Fix: RTS/CTS}
+                \footnotesize
+                \begin{enumerate}
+                    \item Laptop A sends a tiny \textbf{RTS} to the AP.
+                    \item The AP broadcasts a \textbf{CTS} to \emph{all} devices.
+                    \item All devices set a \keyterm{NAV} timer to stay silent.
+                    \item Laptop A transmits data safely.
+                \end{enumerate}
+            \end{block}
+        \end{column}
+        \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.50, every node/.style={transform shape}]
-                    \node[process] (listen) at (0,0) {Listen for Carrier};
-                    \node[decision] (idle) at (0,-1.8) {Channel Idle?};
-                    \node[process] (wait) at (-3,-1.8) {Backoff Timer};
-                    
-                    \node[process] (rts) at (0,-3.8) {Send RTS (Opt.)};
-                    \node[decision] (cts) at (0,-5.6) {Rx CTS?};
-                    
-                    \node[process] (send) at (0,-7.6) {Transmit Data};
-                    \node[decision] (ack) at (0,-9.4) {Rx ACK?};
-                    \node[process] (done) at (0,-11.2) {Transmission Complete};
-                    
-                    \draw[->, thick] (listen) -- (idle);
-                    \draw[->, thick] (idle) -- node[above, font=\scriptsize] {No} (wait);
-                    \draw[->, thick] (wait) |- (listen);
-                    
-                    \draw[->, thick] (idle) -- node[right, font=\scriptsize] {Yes} (rts);
-                    \draw[->, thick] (rts) -- (cts);
-                    
-                    \draw[->, thick] (cts) -- node[above, font=\scriptsize] {No} (3,-5.6) |- (wait);
-                    \draw[->, thick] (cts) -- node[right, font=\scriptsize] {Yes} (send);
-                    
-                    \draw[->, thick] (send) -- (ack);
-                    \draw[->, thick] (ack) -- node[above, font=\scriptsize] {No} (3,-9.4) |- (wait);
-                    \draw[->, thick] (ack) -- node[right, font=\scriptsize] {Yes} (done);
+                \begin{tikzpicture}[scale=0.72]
+                    % AP in center
+                    \node[wifi] (ap) at (3, 1.8) {\iconwifi[0.7cm]};
+                    \node[font=\scriptsize, above=0.05cm of ap] {AP};
+
+                    % Laptop A left
+                    \node[laptop] (la) at (0.2, 1.8) {\iconlaptop[0.55cm]};
+                    \node[font=\scriptsize, left=0.05cm of la] {A};
+
+                    % Laptop B right
+                    \node[laptop] (lb) at (5.8, 1.8) {\iconlaptop[0.55cm]};
+                    \node[font=\scriptsize, right=0.05cm of lb] {B};
+
+                    % Coverage circles (use coordinate units so scale applies)
+                    \draw[rctcblue, dashed, thick, opacity=0.45] (0.2, 1.8) circle (2.0);
+                    \draw[networkgreen, dashed, thick, opacity=0.45] (5.8, 1.8) circle (2.0);
+
+                    % A to AP (RTS)
+                    \draw[ethernet, rctcblue] (la) -- (ap) node[midway, above, font=\tiny] {RTS};
+                    % AP to B (CTS)
+                    \draw[ethernet, networkgreen] (ap) -- (lb) node[midway, above, font=\tiny] {CTS};
+
+                    % A and B cannot see each other
+                    \draw[dashed, alertred, thick]
+                        (la) -- (lb) node[midway, below, font=\tiny, text=alertred] {Cannot hear each other};
+
+                    \node[font=\tiny, align=center] at (3, -0.5)
+                        {RTS/CTS breaks the hidden-node deadlock};
                 \end{tikzpicture}
             \end{center}
         \end{column}
@@ -301,140 +402,160 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 11: SECTION 2 INTRO
+\section{Wi-Fi Standards}
+\subsection{The 802.11 Family}
 % =============================================================================
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Section 2}\\
-        \vspace{0.5em}
-        \Large \textcolor{rctcblue}{Wireless Standards (802.11)}
-    \end{center}
-\end{frame}
+
+\sectionslide{Section 2: Wi-Fi Standards}
 
 % =============================================================================
-% SLIDE 12: EVOLUTION OF WI-FI (TABLE)
+% SLIDE: STANDARDS TABLE
 % =============================================================================
-\begin{frame}{The Evolution of Wi-Fi: Standards and Generations}
+\begin{frame}{The 802.11 Family: A 25-Year Journey}
+    \footnotesize
     \begin{itemize}
-        \item The \keyterm{IEEE 802.11} working group defines the PHY (Physical) and MAC (Media Access Control) layers for wireless LANs.
-        \item The \keyterm{Wi-Fi Alliance} introduced generational names (Wi-Fi 4, 5, 6) to simplify marketing and consumer understanding.
+        \item The \keyterm{IEEE 802.11} standard defines the physical (PHY) and media-access (MAC) layers for wireless LANs. Each new generation added a key technology to improve speed, range, or efficiency.
+        \item The \keyterm{Wi-Fi Alliance} introduced friendly names (Wi-Fi 4, 5, 6\ldots) for consumer marketing.
     \end{itemize}
-    
-    \vspace{0.3em}
+    \vspace{0.2em}
     \begin{table}[]
-        \renewcommand{\arraystretch}{1.4}
+        \renewcommand{\arraystretch}{1.3}
         \centering
         \scriptsize
         \resizebox{\textwidth}{!}{%
         \begin{tabular}{|l|l|l|l|l|}
         \hline
-        \rowcolor[HTML]{EFEFEF} \textbf{IEEE Standard} & \textbf{Wi-Fi Name} & \textbf{Frequency Band(s)} & \textbf{Max Theo. Speed} & \textbf{Key Physical Innovation} \\ \hline
-        \textbf{802.11b} (1999) & Wi-Fi 1 & 2.4 GHz & 11 Mbps & DSSS (Direct Sequence Spread Spectrum) \\ \hline
-        \textbf{802.11a} (1999) & Wi-Fi 2 & 5 GHz & 54 Mbps & OFDM (Orthogonal Frequency Division) \\ \hline
-        \textbf{802.11g} (2003) & Wi-Fi 3 & 2.4 GHz & 54 Mbps & Brought OFDM to the 2.4 GHz band \\ \hline
-        \textbf{802.11n} (2009) & Wi-Fi 4 & 2.4 GHz \& 5 GHz & 600 Mbps & \textbf{MIMO} (Multiple Input, Multiple Output) \\ \hline
-        \textbf{802.11ac} (2013) & Wi-Fi 5 & 5 GHz only & 6.9 Gbps & \textbf{MU-MIMO} (Downlink), 160MHz Channels \\ \hline
-        \textbf{802.11ax} (2019) & Wi-Fi 6 / 6E & 2.4, 5, \& 6 GHz & 9.6 Gbps & \textbf{OFDMA} (Resource Units), BSS Coloring \\ \hline
-        \textbf{802.11be} (2024+) & Wi-Fi 7 & 2.4, 5, \& 6 GHz & 46 Gbps & \textbf{MLO} (Multi-Link Operation), 320MHz Ch. \\ \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Standard} & \textbf{Wi-Fi Name} & \textbf{Band(s)} & \textbf{Max Speed} & \textbf{Key Innovation} \\ \hline
+        802.11b (1999) & Wi-Fi 1 & 2.4 GHz & 11 Mbps & \textbf{DSSS} -- reliable, slow; started the Wi-Fi revolution \\ \hline
+        802.11a (1999) & Wi-Fi 2 & 5 GHz   & 54 Mbps & \textbf{OFDM} -- splits signal into sub-carriers; much faster \\ \hline
+        802.11g (2003) & Wi-Fi 3 & 2.4 GHz & 54 Mbps & Brought OFDM's speed to the 2.4 GHz band \\ \hline
+        802.11n (2009) & Wi-Fi 4 & 2.4 \& 5 GHz & 600 Mbps & \textbf{MIMO} -- multiple antennas, multiple data streams \\ \hline
+        802.11ac (2013) & Wi-Fi 5 & 5 GHz only & 6.9 Gbps & \textbf{MU-MIMO} (downlink), 160 MHz channel bonding \\ \hline
+        802.11ax (2019) & Wi-Fi 6/6E & 2.4, 5, \& 6 GHz & 9.6 Gbps & \textbf{OFDMA} -- serves many clients per transmission \\ \hline
+        802.11be (2024+) & Wi-Fi 7 & 2.4, 5, \& 6 GHz & 46 Gbps & \textbf{MLO} -- simultaneous multi-band links \\ \hline
         \end{tabular}
         }
     \end{table}
 \end{frame}
 
 % =============================================================================
-% SLIDE 13: LEGACY STANDARDS
+% SLIDE: EARLY STANDARDS
 % =============================================================================
-\begin{frame}{Legacy Standards: 802.11a, b, and g}
+\begin{frame}{Early Standards: 802.11b, a, and g}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{block}{The Pioneers}
-                \begin{itemize}
-                    \item \textbf{802.11b:} Used \keyterm{DSSS} (Direct Sequence Spread Spectrum). Highly resilient to interference but very slow (11 Mbps). Ignited the Wi-Fi revolution.
-                    \item \textbf{802.11a:} Operated exclusively in the 5 GHz band. Used \keyterm{OFDM}, which splits the signal across multiple subcarriers. Much faster (54 Mbps) but lacked range.
-                    \item \textbf{802.11g:} The grand compromise. Brought the speed of OFDM (54 Mbps) down to the 2.4 GHz band. Backwards compatible with 802.11b devices.
-                \end{itemize}
+        \begin{column}{0.52\textwidth}
+            \begin{block}{802.11b --- The Standard That Started It All}
+                \footnotesize
+                Used \keyterm{DSSS (Direct Sequence Spread Spectrum)}: data is spread across a wide swath of the 2.4 GHz band simultaneously. Very resistant to interference, but tops out at just \textbf{11 Mbps}. Its simplicity made Wi-Fi affordable for consumers in the early 2000s.
+            \end{block}
+            \vspace{0.3em}
+            \begin{block}{802.11a --- The Fast but Forgotten Standard}
+                \footnotesize
+                Operated only on 5 GHz using \keyterm{OFDM (Orthogonal Frequency Division Multiplexing)}: the channel is split into many narrow sub-carriers transmitted in parallel, reaching \textbf{54 Mbps}. Great speed, but poor wall penetration limited its popularity.
             \end{block}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{The Problem with Legacy}
-                Because 802.11g had to remain backwards compatible with 802.11b, it introduced \textbf{protection mechanisms} (like sending RTS/CTS frames at 1 Mbps) so older devices wouldn't accidentally transmit. 
-                \\ \vspace{0.5em}
-                This overhead destroyed network efficiency. \textbf{Best Practice:} Disable legacy 802.11b rates (1, 2, 5.5, 11 Mbps) on modern enterprise networks.
+        \begin{column}{0.44\textwidth}
+            \begin{block}{802.11g --- The Grand Compromise}
+                \footnotesize
+                Took 802.11a's OFDM speed and brought it to the popular 2.4 GHz band: \textbf{54 Mbps} with good range. Backwards-compatible with 802.11b devices.
+            \end{block}
+            \vspace{0.3em}
+            \begin{alertblock}{The Backwards-Compatibility Trap}
+                \footnotesize
+                Supporting 802.11b \emph{required} the AP to send special slow protection frames (at 1--11 Mbps) so old devices would not interrupt fast clients. This overhead ate up airtime for everyone. \textbf{Best practice on modern networks: disable legacy (802.11b) data rates entirely.}
             \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 14: 802.11n (Wi-Fi 4)
+\subsection{MIMO and Modern Standards}
 % =============================================================================
-\begin{frame}{802.11n (Wi-Fi 4): Introducing MIMO}
+
+% =============================================================================
+% SLIDE: 802.11n and MIMO
+% =============================================================================
+\begin{frame}{802.11n (Wi-Fi 4): MIMO Turns Multipath into an Advantage}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \textbf{802.11n} revolutionized Wi-Fi by introducing \keyterm{MIMO (Multiple Input, Multiple Output)}.
-                \item Previous standards suffered from \keyterm{Multipath Interference} (signals bouncing off walls and arriving out of phase, destroying the data).
-                \item MIMO uses multiple antennas and complex digital signal processing to treat multipath echoes as a \emph{benefit}, reconstructing the separated streams.
-                \item \textbf{Spatial Multiplexing:} Sending multiple independent data streams simultaneously over the exact same frequency channel.
+                \item \textbf{The old problem:} A signal bouncing off walls arrives at the receiver from multiple paths, slightly delayed. These \keyterm{multipath echoes} interfere with each other and corrupt the data.
+                \item \textbf{The MIMO insight:} What if those separate paths each carried a \emph{different} stream of data? 802.11n introduced \keyterm{MIMO (Multiple Input, Multiple Output)}: an AP with 3 antennas can transmit 3 independent spatial streams to a 3-antenna client.
+                \item Result: the same channel now carries 3$\times$ the data. 802.11n reached \textbf{600 Mbps} on 5 GHz with 4 streams.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{exampleblock}{Antenna Configurations}
-                You will see APs listed as \textbf{2x2:2} or \textbf{4x4:4}.
-                \begin{itemize}
-                    \item First number: Transmit antennas (Tx)
-                    \item Second number: Receive antennas (Rx)
-                    \item Third number: Spatial Streams
-                \end{itemize}
-                A 3x3:3 AP can send three distinct streams of data to a 3x3:3 laptop, effectively tripling the throughput compared to legacy standards.
+        \begin{column}{0.44\textwidth}
+            \begin{exampleblock}{Highway Lane Analogy}
+                \footnotesize
+                Before MIMO, a channel was a one-lane road. MIMO adds more lanes to the same road---the speed limit (frequency) hasn't changed, but multiple cars travel simultaneously.
             \end{exampleblock}
+            \vspace{0.3em}
+            \begin{block}{Reading an Antenna Spec}
+                \footnotesize
+                Access points are listed as \textbf{Tx$\times$Rx:Streams} (e.g., \textbf{3$\times$3:3}).
+                \begin{itemize}
+                    \item \textbf{3$\times$3:3} = 3 transmit, 3 receive, 3 spatial streams.
+                    \item The client must also support 3 streams to benefit.
+                    \item A 3$\times$3:3 AP talking to a 1$\times$1:1 phone gives only 1 stream.
+                \end{itemize}
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 15: 802.11ac (Wi-Fi 5)
+% SLIDE: 802.11ac
 % =============================================================================
-\begin{frame}{802.11ac (Wi-Fi 5): Wider Channels and MU-MIMO}
+\begin{frame}{802.11ac (Wi-Fi 5): Wider Channels and Multi-User MIMO}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \textbf{5 GHz Exclusive:} 802.11ac abandoned the 2.4 GHz band to focus entirely on the wider, cleaner 5 GHz spectrum.
-                \item \textbf{Channel Bonding:} Allowed bonding 20 MHz channels into 40, 80, or even 160 MHz contiguous blocks, acting like a wider highway for massive throughput.
-                \item \textbf{Downlink MU-MIMO:} (Multi-User MIMO). While 802.11n could only talk to one client at a time (SU-MIMO), 802.11ac APs could form separate RF beams to talk to \emph{multiple different clients} at the exact same millisecond.
+                \item \textbf{5 GHz only:} 802.11ac moved entirely to 5 GHz to gain access to the many uncongested channels there.
+                \item \keyterm{Channel Bonding:} Instead of a single 20 MHz channel, 802.11ac bonds multiple channels together---40, 80, or even 160 MHz---creating a much wider ``highway.'' An 80 MHz channel carries roughly 4$\times$ as much data as a 20 MHz channel.
+                \item \keyterm{MU-MIMO (Multi-User MIMO):} 802.11n served one client at a time. 802.11ac can transmit to \emph{multiple clients simultaneously} by mathematically steering separate beams.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{The MU-MIMO Limitation}
-                In 802.11ac, MU-MIMO only worked on the \textbf{downlink} (AP to clients). Furthermore, clients had to be physically separated so the AP's mathematical "nulls" (RF blind spots) could keep the streams from interfering.
+        \begin{column}{0.44\textwidth}
+            \begin{alertblock}{The Downlink-Only Limitation}
+                \footnotesize
+                In 802.11ac, MU-MIMO only works on \textbf{downlink} (AP to client). Clients still take turns sending \emph{up} to the AP. This was fixed in Wi-Fi 6.
             \end{alertblock}
-            \begin{block}{QAM Upgrade}
-                Moved from 64-QAM to \textbf{256-QAM}, cramming more bits into every RF symbol, provided the client was very close to the AP (high SNR).
+            \vspace{0.3em}
+            \begin{block}{256-QAM}
+                \footnotesize
+                802.11ac introduced \textbf{256-QAM}: each RF symbol now encodes 8 bits (up from 6 bits in 64-QAM). More bits per symbol = higher throughput---but only when the client is close enough for a clean, high-SNR signal.
             \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 16: 802.11ax & 802.11be
+% SLIDE: 802.11ax and 802.11be
 % =============================================================================
-\begin{frame}{Modern Standards: 802.11ax (Wi-Fi 6) \& 802.11be (Wi-Fi 7)}
+\begin{frame}{802.11ax (Wi-Fi 6) and 802.11be (Wi-Fi 7)}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{block}{802.11ax (Wi-Fi 6 \& 6E)}
+        \begin{column}{0.50\textwidth}
+            \begin{block}{Wi-Fi 6 --- Designed for Crowded Networks}
+                \footnotesize
                 \begin{itemize}
-                    \item \textbf{Goal: Efficiency.} Older Wi-Fi was fast for one user; Wi-Fi 6 is fast for \emph{hundreds} of users simultaneously.
-                    \item \keyterm{OFDMA}: Chops a standard 20 MHz channel into smaller \textbf{Resource Units (RUs)}. The AP can now pack payloads for a laptop, a phone, and a smart thermostat into a single transmission.
-                    \item \textbf{BSS Coloring:} Adds a tag to frames so APs on the same channel can ignore each other's traffic, reducing Co-Channel Interference delays.
+                    \item Wi-Fi 5 was fast in the lab; Wi-Fi 6 is fast \emph{at a stadium concert}.
+                    \item \keyterm{OFDMA}: The AP subdivides a single 20 MHz channel into smaller \textbf{Resource Units (RUs)} and sends data to \emph{many clients in one transmission}---like packing multiple letters into one envelope.
+                    \item \keyterm{BSS Coloring:} APs add a ``color'' tag so nearby APs on the same channel can identify and ignore each other's traffic, reducing unnecessary backoffs.
+                    \item \textbf{Target Wake Time (TWT):} IoT devices agree on sleep schedules with the AP, saving battery.
                 \end{itemize}
             \end{block}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{802.11be (Wi-Fi 7)}
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Wi-Fi 7 --- Ultra-High Throughput}
+                \footnotesize
                 \begin{itemize}
-                    \item \textbf{Goal: Extreme Throughput.} Designed to replace wired Ethernet for VR and uncompressed video.
-                    \item \keyterm{MLO (Multi-Link Operation)}: A Wi-Fi 7 device can connect to the 5 GHz and 6 GHz bands \emph{simultaneously}, aggregating the bandwidth and dropping latency to near-zero.
-                    \item \textbf{4096-QAM:} Packs 12 bits per symbol (requires pristine RF conditions).
+                    \item \keyterm{MLO (Multi-Link Operation):} A device connects to two bands \emph{simultaneously} (e.g., 5 + 6 GHz), aggregating their bandwidth. If one band gets congested, traffic shifts to the other instantly.
+                    \item \textbf{4096-QAM:} 12 bits per symbol---requires near-perfect signal conditions.
+                    \item \textbf{320 MHz channels} in 6 GHz for massive throughput.
+                    \item Targets \textbf{46 Gbps}---designed to replace wired cables for VR and 8K video.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -442,85 +563,89 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 17: CASE STUDY SCENARIO
+% SLIDE: CASE STUDY 1 SCENARIO
 % =============================================================================
 \begin{frame}{Case Study: Dustin's Airtime Anomaly}
     \begin{casestudy}{The Legacy Device Drag}
-        Dustin Henderson, Senior RF Engineer at Hawkins National Lab, is frustrated. The lab just spent \$50,000 upgrading the research wing to state-of-the-art \textbf{Wi-Fi 6 (802.11ax)} access points. 
-        
-        \vspace{0.5em}
-        However, researchers are complaining that the network periodically crawls to a halt. Dustin runs a packet capture and discovers that a single, ancient barcode scanner operating on \textbf{802.11b (11 Mbps)} is actively connecting to the 2.4 GHz network to inventory test tubes.
+        \footnotesize
+        Dustin Henderson, Senior RF Engineer at Hawkins National Lab, is frustrated. The lab just spent \$50{,}000 upgrading the research wing to brand-new \textbf{Wi-Fi 6 (802.11ax)} access points. On paper the network should fly.
+
+        \vspace{0.3em}
+        Instead, researchers complain the network \emph{periodically crawls to a halt}. Dustin pulls a packet capture from the WLC and finds high channel utilization and massive retries---then spots the culprit: a \textbf{single barcode scanner} running 802.11b at 11 Mbps is associating to the 2.4 GHz network during inventory checks.
     \end{casestudy}
-    
+
     \begin{block}{Review Questions}
+        \footnotesize
         \begin{enumerate}
-            \item What frequency band is the barcode scanner using?
-            \item Why would a single slow device cause the brand-new Wi-Fi 6 laptops to slow down?
-            \item What configuration change should Dustin make to the APs to permanently resolve this?
+            \item What frequency band and maximum speed does the 802.11b barcode scanner operate on?
+            \item Wi-Fi is shared and half-duplex. Why would \emph{one} slow device degrade performance for \emph{all} other, faster devices?
+            \item What specific configuration change should Dustin make to resolve this permanently?
         \end{enumerate}
     \end{block}
 \end{frame}
 
 % =============================================================================
-% SLIDE 18: CASE STUDY SOLUTION
+% SLIDE: CASE STUDY 1 SOLUTION
 % =============================================================================
 \begin{frame}{Case Study Solution: Dustin's Airtime Anomaly}
     \begin{casesolution}{The Legacy Device Drag}
+        \footnotesize
         \begin{enumerate}
-            \item The 802.11b scanner operates exclusively on the \textbf{2.4 GHz band}.
-            \item \textbf{Airtime Fairness / The Slow Client Problem:} Wi-Fi is a shared, half-duplex medium. It takes the 802.11b scanner a massive amount of "airtime" to send a tiny payload (because it is transmitting at 1 or 11 Mbps). While the slow scanner is occupying the channel, the Wi-Fi 6 laptops must wait in the CSMA/CA queue.
-            \item \textbf{Disable Legacy Data Rates:} Dustin must configure the Wireless LAN Controller to disable the 802.11b mandatory data rates (1, 2, 5.5, and 11 Mbps). 
+            \item The barcode scanner uses the \textbf{2.4 GHz band} at a maximum of \textbf{11 Mbps}.
+            \item \textbf{The Slow-Client / Airtime Problem:} Wi-Fi channels are time-shared. Because the scanner transmits at 11 Mbps, it occupies the channel for \emph{much longer} per byte than a Wi-Fi 6 laptop at 500+ Mbps. Every millisecond the scanner is transmitting, every other device must wait. The scanner monopolizes a disproportionate share of \emph{airtime} just to move a tiny payload.
+            \item \textbf{Disable Legacy Data Rates:} Dustin should configure the Wireless LAN Controller to disable 802.11b mandatory rates (1, 2, 5.5, and 11 Mbps). The AP will then refuse to associate with any 802.11b device, protecting airtime for modern clients.
         \end{enumerate}
     \end{casesolution}
-    
+
     \begin{alertblock}{Key Takeaway}
-        Disabling legacy data rates ensures the AP will simply refuse to associate with 802.11b devices, protecting the airtime for modern, highly efficient clients. Hawkins Lab will have to buy a new barcode scanner.
+        \footnotesize
+        One legacy device on a shared Wi-Fi channel is like one car driving 15 mph on a freeway---everyone behind it is stuck. Disabling legacy rates forces the scanner to be replaced, but protects the entire network.
     \end{alertblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 19: SECTION 3 INTRO
+\section{Enterprise Wireless Design}
+\subsection{Logical Design}
 % =============================================================================
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Section 3}\\
-        \vspace{0.5em}
-        \Large \textcolor{rctcblue}{Enterprise Wireless Design}
-    \end{center}
-\end{frame}
+
+\sectionslide{Section 3: Enterprise Wireless Design}
 
 % =============================================================================
-% SLIDE 20: LOGICAL DESIGN (SSID & VLAN)
+% SLIDE: SSIDs AND VLAN MAPPING
 % =============================================================================
-\begin{frame}{Logical Design: SSIDs and VLAN Mapping}
+\begin{frame}{Logical Design: SSIDs, VLANs, and Trunking}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item An \keyterm{SSID (Service Set Identifier)} is the network name broadcasted by the AP.
-                \item In an enterprise, an AP typically broadcasts multiple SSIDs simultaneously (e.g., \texttt{Corp-Secure}, \texttt{Guest-WiFi}, \texttt{IoT-Devices}).
-                \item Logically, each SSID is mapped to a specific \keyterm{VLAN} on the wired network.
-                \item The connection between the AP and the access switch must be an \textbf{802.1Q Trunk} to carry the separated VLAN traffic.
+                \item An \keyterm{SSID (Service Set Identifier)} is the network name clients see when searching for Wi-Fi.
+                \item One physical AP typically \emph{broadcasts multiple SSIDs} at once---for example: \texttt{Corp-Secure}, \texttt{Guest-WiFi}, and \texttt{IoT-Devices}.
+                \item Each SSID is logically mapped to a different \keyterm{VLAN}, keeping traffic separated just like separate physical networks.
+                \item Because multiple VLANs must travel over a single cable from the AP to the switch, that link must be an \textbf{802.1Q trunk}---it tags each frame with the VLAN ID.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.85]
+                \begin{tikzpicture}[scale=0.78]
                     \node[wifi] (ap) at (0,0) {\iconwifi[0.8cm]};
-                    \node[font=\scriptsize, above=0.1cm of ap] {Access Point};
-                    
-                    \node[font=\scriptsize, align=center, fill=rctcblue!10, rounded corners, draw=rctcblue] (ssid1) at (-3, 1.5) {\textbf{Corp-Secure} \\ \textit{Map: VLAN 10}};
-                    \node[font=\scriptsize, align=center, fill=networkgreen!10, rounded corners, draw=networkgreen] (ssid2) at (-3, 0) {\textbf{Guest-WiFi} \\ \textit{Map: VLAN 20}};
-                    \node[font=\scriptsize, align=center, fill=aborange!10, rounded corners, draw=aborange] (ssid3) at (-3, -1.5) {\textbf{IoT-Devices} \\ \textit{Map: VLAN 30}};
-                    
-                    \node[switch] (sw) at (3,0) {\iconswitch[0.8cm]};
-                    \node[font=\scriptsize, align=center, below=0.1cm of sw] {Access Switch};
-                    
-                    \draw[wireless, dashed, rctcblue] (ssid1) -- (ap);
-                    \draw[wireless, dashed, networkgreen] (ssid2) -- (ap);
-                    \draw[wireless, dashed, aborange] (ssid3) -- (ap);
-                    
-                    \draw[trunk, <->] (ap) -- (sw) node[midway, above, font=\scriptsize] {802.1Q Trunk};
-                    \node[font=\tiny, align=center] at (1.5, -0.4) {Tags traffic with\\VLAN 10, 20, 30};
+                    \node[font=\scriptsize, above=0.05cm of ap] {Access Point};
+
+                    \node[font=\scriptsize, align=center, fill=rctcblue!10, rounded corners, draw=rctcblue, minimum width=2.2cm]
+                        (s1) at (-3, 1.3) {\textbf{Corp-Secure}\\\textit{VLAN 10}};
+                    \node[font=\scriptsize, align=center, fill=networkgreen!10, rounded corners, draw=networkgreen, minimum width=2.2cm]
+                        (s2) at (-3, 0)   {\textbf{Guest-WiFi}\\\textit{VLAN 20}};
+                    \node[font=\scriptsize, align=center, fill=aborange!10, rounded corners, draw=aborange, minimum width=2.2cm]
+                        (s3) at (-3,-1.3) {\textbf{IoT-Devices}\\\textit{VLAN 30}};
+
+                    \node[switch] (sw) at (2.8, 0) {\iconswitch[0.7cm]};
+                    \node[font=\scriptsize, below=0.05cm of sw] {Access Switch};
+
+                    \draw[wireless noarrow, rctcblue]    (s1) -- (ap);
+                    \draw[wireless noarrow, networkgreen] (s2) -- (ap);
+                    \draw[wireless noarrow, aborange]     (s3) -- (ap);
+                    \draw[trunk, <->] (ap) -- (sw)
+                        node[midway, above, font=\scriptsize] {802.1Q Trunk};
+                    \node[font=\tiny, align=center] at (1.4,-0.45) {Tags: V10, V20, V30};
                 \end{tikzpicture}
             \end{center}
         \end{column}
@@ -528,407 +653,504 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 21: AUTONOMOUS VS LIGHTWEIGHT
+\subsection{AP Architectures}
 % =============================================================================
-\begin{frame}{Autonomous vs. Lightweight Architecture}
+
+% =============================================================================
+% SLIDE: FAT vs THIN APs
+% =============================================================================
+\begin{frame}{Autonomous vs.\ Lightweight APs: Scale Changes Everything}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Autonomous APs (Fat APs)}
+            \begin{block}{Autonomous (Fat) APs}
+                \footnotesize
                 \begin{itemize}
-                    \item Standalone, self-contained devices (like a standard home router).
-                    \item Each AP contains its own management, security protocols, routing intelligence, and QoS rules.
-                    \item \textbf{The Scaling Problem:} If an enterprise has 500 APs, a password change or firmware update requires logging into 500 separate management interfaces. \emph{It does not scale.}
+                    \item Fully self-contained: each AP manages its own authentication, security, QoS, and SSID settings.
+                    \item Works great for a home router or a single-AP coffee shop.
+                    \item \textbf{The scaling problem:} Imagine an enterprise with \textbf{500 APs}. Changing the Wi-Fi password---or updating firmware---means logging into 500 separate devices. One misconfigured AP breaks policy. Nightmare.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Lightweight APs (Thin APs)}
+            \begin{block}{Lightweight (Thin) APs}
+                \footnotesize
                 \begin{itemize}
-                    \item Stripped-down radios that do little more than broadcast RF and forward frames.
-                    \item All "brains" (authentication, roaming decisions, channel assignments, security) are moved to a centralized \keyterm{Wireless LAN Controller (WLC)}.
-                    \item \textbf{The Solution:} You configure the WLC once, and it pushes the configuration dynamically to all 500 APs instantly.
+                    \item The AP is reduced to a simple radio: it beacons, transmits, and forwards frames.
+                    \item All ``intelligence'' (auth, roaming, channel selection, policy) lives in a centralized \keyterm{Wireless LAN Controller (WLC)}.
+                    \item \textbf{The benefit:} Change a password on the WLC once---all 500 APs update instantly. Add a new SSID---all APs broadcast it within seconds.
+                    \item Enterprise networks almost always use this architecture.
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
+    \vspace{0.3em}
+    \begin{alertblock}{The WLC is a Critical Infrastructure Device}
+        \footnotesize
+        If the WLC fails and thin APs cannot reach it, wireless service for the entire site goes down. Always deploy WLCs in redundant pairs.
+    \end{alertblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 22: WLC AND CAPWAP
+% SLIDE: CAPWAP
 % =============================================================================
-\begin{frame}{The WLC and CAPWAP Tunnels}
+\begin{frame}{The WLC and CAPWAP: How Thin APs Phone Home}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.46\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item Lightweight APs communicate with the WLC using \keyterm{CAPWAP} (Control and Provisioning of Wireless Access Points), UDP ports 5246/5247.
-                \item \textbf{Split-MAC Architecture:} 
+                \item Thin APs communicate with the WLC using \keyterm{CAPWAP (Control and Provisioning of Wireless Access Points)}, over UDP ports \textbf{5246} (control) and \textbf{5247} (data).
+                \item \textbf{Split-MAC Architecture:}
                     \begin{itemize}
-                        \item \textbf{AP handles real-time tasks:} Beacons, ACKs, and RF transmission.
-                        \item \textbf{WLC handles management:} Authentication, roaming, and security.
+                        \item \textbf{AP:} Time-sensitive RF tasks---beacons, ACKs, encryption.
+                        \item \textbf{WLC:} Policy tasks---authentication, roaming decisions, channel allocation.
                     \end{itemize}
-                \item \textbf{Data Tunneling:} In most enterprise designs, all user Wi-Fi traffic is tunneled directly to the WLC before being dropped onto the wired LAN.
+                \item \textbf{Data Tunneling:} In most designs, user traffic is encapsulated inside a CAPWAP tunnel and sent to the WLC before being placed on the wired LAN, giving the WLC full visibility and control.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.50\textwidth}
             \begin{center}
-                \begin{tikzpicture}[scale=0.85]
-                    \node[wifi] (ap) at (0,0) {\iconwifi[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of ap] {LAP};
-                    
-                    \node[switch] (sw1) at (2.5,0) {\iconswitch[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of sw1] {Switch};
-                    
-                    \node[router] (rt) at (5,0) {\iconrouter[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of rt] {Router};
-                    
-                    \node[server] (wlc) at (7.5,0) {\iconserver[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of wlc] {WLC};
-                    
-                    % Physical Connections
-                    \draw[ethernet noarrow] (ap) -- (sw1);
-                    \draw[ethernet noarrow] (sw1) -- (rt);
+                \begin{tikzpicture}[scale=0.75]
+                    \node[wifi]   (ap)  at (0,0)   {\iconwifi[0.55cm]};
+                    \node[font=\tiny, below=0.05cm of ap] {Thin AP};
+
+                    \node[switch] (sw)  at (2.4,0) {\iconswitch[0.55cm]};
+                    \node[font=\tiny, below=0.05cm of sw] {Switch};
+
+                    \node[router] (rt)  at (4.8,0) {\iconrouter[0.55cm]};
+                    \node[font=\tiny, below=0.05cm of rt] {Router};
+
+                    \node[server] (wlc) at (7.2,0) {\iconserver[0.55cm]};
+                    \node[font=\tiny, below=0.05cm of wlc] {WLC};
+
+                    \draw[ethernet noarrow] (ap) -- (sw);
+                    \draw[ethernet noarrow] (sw) -- (rt);
                     \draw[ethernet noarrow] (rt) -- (wlc);
-                    
-                    % CAPWAP Tunnel
-                    \draw[rctcblue, dashed, line width=1.5pt, bend left=35, <->] 
-                        (ap.north) to node[above, font=\scriptsize, align=center] {CAPWAP Tunnel\\(Control \& Data)} (wlc.north);
+
+                    \draw[rctcblue, dashed, line width=1.5pt, bend left=40, <->]
+                        (ap.north) to node[above, font=\tiny, align=center] {CAPWAP\\UDP 5246/5247} (wlc.north);
                 \end{tikzpicture}
             \end{center}
-            \vspace{0.2em}
-            \begin{alertblock}{Design Note}
-                Because all traffic flows through the WLC, the WLC must be placed at a high-bandwidth choke point (like the Core or Data Center).
-            \end{alertblock}
+            \vspace{0.3em}
+            \begin{block}{Design Implication}
+                \footnotesize
+                Since all traffic flows through the WLC, it must sit at a high-bandwidth point---typically in the data center or network core.
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 23: SITE SURVEYS
+\subsection{Physical Design}
 % =============================================================================
-\begin{frame}{Physical Design: The Site Survey}
+
+% =============================================================================
+% SLIDE: SITE SURVEYS
+% =============================================================================
+\begin{frame}{The Site Survey: Measure Before You Mount}
+    \footnotesize
     \begin{itemize}
-        \item A \keyterm{Site Survey} is the critical process of planning AP placement to ensure adequate coverage, capacity, and minimal interference.
+        \item A \keyterm{site survey} is the process of systematically planning AP placement to achieve adequate coverage, capacity, and minimal interference \emph{before} you start drilling holes in the ceiling.
     \end{itemize}
-    
-    \vspace{0.3em}
+    \vspace{0.2em}
     \begin{columns}[T]
         \begin{column}{0.32\textwidth}
             \begin{block}{Predictive Survey}
                 \footnotesize
-                Performed off-site using CAD floorplans and RF simulation software (e.g., Ekahau). Walls are drawn and assigned attenuation values (brick vs. drywall) to mathematically estimate AP coverage.
+                Done \emph{before} installation, using CAD floor plans in simulation software (e.g., Ekahau). You draw walls and assign each material an attenuation value (thick concrete vs.\ drywall). The software calculates predicted coverage zones so you can position APs on paper first.
             \end{block}
         \end{column}
         \begin{column}{0.32\textwidth}
             \begin{block}{Active Survey}
                 \footnotesize
-                An engineer walks the actual building with a testing laptop, actively connecting to test APs ("AP on a stick") to measure real-world throughput, latency, and packet loss.
+                Done \emph{during or after} installation. An engineer walks the building with a laptop, actively associating to test APs (``AP on a stick'') and measuring real-world RSSI, throughput, and packet loss. Produces a heat map of actual coverage.
             \end{block}
         \end{column}
         \begin{column}{0.32\textwidth}
             \begin{block}{Passive Survey}
                 \footnotesize
-                Walking the building with a spectrum analyzer purely to listen. Used to map existing RF noise, detect rogue APs, and identify non-Wi-Fi interference (microwaves, Bluetooth).
+                Walk the site with a spectrum analyzer set only to \emph{listen}---never transmit. Used to find existing RF noise, unauthorized APs, and non-Wi-Fi interference (microwaves, Bluetooth) before planning begins.
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{0.2em}
+    \begin{exampleblock}{Best Practice: Survey Order}
+        \footnotesize
+        Passive $\rightarrow$ Predictive $\rightarrow$ Install $\rightarrow$ Active. A passive survey first reveals interference you must design around.
+    \end{exampleblock}
+\end{frame}
+
+% =============================================================================
+% SLIDE: ANTENNAS AND COVERAGE CELLS
+% =============================================================================
+\begin{frame}{Antenna Types and Coverage Cell Design}
+    \begin{columns}[T]
+        \begin{column}{0.46\textwidth}
+            \footnotesize
+            \begin{itemize}
+                \item The antenna determines the \emph{shape} of the RF coverage zone, not just its size.
+                \item \keyterm{Omnidirectional (Dipole):} Radiates equally in all horizontal directions---a donut shape. Ideal for ceiling mounts in open-plan offices.
+                \item \keyterm{Directional (Patch / Yagi):} Focuses RF in one direction, increasing reach that way but reducing it elsewhere. Ideal for:
+                    \begin{itemize}
+                        \item Long hallways
+                        \item High warehouse ceilings (aimed down)
+                        \item Bridging two buildings
+                    \end{itemize}
+                \item \textbf{Roaming Overlap:} Adjacent APs need \textbf{15--20\% coverage overlap} so clients smoothly hand off as the user walks.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.68]
+                    % AP 1 cell
+                    \node[wifi] (ap1) at (0,0) {\iconwifi[0.5cm]};
+                    \draw[thick, rctcblue, fill=rctcblue!12, opacity=0.7] (0,0) circle (2.4);
+                    \node[font=\tiny\bfseries, text=rctcblue, align=center] at (-1.4, 0.6) {AP 1\\Ch 1};
+
+                    % AP 2 cell
+                    \node[wifi] (ap2) at (4.2,0) {\iconwifi[0.5cm]};
+                    \draw[thick, networkgreen, fill=networkgreen!12, opacity=0.7] (4.2,0) circle (2.4);
+                    \node[font=\tiny\bfseries, text=networkgreen, align=center] at (5.6, 0.6) {AP 2\\Ch 6};
+
+                    % Overlap label
+                    \node[font=\tiny\bfseries, align=center, text=alertred] at (2.1, 1.5) {15--20\%\\Overlap};
+
+                    % Walking user
+                    \node[phone] (usr) at (2.1, -1.0) {\iconphone[0.45cm]};
+                    \draw[->, thick, dashed, gray] (0.4,-1.0) -- (usr) -- (3.8,-1.0)
+                        node[right, font=\tiny] {Roaming};
+                \end{tikzpicture}
+            \end{center}
+            \vspace{0.2em}
+            \begin{alertblock}{Channel Rule for Adjacent Cells}
+                \footnotesize
+                Adjacent APs \emph{must} use non-overlapping channels. If AP1 is on Ch 1, then AP2 must be on Ch 6---never Ch 2 or 3.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE: CASE STUDY 2 SCENARIO
+% =============================================================================
+\begin{frame}{Case Study: Robin's Starcourt Site Survey}
+    \begin{casestudy}{The Food Court Dilemma}
+        \footnotesize
+        Robin Buckley is the network engineer designing Wi-Fi coverage for Starcourt Mall. She has two specific problems:
+
+        \vspace{0.3em}
+        \textbf{Problem 1 -- Food Court Density:} The food court hosts 200+ simultaneous smartphones during the lunch rush. A single AP in the center keeps dropping connections and running slow.
+
+        \vspace{0.3em}
+        \textbf{Problem 2 -- Signal Bleed:} The back-office SSID is bleeding out through the glass walls into the parking lot. Customers are accidentally associating to the corporate network from their cars.
+    \end{casestudy}
+
+    \begin{block}{Review Questions}
+        \footnotesize
+        \begin{enumerate}
+            \item For the dense food court, should Robin use a \emph{few high-powered} APs or \emph{many low-powered} APs? Why?
+            \item What specific type of antenna should Robin use near the glass walls to stop the signal from escaping into the parking lot?
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+% =============================================================================
+% SLIDE: CASE STUDY 2 SOLUTION
+% =============================================================================
+\begin{frame}{Case Study Solution: Robin's Starcourt Site Survey}
+    \begin{casesolution}{The Food Court Dilemma}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{Many Low-Powered APs (Microcells):} A single high-powered AP creates one giant coverage cell---all 200+ devices fight for airtime on one channel. Deploying many low-powered APs creates small cells that allow \emph{channel reuse}: AP1 on Ch 1, AP2 on Ch 6, AP3 on Ch 11, AP4 back on Ch 1, etc. This dramatically increases total capacity because each AP serves far fewer clients.
+
+            \item \textbf{Directional (Patch) Antennas:} Robin should mount patch antennas on the interior side of the perimeter walls, \emph{aimed inward}. A patch antenna concentrates its beam in one direction---facing into the mall. Standard omnidirectional APs broadcast a 360\textdegree{} donut, sending half the energy directly through the glass into the parking lot.
+        \end{enumerate}
+    \end{casesolution}
+
+    \begin{alertblock}{Key Takeaway}
+        \footnotesize
+        Good wireless design is about precisely \emph{shaping} the RF cell---not blasting the strongest signal possible. Coverage, capacity, and containment must all be considered.
+    \end{alertblock}
+\end{frame}
+
+% =============================================================================
+\section{Wireless Security}
+\subsection{Encryption Protocols}
+% =============================================================================
+
+\sectionslide{Section 4: Wireless Security}
+
+% =============================================================================
+% SLIDE: WHY ENCRYPTION MATTERS
+% =============================================================================
+\begin{frame}{Why Wireless Encryption is Non-Negotiable}
+    \begin{columns}[T]
+        \begin{column}{0.46\textwidth}
+            \footnotesize
+            \begin{itemize}
+                \item A wired network requires physical access---an attacker must plug a cable in.
+                \item A wireless network broadcasts every frame into the air. Anyone with a Wi-Fi adapter and free software like Wireshark can \emph{capture everything} transmitted on an open (unencrypted) network.
+                \item On an open Wi-Fi network, captured traffic includes: web sessions, passwords, emails, and file transfers---all in plaintext.
+                \item \keyterm{Encryption} converts data into an unreadable form so even if an attacker captures every frame, they cannot read the contents without the key.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{alertblock}{Try This Right Now}
+                \footnotesize
+                Next time you connect to an open Wi-Fi hotspot (coffee shop, hotel), every HTTP packet you send can be captured by anyone else in the room. This is why \textbf{HTTPS} (TLS) and \textbf{VPNs} are especially critical on untrusted Wi-Fi.
+            \end{alertblock}
+            \vspace{0.3em}
+            \begin{block}{The Attacker's View (Open Wi-Fi)}
+                \begin{center}
+                    \begin{tikzpicture}[scale=0.72]
+                        \node[laptop] (v) at (0,0)    {\iconlaptop[0.5cm]};
+                        \node[font=\tiny, below=0.05cm of v] {You};
+                        \node[wifi]   (a) at (3,0)    {\iconwifi[0.5cm]};
+                        \node[font=\tiny, below=0.05cm of a] {Open AP};
+                        \node[pc]     (h) at (1.5,-1.8) {\iconpc[0.5cm]};
+                        \node[font=\tiny, text=alertred, below=0.05cm of h] {Attacker};
+                        \draw[wireless noarrow] (v) -- (a);
+                        \draw[wireless, alertred, thick] (h) -- (v)
+                            node[midway, left, font=\tiny, text=alertred] {reads all};
+                    \end{tikzpicture}
+                \end{center}
             \end{block}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 24: ANTENNAS & ROAMING
+% SLIDE: EVOLUTION OF ENCRYPTION
 % =============================================================================
-\begin{frame}[shrink=10]{Antenna Types and Coverage Cells}
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{itemize}
-                \item \keyterm{Omnidirectional (Dipole):} Radiates RF energy equally in a 360-degree donut shape. Ideal for ceiling mounts in the center of standard rooms.
-                \item \keyterm{Directional (Patch/Yagi):} Focuses RF energy in a specific direction, increasing gain (reach) in that direction while reducing it elsewhere. Ideal for long hallways, high warehouse ceilings, or bridging buildings.
-            \end{itemize}
-            
-            \vspace{0.3em}
-            \begin{exampleblock}{Seamless Roaming}
-                As a user walks, their device must seamlessly \keyterm{roam} from AP 1 to AP 2. This requires exactly \textbf{15\% to 20\% coverage overlap} between the RF cells.
-            \end{exampleblock}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.7]
-                    % AP 1 and Cell
-                    \node[wifi] (ap1) at (0,0) {\iconwifi[0.5cm]};
-                    \draw[thick, rctcblue, fill=rctcblue!10, opacity=0.6] (0,0) circle (2.5cm);
-                    \node[font=\scriptsize] at (0, 0.8) {AP 1 (Ch 1)};
-                    
-                    % AP 2 and Cell
-                    \node[wifi] (ap2) at (4,0) {\iconwifi[0.5cm]};
-                    \draw[thick, networkgreen, fill=networkgreen!10, opacity=0.6] (4,0) circle (2.5cm);
-                    \node[font=\scriptsize] at (4, 0.8) {AP 2 (Ch 6)};
-                    
-                    % Roaming user
-                    \node[phone] (user) at (2, -1) {\iconphone[0.5cm]};
-                    \draw[->, thick, dashed] (0.5, -1) -- (user) -- (3.5, -1);
-                    
-                    % Overlap label
-                    \node[font=\scriptsize, align=center, text=alertred, font=\bfseries] at (2, 1.5) {15-20\%\\Overlap};
-                \end{tikzpicture}
-            \end{center}
-            \vspace{0.2em}
-            \scriptsize \textit{Note:} Adjacent APs must operate on non-overlapping channels. For 2.4 GHz, use 1 and 6 to prevent ACI in the roaming zone.
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% =============================================================================
-% SLIDE 25: CASE STUDY 2 SCENARIO
-% =============================================================================
-\begin{frame}[shrink=5]{Case Study: Robin's Starcourt Site Survey}
-    \begin{casestudy}{The Food Court Dilemma}
-        Robin Buckley is designing the AP layout for Starcourt Mall.
-        She needs dense coverage for the food court and must keep the back-office signal from bleeding into the parking lot.
-    \end{casestudy}
-    
-    \begin{block}{Review Questions}
-        \begin{enumerate}
-            \item For the dense food court, should Robin use a few high-powered APs or many low-powered APs? Why?
-            \item What specific type of antenna should Robin deploy near the glass doors to stop the signal from bleeding into the parking lot?
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-% =============================================================================
-% SLIDE 26: CASE STUDY 2 SOLUTION
-% =============================================================================
-\begin{frame}[shrink=5]{Case Study Solution: Robin's Starcourt Site Survey}
-    \begin{casesolution}{The Food Court Dilemma}
-        \begin{enumerate}
-            \item \textbf{Food Court Density:} She should deploy \textbf{many low-powered APs}. High-powered APs create massive coverage cells, forcing hundreds of devices to fight for airtime on a single channel (a CSMA/CA nightmare). Small, low-power cells (Microcells) allow Robin to reuse channels, dramatically increasing total bandwidth capacity.
-            \item \textbf{Parking Lot Bleed:} Robin should use \textbf{Directional (Patch) antennas} mounted on the interior perimeter walls, aimed \emph{inward} toward the mall. Standard omnidirectional antennas would radiate 360 degrees, sending half their RF energy straight through the glass into the parking lot.
-        \end{enumerate}
-    \end{casesolution}
-    
-    \begin{alertblock}{Key Takeaway}
-        Good wireless design isn't about making the signal as loud as possible; it is about strictly controlling the shape, size, and boundaries of the RF cell.
-    \end{alertblock}
-\end{frame}
-
-% =============================================================================
-% SLIDE 27: SECTION 4 INTRO
-% =============================================================================
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Section 4}\\
-        \vspace{0.5em}
-        \Large \textcolor{rctcblue}{Wireless Security \& Access}
-    \end{center}
-\end{frame}
-
-% =============================================================================
-% SLIDE 28: ENCRYPTION PROTOCOLS
-% =============================================================================
-\begin{frame}{The Evolution of Wireless Encryption}
-    \begin{itemize}
-        \item RF data is broadcasted in open air. Without encryption, anyone with a protocol analyzer (like Wireshark) can capture and read all network traffic.
-    \end{itemize}
-    
-    \vspace{0.3em}
+\begin{frame}{The Evolution of Wi-Fi Encryption}
     \begin{table}[]
-        \renewcommand{\arraystretch}{1.5}
+        \renewcommand{\arraystretch}{1.4}
         \centering
         \scriptsize
         \resizebox{\textwidth}{!}{%
-        \begin{tabular}{|l|l|l|l|}
+        \begin{tabular}{|l|l|p{4.5cm}|l|}
         \hline
-        \rowcolor[HTML]{EFEFEF} \textbf{Protocol} & \textbf{Cipher / Encryption} & \textbf{Key Vulnerability} & \textbf{Modern Status} \\ \hline
-        \textbf{WEP} & RC4 (Weak 24-bit IVs) & IVs repeat; can be cracked in minutes by capturing traffic. & \textbf{Dead.} Never use under any circumstance. \\ \hline
-        \textbf{WPA} & TKIP (RC4 wrapper) & Band-aid fix designed to run on old WEP hardware. & \textbf{Deprecated.} Easily compromised. \\ \hline
-        \textbf{WPA2} & \textbf{AES / CCMP} & Dictionary/Brute-force attacks against the Pre-Shared Key (4-way handshake). & \textbf{Current Standard.} Secure if the password is long/complex. \\ \hline
-        \textbf{WPA3} & \textbf{AES / GCMP} & None widely known yet. Uses \textbf{SAE} instead of PSK. & \textbf{The Future.} Mandatory for Wi-Fi 6E (6 GHz). \\ \hline
+        \rowcolor[HTML]{EFEFEF}
+        \textbf{Protocol} & \textbf{Cipher} & \textbf{Why It Was Replaced} & \textbf{Status} \\ \hline
+        \textbf{WEP} (1997) & RC4 (24-bit IV) & IVs repeat after $\sim$5,000 packets; cracked in minutes by replaying captured traffic. & \textbf{Dead. Never use.} \\ \hline
+        \textbf{WPA} (2003) & TKIP (RC4 wrapper) & A band-aid to run on old WEP hardware; TKIP is still RC4-based and was later broken. & \textbf{Deprecated.} \\ \hline
+        \textbf{WPA2} (2004) & AES-CCMP (128-bit) & Dictionary attacks possible against the 4-way handshake if the passphrase is weak. & \textbf{Widely used.} Strong with a long passphrase. \\ \hline
+        \textbf{WPA3} (2018) & AES-GCMP-256 + SAE & None widely exploited. & \textbf{Current standard.} Mandatory on 6 GHz. \\ \hline
         \end{tabular}
         }
     \end{table}
-    
-    \begin{alertblock}{WPA3 and Forward Secrecy}
-        WPA3's SAE (Simultaneous Authentication of Equals) provides \keyterm{Forward Secrecy}. If an attacker records encrypted Wi-Fi traffic today, and steals the password tomorrow, they \emph{still} cannot decrypt the old traffic.
+    \vspace{0.2em}
+    \begin{alertblock}{WPA3's Key Improvement: Forward Secrecy via SAE}
+        \footnotesize
+        WPA2 uses a fixed pre-shared key to derive session keys. If an attacker records your encrypted traffic \emph{today} and learns your password \emph{later}, they can decrypt everything.\\[0.2em]
+        WPA3 uses \keyterm{SAE (Simultaneous Authentication of Equals)}, which generates a fresh, unique session key for every connection. Even if the password is stolen later, old captured traffic cannot be decrypted.
     \end{alertblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 29: PERSONAL VS ENTERPRISE
+\subsection{Authentication Models}
 % =============================================================================
-\begin{frame}{Authentication: Personal vs. Enterprise}
+
+% =============================================================================
+% SLIDE: PERSONAL vs ENTERPRISE
+% =============================================================================
+\begin{frame}{Personal vs.\ Enterprise Authentication}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{WPA2 / WPA3 - Personal (PSK)}
+            \begin{block}{WPA2/3-Personal (Pre-Shared Key)}
+                \footnotesize
                 \begin{itemize}
-                    \item Uses a \keyterm{Pre-Shared Key} (password).
-                    \item Every single device on the network types in the exact same password.
-                    \item \textbf{The Fatal Flaw for Business:} If an employee is fired, you must change the Wi-Fi password on \emph{every single device} in the company to properly revoke their access.
-                    \item Suitable only for homes and small coffee shops.
+                    \item Everyone on the network types the \emph{same} passphrase.
+                    \item Easy to set up; fine for homes and small businesses.
+                    \item \textbf{Critical Flaw for Enterprises:} When an employee is fired or a device is stolen, you must change the Wi-Fi password on \emph{every single device}. There is no way to revoke one person without affecting everyone.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{WPA2 / WPA3 - Enterprise (802.1X)}
+            \begin{block}{WPA2/3-Enterprise (802.1X / RADIUS)}
+                \footnotesize
                 \begin{itemize}
-                    \item Uses \keyterm{802.1X} and a back-end \textbf{RADIUS} server (tied to Active Directory).
-                    \item Users authenticate with their own unique username/password, or a digital certificate.
-                    \item \textbf{The Enterprise Benefit:} If someone is fired, you disable their specific AD account. Their Wi-Fi access is instantly revoked, and nobody else is affected.
+                    \item Each user authenticates with their \textbf{own unique credentials} (username/password or digital certificate).
+                    \item The AP talks to a \keyterm{RADIUS server}, which checks credentials against Active Directory.
+                    \item \textbf{Revocation is instant:} Disable one AD account and that employee's Wi-Fi disappears---nobody else is affected.
+                    \item Required for any organization with more than a handful of employees.
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
+    \vspace{0.3em}
+    \begin{exampleblock}{Hotel Key Card Analogy}
+        \footnotesize
+        PSK is like one master key that opens every room. If it's lost, you re-key the entire hotel. 802.1X is like individual key cards---deactivate one card without affecting anyone else.
+    \end{exampleblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 30: BYOD AND CAPTIVE PORTALS
+% SLIDE: BYOD AND CAPTIVE PORTALS
 % =============================================================================
-\begin{frame}{Managing Guest Access and BYOD}
+\begin{frame}{Managing Guest Access: BYOD and Captive Portals}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \keyterm{BYOD (Bring Your Own Device)} policies allow employees to use personal smartphones. Because IT does not control these devices, they must be treated as untrusted (placed on an isolated VLAN).
-                \item \keyterm{MDM (Mobile Device Management)}: Software profiles installed on personal devices that enforce security policies (PIN required, encrypted storage) before granting access to corporate Wi-Fi and email.
+                \item \keyterm{BYOD (Bring Your Own Device):} Employees use personal phones and laptops on the corporate network. IT does not own or control these devices---they are inherently untrusted.
+                \item \textbf{BYOD Best Practice:} Place personal devices on an isolated VLAN (e.g., VLAN 50 ``Corp-BYOD'') with internet access but no access to internal servers or file shares.
+                \item \keyterm{MDM (Mobile Device Management):} Software pushed to personal devices that enforces security policies---requiring a PIN, encrypting storage, and allowing remote wipe.
             \end{itemize}
         \end{column}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.44\textwidth}
             \begin{block}{Captive Portals}
-                \begin{itemize}
-                    \item A web page that intercepts HTTP/DNS traffic until a user completes an action.
-                    \item Used to enforce an \textbf{Acceptable Use Policy (AUP)}, process payments, or verify an email address.
-                    \item \textbf{Warning:} Networks with Captive Portals are typically \textbf{Open} (no Layer 2 encryption). Traffic can be intercepted easily.
-                \end{itemize}
+                \footnotesize
+                A captive portal intercepts all web traffic from a new client and redirects to a \emph{landing page}---typically to accept Terms of Service, pay for access, or enter an email. Used in hotels, airports, and coffee shops.
             \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% =============================================================================
-% SLIDE 31: ROGUE APS AND EVIL TWINS
-% =============================================================================
-\begin{frame}[shrink=10]{Wireless Threats: Rogue APs and Evil Twins}
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \begin{block}{Rogue Access Point}
-                \begin{itemize}
-                    \item Unauthorized AP plugged into the corporate network.
-                    \item Often installed by an employee for convenience.
-                    \item \textbf{Danger:} Bypasses firewall, RADIUS, and WLC.
-                \end{itemize}
-            \end{block}
-            \begin{block}{Evil Twin Attack}
-                \begin{itemize}
-                    \item Malicious AP spoofing the legitimate corporate SSID.
-                    \item Devices roam to the strongest signal, letting the attacker intercept traffic.
-                \end{itemize}
-            \end{block}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{center}
-                \begin{tikzpicture}[scale=0.72]
-                    \node[pc] (victim) at (0,0) {\iconlaptop[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of victim] {Victim Device};
-                    
-                    \node[wifi] (real) at (3,2) {\iconwifi[0.6cm]};
-                    \node[font=\scriptsize, above=0.1cm of real] {Real AP (Weak Signal)};
-                    \node[font=\tiny] at (3, 1.4) {BSSID: 00:1A:2B...};
-                    
-                    \node[wifi] (evil) at (3,-2) {\iconwifi[0.6cm]};
-                    \node[font=\scriptsize, below=0.1cm of evil, alertred] {Evil Twin (Strong Signal)};
-                    \node[font=\tiny, alertred] at (3, -2.6) {BSSID: FF:EE:DD...};
-                    \node at (4,-2) {\iconhacker[0.6cm]};
-                    
-                    \draw[wireless, opacity=0.3] (victim) -- node[above, sloped, font=\tiny] {Ignores} (real);
-                    \draw[wireless, alertred, thick] (victim) -- node[below, sloped, font=\tiny, text=alertred] {Connects} (evil);
-                \end{tikzpicture}
-            \end{center}
-            \vspace{0.2em}
-            \begin{alertblock}{Defense}
-                Use a \keyterm{WIDS/WIPS} to scan for spoofed MAC addresses and unauthorized APs.
+            \vspace{0.3em}
+            \begin{alertblock}{Captive Portal Warning}
+                \footnotesize
+                Captive portal networks are almost always \textbf{open} (no Layer 2 encryption). Even after you ``agree'' to the terms, anyone nearby can still sniff your unencrypted traffic. Always use HTTPS and/or a VPN on these networks.
             \end{alertblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 32: CASE STUDY 3 SCENARIO
+\subsection{Wireless Threats}
 % =============================================================================
-\begin{frame}[shrink=5]{Case Study: Steve's Evil Twin}
+
+% =============================================================================
+% SLIDE: ROGUE APs AND EVIL TWINS
+% =============================================================================
+\begin{frame}[shrink=5]{Wireless Threats: Rogue APs and Evil Twins}
+    \begin{columns}[T]
+        \begin{column}{0.46\textwidth}
+            \begin{block}{Rogue Access Point}
+                \footnotesize
+                \begin{itemize}
+                    \item An \emph{unauthorized} AP connected to the corporate network---usually by an employee who wants better Wi-Fi at their desk.
+                    \item \textbf{Danger:} A rogue AP bypasses the firewall, RADIUS server, and WLC. Anyone who connects is inside the network with no security checks.
+                    \item \textbf{Detection:} A Wireless IDS/IPS (\keyterm{WIDS/WIPS}) scans for unknown BSSIDs.
+                \end{itemize}
+            \end{block}
+            \vspace{0.2em}
+            \begin{block}{Evil Twin Attack}
+                \footnotesize
+                An attacker sets up an AP with the \emph{same SSID} as a legitimate network and pumps out a stronger signal. Nearby devices automatically roam to the stronger signal---landing in the attacker's control.
+            \end{block}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.72]
+                    \node[laptop] (v)    at (0,0.5)  {\iconlaptop[0.55cm]};
+                    \node[font=\scriptsize, below=0.05cm of v] {Victim};
+
+                    \node[wifi]   (real) at (3,2.5)  {\iconwifi[0.55cm]};
+                    \node[font=\tiny, above=0.05cm of real, align=center] {Legitimate AP\\SSID: ``Corp-WiFi''\\(weak signal)};
+
+                    \node[wifi]   (evil) at (3,-1.8) {\iconwifi[0.55cm]};
+                    \node[font=\tiny, below=0.05cm of evil, align=center, text=alertred]
+                        {Evil Twin AP\\SSID: ``Corp-WiFi''\\(strong signal)};
+                    \node[pc] at (4.4,-1.8) {\iconhacker[0.55cm]};
+
+                    \draw[wireless noarrow, opacity=0.3] (v) -- (real)
+                        node[midway, above, sloped, font=\tiny, opacity=0.5] {Ignores};
+                    \draw[wireless, alertred, thick] (v) -- (evil)
+                        node[midway, below, sloped, font=\tiny, text=alertred] {Connects!};
+                \end{tikzpicture}
+            \end{center}
+            \vspace{0.1em}
+            \begin{alertblock}{Defense}
+                \footnotesize
+                Use \textbf{802.1X}: the phone challenges the AP to present a valid server certificate. The evil twin cannot fake a cert---the phone rejects the connection automatically.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE: CASE STUDY 3 SCENARIO
+% =============================================================================
+\begin{frame}{Case Study: Steve's Evil Twin}
     \begin{casestudy}{The Stolen Credentials}
-        Steve Harrington sees staff phones connect to an open guest network named "Starcourt\_Staff" with a captive portal.
-        A second AP with the same SSID is sitting in a van outside the breakroom and blasting a much stronger signal.
+        \footnotesize
+        Steve Harrington, security analyst at Starcourt Mall, notices something wrong. The mall's guest network is named ``Starcourt\_Guest'' and uses an open captive portal---visitors browse to any website and get a login page asking for their email.
+
+        \vspace{0.3em}
+        Steve reviews WIDS alerts and spots a second AP broadcasting ``Starcourt\_Guest'' from a MAC address that does not belong to any corporate AP. Looking outside, he notices a van near the food court entrance pumping a much stronger signal on the same SSID. Guest phones are automatically connecting to the van instead of the legitimate AP.
     \end{casestudy}
-    
+
     \begin{block}{Review Questions}
+        \footnotesize
         \begin{enumerate}
-            \item What specific type of attack is the van in the parking lot executing?
-            \item Why are the employee's personal phones automatically connecting to the van's AP instead of the real one inside the mall?
-            \item How would moving to \textbf{WPA2-Enterprise (802.1X)} instead of an Open Captive Portal prevent this attack?
+            \item What specific type of attack is the van executing?
+            \item Why do the guest phones connect to the van automatically, rather than the real AP?
+            \item What authentication change would prevent this attack by requiring both sides to prove identity?
         \end{enumerate}
     \end{block}
 \end{frame}
 
 % =============================================================================
-% SLIDE 33: CASE STUDY 3 SOLUTION
+% SLIDE: CASE STUDY 3 SOLUTION
 % =============================================================================
-\begin{frame}[shrink=5]{Case Study Solution: Steve's Evil Twin}
+\begin{frame}{Case Study Solution: Steve's Evil Twin}
     \begin{casesolution}{The Stolen Credentials}
+        \footnotesize
         \begin{enumerate}
-            \item \textbf{Evil Twin:} The attacker in the van is spoofing the legitimate network name and serving a fake Captive Portal page to harvest credentials.
-            \item \textbf{Signal Strength / Roaming:} Wireless client drivers are programmed to aggressively roam to the AP with the strongest RF signal. Because the van is pumping out high power near the breakroom, the phones switch to it automatically.
-            \item \textbf{802.1X Mutual Authentication:} If the network used 802.1X (EAP-TLS or PEAP), the authentication process requires mutual trust. The employee's phone would challenge the van's AP to present a valid digital certificate signed by the corporate CA. Because the van doesn't have it, the phone silently aborts the connection, keeping the credentials safe.
+            \item \textbf{Evil Twin Attack:} The attacker is spoofing the legitimate SSID with a high-power AP, serving a fake captive portal to harvest email addresses---or worse, credentials.
+            \item \textbf{Automatic Roaming to Strongest Signal:} Wi-Fi client drivers prefer the AP with the highest received signal strength (RSSI). Because the van's AP blasts higher power, phones associate to it automatically---there is no user prompt.
+            \item \textbf{802.1X with Mutual Authentication:} If the network used 802.1X (PEAP or EAP-TLS), the exchange requires the \emph{AP} to present a valid digital certificate from a trusted CA, and the client verifies it. The van's AP has no valid corporate certificate---the phone silently fails authentication and refuses to connect, even though the signal is strong.
         \end{enumerate}
     \end{casesolution}
-    
+
     \begin{alertblock}{Key Takeaway}
-        Open networks with Captive Portals are trivial to spoof and provide no Layer 2 encryption. 802.1X secures BYOD access by cryptographically verifying both the user \emph{and} the network infrastructure.
+        \footnotesize
+        An open captive portal is trivial to clone. 802.1X prevents evil twin attacks because you cannot fake a certificate---the evil twin is exposed the moment the client asks ``prove who you are.''
     \end{alertblock}
 \end{frame}
 
 % =============================================================================
-% SLIDE 34: SECTION 5 INTRO
+\section{Wireless Troubleshooting}
+\subsection{Signal and Environment}
 % =============================================================================
-\begin{frame}
-    \begin{center}
-        \Huge \textbf{Section 5}\\
-        \vspace{0.5em}
-        \Large \textcolor{rctcblue}{Wireless Troubleshooting}
-    \end{center}
-\end{frame}
+
+\sectionslide{Section 5: Wireless Troubleshooting}
 
 % =============================================================================
-% SLIDE 35: ENVIRONMENTAL ISSUES
+% SLIDE: RF ATTENUATION
 % =============================================================================
-\begin{frame}[shrink=5]{Environmental Issues and RF Attenuation}
+\begin{frame}{The Physical Environment: Your Signal's Worst Enemy}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item When troubleshooting wireless coverage gaps, the physical environment is the primary suspect.
-                \item \keyterm{Attenuation}: The natural loss of signal strength as an RF wave travels through space or passes through materials.
+                \item Unlike a cable, an RF signal must travel through walls, floors, furniture, and people. Every obstacle weakens the signal (\keyterm{attenuation}).
+                \item \textbf{Absorption:} Dense materials convert RF energy into heat. Concrete, brick, and even human bodies absorb 2.4 GHz aggressively.
+                \item \textbf{Reflection:} Metal objects---filing cabinets, elevator shafts, chain-link fences---bounce the signal. Reflected copies arrive out of phase and cause \keyterm{multipath interference}.
+                \item \textbf{Refraction:} Water and glass can bend the wave's path.
+                \item \textbf{Rule of Thumb:} The 5 GHz band is attenuated \emph{more} by walls than 2.4 GHz, because of its shorter wavelength.
             \end{itemize}
-            
-            \vspace{0.3em}
-            \begin{block}{RF Behaviors}
-                \begin{itemize}
-                    \footnotesize
-                    \item \textbf{Absorption:} Materials (concrete, brick, human bodies) absorb RF energy, killing the signal.
-                    \item \textbf{Reflection:} Metal objects (filing cabinets, elevator shafts) bounce the signal, causing multipath interference.
-                    \item \textbf{Refraction:} Glass and water can bend the RF wave, changing its trajectory.
-                \end{itemize}
-            \end{block}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{alertblock}{Non-Wi-Fi Interference}
+        \begin{column}{0.44\textwidth}
+            \begin{table}[]
+                \renewcommand{\arraystretch}{1.3}
+                \centering
+                \scriptsize
+                \begin{tabular}{|l|l|}
+                \hline
+                \rowcolor[HTML]{EFEFEF} \textbf{Obstacle} & \textbf{Typical Loss} \\ \hline
+                Open air & Low (inverse square) \\ \hline
+                Drywall / plywood & Low ($\sim$3 dB) \\ \hline
+                Glass window & Low--Medium ($\sim$3 dB) \\ \hline
+                Brick / cinderblock & High ($\sim$10 dB) \\ \hline
+                Concrete floor/wall & Very High ($\sim$15 dB) \\ \hline
+                Metal / elevator shaft & Signal-blocking \\ \hline
+                Human body & $\sim$3--5 dB at 2.4 GHz \\ \hline
+                \end{tabular}
+            \end{table}
+            \vspace{0.2em}
+            \begin{exampleblock}{The dB Scale (Rule of 3s and 10s)}
+                \scriptsize
                 \begin{itemize}
-                    \footnotesize
-                    \item Wi-Fi runs in unlicensed ISM bands. 
-                    \item Baby monitors, microwaves, cordless phones, and Bluetooth all share the 2.4 GHz band.
-                    \item Because CSMA/CA requires devices to wait for "clear air", non-Wi-Fi interference doesn't just corrupt data—it freezes the channel completely.
-                \end{itemize}
-            \end{alertblock}
-            \begin{exampleblock}{The Rule of 3s and 10s (dB)}
-                In RF math:
-                \begin{itemize}
-                    \item $+3$ dB doubles the power.
-                    \item $-3$ dB halves the power.
-                    \item $+10$ dB increases power by 10x.
+                    \item $-3$ dB = signal power cut in half
+                    \item $+3$ dB = signal power doubled
+                    \item $-10$ dB = signal power reduced to $\frac{1}{10}$th
                 \end{itemize}
             \end{exampleblock}
         \end{column}
@@ -936,19 +1158,20 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 36: SIGNAL METRICS (RSSI AND SNR)
+% SLIDE: RSSI AND SNR
 % =============================================================================
-\begin{frame}[shrink=5]{Troubleshooting Metrics: RSSI and SNR}
+\begin{frame}{Signal Metrics: RSSI and SNR}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
             \begin{itemize}
-                \item \keyterm{RSSI (Received Signal Strength Indicator):} A measurement of how well your device can hear the AP. Measured in \textbf{negative dBm}.
-                \item Closer to zero is better.
-                \item \keyterm{Noise Floor:} The background ambient RF noise (microwaves, cosmic radiation, neighbor's Wi-Fi).
-                \item \keyterm{SNR (Signal-to-Noise Ratio):} The difference between the RSSI and the Noise Floor. A high SNR means the signal is clearly distinguishable from the noise.
+                \item \keyterm{RSSI (Received Signal Strength Indicator):} How loudly your device hears the AP. Measured in \emph{negative} dBm---closer to zero = stronger. A value of $-65$ dBm is excellent; $-90$ dBm means the device can barely hear the AP.
+                \item \keyterm{Noise Floor:} The constant background hum of RF energy---neighboring networks, microwaves, cosmic radiation. Typically around $-90$ to $-100$ dBm.
+                \item \keyterm{SNR (Signal-to-Noise Ratio):} The difference between RSSI and noise floor. If signal is $-65$ dBm and noise is $-90$ dBm, SNR = $25$ dB---excellent.
+                \item \textbf{Why SNR matters more than RSSI:} A signal of $-70$ dBm in a noisy room (noise at $-72$ dBm) is \emph{unusable}. The same $-70$ dBm in a quiet room (noise at $-95$ dBm) is perfectly fine.
             \end{itemize}
         \end{column}
-        \begin{column}{0.48\textwidth}
+        \begin{column}{0.44\textwidth}
             \begin{table}[]
                 \renewcommand{\arraystretch}{1.3}
                 \centering
@@ -956,48 +1179,72 @@
                 \resizebox{\linewidth}{!}{%
                 \begin{tabular}{|l|l|}
                 \hline
-                \rowcolor[HTML]{EFEFEF} \textbf{RSSI Value} & \textbf{Expected Performance} \\ \hline
-                \textbf{-30 dBm} & Perfect (Right next to AP) \\ \hline
-                \textbf{-65 dBm} & Excellent (Enterprise standard) \\ \hline
-                \textbf{-70 dBm} & Good (Reliable packet delivery) \\ \hline
-                \textbf{-80 dBm} & Poor (Dropped packets, slow) \\ \hline
-                \textbf{-90 dBm} & Unusable (Disconnects) \\ \hline
+                \rowcolor[HTML]{EFEFEF} \textbf{RSSI} & \textbf{Performance} \\ \hline
+                $-$30 dBm & Perfect (next to AP) \\ \hline
+                $-$65 dBm & Excellent (enterprise standard) \\ \hline
+                $-$70 dBm & Good (reliable delivery) \\ \hline
+                $-$80 dBm & Poor (dropped packets) \\ \hline
+                $-$90 dBm & Unusable (disconnects) \\ \hline
                 \end{tabular}
                 }
             \end{table}
-            
-            \vspace{0.3em}
-            \begin{exampleblock}{Calculating SNR}
-                Signal: $-65$ dBm \\
-                Noise Floor: $-90$ dBm \\
-                SNR = $25$ dB (\textit{Excellent})
-                \\ \vspace{0.2em}
-                \scriptsize *If SNR drops below $10$ dB, the device cannot decode the transmission.
+            \vspace{0.2em}
+            \begin{exampleblock}{SNR Calculation Example}
+                \scriptsize
+                Signal: $-65$ dBm\\
+                Noise Floor: $-90$ dBm\\
+                \textbf{SNR = 25 dB (Excellent)}\\[0.3em]
+                SNR $< 10$ dB: cannot decode the signal.\\
+                SNR $> 20$ dB: clean, fast connection.
             \end{exampleblock}
         \end{column}
     \end{columns}
 \end{frame}
 
 % =============================================================================
-% SLIDE 37: COMMON CONFIG ISSUES
+\subsection{Common Problems and Fixes}
 % =============================================================================
-\begin{frame}[shrink=5]{Common Configuration and Placement Issues}
+
+% =============================================================================
+% SLIDE: NON-WI-FI INTERFERENCE
+% =============================================================================
+\begin{frame}{Non-Wi-Fi Interference: Invisible Channel Blockers}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Improper AP Placement}
-                \begin{itemize}
-                    \item \textbf{Too High:} Mounting APs on 30-foot warehouse ceilings puts clients too far away.
-                    \item \textbf{Hidden APs:} Placing APs above drop ceilings near metal HVAC ducts severely attenuates and reflects the signal.
-                    \item \textbf{Wall Mounts:} Mounting omnidirectional APs sideways on a wall instead of flat on a ceiling pushes half the signal into the floor/ceiling.
-                \end{itemize}
-            \end{block}
+        \begin{column}{0.52\textwidth}
+            \footnotesize
+            \begin{itemize}
+                \item The 2.4 GHz frequency is an \keyterm{ISM band} (Industrial, Scientific, Medical)---license-free frequency shared by many devices.
+                \item Non-Wi-Fi transmitters do not use CSMA/CA. They transmit whenever they want, generating RF noise that \emph{prevents} Wi-Fi devices from seeing a clear channel.
+            \end{itemize}
+            \vspace{0.2em}
+            \begin{alertblock}{CSMA/CA Under Attack}
+                \scriptsize
+                When a microwave oven is running, it floods 2.4 GHz with noise. Every Wi-Fi device's CCA check says ``channel busy.'' Devices wait indefinitely (high latency). When they finally try to transmit, noise corrupts the frame and no ACK arrives---causing retransmits. The channel effectively freezes.
+            \end{alertblock}
         \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Logical Configuration Errors}
+        \begin{column}{0.44\textwidth}
+            \begin{table}[]
+                \renewcommand{\arraystretch}{1.3}
+                \centering
+                \scriptsize
+                \begin{tabular}{|l|l|}
+                \hline
+                \rowcolor[HTML]{EFEFEF} \textbf{Source} & \textbf{Affected Band} \\ \hline
+                Microwave oven & 2.4 GHz \\ \hline
+                Baby monitor (analog) & 2.4 GHz \\ \hline
+                Bluetooth devices & 2.4 GHz \\ \hline
+                Cordless phone (older) & 2.4 GHz \\ \hline
+                Radar / TDWR & 5 GHz (DFS) \\ \hline
+                Neighboring Wi-Fi & 2.4 or 5 GHz \\ \hline
+                \end{tabular}
+            \end{table}
+            \vspace{0.2em}
+            \begin{block}{Mitigation}
+                \footnotesize
                 \begin{itemize}
-                    \item \textbf{Channel Overlap:} Manually assigning an AP to Channel 3 on the 2.4 GHz band causes crippling Adjacent Channel Interference.
-                    \item \textbf{Capacity Overload:} Connecting 100 students to a single AP in an auditorium. Wi-Fi is shared; airtime becomes exhausted.
-                    \item \textbf{Frequency Mismatch:} A legacy 2.4 GHz IoT device cannot see an SSID that is only broadcasting on 5 GHz.
+                    \item Move critical devices to 5 GHz.
+                    \item Use a spectrum analyzer to identify the noise source.
+                    \item Replace old/leaky equipment.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -1005,85 +1252,127 @@
 \end{frame}
 
 % =============================================================================
-% SLIDE 38: CASE STUDY 4 SCENARIO
+% SLIDE: COMMON CONFIG ERRORS
 % =============================================================================
-\begin{frame}[shrink=5]{Case Study: Hopper's Microwave Mystery}
+\begin{frame}{Common Configuration and Placement Mistakes}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Physical Placement Errors}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Too high:} An AP on a 30-foot warehouse ceiling is too far from floor-level devices. Signal path loss accumulates over vertical distance.
+                    \item \textbf{Above ceiling tiles:} Placing APs above a drop ceiling next to metal HVAC ducts degrades and reflects the signal before it reaches the floor.
+                    \item \textbf{Wrong orientation:} Mounting an omnidirectional AP sideways on a wall directs half the donut-shaped signal into the floor or ceiling.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Logical Configuration Errors}
+                \footnotesize
+                \begin{itemize}
+                    \item \textbf{Bad channel assignment:} Assigning a 2.4 GHz AP to Channel 3 or 4 creates adjacent-channel interference with every neighboring AP on Ch 1 or 6.
+                    \item \textbf{Capacity overload:} 100 students in an auditorium, all on one AP. Wi-Fi is shared---airtime is exhausted even if the signal is strong.
+                    \item \textbf{Frequency mismatch:} A 2.4 GHz-only IoT thermostat cannot see an SSID broadcasting only on 5 GHz. Always broadcast on both bands or create a dedicated 2.4 GHz SSID for legacy devices.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% =============================================================================
+% SLIDE: CASE STUDY 4 SCENARIO
+% =============================================================================
+\begin{frame}{Case Study: Hopper's Microwave Mystery}
     \begin{casestudy}{The Lunchtime Latency}
-        Jim Hopper, IT Director at the Hawkins Police Station, is aggressively troubleshooting a massive latency spike that happens every day exactly at 12:30 PM on the dispatch floor. 
-        
-        \vspace{0.5em}
-        During this window, wireless IP phones drop calls, and the dispatch software running on 2.4 GHz laptops disconnects entirely. Checking the WLC logs, Hopper sees that the AP serving the dispatch floor is experiencing 90\% channel utilization and massive packet retries, despite only having 5 connected devices.
+        \footnotesize
+        Jim Hopper is IT Director for the Hawkins Police Department. Every weekday at \textbf{exactly 12:30 PM}, the dispatch floor erupts with complaints: wireless VoIP phones drop calls, and the CAD (Computer Aided Dispatch) software loses its Wi-Fi connection entirely.
+
+        \vspace{0.3em}
+        Hopper checks the WLC and sees the dispatch AP reporting \textbf{90\% channel utilization} and hundreds of packet retries---despite only 5 connected devices. The disruption lasts about 10 minutes and then completely resolves itself. No configuration changes have been made.
     \end{casestudy}
-    
+
     \begin{block}{Review Questions}
+        \footnotesize
         \begin{enumerate}
-            \item What phenomenon is occurring every day at 12:30 PM?
-            \item Why does this non-Wi-Fi interference cause Wi-Fi packet retries and high channel utilization?
-            \item What are two potential solutions Hopper can implement to fix the dispatch network?
+            \item What is the most likely cause of a consistent, time-based RF disruption that resolves in under 15 minutes?
+            \item Mechanically, why does this non-Wi-Fi source cause packet retries and high channel utilization rather than just signal loss?
+            \item Propose two solutions---one physical, one logical (network-layer).
         \end{enumerate}
     \end{block}
 \end{frame}
 
 % =============================================================================
-% SLIDE 39: CASE STUDY 4 SOLUTION
+% SLIDE: CASE STUDY 4 SOLUTION
 % =============================================================================
-\begin{frame}[shrink=5]{Case Study Solution: Hopper's Microwave Mystery}
+\begin{frame}{Case Study Solution: Hopper's Microwave Mystery}
     \begin{casesolution}{The Lunchtime Latency}
+        \footnotesize
         \begin{enumerate}
-            \item \textbf{Non-Wi-Fi Interference:} Joyce is heating up her lunch. Microwave ovens operate at 2.4 GHz. A leaky, unshielded microwave acts as a massive RF jammer on the 2.4 GHz band.
-            \item \textbf{CSMA/CA Breakdown:} Wi-Fi devices must perform a Clear Channel Assessment (CCA). When the microwave is running, the channel is never clear. Devices wait indefinitely (latency). When they do try to transmit, the RF noise corrupts the frame, no ACK is received, and the packet must be retried.
-            \item \textbf{Solutions:} 
+            \item \textbf{A Leaky Microwave Oven:} Someone in the break room heats lunch at 12:30 PM. Microwave ovens operate at 2.4 GHz---the same band as the dispatch floor's Wi-Fi. An older or damaged microwave can radiate significant RF energy outside its shielded enclosure.
+
+            \item \textbf{CSMA/CA Paralysis:} Microwaves do not respect CSMA/CA. Wi-Fi devices' CCA checks detect the channel as ``busy'' and defer indefinitely (causing high latency). When a device tries to transmit anyway, the microwave noise corrupts the frame, the ACK is never received, and the device retransmits---causing high retry counts and channel utilization.
+
+            \item \textbf{Two Solutions:}
                 \begin{itemize}
-                    \item \textit{Solution A:} Move the dispatch laptops and IP phones to the \textbf{5 GHz band}, completely avoiding the microwave's frequency.
-                    \item \textit{Solution B:} Throw the leaky microwave away and buy a properly shielded one for the breakroom.
+                    \item \textit{Physical:} Replace the old microwave with a properly shielded modern unit.
+                    \item \textit{Logical:} Move the dispatch APs and devices to the \textbf{5 GHz band}, which is not affected by 2.4 GHz microwave ovens.
                 \end{itemize}
         \end{enumerate}
     \end{casesolution}
 \end{frame}
 
 % =============================================================================
-% SLIDE 40: MODULE SUMMARY
+\section*{Module Summary}
 % =============================================================================
-\begin{frame}[shrink=5]{Module 12.0 Summary}
+
+% =============================================================================
+% SLIDE: SUMMARY
+% =============================================================================
+\begin{frame}[shrink=5]{Module 12 Summary}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{Wireless Fundamentals}
+            \begin{block}{Sections 1--2: RF Basics and Standards}
+                \scriptsize
                 \begin{itemize}
-                    \item RF uses 2.4 GHz (range/crowded), 5 GHz (speed/clean), and 6 GHz (Wi-Fi 6E/7).
-                    \item Wi-Fi uses CSMA/CA to avoid collisions.
-                    \item 802.11 evolved from DSSS (802.11b) to MIMO (802.11n) to OFDMA (802.11ax).
+                    \item 2.4 GHz = range; 5 GHz = speed; 6 GHz = clean, WPA3-required.
+                    \item Use only channels \textbf{1, 6, 11} on 2.4 GHz to avoid ACI.
+                    \item CSMA/CA (listen, wait, transmit, ACK); RTS/CTS solves hidden node.
+                    \item b (DSSS) $\to$ n (MIMO) $\to$ ac (MU-MIMO) $\to$ ax (OFDMA) $\to$ be (MLO).
                 \end{itemize}
             \end{block}
-            
             \vspace{0.3em}
-            \begin{block}{Enterprise Design}
+            \begin{block}{Section 3: Enterprise Design}
+                \scriptsize
                 \begin{itemize}
-                    \item WLCs manage lightweight APs via CAPWAP tunnels for centralized control.
-                    \item Antenna choice (Omni vs. Directional) shapes the RF cell to optimize coverage.
+                    \item Each SSID maps to a VLAN; AP uplink must be a trunk.
+                    \item Thin APs + WLC (CAPWAP) enable centralized management.
+                    \item Site survey before installation; microcells over high power for density.
+                    \item Omni for open offices; directional for hallways and signal containment.
                 \end{itemize}
             \end{block}
         \end{column}
         \begin{column}{0.48\textwidth}
-            \begin{block}{Security \& Threats}
+            \begin{block}{Section 4: Security}
+                \scriptsize
                 \begin{itemize}
-                    \item WPA3 uses SAE for forward secrecy.
-                    \item 802.1X (Enterprise) ties access to identity.
-                    \item Rogue APs bypass firewalls; Evil Twins spoof real networks to steal credentials.
-                    \item BYOD requires MDM or isolated VLANs.
+                    \item WEP is dead; WPA2 (AES) is adequate; WPA3 (SAE) is the standard.
+                    \item Personal (PSK): shared password---fine for homes only.
+                    \item Enterprise (802.1X): per-user credentials via RADIUS---required for business.
+                    \item Rogue APs bypass security; evil twins harvest credentials.
+                    \item 802.1X + mutual auth defeats evil twins.
                 \end{itemize}
             \end{block}
-            
             \vspace{0.3em}
-            \begin{block}{Troubleshooting}
+            \begin{block}{Section 5: Troubleshooting}
+                \scriptsize
                 \begin{itemize}
-                    \item Good RSSI (-65 dBm) and high SNR are critical.
-                    \item Non-Wi-Fi interference destroys 2.4 GHz.
-                    \item Only use channels 1, 6, and 11 on 2.4 GHz.
+                    \item Target RSSI $\leq -65$ dBm and SNR $\geq 20$ dB.
+                    \item Non-Wi-Fi ISM interference (microwaves, Bluetooth) paralyzes CSMA/CA.
+                    \item Fix: move to 5 GHz, fix placement, use only 1/6/11 on 2.4 GHz.
                 \end{itemize}
             \end{block}
         \end{column}
     \end{columns}
 \end{frame}
-
 
 \end{document}
