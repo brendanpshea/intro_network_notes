@@ -24,7 +24,7 @@ param(
     [ValidateSet('pdf','clean')]
     [string]$Mode = 'pdf',
 
-    [ValidateRange(1,11)]
+    [ValidateRange(1,14)]
     [int]$Module = 0
 )
 
@@ -48,7 +48,10 @@ $modules = @(
     @{ Num = 8;  Base = 'network_08_operations_monitor' },
     @{ Num = 9;  Base = 'network_09_security_concepts' },
     @{ Num = 10; Base = 'network_10_auth_access_hardening' },
-    @{ Num = 11; Base = 'network_11_zones_iot_physical' }
+    @{ Num = 11; Base = 'network_11_zones_iot_physical' },
+    @{ Num = 12; Base = 'network_12_wireless' },
+    @{ Num = 13; Base = 'network_13_wan_vpn_remote' },
+    @{ Num = 14; Base = 'network_14_modern_environments' }
 )
 
 if ($Module -ne 0) {
